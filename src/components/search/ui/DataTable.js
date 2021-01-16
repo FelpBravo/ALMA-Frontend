@@ -1,0 +1,175 @@
+import React, { useEffect, useRef, useState } from 'react';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import queryString from 'query-string';
+import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
+import FileSaver from 'file-saver';
+import Paper from '@material-ui/core/Paper';
+import { useLocation } from 'react-router-dom';
+
+import { columnsDocuments } from 'helpers/columnsDocuments';
+import { DataTableHead } from './DataTableHead';
+import { downloadDocument } from 'services/filesService';
+import { startDeleteDocument, startSearchLoading } from 'actions/search';
+import { MenuTable } from './MenuTable';
+
+const DataTable = () => {
+
+	const isMounted = useRef(true);
+
+	const dispatch = useDispatch();
+	const location = useLocation();
+
+	const { documents = {}, fields = [], textSearch = '' } = useSelector(state => state.searchs);
+	const { data = [], totalItems = 0 } = documents;
+	const { filters } = fields;
+
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
+
+	const { folderId } = queryString.parse(location.search);
+
+	useEffect(() => {
+
+		return () => {
+			isMounted.current = false;
+		}
+
+	}, []);
+
+	const handleChangePage = (event, page) => {
+
+		const existsFilters = filters.filter(filter => filter.value);
+
+		//console.log(textSearch, existsFilters, folderId, page + 1);
+		dispatch(startSearchLoading(textSearch, existsFilters, folderId, page + 1));
+
+		setPage(page);
+
+	};
+
+	const handleChangeRowsPerPage = event => {
+		setRowsPerPage(event.target.value);
+	};
+
+	const handleDownload = async (id, name) => {
+		try {
+			Swal.fire({
+				title: 'Downloading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const { data } = await downloadDocument(id);
+			FileSaver.saveAs(data, name);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+	}
+
+	const handleEdit = (id) => {
+
+	}
+
+	const handleDelete = async (id) => {
+		const resp = await Swal.fire({
+			title: 'Delete',
+			text: "¿Está seguro de continuar?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
+
+		if (resp.value) {
+			dispatch(startDeleteDocument(id));
+		}
+	}
+
+	return (
+		<Paper>
+			<div className="flex-auto">
+				<div className="table-responsive-material">
+					<Table className="">
+						<DataTableHead
+							columns={columnsDocuments}
+						/>
+						<TableBody>
+							{data.map(({ id, name, createdAt, modifiedAt, tags, version, isFavorite }) => {
+								return (
+									<TableRow
+										hover
+										tabIndex={-1}
+										key={id}
+									>
+										<TableCell>
+											<i className="far fa-file-pdf custom-link-dash"></i>{` `}
+											<span className="custom-link-dash">{name}</span>
+										</TableCell>
+										<TableCell>{``}</TableCell>
+										<TableCell>{createdAt}</TableCell>
+										<TableCell>{modifiedAt}</TableCell>
+										<TableCell>{``}</TableCell>
+										<TableCell>{version}</TableCell>
+										<TableCell>{id}</TableCell>
+										<TableCell></TableCell>
+										<TableCell>
+
+											<div className="custom-td-table">
+												<i
+													onClick={() => handleDownload(id, name)}
+													className="fa fa-download cursor-pointer custom-link-dash"
+												></i>
+												<i
+													onClick={() => handleEdit(id)}
+													className="far fa-edit cursor-pointer custom-link-dash"
+												></i>
+												<i
+													onClick={() => handleDelete(id)}
+													className="far fa-trash-alt cursor-pointer custom-link-dash"
+												></i>
+
+											</div>
+
+										</TableCell>
+
+										<TableCell>
+											<MenuTable
+												id={id}
+												isFavorite={isFavorite}
+											/>
+										</TableCell>
+
+									</TableRow>
+								);
+							})}
+						</TableBody>
+						<TableFooter>
+							<TableRow>
+								<TablePagination
+									count={totalItems}
+									rowsPerPage={rowsPerPage}
+									page={page}
+									onChangePage={handleChangePage}
+									onChangeRowsPerPage={handleChangeRowsPerPage}
+								/>
+							</TableRow>
+						</TableFooter>
+					</Table>
+				</div>
+			</div>
+		</Paper>
+	);
+};
+
+export default DataTable;

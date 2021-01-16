@@ -1,0 +1,108 @@
+.btn-primary-custom {
+	padding: 20px;
+}
+
+.link-login {
+    color: $app-primary-apiux;
+    text-decoration: none;
+	font-size: 12px;
+
+    &:hover {
+        text-decoration: underline;
+		color: $app-primary-apiux;
+    }
+}
+
+.checkbox-login {
+	padding-left: 10px;
+}
+
+.text-color-apiux {
+	 color: $app-primary-apiux;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.text-color-tags {
+   color: $app-primary-apiux;
+   background: "#e1f0ff";
+   font-size: 12px;
+}
+
+.user-avatar-custom {
+	height: 50px;
+	width: 50px;
+}
+
+.custom-color-table {
+	color: $app-primary-apiux;
+}
+
+.custom-td-table {
+	display: flex;
+    justify-content: space-between;
+}
+
+.custom-color-folder {
+	background: '#ffaa00';
+}
+
+.custom-top-users {
+	color: $app-primary-apiux;
+	text-align: center;
+}
+
+.custom-link-dash {
+	color: $app-primary-apiux;
+}
+
+.custom-text-field {
+	background: $app-color-back;
+	border: $app-color-back solid;
+	border-radius: 5px;
+	padding: 2px;
+}
+
+.custom-table {
+	border-radius: 2px;
+}
+
+.custom-icons-table {
+	display: flex;
+	align-items: center;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.custom-item-menu {
+	color: white;
+
+ 	&:hover {
+        text-decoration: none;	
+    }
+}
+
+.custom-item-tree {
+	color: white;
+    font-size: 10px;
+
+ 	&:hover {
+        text-decoration: none;	
+    }
+}
+
+.text-error {
+ 	font-size: 12px;
+}
+
+.text-advanced-search {
+	color: $app-primary-apiux;
+	text-decoration: underline;
+}
+
+.buttons-search {
+	display: flex;
+    justify-content: space-between;
+}
