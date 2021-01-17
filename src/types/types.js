@@ -32,4 +32,9 @@ export const types = {
 	searchClearAllFilters: 'Search Clear all filters',
 	searchSubscribeDocumentFinish: 'Search subscribe document finish',
 
+	docsDocumentsTypeLoaded: 'Documents Type documents loaded',
+	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',
+	docsRemoveAll: 'Documents Remove all',
+	docsRemoveDetailDocumentType: 'Documents Remove detail document type',
+
 }

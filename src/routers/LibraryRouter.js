@@ -16,8 +16,8 @@ const LibraryRouter = () => {
 
 				<Route
 
-					path="/mics"
-					component={asyncComponent(() => import('../components/mics/Mics'))}
+					path="/documents"
+					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
 
 				<Route
@@ -32,7 +32,7 @@ const LibraryRouter = () => {
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
 
-				<Redirect to="/dashboard" />
+				<Redirect to="/documents" />
 
 			</Switch>
 		</div>

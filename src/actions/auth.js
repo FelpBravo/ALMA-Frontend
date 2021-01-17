@@ -5,6 +5,7 @@ import { uiFinishLoading } from './uiAuth';
 import { types } from '../types/types';
 import { folderRemoveAll } from './folders';
 import { searchRemoveText } from './search';
+import { documentsRemoveAll } from './documents';
 
 export const startUserSignInLogin = (userName, password) => {
 	return async (dispatch) => {
@@ -36,6 +37,7 @@ export const startUserSingOut = () => {
 		dispatch(folderRemoveAll());
 		dispatch(searchRemoveText());
 		dispatch(userSignOut());
+		dispatch(documentsRemoveAll());
 	}
 }
 

@@ -16,12 +16,20 @@ export const fixedFolders = [
 				name: 'sidebar.loadDocuments',
 				icon: 'view-dashboard',
 				type: 'item',
-				link: '/mics',
+				link: '/documents',
+				bd: false,
+			},
+			{
+				id: -3,
+				name: 'sidebar.tags.home',
+				icon: 'view-dashboard',
+				type: 'item',
+				link: '/tags',
 				bd: false,
 			},
 		],
 	},
-	{
+	/*{
 		name: 'sidebar.admin',
 		type: 'section',
 		children: [
@@ -34,7 +42,7 @@ export const fixedFolders = [
 				bd: false,
 			},
 		],
-	},
+	},*/
 	{
 		name: 'sidebar.folders',
 		type: 'section',
