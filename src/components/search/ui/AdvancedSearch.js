@@ -146,7 +146,6 @@ export const AdvancedSearch = () => {
 						<Divider className="mt-3" />
 
 						<Grid
-							className="buttons-search mt-3"
 							container
 							justify="flex-end"
 							alignItems="flex-end"

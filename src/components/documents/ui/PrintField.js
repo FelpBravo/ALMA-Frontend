@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { DATE, NUMERIC } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+import { detailDocumentSetValueField } from 'actions/documents';
 
-export const PrintField = ({ name, label, type, value }) => {
+export const PrintField = ({ sectionId, name, label, type, value }) => {
 
 	const dispatch = useDispatch();
 
@@ -12,6 +13,8 @@ export const PrintField = ({ name, label, type, value }) => {
 		const { name, value } = target;
 
 		//console.log(name, value);
+
+		dispatch(detailDocumentSetValueField(sectionId, name, value));
 
 	}
 

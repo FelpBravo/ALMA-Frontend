@@ -6,7 +6,8 @@ import IntlMessages from 'util/IntlMessages'
 import {
 	startDocumentsTypeLoading,
 	startDetailDocumentTypeLoading,
-	removeDetailDocumentType
+	removeDetailDocumentType,
+	documentSaveFolderId
 } from 'actions/documents'
 
 export const FormInit = () => {
@@ -15,15 +16,13 @@ export const FormInit = () => {
 
 	const {
 		documentsType = [],
-		detailDocumentType = {}
+		detailDocumentType = {},
+		folderId = ''
 	} = useSelector(state => state.documents);
 
-	const { id = '' } = detailDocumentType;
+	const { id: documentType = '' } = detailDocumentType;
 
 	const { initFolders = [] } = useSelector(state => state.folders);
-
-	const [documentType, setDocumentType] = useState(id);
-
 
 	useEffect(() => {
 
@@ -38,19 +37,19 @@ export const FormInit = () => {
 			case 'documentsType':
 				if (value) {
 					dispatch(startDetailDocumentTypeLoading(value));
-					setDocumentType(value)
 				} else {
 					dispatch(removeDetailDocumentType());
-					setDocumentType('')
 				}
+
 				break;
 
 			case 'folder':
-				console.log(value);
+				dispatch(documentSaveFolderId(value ? value : ''));
 
 			default:
 				break;
 		}
+
 	}
 
 	return (
@@ -58,7 +57,7 @@ export const FormInit = () => {
 			<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 				<FormControl fullWidth>
 					<InputLabel>
-						<IntlMessages id="dashboard.loadDocuments.typeDoc" />
+						<IntlMessages id="document.loadDocuments.typeDoc" />
 					</InputLabel>
 					<NativeSelect
 						value={documentType}
@@ -86,9 +85,10 @@ export const FormInit = () => {
 			<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 				<FormControl fullWidth>
 					<InputLabel>
-						<IntlMessages id="dashboard.loadDocuments.folders" />
+						<IntlMessages id="document.loadDocuments.folders" />
 					</InputLabel>
 					<NativeSelect
+						value={folderId}
 						name="folder"
 						input={<BootstrapInput />}
 						onChange={handleOnChange}

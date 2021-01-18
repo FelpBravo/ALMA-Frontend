@@ -59,6 +59,7 @@ const DataTable = () => {
 
 	const handleDownload = async (id, name) => {
 		try {
+
 			Swal.fire({
 				title: 'Downloading...',
 				text: 'Please wait...',
@@ -69,7 +70,9 @@ const DataTable = () => {
 			Swal.showLoading();
 
 			const { data } = await downloadDocument(id);
+
 			FileSaver.saveAs(data, name);
+
 		} catch (error) {
 			console.log(error);
 		} finally {

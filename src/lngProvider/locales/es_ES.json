@@ -359,11 +359,6 @@
 	"dashboard.popularArticles": "articulos populares",
 	"dashboard.comments": "Comentarios",
 	"dashboard.searchText": "Buscar por nombre de documento",
-	"dashboard.loadDocuments": "Carga de documentos",
-	"dashboard.loadDocuments.typeDoc": "Tipo de documento",
-	"dashboard.loadDocuments.folders": "Carpetas",
-	"dashboard.selectDocument": "Seleccionar documentos",
-	"dashboard.dropDocument": "Arrasta los documentos aquí",
 	"dashboard.searchTextButton": "Buscar",
 	"dashboard.searchDocuments": "Inicia tu búsqueda de documentos",
 	"dashboard.searchResults": "Resultados de tu búsqueda",
@@ -601,5 +596,13 @@
 	"table.search.flags": "Banderas",
 	"table.search.actions": "Acciones",
 	"table.search.subscribe": "Suscribir",
-	"table.search.unsubscribe": "Desuscribir"
+	"table.search.unsubscribe": "Desuscribir",
+	"document.loadDocuments": "Carga de documentos",
+	"document.loadDocuments.typeDoc": "Tipo de documento",
+	"document.loadDocuments.folders": "Carpetas",
+	"document.loadDocuments.load": "Cargar",
+	"document.selectDocument": "Seleccionar documentos",
+	"document.dropDocument": "Arrasta los documentos aquí o",
+	"document.documentsLoad": "Documentos cargados",
+	"document.thumbnail.not.available": "Miniatura no disponible"
 }

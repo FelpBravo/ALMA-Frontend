@@ -36,5 +36,10 @@ export const types = {
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',
 	docsRemoveAll: 'Documents Remove all',
 	docsRemoveDetailDocumentType: 'Documents Remove detail document type',
+	docsSetValueField: 'Documents Set value field',
+	docsSaveFormFinish: 'Documents Save form finish',
+	docsSaveFolderId: 'Documents Save folder ID',
+	docsSaveFileIdLoaded: 'Documents Save file ID loaded',
+	docsSaveThumbnail: 'Documents Save thumbnail',
 
 }

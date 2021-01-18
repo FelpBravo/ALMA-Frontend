@@ -29,7 +29,10 @@ export const SubDetailDocumentType = ({ id, name, label, customPropertyList = []
 										key={item.name}
 										className="col-xl-4 col-lg-4 col-md-6 col-6 mb-3"
 									>
-										<PrintField {...item} />
+										<PrintField
+											sectionId={id}
+											{...item}
+										/>
 									</div>
 								)
 							})

@@ -102,7 +102,30 @@
 	text-decoration: underline;
 }
 
-.buttons-search {
+.drop-down {
+	border-color: $app-primary-apiux;
+	border-width: 2px;
+	border-style: solid;
+	padding: 20px;
+	color: $app-primary-apiux;
+	outline: none;
+	align-items: center;
 	display: flex;
-    justify-content: space-between;
+	flex-direction: column;
+	border-style: dashed;
+}
+
+.drop-down button {
+	background: $app-primary-apiux;
+	color: white;
+}
+
+.drop-down button:hover {
+	transition: background .3s ease;
+	background: #409AF5;
+	color: white;
+}
+
+.drop-down span {
+	margin: 20px;
 }

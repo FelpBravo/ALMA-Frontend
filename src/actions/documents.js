@@ -1,4 +1,5 @@
 import { getAll, getById } from 'services/aspectGroupsService';
+import { saveForm } from 'services/filesService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -69,4 +70,69 @@ export const removeDetailDocumentType = () => {
 	return {
 		type: types.docsRemoveDetailDocumentType,
 	}
-}
+};
+
+export const detailDocumentSetValueField = (sectionId, name, value) => {
+	return {
+		type: types.docsSetValueField,
+		payload: {
+			sectionId,
+			name,
+			value
+		}
+	}
+};
+
+export const startSaveFormLoading = (fileId, folderId, aspectGroup) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await saveForm(fileId, folderId, aspectGroup);
+
+			dispatch(saveFormFinish());
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+const saveFormFinish = () => {
+	return {
+		type: types.docsSaveFormFinish,
+	}
+};
+
+export const documentSaveFolderId = (folderId) => {
+	return {
+		type: types.docsSaveFolderId,
+		payload: folderId,
+	}
+};
+
+export const saveFileIdLoaded = (fileId) => {
+	return {
+		type: types.docsSaveFileIdLoaded,
+		payload: fileId,
+	}
+};
+
+export const documentSaveThumbnail = (thumbnail) => {
+	return {
+		type: types.docsSaveThumbnail,
+		payload: thumbnail
+	}
+};
