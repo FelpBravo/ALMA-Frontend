@@ -91,8 +91,6 @@ const Documents = () => {
 
 					<DetailDocumentType />
 
-
-
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
 							<Grid
