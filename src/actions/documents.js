@@ -1,7 +1,9 @@
+import { fileBase64 } from 'helpers/fileBase64';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { saveForm } from 'services/filesService';
+import { getThumbnail, saveForm, uploadDocument } from 'services/filesService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
+import { KEY_DOC } from '../constants/constUtil';
 
 export const startDocumentsTypeLoading = () => {
 	return async (dispatch) => {
@@ -123,14 +125,70 @@ export const documentSaveFolderId = (folderId) => {
 	}
 };
 
-export const saveFileIdLoaded = (fileId) => {
+export const startDropFileLoading = (files) => {
+	return async (dispatch) => {
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await uploadDocument(KEY_DOC, files[0]);
+
+			// SAVE STORE ID LOADED
+			dispatch(saveFileIdLoaded(resp.data.id));
+			dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
+
+			Swal.close();
+
+		} catch (error) {
+			Swal.close();
+			Swal.fire({
+				title: 'Upload',
+				text: 'Archivo ya existe',
+				icon: "error",
+				heightAuto: false,
+			});
+		}
+	}
+};
+
+const saveFileIdLoaded = (fileId) => {
 	return {
 		type: types.docsSaveFileIdLoaded,
 		payload: fileId,
 	}
 };
 
-export const documentSaveThumbnail = (thumbnail) => {
+const saveThumbnailGenerated = (thumbnailGenerated) => {
+	return {
+		type: types.docsSaveThumbnailGenerated,
+		payload: thumbnailGenerated,
+	}
+};
+
+export const startThumbnailLoading = (fileId) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getThumbnail(fileId);
+
+			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`));
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+const documentSaveThumbnail = (thumbnail) => {
 	return {
 		type: types.docsSaveThumbnail,
 		payload: thumbnail

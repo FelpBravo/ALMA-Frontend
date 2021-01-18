@@ -40,6 +40,7 @@ export const types = {
 	docsSaveFormFinish: 'Documents Save form finish',
 	docsSaveFolderId: 'Documents Save folder ID',
 	docsSaveFileIdLoaded: 'Documents Save file ID loaded',
+	docsSaveThumbnailGenerated: 'Documents Save thumbnailGenerated',
 	docsSaveThumbnail: 'Documents Save thumbnail',
 
 }

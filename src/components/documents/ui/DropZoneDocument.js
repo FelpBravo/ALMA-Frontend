@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import Swal from 'sweetalert2';
+import React, { useEffect } from 'react'
 import { useDropzone } from 'react-dropzone';
 import IntlMessages from 'util/IntlMessages';
-import { getThumbnail, uploadDocument } from 'services/filesService';
-import { fileBase64 } from 'helpers/fileBase64';
 import { useDispatch, useSelector } from 'react-redux';
-import { documentSaveThumbnail, saveFileIdLoaded } from 'actions/documents';
-
-const keyDoc = '9d5f20ac-335b-4c64-b0b4-934cd795ba1a';
+import { startDropFileLoading, startThumbnailLoading } from 'actions/documents';
 
 export const DropZoneDocument = () => {
 
 	const dispatch = useDispatch();
 
-	const { thumbnail = null } = useSelector(state => state.documents);
+	const { thumbnail = null,
+		thumbnailGenerated = false,
+		fileIdLoaded = '' } = useSelector(state => state.documents);
 
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({
 		onDrop: (acceptedFiles) => dropFile(acceptedFiles),
@@ -21,10 +18,11 @@ export const DropZoneDocument = () => {
 		noKeyboard: true,
 	});
 
-	const [respUpload, setRespUpload] = useState({ id: '', thumbnailGenerated: false });
-
-
 	useEffect(() => {
+
+		if (!thumbnailGenerated || fileIdLoaded.length === 0) {
+			return;
+		}
 
 		setTimeout(() => {
 
@@ -32,53 +30,18 @@ export const DropZoneDocument = () => {
 
 		}, 1000);
 
-	}, [respUpload]);
+	}, [fileIdLoaded, thumbnailGenerated]);
 
 	const dropFile = async (files) => {
-		try {
 
-			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
-
-			Swal.showLoading();
-
-			const resp = await uploadDocument(keyDoc, files[0]);
-
-			setRespUpload({ ...resp.data });
-
-			// SAVE STORE ID LOADED
-			dispatch(saveFileIdLoaded(resp.data.id));
-
-			Swal.close();
-
-		} catch (error) {
-			Swal.close();
-			Swal.fire({
-				title: 'Upload',
-				text: 'Archivo ya existe',
-				icon: "error",
-				heightAuto: false,
-			});
-		}
+		dispatch(startDropFileLoading(files));
 
 	}
 
-	const loadThumbnail = async () => {
-		if (respUpload.thumbnailGenerated) {
-			try {
+	const loadThumbnail = () => {
 
-				const resp = await getThumbnail(respUpload.id);
+		dispatch(startThumbnailLoading(fileIdLoaded));
 
-				dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`));
-
-			} catch (error) {
-				console.log(error);
-			}
-		}
 	}
 
 	return (

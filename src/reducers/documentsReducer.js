@@ -8,6 +8,7 @@ const initialState = {
 	fileIdLoaded: '',
 	folderId: '',
 	thumbnail: null,
+	thumbnailGenerated: false,
 }
 
 export const documentsReducer = (state = initialState, action) => {
@@ -33,6 +34,8 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
+				thumbnail: null,
+				thumbnailGenerated: false,
 			}
 
 		case types.docsRemoveDetailDocumentType:
@@ -88,6 +91,12 @@ export const documentsReducer = (state = initialState, action) => {
 				fileIdLoaded: action.payload,
 			}
 
+		case types.docsSaveThumbnailGenerated:
+			return {
+				...state,
+				thumbnailGenerated: action.payload,
+			}
+
 		case types.docsSaveFormFinish:
 			return {
 				...state,
@@ -97,6 +106,7 @@ export const documentsReducer = (state = initialState, action) => {
 				fileIdLoaded: '',
 				folderId: '',
 				thumbnail: null,
+				thumbnailGenerated: false,
 			}
 
 		default:
