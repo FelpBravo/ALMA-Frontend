@@ -199,4 +199,16 @@ export const documentsClear = () => {
 	return {
 		type: types.docsClear,
 	}
-}
+};
+
+export const openModalMultiSelect = () => {
+	return {
+		type: types.docsOpenModalMultiSelect,
+	}
+};
+
+export const closeModalMultiSelect = () => {
+	return {
+		type: types.docsCloseModalMultiSelect,
+	}
+};

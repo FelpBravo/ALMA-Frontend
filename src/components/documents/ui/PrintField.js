@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { DATE, NUMERIC } from 'constants/constUtil';
+import { DATE, NUMERIC, LIST } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { detailDocumentSetValueField } from 'actions/documents';
+import { MultiLevelSelect } from './MultiLevelSelect';
 
-export const PrintField = ({ sectionId, name, label, type, value }) => {
+export const PrintField = ({ sectionId, name, label, type, value, propertyItemList }) => {
 
 	const dispatch = useDispatch();
 
@@ -50,6 +51,15 @@ export const PrintField = ({ sectionId, name, label, type, value }) => {
 					onChange={handleOnChange}
 				/>
 			);
+		case LIST:
+			return <MultiLevelSelect
+				sectionId={sectionId}
+				name={name}
+				label={label}
+				type={type}
+				value={value}
+				propertyItemList={propertyItemList}
+			/>
 
 		default:
 			return (

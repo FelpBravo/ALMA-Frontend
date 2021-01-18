@@ -9,6 +9,7 @@ const initialState = {
 	folderId: '',
 	thumbnail: null,
 	thumbnailGenerated: false,
+	openModalMultiSelect: false,
 }
 
 export const documentsReducer = (state = initialState, action) => {
@@ -36,6 +37,7 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
+				openModalMultiSelect: false,
 			}
 
 		case types.docsRemoveDetailDocumentType:
@@ -107,6 +109,7 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
+				openModalMultiSelect: false,
 			}
 
 		case types.docsClear:
@@ -119,6 +122,18 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
+			}
+
+		case types.docsOpenModalMultiSelect:
+			return {
+				...state,
+				openModalMultiSelect: true,
+			}
+
+		case types.docsCloseModalMultiSelect:
+			return {
+				...state,
+				openModalMultiSelect: false,
 			}
 
 		default:

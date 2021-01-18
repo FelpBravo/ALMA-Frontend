@@ -10,7 +10,6 @@ export const types = {
 
 	foldersInitLoaded: 'Folders Init Loaded',
 	foldersSetChildren: 'Folders Set children',
-
 	foldersSaveIds: 'Folders Save ids',
 	foldersRemoveId: 'Folders Remove id',
 	foldersSaveAll: 'Folders Save all folders',
@@ -43,5 +42,7 @@ export const types = {
 	docsSaveThumbnailGenerated: 'Documents Save thumbnailGenerated',
 	docsSaveThumbnail: 'Documents Save thumbnail',
 	docsClear: 'Documents Clear',
+	docsOpenModalMultiSelect: 'Documents Open modal multi select',
+	docsCloseModalMultiSelect: 'Documents Close modal multi select',
 
 }
