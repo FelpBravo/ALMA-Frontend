@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
 
-	baseURL: 'http://192.168.218.105:9090/middleware',
+	baseURL: process.env.REACT_APP_URL_API,
 
 });
 

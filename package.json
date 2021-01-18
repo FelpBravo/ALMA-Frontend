@@ -29,6 +29,7 @@
 		"downshift": "^4.0.2",
 		"draft-js": "^0.11.4",
 		"draftjs-to-html": "^0.9.1",
+		"env-cmd": "^10.1.0",
 		"file-saver": "^2.0.5",
 		"history": "^4.10.1",
 		"isomorphic-fetch": "^2.2.1",
@@ -96,8 +97,12 @@
 		"url-search-params": "^1.1.0"
 	},
 	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts --max_old_space_size=6144 build",
+		"start": "env-cmd -f.env.local react-scripts start",
+		"start-dev": "env-cmd -f.env.development react-scripts start",
+		"start-qa": "env-cmd -f .env.qa react-scripts start",
+		"build": "env-cmd -f .env.production react-scripts --max_old_space_size=6144 build",
+		"build-dev": "env-cmd -f .env.development react-scripts build",
+		"build-qa": "env-cmd -f .env.qa react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},

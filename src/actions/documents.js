@@ -194,3 +194,9 @@ const documentSaveThumbnail = (thumbnail) => {
 		payload: thumbnail
 	}
 };
+
+export const documentsClear = () => {
+	return {
+		type: types.docsClear,
+	}
+}

@@ -42,5 +42,6 @@ export const types = {
 	docsSaveFileIdLoaded: 'Documents Save file ID loaded',
 	docsSaveThumbnailGenerated: 'Documents Save thumbnailGenerated',
 	docsSaveThumbnail: 'Documents Save thumbnail',
+	docsClear: 'Documents Clear',
 
 }

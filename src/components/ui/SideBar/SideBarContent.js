@@ -29,7 +29,6 @@ const useStyles = makeStyles({
 		'&:hover': {
 			color: '#FFFFFF',
 		},
-
 	}
 });
 

@@ -109,6 +109,18 @@ export const documentsReducer = (state = initialState, action) => {
 				thumbnailGenerated: false,
 			}
 
+		case types.docsClear:
+			return {
+				...state,
+				detailDocumentType: {
+					aspectList: [],
+				},
+				fileIdLoaded: '',
+				folderId: '',
+				thumbnail: null,
+				thumbnailGenerated: false,
+			}
+
 		default:
 			return state;
 	}

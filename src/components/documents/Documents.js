@@ -7,7 +7,7 @@ import { DropZoneDocument } from './ui/DropZoneDocument';
 import { Divider, Button, Grid } from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
-import { startSaveFormLoading } from 'actions/documents';
+import { documentsClear, startSaveFormLoading } from 'actions/documents';
 import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +59,7 @@ const Documents = () => {
 	}
 
 	const handleClear = () => {
-
+		dispatch(documentsClear());
 	}
 
 	return (
