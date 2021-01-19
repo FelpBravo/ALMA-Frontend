@@ -50,4 +50,10 @@ export const types = {
 	docsClearVersioningType: 'Documents Clear versioning type',
 	docsClearVersioningComments: 'Documents Clear versioning comments',
 
+	adminFoldersLoaded: 'Admin Folders loaded',
+	adminFoldersSubFoldersLoaded: 'Admin Folders sub folders loaded',
+	adminFoldersSaveHistory: 'Admin Folders save history',
+	adminFoldersSaveCurrentFolders: 'Admin Folders save current folders',
+	adminFoldersUpdateListHistory: 'Admin Folder update list history',
+
 }

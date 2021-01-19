@@ -32,7 +32,13 @@ const LibraryRouter = () => {
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
 
-				<Redirect to="/dashboard" />
+				<Route
+
+					path="/folders"
+					component={asyncComponent(() => import('../components/folders/Folders'))}
+				/>
+
+				<Redirect to="/folders" />
 
 			</Switch>
 		</div>

@@ -141,3 +141,16 @@
 		color: $app-primary-apiux;
     }
 }
+
+.folders-table-head {
+	background: $app-primary-apiux;
+	color: '#ffffff';
+}
+
+.folders-table-row {
+	cursor: pointer;
+
+&:hover {
+
+}
+}
