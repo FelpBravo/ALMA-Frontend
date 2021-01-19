@@ -110,7 +110,16 @@ const DataTable = () => {
 							columns={columnsDocuments}
 						/>
 						<TableBody>
-							{data.map(({ id, name, createdAt, modifiedAt, tags, version, isFavorite }) => {
+							{data.map((
+								{ id,
+									name,
+									createdAt,
+									modifiedAt,
+									tags,
+									version,
+									isFavorite,
+									createdByUser
+								}) => {
 								return (
 									<TableRow
 										hover
@@ -121,12 +130,12 @@ const DataTable = () => {
 											<i className="far fa-file-pdf custom-link-dash"></i>{` `}
 											<span className="custom-link-dash">{name}</span>
 										</TableCell>
-										<TableCell>{``}</TableCell>
+										<TableCell>{`${createdByUser}`}</TableCell>
 										<TableCell>{createdAt}</TableCell>
 										<TableCell>{modifiedAt}</TableCell>
 										<TableCell>{``}</TableCell>
 										<TableCell>{version}</TableCell>
-										<TableCell>{id}</TableCell>
+										{/*<TableCell>{id}</TableCell>*/}
 										<TableCell></TableCell>
 										<TableCell>
 
