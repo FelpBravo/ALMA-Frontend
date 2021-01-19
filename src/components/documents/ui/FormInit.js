@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { FormControl, NativeSelect, InputLabel } from '@material-ui/core'
-import { BootstrapInput } from 'components/ui/helpers/BootstrapInput'
-import { useDispatch, useSelector } from 'react-redux'
-import IntlMessages from 'util/IntlMessages'
+import React, { useEffect } from 'react';
+import { FormControl, NativeSelect, InputLabel } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
+import IntlMessages from 'util/IntlMessages';
 import {
 	startDocumentsTypeLoading,
 	startDetailDocumentTypeLoading,
 	removeDetailDocumentType,
 	documentSaveFolderId
-} from 'actions/documents'
+} from 'actions/documents';
 
 export const FormInit = () => {
 

@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import FileSaver from 'file-saver';
 import Paper from '@material-ui/core/Paper';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
@@ -21,6 +21,8 @@ import { MenuTable } from './MenuTable';
 const DataTable = () => {
 
 	const isMounted = useRef(true);
+
+	const history = useHistory();
 
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -81,7 +83,7 @@ const DataTable = () => {
 	}
 
 	const handleEdit = (id) => {
-
+		history.push(`/documents?document=${id}`);
 	}
 
 	const handleDelete = async (id) => {

@@ -42,7 +42,12 @@ export const types = {
 	docsSaveThumbnailGenerated: 'Documents Save thumbnailGenerated',
 	docsSaveThumbnail: 'Documents Save thumbnail',
 	docsClear: 'Documents Clear',
-	docsOpenModalMultiSelect: 'Documents Open modal multi select',
 	docsCloseModalMultiSelect: 'Documents Close modal multi select',
+	docsDocumentByIdLoaded: 'Documents Document by ID loaded',
+	docsTagsLoaded: 'Documents Tags Loaded',
+	docsSaveVersioningType: 'Documents Save versioning type',
+	docsSaveVersioningComments: 'Documents Save versioning comments',
+	docsClearVersioningType: 'Documents Clear versioning type',
+	docsClearVersioningComments: 'Documents Clear versioning comments',
 
 }

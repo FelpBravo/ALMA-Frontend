@@ -33,7 +33,7 @@ export const DropZoneDocument = () => {
 	}, [fileIdLoaded, thumbnailGenerated]);
 
 	const dropFile = async (files) => {
-
+		console.log(files[0]);
 		dispatch(startDropFileLoading(files));
 
 	}

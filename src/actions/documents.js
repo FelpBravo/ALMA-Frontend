@@ -1,6 +1,7 @@
 import { fileBase64 } from 'helpers/fileBase64';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { getThumbnail, saveForm, uploadDocument } from 'services/filesService';
+import { getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
+import { getTags } from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 import { KEY_DOC } from '../constants/constUtil';
@@ -201,14 +202,88 @@ export const documentsClear = () => {
 	}
 };
 
-export const openModalMultiSelect = () => {
-	return {
-		type: types.docsOpenModalMultiSelect,
+export const startDocumentByIdLoading = (fileId) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getDocumentById(fileId);
+
+			Swal.close();
+
+			dispatch(documentByIdLoaded(resp.data));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+		}
+
 	}
 };
 
-export const closeModalMultiSelect = () => {
+const documentByIdLoaded = ({ aspectGroup, fileId, folderId }) => {
 	return {
-		type: types.docsCloseModalMultiSelect,
+		type: types.docsDocumentByIdLoaded,
+		payload: {
+			aspectGroup, fileId, folderId
+		}
+	}
+}
+
+export const startTagsLoading = () => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getTags();
+
+			dispatch(tagsLoaded(resp.data));
+
+		} catch (error) {
+			console.log(error);
+		}
+
 	}
 };
+
+const tagsLoaded = (tags) => {
+	return {
+		type: types.docsTagsLoaded,
+		payload: tags,
+	}
+}
+
+export const saveVersioningType = (type) => {
+	return {
+		type: types.docsSaveVersioningType,
+		payload: type,
+	}
+}
+
+export const saveVersioningComments = (comments) => {
+	return {
+		type: types.docsSaveVersioningComments,
+		payload: comments,
+	}
+};
+
+export const clearVersioningType = () => {
+	return {
+		type: types.docsClearVersioningType,
+	}
+}
+
+export const clearVersioningComments = () => {
+	return {
+		type: types.docsClearVersioningComments
+	}
+}

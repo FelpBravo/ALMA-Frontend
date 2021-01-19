@@ -40,7 +40,7 @@ const uploadDocument = (folderId, file) => {
 		},
 	});
 
-}
+};
 
 const getThumbnail = (id) => {
 
@@ -51,8 +51,7 @@ const getThumbnail = (id) => {
 		responseType: 'arraybuffer'
 	});
 
-}
-
+};
 
 const saveForm = (fileId, folderId, aspectGroup, tags = []) => {
 
@@ -62,7 +61,32 @@ const saveForm = (fileId, folderId, aspectGroup, tags = []) => {
 		},
 	});
 
-}
+};
+
+const getDocumentById = (id) => {
+	return axiosInstance.get(`/files/${id}`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
+
+const editDocumentVersion = (file, fileId, versioningType, versioningComments) => {
+
+	const data = new FormData();
+	data.append('file', file);
+	data.append('fileId', fileId);
+	data.append('majorVersion', versioningType);
+	data.append('comment', versioningComments);
+
+	return axiosInstance.put(`/files/new-version`, data, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+			'Content-Type': 'multipart/form-data'
+		},
+	});
+
+};
 
 
 export {
@@ -72,4 +96,6 @@ export {
 	uploadDocument,
 	getThumbnail,
 	saveForm,
+	getDocumentById,
+	editDocumentVersion,
 }

@@ -9,7 +9,9 @@ const initialState = {
 	folderId: '',
 	thumbnail: null,
 	thumbnailGenerated: false,
-	openModalMultiSelect: false,
+	tags: [],
+	versioningType: '',
+	versioningComments: '',
 }
 
 export const documentsReducer = (state = initialState, action) => {
@@ -37,7 +39,9 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
-				openModalMultiSelect: false,
+				tags: [],
+				versioningType: '',
+				versioningComments: '',
 			}
 
 		case types.docsRemoveDetailDocumentType:
@@ -109,7 +113,9 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
-				openModalMultiSelect: false,
+				tags: [],
+				versioningType: '',
+				versioningComments: '',
 			}
 
 		case types.docsClear:
@@ -122,18 +128,47 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
+				tags: [],
+				versioningType: '',
+				versioningComments: '',
 			}
 
-		case types.docsOpenModalMultiSelect:
+		case types.docsDocumentByIdLoaded:
 			return {
 				...state,
-				openModalMultiSelect: true,
+				detailDocumentType: { ...action.payload.aspectGroup },
+				fileIdLoaded: action.payload.fileId,
+				folderId: action.payload.folderId,
 			}
 
-		case types.docsCloseModalMultiSelect:
+		case types.docsTagsLoaded:
 			return {
 				...state,
-				openModalMultiSelect: false,
+				tags: [...action.payload],
+			}
+
+		case types.docsSaveVersioningType:
+			return {
+				...state,
+				versioningType: action.payload,
+			}
+
+		case types.docsClearVersioningType:
+			return {
+				...state,
+				versioningType: '',
+			}
+
+		case types.docsSaveVersioningComments:
+			return {
+				...state,
+				versioningComments: action.payload,
+			}
+
+		case types.docsClearVersioningComments:
+			return {
+				...state,
+				versioningComments: '',
 			}
 
 		default:

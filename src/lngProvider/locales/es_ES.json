@@ -604,5 +604,9 @@
 	"document.selectDocument": "Seleccionar documentos",
 	"document.dropDocument": "Arrasta los documentos aquí o",
 	"document.documentsLoad": "Documentos cargados",
-	"document.thumbnail.not.available": "Miniatura no disponible"
+	"document.thumbnail.not.available": "Miniatura no disponible",
+	"document.versioning.type.major": "Mayor",
+	"document.versioning.type.minor": "Menor",
+	"document.versioning.comments": "Comentarios del versionamiento",
+	"document.versioning.title": "Versionamiento"
 }

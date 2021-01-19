@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Divider, Button, Grid } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import queryString from 'query-string';
+import { useLocation } from 'react-router-dom';
+
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { FormInit } from './ui/FormInit';
+import IntlMessages from 'util/IntlMessages';
 import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
-import { Divider, Button, Grid } from '@material-ui/core';
-import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
-import { documentsClear, startSaveFormLoading } from 'actions/documents';
-import Swal from 'sweetalert2';
+import {
+	documentsClear, startDocumentByIdLoading,
+	startSaveFormLoading, startTagsLoading, startThumbnailLoading
+} from 'actions/documents';
+import { Versioning } from './ui/Versioning';
+
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -23,10 +31,31 @@ const Documents = () => {
 	const classes = useStyles();
 
 	const dispatch = useDispatch();
+	const location = useLocation();
 
-	const { detailDocumentType = [], fileIdLoaded = '', folderId = '' } = useSelector(state => state.documents);
+	const { detailDocumentType = [],
+		fileIdLoaded = '',
+		folderId = '',
+		versioningType = '',
+		versioningComments = ''
+	} = useSelector(state => state.documents);
+
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
+	const { document = '' } = queryString.parse(location.search);
+
+	useEffect(() => {
+
+		if (document.length === 0) {
+			return;
+		}
+
+		dispatch(documentsClear());
+		dispatch(startDocumentByIdLoading(document));
+		dispatch(startThumbnailLoading(document));
+		dispatch(startTagsLoading());
+
+	}, [dispatch, document]);
 
 	const handleSaveForm = async () => {
 		const resp = await Swal.fire({
@@ -53,7 +82,11 @@ const Documents = () => {
 				}
 			}
 
-			dispatch(startSaveFormLoading(fileIdLoaded, folderId, { id: documentId, aspectList: filters }));
+			if (document.length === 0) {
+				dispatch(startSaveFormLoading(fileIdLoaded, folderId, { id: documentId, aspectList: filters }));
+			} else {
+
+			}
 		}
 
 	}
@@ -73,7 +106,11 @@ const Documents = () => {
 						</div>
 					</div>
 
-					<FormInit />
+					{
+						document.length === 0
+						&&
+						<FormInit />
+					}
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
@@ -90,6 +127,12 @@ const Documents = () => {
 					</div>
 
 					<DetailDocumentType />
+
+					{
+						document.length > 0
+						&&
+						<Versioning />
+					}
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
@@ -114,7 +157,14 @@ const Documents = () => {
 											documentId.length === 0 ||
 											aspectList.length === 0 ||
 											fileIdLoaded.length === 0 ||
-											folderId.length === 0
+											folderId.length === 0 ||
+											(document.length > 0
+												&&
+												(
+													versioningType.length === 0 ||
+													versioningComments.length === 0
+												)
+											)
 										}
 										type="submit"
 										variant="contained"
