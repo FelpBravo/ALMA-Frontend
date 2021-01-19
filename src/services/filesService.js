@@ -54,7 +54,7 @@ const getThumbnail = (id) => {
 };
 
 const saveForm = (fileId, folderId, aspectGroup, tags = []) => {
-
+	//console.log(JSON.stringify({ fileId, folderId, aspectGroup, tags }));
 	return axiosInstance.post(`/files/fullDocument`, { fileId, folderId, aspectGroup, tags }, {
 		headers: {
 			Authorization: `Bearer ${token}`,

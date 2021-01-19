@@ -6,6 +6,7 @@ import {
 	saveVersioningType, clearVersioningType,
 	saveVersioningComments, clearVersioningComments
 } from 'actions/documents';
+import { VERSION_TYPE_MAJOR, VERSION_TYPE_MINOR } from 'constants/constUtil';
 
 const labelMajor = <IntlMessages id="document.versioning.type.major" />
 const labelMinor = <IntlMessages id="document.versioning.type.minor" />
@@ -65,12 +66,12 @@ export const Versioning = () => {
 								onChange={handleOnChange}
 							>
 								<FormControlLabel
-									value="major"
+									value={VERSION_TYPE_MAJOR}
 									control={<Radio color="primary" />}
 									label={labelMajor}
 								/>
 								<FormControlLabel
-									value="minor"
+									value={VERSION_TYPE_MINOR}
 									control={<Radio color="primary" />}
 									label={labelMinor}
 								/>

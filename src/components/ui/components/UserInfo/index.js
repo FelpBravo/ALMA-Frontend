@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import { useDispatch, useSelector } from 'react-redux';
+import jwt_decode from "jwt-decode";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
 import { startUserSingOut } from 'actions/auth';
 import IntlMessages from 'util/IntlMessages';
 
@@ -12,6 +14,23 @@ const UserInfo = () => {
 
 	const [anchorE1, setAnchorE1] = useState(null);
 	const [open, setOpen] = useState(false);
+	const [user, setUser] = useState({ firstName: '', lastName: '' });
+
+	const { authUser } = useSelector(state => state.auth);
+
+	useEffect(() => {
+
+		if (!authUser) {
+			return;
+		}
+
+		const { user } = jwt_decode(authUser);
+
+		if (user) {
+			setUser(user);
+		}
+
+	}, [authUser]);
 
 	const handleClick = event => {
 		setOpen(true);
@@ -36,8 +55,9 @@ const UserInfo = () => {
 			/>
 
 			<div className="user-detail">
-				<h4 className="user-name d-flex" onClick={handleClick}><span className='text-truncate'>Robert Johnson</span> <i
-					className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
+				<h4 className="user-name d-flex" onClick={handleClick}>
+					<span className='text-truncate'>{`${user.firstName} ${user.lastName}`}</span>
+					<i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
 				</h4>
 			</div>
 
@@ -54,7 +74,7 @@ const UserInfo = () => {
 					}
 				}}
 			>
-				<MenuItem onClick={handleRequestClose}>
+				{/*<MenuItem onClick={handleRequestClose}>
 					<i className="zmdi zmdi-account zmdi-hc-fw mr-2" />
 					<IntlMessages id="popup.profile" />
 				</MenuItem>
@@ -62,7 +82,7 @@ const UserInfo = () => {
 				<MenuItem onClick={handleRequestClose}>
 					<i className="zmdi zmdi-settings zmdi-hc-fw mr-2" />
 					<IntlMessages id="popup.setting" />
-				</MenuItem>
+				</MenuItem>*/}
 
 				<MenuItem onClick={handleLogout}>
 					<i className="zmdi zmdi-sign-in zmdi-hc-fw mr-2" />

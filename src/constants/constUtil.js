@@ -12,3 +12,6 @@ export const LIST = 'LIST';
 
 // KEY UPLOAD DOC
 export const KEY_DOC = '9d5f20ac-335b-4c64-b0b4-934cd795ba1a';
+
+export const VERSION_TYPE_MAJOR = 'major'
+export const VERSION_TYPE_MINOR = 'minor'

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -10,13 +9,13 @@ import { FormControlLabel, InputAdornment, Typography } from '@material-ui/core'
 import { CheckBox, LockOpen, PermIdentity } from '@material-ui/icons';
 import { uiShowLoading } from 'actions/uiAuth';
 
-const SignIn = (props) => {
+const SignIn = () => {
 
 	const dispatch = useDispatch();
 	const { loader } = useSelector(state => state.uiAuth);
 
-	const [email, setEmail] = useState('nadia_apiux');
-	const [password, setPassword] = useState('12345');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
 	const handleLogin = (e) => {
 		e.preventDefault();
@@ -95,9 +94,9 @@ const SignIn = (props) => {
 									}
 								/>
 
-								<Link to="/auth/signup" className="link-login">
+								<span className="link-login">
 									<IntlMessages id="sidebar.appModule.forgotPassword" />
-								</Link>
+								</span>
 							</div>
 
 							<Button

@@ -1,12 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone';
-import IntlMessages from 'util/IntlMessages';
+import queryString from 'query-string';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import IntlMessages from 'util/IntlMessages';
 import { startDropFileLoading, startThumbnailLoading } from 'actions/documents';
+import { DocumentContext } from '../helpers/DocumentContext';
 
 export const DropZoneDocument = () => {
 
 	const dispatch = useDispatch();
+	const location = useLocation();
+
+	// Contexto provider
+	const { setFiles } = useContext(DocumentContext);
+
+	// ID DOCUMENTO URL	
+	const { document = '' } = queryString.parse(location.search);
 
 	const { thumbnail = null,
 		thumbnailGenerated = false,
@@ -32,9 +43,13 @@ export const DropZoneDocument = () => {
 
 	}, [fileIdLoaded, thumbnailGenerated]);
 
-	const dropFile = async (files) => {
-		console.log(files[0]);
-		dispatch(startDropFileLoading(files));
+	const dropFile = (files) => {
+
+		if (document.length === 0) {
+			dispatch(startDropFileLoading(files));
+		} else {
+			setFiles(files);
+		}
 
 	}
 

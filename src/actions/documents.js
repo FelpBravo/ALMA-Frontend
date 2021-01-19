@@ -1,6 +1,7 @@
 import { fileBase64 } from 'helpers/fileBase64';
+import { toBase64 } from 'helpers/toBase64';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
+import { editDocumentVersion, getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
 import { getTags } from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
@@ -267,7 +268,7 @@ export const saveVersioningType = (type) => {
 		type: types.docsSaveVersioningType,
 		payload: type,
 	}
-}
+};
 
 export const saveVersioningComments = (comments) => {
 	return {
@@ -280,10 +281,46 @@ export const clearVersioningType = () => {
 	return {
 		type: types.docsClearVersioningType,
 	}
-}
+};
 
 export const clearVersioningComments = () => {
 	return {
 		type: types.docsClearVersioningComments
 	}
-}
+};
+
+export const startEditDocumentLoading = (
+	files,
+	fileId,
+	versioningType,
+	versioningComments,
+	folderId,
+	aspectGroup
+) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
+
+			//await saveForm(fileId, folderId, aspectGroup);
+
+			dispatch(saveFormFinish());
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};

@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Button, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import queryString from 'query-string';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { FormInit } from './ui/FormInit';
@@ -13,9 +13,12 @@ import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import {
 	documentsClear, startDocumentByIdLoading,
+	startEditDocumentLoading,
 	startSaveFormLoading, startTagsLoading, startThumbnailLoading
 } from 'actions/documents';
 import { Versioning } from './ui/Versioning';
+import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
+import { DocumentContext } from './helpers/DocumentContext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,17 +35,21 @@ const Documents = () => {
 
 	const dispatch = useDispatch();
 	const location = useLocation();
+	const history = useHistory();
 
 	const { detailDocumentType = [],
 		fileIdLoaded = '',
 		folderId = '',
 		versioningType = '',
-		versioningComments = ''
+		versioningComments = '',
 	} = useSelector(state => state.documents);
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
+	// ID DOCUMENTO URL
 	const { document = '' } = queryString.parse(location.search);
+
+	const [files, setFiles] = useState(null);
 
 	useEffect(() => {
 
@@ -83,8 +90,23 @@ const Documents = () => {
 			}
 
 			if (document.length === 0) {
+
 				dispatch(startSaveFormLoading(fileIdLoaded, folderId, { id: documentId, aspectList: filters }));
+
 			} else {
+
+				dispatch(
+					startEditDocumentLoading(
+						files,
+						fileIdLoaded,
+						versioningType === VERSION_TYPE_MAJOR ? true : false,
+						versioningComments,
+						folderId,
+						{ id: documentId, aspectList: filters }
+					)
+				);
+
+				history.goBack();
 
 			}
 		}
@@ -118,7 +140,9 @@ const Documents = () => {
 						</div>
 					</div>
 
-					<DropZoneDocument />
+					<DocumentContext.Provider value={{ setFiles }}>
+						<DropZoneDocument />
+					</DocumentContext.Provider>
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
