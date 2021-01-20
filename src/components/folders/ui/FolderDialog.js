@@ -48,8 +48,6 @@ const FolderDialog = () => {
 
 	const handleOnSave = () => {
 
-		console.log(formValues);
-
 		const data = {
 			...formValues,
 			position: parseInt(position),
@@ -57,10 +55,8 @@ const FolderDialog = () => {
 			company: 1
 		};
 
-		console.log(data);
-
 		if (actionModal === ACTION_CREATE) {
-			console.log(parentId, parentName);
+
 			dispatch(startSaveFolderLoading(data, parentId, parentName));
 
 		} else {
@@ -75,7 +71,7 @@ const FolderDialog = () => {
 				open={openModal}
 				onClose={handleClose}
 				aria-labelledby="form-dialog-title"
-				fullWidth="sm"
+				fullWidth={true}
 			>
 				<DialogTitle id="form-dialog-title">
 					{
@@ -122,39 +118,46 @@ const FolderDialog = () => {
 						</div>
 					</div>
 
-					<div className="row mt-3">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-							<h4>{<IntlMessages id="folders.modal.field.state" />}</h4>
+					{
+						actionModal !== ACTION_CREATE
+						&&
+						<div className="row mt-3">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+								<h4>{<IntlMessages id="folders.modal.field.state" />}</h4>
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+					{
+						actionModal !== ACTION_CREATE
+						&&
+						<div className="row">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<FormControl component="fieldset">
-								<RadioGroup
-									aria-label="gender"
-									name="state"
-									value={String(state)}
-									onChange={handleOnChange}
-								>
-									<FormControlLabel
-										value="true"
-										label="Activo"
-										control={<Radio color="primary" />}
+								<FormControl component="fieldset">
+									<RadioGroup
+										aria-label="gender"
+										name="state"
+										value={String(state)}
+										onChange={handleOnChange}
+									>
+										<FormControlLabel
+											value="true"
+											label="Activo"
+											control={<Radio color="primary" />}
 
-									/>
-									<FormControlLabel
-										value="false"
-										control={<Radio color="primary" />}
-										label="Inactivo"
-									/>
-								</RadioGroup>
-							</FormControl>
+										/>
+										<FormControlLabel
+											value="false"
+											control={<Radio color="primary" />}
+											label="Inactivo"
+										/>
+									</RadioGroup>
+								</FormControl>
 
+							</div>
 						</div>
-					</div>
-
+					}
 
 				</DialogContent>
 

@@ -1,3 +1,4 @@
+import { setFolders } from 'helpers/setFolders';
 import { types } from 'types/types';
 
 const initialState = {
@@ -5,6 +6,7 @@ const initialState = {
 	historyFolders: [],
 	currentFolders: {
 		id: -1,
+		name: '',
 		folders: [],
 	},
 	openModal: false,
@@ -32,6 +34,7 @@ export const adminFoldersReducer = (state = initialState, action) => {
 				...state,
 				currentFolders: {
 					id: action.payload.folderId,
+					name: action.payload.name,
 					folders: [...action.payload.folders],
 				},
 			}
@@ -112,21 +115,3 @@ export const adminFoldersReducer = (state = initialState, action) => {
 			return state;
 	}
 };
-
-const setFolders = (folderId, folders, currentFolder) => {
-
-	if (currentFolder.id == folderId) {
-
-		currentFolder.children = [...folders];
-		currentFolder.hashSubFolders = true;
-
-	} else if (Array.isArray(currentFolder.children)) {
-
-		for (const folder of currentFolder.children) {
-
-			setFolders(folderId, folders, folder);
-
-		}
-	}
-
-}

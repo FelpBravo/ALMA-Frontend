@@ -22,7 +22,7 @@ export const startFoldersLoading = () => {
 
 			dispatch(foldersLoaded(resp.data));
 			dispatch(saveHistory(0, INIT_FOLDER));
-			dispatch(saveCurrentFolders(0, resp.data));
+			dispatch(saveCurrentFolders(0, INIT_FOLDER, resp.data));
 
 		} catch (error) {
 			console.log(error);
@@ -43,41 +43,51 @@ export const foldersLoaded = (folders) => {
 export const startSubFoldersLoading = (folderId, name) => {
 	return async (dispatch, getState) => {
 
-		const { folders } = getState().adminFolders;
+		const { folders, currentFolders } = getState().adminFolders;
 
-		const valueSearch = [];
+		if (currentFolders.id === folderId) {
 
-		getCurrentFolderById(folders, folderId, valueSearch);
-
-		if (valueSearch.length > 0 && Array.isArray(valueSearch[0].children)) {
-
-			dispatch(subFoldersLoaded(folderId, valueSearch[0].children));
-			dispatch(saveHistory(folderId, name));
-			dispatch(saveCurrentFolders(folderId, valueSearch[0].children));
+			const resp = await getFoldersAdminById(folderId);
+			dispatch(subFoldersLoaded(folderId, resp.data));
+			dispatch(saveCurrentFolders(folderId, name, resp.data));
 
 		} else {
 
-			try {
+			const valueSearch = [];
 
-				Swal.fire({
-					title: 'Loading...',
-					text: 'Please wait...',
-					allowOutsideClick: false,
-					heightAuto: false,
-				});
+			getCurrentFolderById(folders, folderId, valueSearch);
 
-				Swal.showLoading();
+			if (valueSearch.length > 0 && Array.isArray(valueSearch[0].children)) {
 
-				const resp = await getFoldersAdminById(folderId);
-
-				dispatch(subFoldersLoaded(folderId, resp.data));
+				dispatch(subFoldersLoaded(folderId, valueSearch[0].children));
 				dispatch(saveHistory(folderId, name));
-				dispatch(saveCurrentFolders(folderId, resp.data));
+				dispatch(saveCurrentFolders(folderId, name, valueSearch[0].children));
 
-			} catch (error) {
-				console.log(error);
-			} finally {
-				Swal.close();
+			} else {
+
+				try {
+
+					Swal.fire({
+						title: 'Loading...',
+						text: 'Please wait...',
+						allowOutsideClick: false,
+						heightAuto: false,
+					});
+
+					Swal.showLoading();
+
+					const resp = await getFoldersAdminById(folderId);
+
+					dispatch(subFoldersLoaded(folderId, resp.data));
+					dispatch(saveHistory(folderId, name));
+					dispatch(saveCurrentFolders(folderId, name, resp.data));
+
+				} catch (error) {
+					console.log(error);
+				} finally {
+					Swal.close();
+				}
+
 			}
 
 		}
@@ -105,11 +115,12 @@ const saveHistory = (folderId, name) => {
 	}
 };
 
-const saveCurrentFolders = (folderId, folders) => {
+const saveCurrentFolders = (folderId, name, folders) => {
 	return {
 		type: types.adminFoldersSaveCurrentFolders,
 		payload: {
 			folderId,
+			name,
 			folders,
 		},
 	}
@@ -122,7 +133,7 @@ export const startSaveCurrentFolder = (folderId) => {
 
 		if (folderId === 0) {
 
-			dispatch(saveCurrentFolders(0, folders));
+			dispatch(saveCurrentFolders(0, INIT_FOLDER, folders));
 			dispatch(updateListHistory([{ id: 0, name: INIT_FOLDER }]));
 
 		} else {
@@ -139,7 +150,7 @@ export const startSaveCurrentFolder = (folderId) => {
 
 			dispatch(updateListHistory(newHistoryFolders));
 
-			dispatch(saveCurrentFolders(folderId, valueSearch[0].children));
+			dispatch(saveCurrentFolders(folderId, valueSearch[0].name, valueSearch[0].children));
 
 		}
 
