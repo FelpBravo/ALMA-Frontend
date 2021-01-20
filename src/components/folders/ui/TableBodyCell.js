@@ -59,12 +59,25 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	}
 
 	return (
-		<TableRow hover onClick={handleOnClick}>
-			<TableCell component="th" scope="row" className="folders-table-row">
+		<TableRow hover>
+			<TableCell
+				onClick={handleOnClick}
+				component="th"
+				scope="row"
+				className="folders-table-row"
+			>
 				{name}
 			</TableCell>
-			<TableCell>{position}</TableCell>
-			<TableCell>
+			<TableCell
+				className="folders-table-row"
+				onClick={handleOnClick}
+			>
+				{position}
+			</TableCell>
+			<TableCell
+				className="folders-table-row"
+				onClick={handleOnClick}
+			>
 				{
 					state ? 'Activo' : 'Inactivo'
 				}

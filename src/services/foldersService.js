@@ -42,10 +42,19 @@ const create = (data) => {
 	});
 };
 
+const edit = (data) => {
+	return axiosInstance.put('/folders/admin', data, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
+
 export {
 	getFolders,
 	getFoldersById,
 	getFoldersAdmin,
 	getFoldersAdminById,
 	create,
+	edit,
 }

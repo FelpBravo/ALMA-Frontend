@@ -1,6 +1,6 @@
 import { INIT_FOLDER } from 'constants/constUtil';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
-import { create, getFoldersAdmin, getFoldersAdminById } from 'services/foldersService';
+import { create, edit, getFoldersAdmin, getFoldersAdminById } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -230,3 +230,32 @@ const saveFolderLoaded = () => {
 		type: types.adminFoldersSaveLoaded,
 	}
 }
+
+export const startEditFolderLoading = (data, folderId, name) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await edit(data);
+
+			//dispatch(startSubFoldersLoading(folderId, name));
+			dispatch(saveFolderLoaded());
+			dispatch(closeModalFolder());
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};

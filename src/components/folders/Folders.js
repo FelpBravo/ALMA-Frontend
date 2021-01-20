@@ -14,6 +14,8 @@ const Folders = () => {
 	const dispatch = useDispatch();
 	const { folders = [], currentFolders, historyFolders = [] } = useSelector(state => state.adminFolders);
 
+	console.log(folders);
+
 	useEffect(() => {
 
 		if (folders.length === 0) {
@@ -30,16 +32,12 @@ const Folders = () => {
 
 	}
 
-
-	const handleOpenModal = () => {
-
-		dispatch(openModalFolder());
-
-	};
-
 	const handleNewFolder = () => {
+
 		dispatch(openModalFolder());
+
 		dispatch(setActionModal(ACTION_CREATE));
+
 		dispatch(setFolder({
 			name: '',
 			parentId: currentFolders.id,

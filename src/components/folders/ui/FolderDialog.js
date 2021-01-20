@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFolder, startSaveFolderLoading } from 'actions/adminFolders';
+import { closeModalFolder, startEditFolderLoading, startSaveFolderLoading } from 'actions/adminFolders';
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
@@ -51,7 +51,7 @@ const FolderDialog = () => {
 		const data = {
 			...formValues,
 			position: parseInt(position),
-			state: Boolean(state),
+			state: String(formValues.state) === 'true',
 			company: 1
 		};
 
@@ -60,6 +60,8 @@ const FolderDialog = () => {
 			dispatch(startSaveFolderLoading(data, parentId, parentName));
 
 		} else {
+
+			dispatch(startEditFolderLoading(data, parentId, parentName));
 
 		}
 
