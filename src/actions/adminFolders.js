@@ -39,29 +39,45 @@ export const foldersLoaded = (folders) => {
 };
 
 export const startSubFoldersLoading = (folderId, name) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
 
-		try {
+		const { folders } = getState().adminFolders;
 
-			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
+		const valueSearch = [];
 
-			Swal.showLoading();
+		getCurrentFolderById(folders, folderId, valueSearch);
 
-			const resp = await getFoldersById(folderId);
+		if (valueSearch.length > 0 && Array.isArray(valueSearch[0].children)) {
 
-			dispatch(subFoldersLoaded(folderId, resp.data));
+			dispatch(subFoldersLoaded(folderId, valueSearch[0].children));
 			dispatch(saveHistory(folderId, name));
-			dispatch(saveCurrentFolders(folderId, resp.data));
+			dispatch(saveCurrentFolders(folderId, valueSearch[0].children));
 
-		} catch (error) {
-			console.log(error);
-		} finally {
-			Swal.close();
+		} else {
+
+			try {
+
+				Swal.fire({
+					title: 'Loading...',
+					text: 'Please wait...',
+					allowOutsideClick: false,
+					heightAuto: false,
+				});
+
+				Swal.showLoading();
+
+				const resp = await getFoldersById(folderId);
+
+				dispatch(subFoldersLoaded(folderId, resp.data));
+				dispatch(saveHistory(folderId, name));
+				dispatch(saveCurrentFolders(folderId, resp.data));
+
+			} catch (error) {
+				console.log(error);
+			} finally {
+				Swal.close();
+			}
+
 		}
 
 	}
@@ -109,13 +125,15 @@ export const startSaveCurrentFolder = (folderId) => {
 
 		} else {
 
-			const resp = getFolderById(folders, folderId);
+			const valueSearch = [];
+
+			getCurrentFolderById(folders, folderId, valueSearch);
 
 			const newHistoryFolders = [...historyFolders.slice(0, historyFolders.length - 1)];
 
 			dispatch(updateListHistory(newHistoryFolders));
 
-			dispatch(saveCurrentFolders(folderId, resp.children));
+			dispatch(saveCurrentFolders(folderId, valueSearch[0].children));
 
 		}
 
@@ -129,23 +147,20 @@ const updateListHistory = (history) => {
 	}
 }
 
-const getFolderById = (folders = [], folderId) => {
+const getCurrentFolderById = (folders = [], folderId, valueSearch = []) => {
 
 	for (const folder of folders) {
 
-		if (folder.id == folderId) {
+		if (folder.id === folderId) {
 
-			return folder;
+			valueSearch.push(folder);
 
 		} else if (Array.isArray(folder.children)) {
 
-			for (const subFolder of folder.children) {
-
-				getFolderById(subFolder.children, folderId);
-
-			}
+			getCurrentFolderById(folder.children, folderId, valueSearch);
 
 		}
 
 	}
+
 }

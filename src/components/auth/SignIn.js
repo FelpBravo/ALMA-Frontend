@@ -45,6 +45,7 @@ const SignIn = () => {
 						<form onSubmit={handleLogin}>
 
 							<TextField
+								size="small"
 								label={<IntlMessages id="appModule.email" />}
 								fullWidth
 								onChange={(event) => setEmail(event.target.value)}
@@ -62,6 +63,7 @@ const SignIn = () => {
 							/>
 
 							<TextField
+								size="small"
 								type="password"
 								label={<IntlMessages id="appModule.password" />}
 								fullWidth
