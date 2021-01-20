@@ -7,7 +7,16 @@ const initialState = {
 		id: -1,
 		folders: [],
 	},
-
+	openModal: false,
+	actionModal: '',
+	folder: {
+		id: 0,
+		name: '',
+		parentId: 0,
+		parentName: '',
+		position: 0,
+		state: true,
+	}
 };
 
 export const adminFoldersReducer = (state = initialState, action) => {
@@ -56,6 +65,49 @@ export const adminFoldersReducer = (state = initialState, action) => {
 				historyFolders: [...action.payload,]
 			}
 
+		case types.adminFoldersOpenModal:
+			return {
+				...state,
+				openModal: true,
+			}
+
+		case types.adminFoldersCloseModal:
+			return {
+				...state,
+				openModal: false,
+			}
+
+		case types.adminFoldersSetActionModal:
+			return {
+				...state,
+				actionModal: action.payload,
+			}
+
+		case types.adminFoldersRemoveActionModal:
+			return {
+				...state,
+				actionModal: '',
+			}
+
+		case types.adminFoldersSetFolder:
+			return {
+				...state,
+				folder: { ...action.payload }
+			}
+
+		case types.adminFoldersSaveLoaded:
+			return {
+				...state,
+				folder: {
+					id: 0,
+					name: '',
+					parentId: 0,
+					parentName: '',
+					position: 0,
+					state: true,
+				}
+			}
+
 		default:
 			return state;
 	}
@@ -66,6 +118,7 @@ const setFolders = (folderId, folders, currentFolder) => {
 	if (currentFolder.id == folderId) {
 
 		currentFolder.children = [...folders];
+		currentFolder.hashSubFolders = true;
 
 	} else if (Array.isArray(currentFolder.children)) {
 

@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { startFoldersLoading, startSaveCurrentFolder } from 'actions/adminFolders';
+import { openModalFolder, startFoldersLoading, startSaveCurrentFolder } from 'actions/adminFolders';
 import { DataTableFolders } from './ui/DataTableFolders';
 import SimpleBreadcrumbs from 'components/ui/SimpleBreadcrumbs';
+import FolderDialog from './ui/FolderDialog';
 
 const Folders = () => {
 
@@ -26,6 +27,13 @@ const Folders = () => {
 		dispatch(startSaveCurrentFolder(id));
 
 	}
+
+
+	const handleOpenModal = () => {
+
+		dispatch(openModalFolder());
+
+	};
 
 	return (
 		<div className="row">
@@ -73,6 +81,9 @@ const Folders = () => {
 
 				</div>
 			</div>
+
+			<FolderDialog />
+
 		</div>
 
 	);

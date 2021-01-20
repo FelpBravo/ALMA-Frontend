@@ -54,6 +54,12 @@ export const types = {
 	adminFoldersSubFoldersLoaded: 'Admin Folders sub folders loaded',
 	adminFoldersSaveHistory: 'Admin Folders save history',
 	adminFoldersSaveCurrentFolders: 'Admin Folders save current folders',
-	adminFoldersUpdateListHistory: 'Admin Folder update list history',
+	adminFoldersUpdateListHistory: 'Admin Folders update list history',
+	adminFoldersOpenModal: 'Admin Folders open modal',
+	adminFoldersCloseModal: 'Admin Folders close modal',
+	adminFoldersSetActionModal: 'Admin Folders set action modal',
+	adminFoldersRemoveActionModal: 'Admin Folder remove action modal',
+	adminFoldersSetFolder: 'Admin Folders set folder',
+	adminFoldersSaveLoaded: 'Admin Folders save loaded',
 
 }

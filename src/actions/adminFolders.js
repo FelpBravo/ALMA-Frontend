@@ -1,5 +1,6 @@
 import { INIT_FOLDER } from 'constants/constUtil';
-import { getFolders, getFoldersById } from 'services/foldersService';
+import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
+import { create, getFoldersAdmin, getFoldersAdminById } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -17,7 +18,7 @@ export const startFoldersLoading = () => {
 
 			Swal.showLoading();
 
-			const resp = await getFolders();
+			const resp = await getFoldersAdmin();
 
 			dispatch(foldersLoaded(resp.data));
 			dispatch(saveHistory(0, INIT_FOLDER));
@@ -67,7 +68,7 @@ export const startSubFoldersLoading = (folderId, name) => {
 
 				Swal.showLoading();
 
-				const resp = await getFoldersById(folderId);
+				const resp = await getFoldersAdminById(folderId);
 
 				dispatch(subFoldersLoaded(folderId, resp.data));
 				dispatch(saveHistory(folderId, name));
@@ -143,29 +144,78 @@ export const startSaveCurrentFolder = (folderId) => {
 		}
 
 	}
-}
+};
 
 const updateListHistory = (history) => {
 	return {
 		type: types.adminFoldersUpdateListHistory,
 		payload: history,
 	}
-}
+};
 
-const getCurrentFolderById = (folders = [], folderId, valueSearch = []) => {
+export const openModalFolder = () => {
+	return {
+		type: types.adminFoldersOpenModal,
+	}
+};
 
-	for (const folder of folders) {
+export const closeModalFolder = () => {
+	return {
+		type: types.adminFoldersCloseModal,
+	}
+};
 
-		if (folder.id === folderId) {
+export const setActionModal = (type) => {
+	return {
+		type: types.adminFoldersSetActionModal,
+		payload: type,
+	}
+};
 
-			valueSearch.push(folder);
+export const setRemoveActionModal = () => {
+	return {
+		type: types.adminFoldersRemoveActionModal,
+	}
+};
 
-		} else if (Array.isArray(folder.children)) {
+export const setFolder = (folder) => {
+	return {
+		type: types.adminFoldersSetFolder,
+		payload: folder,
+	}
+};
 
-			getCurrentFolderById(folder.children, folderId, valueSearch);
+export const startSaveFolderLoading = (data, folderId, name) => {
+	return async (dispatch) => {
 
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await create(data);
+
+			dispatch(startSubFoldersLoading(folderId, name));
+			dispatch(saveFolderLoaded());
+			dispatch(closeModalFolder());
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
 		}
 
 	}
+};
 
+const saveFolderLoaded = () => {
+	return {
+		type: types.adminFoldersSaveLoaded,
+	}
 }

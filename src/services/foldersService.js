@@ -18,7 +18,34 @@ const getFoldersById = (folderId) => {
 	});
 };
 
+const getFoldersAdmin = () => {
+	return axiosInstance.get('/folders/admin', {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
+
+const getFoldersAdminById = (folderId) => {
+	return axiosInstance.get(`/folders/admin/${folderId}/children`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
+
+const create = (data) => {
+	return axiosInstance.post('/folders/admin', data, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
+
 export {
 	getFolders,
-	getFoldersById
+	getFoldersById,
+	getFoldersAdmin,
+	getFoldersAdminById,
+	create,
 }

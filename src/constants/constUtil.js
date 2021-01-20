@@ -18,3 +18,5 @@ export const VERSION_TYPE_MINOR = 'minor'
 
 // FOLDER MIGA DE PAN
 export const INIT_FOLDER = 'General';
+export const ACTION_CREATE = 'create';
+export const ACTION_EDIT = 'edit';
