@@ -611,5 +611,6 @@
 	"document.versioning.comments": "Comentarios del versionamiento",
 	"document.versioning.title": "Versionamiento",
 	"folders.title": "Administración directorios",
-	"folders.table.column1": "Nombre"
+	"folders.table.column1": "Nombre",
+	"tags.title": "Administración de etiquetas"
 }

@@ -10,6 +10,44 @@ const getTags = () => {
 	});
 };
 
+const addTags = () => {
+	return axiosInstance.put(`/tags/add`,
+		{ tag, hex },
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+};
+
+const editTags = () => {
+	return axiosInstance.options(`/tags/edit`,
+		{ id, tag, hex },
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+};
+
+const deleteTags = () => {
+	return axiosInstance.delete(`/tags/{tagId}/delete`,
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+	);
+};
+
+
+
+
 export {
 	getTags,
+	addTags,
+	editTags,
+	deleteTags,
 }
