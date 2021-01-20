@@ -584,6 +584,7 @@
 	"sidebar.modern": "Moderno",
 	"sidebar.home": "Panel de inicio",
 	"sidebar.tags.home": "Etiquetas",
+	"sidebar.tags.folders": "Folders",
 	"sidebar.loadDocuments": "Carga documentos",
 	"company.name": "APIUX",
 	"table.search.documentName": "Nombre documento",
@@ -608,5 +609,7 @@
 	"document.versioning.type.major": "Mayor",
 	"document.versioning.type.minor": "Menor",
 	"document.versioning.comments": "Comentarios del versionamiento",
-	"document.versioning.title": "Versionamiento"
+	"document.versioning.title": "Versionamiento",
+	"folders.title": "Administración directorios",
+	"folders.table.column1": "Nombre"
 }

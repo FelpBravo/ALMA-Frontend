@@ -74,7 +74,13 @@ const SideBarContent = () => {
 	useEffect(() => {
 
 		if (initFolders.length === 0) {
-			dispatch(startFoldersInitLoading());
+
+			setTimeout(() => {
+
+				dispatch(startFoldersInitLoading());
+
+			}, 1000);
+
 		}
 
 	}, [dispatch, initFolders]);
