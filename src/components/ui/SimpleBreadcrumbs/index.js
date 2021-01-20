@@ -12,7 +12,11 @@ const SimpleBreadcrumbs = ({ items = [], handleClick, currentItem }) => {
 					return (
 						currentItem === item.id
 							?
-							<Typography color="textPrimary">{item.name}</Typography>
+							<Typography
+								key={item.id}
+								color="textPrimary">
+								{item.name}
+							</Typography>
 							:
 							<Link
 								className="general-link"

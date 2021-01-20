@@ -110,12 +110,10 @@ export const startSaveCurrentFolder = (folderId) => {
 		} else {
 
 			const resp = getFolderById(folders, folderId);
-			const folderSelected = historyFolders.find(history => history.id === folderId);
 
-			if (historyFolders.indexOf(folderSelected) !== historyFolders.length - 1) {
-				const newHistoryFolders = [...historyFolders.slice(0, historyFolders.length - 1)];
-				dispatch(updateListHistory(newHistoryFolders));
-			}
+			const newHistoryFolders = [...historyFolders.slice(0, historyFolders.length - 1)];
+
+			dispatch(updateListHistory(newHistoryFolders));
 
 			dispatch(saveCurrentFolders(folderId, resp.children));
 
@@ -141,7 +139,11 @@ const getFolderById = (folders = [], folderId) => {
 
 		} else if (Array.isArray(folder.children)) {
 
-			return getFolderById(folder.children, folderId);
+			for (const subFolder of folder.children) {
+
+				getFolderById(subFolder.children, folderId);
+
+			}
 
 		}
 

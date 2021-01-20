@@ -11,6 +11,8 @@ const Folders = () => {
 	const dispatch = useDispatch();
 	const { folders = [], currentFolders, historyFolders = [] } = useSelector(state => state.adminFolders);
 
+	console.log(currentFolders);
+
 	console.log(folders);
 
 	useEffect(() => {
