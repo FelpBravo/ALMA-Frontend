@@ -39,12 +39,12 @@ export const columnsDocuments = [
 		disablePadding: false,
 		label: <IntlMessages id="table.search.version" />
 	},
-	{
+	/*{
 		id: createUUID(),
 		align: true,
 		disablePadding: false,
 		label: <IntlMessages id="table.search.id" />
-	},
+	},*/
 	{
 		id: createUUID(),
 		align: true,

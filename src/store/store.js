@@ -12,6 +12,7 @@ import { auditReducer } from 'reducers/auditReducer';
 import { uiAuditReducer } from 'reducers/uiAuditReducer';
 import { searchReducer } from 'reducers/searchReducer';
 import { documentsReducer } from 'reducers/documentsReducer';
+import { adminFoldersReducer } from 'reducers/adminFoldersReducer';
 //import { uiSearchReducer } from 'reducers/uiSearchReducer';
 
 export const history = createBrowserHistory();
@@ -31,6 +32,7 @@ const rootReducer = (history) => combineReducers({
 	uiAudit: uiAuditReducer,
 	searchs: searchReducer,
 	documents: documentsReducer,
+	adminFolders: adminFoldersReducer,
 	//uiSearch: uiSearchReducer
 });
 

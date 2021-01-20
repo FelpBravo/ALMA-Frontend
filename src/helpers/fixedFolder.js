@@ -27,6 +27,14 @@ export const fixedFolders = [
 				link: '/tags',
 				bd: false,
 			},
+			{
+				id: -4,
+				name: 'sidebar.tags.folders',
+				icon: 'view-dashboard',
+				type: 'item',
+				link: '/folders',
+				bd: false,
+			},
 		],
 	},
 	/*{
