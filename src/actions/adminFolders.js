@@ -1,3 +1,4 @@
+import { INIT_FOLDER } from 'constants/constUtil';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
@@ -19,7 +20,7 @@ export const startFoldersLoading = () => {
 			const resp = await getFolders();
 
 			dispatch(foldersLoaded(resp.data));
-			dispatch(saveHistory(0, 'Administración'));
+			dispatch(saveHistory(0, INIT_FOLDER));
 			dispatch(saveCurrentFolders(0, resp.data));
 
 		} catch (error) {
@@ -121,7 +122,7 @@ export const startSaveCurrentFolder = (folderId) => {
 		if (folderId === 0) {
 
 			dispatch(saveCurrentFolders(0, folders));
-			dispatch(updateListHistory([{ id: 0, name: 'Administración' }]));
+			dispatch(updateListHistory([{ id: 0, name: INIT_FOLDER }]));
 
 		} else {
 
@@ -129,7 +130,11 @@ export const startSaveCurrentFolder = (folderId) => {
 
 			getCurrentFolderById(folders, folderId, valueSearch);
 
-			const newHistoryFolders = [...historyFolders.slice(0, historyFolders.length - 1)];
+			const folderSelected = historyFolders.find(history => history.id === folderId);
+
+			const newHistoryFolders = [
+				...historyFolders.slice(0, historyFolders.indexOf(folderSelected) + 1)
+			];
 
 			dispatch(updateListHistory(newHistoryFolders));
 
