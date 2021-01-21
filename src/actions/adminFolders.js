@@ -1,6 +1,6 @@
 import { INIT_FOLDER } from 'constants/constUtil';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
-import { create, edit, getFoldersAdmin, getFoldersAdminById } from 'services/foldersService';
+import { create, edit, getFoldersAdmin, getFoldersAdminById, remove } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -296,4 +296,37 @@ export const adminFoldersremoveAll = () => {
 	return {
 		type: types.adminFoldersRemoveAll,
 	}
+};
+
+export const startDeleteFolderLoading = (folderId) => {
+	return (dispatch, getState) => {
+		const { folders } = getState().adminFolders;
+
+		try {
+
+			//await remove(folderId);
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+export const deleteFolderLoaded = (folderId) => {
+	return {
+		type: types.adminFoldersDeleteFolderLoaded,
+		payload: folderId,
+	}
+}
+
+const removeFolder = (folderId, folders) => {
+
+	for (const folder of folders) {
+
+
+
+	}
+
+
 }
