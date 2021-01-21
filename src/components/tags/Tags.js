@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import IntlMessages from 'util/IntlMessages';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,7 +16,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { startTagsInitLoading } from 'actions/tags';
+import data from 'components/ui/components/ToDoCard/data';
 
 function generate(element) {
 	return [0, 1, 2].map((value) =>
@@ -40,6 +42,19 @@ const useStyles = makeStyles((theme) => ({
 	}));
 
 const Tags = () => {
+	const dispatch = useDispatch();
+	const { data= [],} = useSelector(state => state.tags);
+	console.log('somos los tags',data)
+
+	
+	useEffect(() => {
+
+		if (data.length === 0) {
+			dispatch(startTagsInitLoading());
+		}
+
+	}, [dispatch, data]);
+
 	const classes = useStyles();
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);

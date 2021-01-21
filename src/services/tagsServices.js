@@ -10,7 +10,7 @@ const getTags = () => {
 	});
 };
 
-const addTags = () => {
+{/*const addTags = () => {
 	return axiosInstance.put(`/tags/add`,
 		{ tag, hex },
 		{
@@ -31,7 +31,7 @@ const editTags = () => {
 		}
 	);
 };
-
+*/}
 const deleteTags = () => {
 	return axiosInstance.delete(`/tags/{tagId}/delete`,
 		{
@@ -47,7 +47,5 @@ const deleteTags = () => {
 
 export {
 	getTags,
-	addTags,
-	editTags,
 	deleteTags,
 }

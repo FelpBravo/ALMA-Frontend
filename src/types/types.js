@@ -56,4 +56,9 @@ export const types = {
 	adminFoldersSaveCurrentFolders: 'Admin Folders save current folders',
 	adminFoldersUpdateListHistory: 'Admin Folder update list history',
 
+	tagsInitLoaded: 'Tags List',
+	tagsAdd: 'Tags New',
+	tagsEdit: 'Tags Edit',
+	tagsRemove: 'Tags Delete',
+
 }
