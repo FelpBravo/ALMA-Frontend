@@ -151,6 +151,16 @@ export const adminFoldersReducer = (state = initialState, action) => {
 				}
 			}
 
+		case types.adminFoldersDeleteFolderLoaded:
+			return {
+				...state,
+				folders: [...action.payload.folders],
+				currentFolders: {
+					...state.currentFolders,
+					folders: [...action.payload.currentFolders.folders],
+				}
+			}
+
 		default:
 			return state;
 	}
