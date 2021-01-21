@@ -43,51 +43,41 @@ export const foldersLoaded = (folders) => {
 export const startSubFoldersLoading = (folderId, name) => {
 	return async (dispatch, getState) => {
 
-		const { folders, currentFolders } = getState().adminFolders;
+		const { folders } = getState().adminFolders;
 
-		if (currentFolders.id === folderId) {
+		const valueSearch = [];
 
-			const resp = await getFoldersAdminById(folderId);
-			dispatch(subFoldersLoaded(folderId, resp.data));
-			dispatch(saveCurrentFolders(folderId, name, resp.data));
+		getCurrentFolderById(folders, folderId, valueSearch);
+
+		if (valueSearch.length > 0 && Array.isArray(valueSearch[0].children)) {
+
+			dispatch(subFoldersLoaded(folderId, valueSearch[0].children));
+			dispatch(saveHistory(folderId, name));
+			dispatch(saveCurrentFolders(folderId, name, valueSearch[0].children));
 
 		} else {
 
-			const valueSearch = [];
+			try {
 
-			getCurrentFolderById(folders, folderId, valueSearch);
+				Swal.fire({
+					title: 'Loading...',
+					text: 'Please wait...',
+					allowOutsideClick: false,
+					heightAuto: false,
+				});
 
-			if (valueSearch.length > 0 && Array.isArray(valueSearch[0].children)) {
+				Swal.showLoading();
 
-				dispatch(subFoldersLoaded(folderId, valueSearch[0].children));
+				const resp = await getFoldersAdminById(folderId);
+
+				dispatch(subFoldersLoaded(folderId, resp.data));
 				dispatch(saveHistory(folderId, name));
-				dispatch(saveCurrentFolders(folderId, name, valueSearch[0].children));
+				dispatch(saveCurrentFolders(folderId, name, resp.data));
 
-			} else {
-
-				try {
-
-					Swal.fire({
-						title: 'Loading...',
-						text: 'Please wait...',
-						allowOutsideClick: false,
-						heightAuto: false,
-					});
-
-					Swal.showLoading();
-
-					const resp = await getFoldersAdminById(folderId);
-
-					dispatch(subFoldersLoaded(folderId, resp.data));
-					dispatch(saveHistory(folderId, name));
-					dispatch(saveCurrentFolders(folderId, name, resp.data));
-
-				} catch (error) {
-					console.log(error);
-				} finally {
-					Swal.close();
-				}
-
+			} catch (error) {
+				console.log(error);
+			} finally {
+				Swal.close();
 			}
 
 		}
@@ -196,7 +186,7 @@ export const setFolder = (folder) => {
 	}
 };
 
-export const startSaveFolderLoading = (data, folderId, name) => {
+export const startCreateFolderLoading = (data, folderId, name) => {
 	return async (dispatch) => {
 
 		try {
@@ -212,9 +202,45 @@ export const startSaveFolderLoading = (data, folderId, name) => {
 
 			await create(data);
 
-			dispatch(startSubFoldersLoading(folderId, name));
+			dispatch(startSubFolderLoadingAfterCrete(folderId, name));
+
+			Swal.close();
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+		}
+
+	}
+};
+
+export const startSubFolderLoadingAfterCrete = (folderId, name) => {
+	return async (dispatch, getState) => {
+
+		const { currentFolders } = getState().adminFolders;
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getFoldersAdminById(folderId);
+
+			dispatch(subFoldersLoaded(folderId, resp.data));
+
+			if (currentFolders.id !== folderId) {
+				dispatch(saveHistory(folderId, name));
+			}
+
+			dispatch(saveCurrentFolders(folderId, name, resp.data));
+
 			dispatch(saveFolderLoaded());
-			//dispatch(closeModalFolder());
 
 		} catch (error) {
 			console.log(error);
