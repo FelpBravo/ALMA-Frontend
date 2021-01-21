@@ -61,5 +61,6 @@ export const types = {
 	adminFoldersRemoveActionModal: 'Admin Folder remove action modal',
 	adminFoldersSetFolder: 'Admin Folders set folder',
 	adminFoldersSaveLoaded: 'Admin Folders save loaded',
+	adminFoldersUpdateLoaded: 'Admin Folders update loaded',
 
 }

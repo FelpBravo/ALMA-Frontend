@@ -1,4 +1,4 @@
-import { setFolders } from 'helpers/setFolders';
+import { setFolders, updatePropertiesAfterEdit } from 'helpers/setFolders';
 import { types } from 'types/types';
 
 const initialState = {
@@ -109,6 +109,24 @@ export const adminFoldersReducer = (state = initialState, action) => {
 					position: 0,
 					state: true,
 				}
+			}
+
+		case types.adminFoldersUpdateLoaded:
+			return {
+				...state,
+				currentFolders: {
+					...state.currentFolders,
+					name: action.payload.name,
+				},
+				folders: state.folders.map((folder => {
+
+					const { id, name, state, position } = action.payload;
+
+					updatePropertiesAfterEdit(id, name, state, position, folder);
+
+					return folder;
+
+				})),
 			}
 
 		default:

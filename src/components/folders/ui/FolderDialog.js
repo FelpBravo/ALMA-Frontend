@@ -57,10 +57,12 @@ const FolderDialog = () => {
 
 		if (actionModal === ACTION_CREATE) {
 
+			dispatch(closeModalFolder());
 			dispatch(startSaveFolderLoading(data, parentId, parentName));
 
 		} else {
 
+			dispatch(closeModalFolder());
 			dispatch(startEditFolderLoading(data, parentId, parentName));
 
 		}

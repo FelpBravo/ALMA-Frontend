@@ -214,7 +214,7 @@ export const startSaveFolderLoading = (data, folderId, name) => {
 
 			dispatch(startSubFoldersLoading(folderId, name));
 			dispatch(saveFolderLoaded());
-			dispatch(closeModalFolder());
+			//dispatch(closeModalFolder());
 
 		} catch (error) {
 			console.log(error);
@@ -247,9 +247,9 @@ export const startEditFolderLoading = (data, folderId, name) => {
 
 			await edit(data);
 
-			//dispatch(startSubFoldersLoading(folderId, name));
+			dispatch(updateLoaded(data));
 			dispatch(saveFolderLoaded());
-			dispatch(closeModalFolder());
+			//dispatch(closeModalFolder());
 
 		} catch (error) {
 			console.log(error);
@@ -259,3 +259,10 @@ export const startEditFolderLoading = (data, folderId, name) => {
 
 	}
 };
+
+const updateLoaded = (data) => {
+	return {
+		type: types.adminFoldersUpdateLoaded,
+		payload: data,
+	}
+}
