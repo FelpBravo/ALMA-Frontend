@@ -59,16 +59,18 @@ const SideBarContent = () => {
 
 		setSelected([folderId]);
 
-	}, [folderId]);
+	}, [folderId, setSelected]);
 
 	useEffect(() => {
 
 		setFolders(initFolders);
 
-	}, [initFolders])
+	}, [initFolders, setFolders])
 
 	useEffect(() => {
+
 		setExpanded(selectedIds);
+
 	}, [selectedIds, setExpanded])
 
 	useEffect(() => {
@@ -79,7 +81,7 @@ const SideBarContent = () => {
 
 				dispatch(startFoldersInitLoading());
 
-			}, 1000);
+			}, 3000);
 
 		}
 

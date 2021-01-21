@@ -85,14 +85,17 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 			<TableCell>
 				<div className="custom-td-table">
 					<i
+						title="New"
 						onClick={() => handleSelectAction(1)}
 						className="fa fa-plus cursor-pointer custom-link-dash"
 					></i>
 					<i
+						title="Edit"
 						onClick={() => handleSelectAction(2)}
 						className="far fa-edit cursor-pointer custom-link-dash"
 					></i>
 					<i
+						title="Delete"
 						onClick={() => handleSelectAction(3)}
 						className="far fa-trash-alt cursor-pointer custom-link-dash"
 					></i>

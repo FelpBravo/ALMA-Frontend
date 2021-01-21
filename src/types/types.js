@@ -63,5 +63,6 @@ export const types = {
 	adminFoldersSaveLoaded: 'Admin Folders save loaded',
 	adminFoldersUpdateLoaded: 'Admin Folders update loaded',
 	adminFoldersRemoveAll: 'Admin Folders remove all',
+	adminFoldersDeleteFolderLoaded: 'Admin Folders delete folder loaded',
 
 }
