@@ -20,3 +20,5 @@ export const VERSION_TYPE_MINOR = 'minor'
 export const INIT_FOLDER = 'General';
 export const ACTION_CREATE = 'create';
 export const ACTION_EDIT = 'edit';
+
+export const GENERAL_ERROR = 'Se presentó un error al procesar la solicitud. Por favor intente de nuevo'
