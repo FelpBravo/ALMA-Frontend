@@ -20,7 +20,6 @@ import { Versioning } from './ui/Versioning';
 import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import { DocumentContext } from './helpers/DocumentContext';
 
-
 const useStyles = makeStyles((theme) => ({
 	buttons: {
 		'& > *': {
@@ -101,7 +100,6 @@ const Documents = () => {
 						fileIdLoaded,
 						versioningType === VERSION_TYPE_MAJOR ? true : false,
 						versioningComments,
-						folderId,
 						{ id: documentId, aspectList: filters }
 					)
 				);

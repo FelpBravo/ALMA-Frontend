@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Dialog, TextField, DialogContent, DialogTitle, DialogActions, Button,
 	IconButton, ListItemText, ListItem, Breadcrumbs, List, Collapse, makeStyles
@@ -15,12 +15,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const MultiLevelSelect = (
-	{ sectionId,
+	{
+		sectionId,
 		name,
 		label,
 		type,
 		value: valueProps = '',
-		propertyItemList = [] }
+		propertyItemList = []
+	}
 ) => {
 
 	const classes = useStyles();
@@ -31,10 +33,16 @@ export const MultiLevelSelect = (
 	const [openModal, setOpenModal] = useState(false);
 	const [currentValues, setCurrentValues] = useState([]);
 	const [steps, setSteps] = useState([]);
-	const [value, setValue] = useState(valueProps);
+	const [value, setValue] = useState('');
 	const [lastValues, setLastValues] = useState([]);
 	const [lastSteps, setLastSteps] = useState([]);
 	const [lastLevel, setLastLevel] = useState(0);
+
+	useEffect(() => {
+
+		setValue(valueProps)
+
+	}, [valueProps, setValue]);
 
 	const handleOpenModal = () => {
 		setCurrentValues(lastValues);
@@ -62,7 +70,6 @@ export const MultiLevelSelect = (
 			setLastSteps(steps);
 			setLastLevel(currentLevel);
 			setOpenModal(false);
-			//props.onChange({ 'id': props.data.name, 'target': { 'value': element.value } });
 
 			dispatch(detailDocumentSetValueField(sectionId, name, element.value));
 		}
@@ -163,7 +170,7 @@ export const MultiLevelSelect = (
 				variant="outlined"
 				color="primary"
 				onClick={handleOpenModal}
-				value={value || ''}
+				value={value ? value : ''}
 				fullWidth
 				size="small"
 			/>

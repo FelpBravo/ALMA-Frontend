@@ -6,6 +6,7 @@ import {
 	openModalFolder, setActionModal, setFolder, startDeleteFolderLoading, startSubFoldersLoading
 } from 'actions/adminFolders';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
+import Swal from 'sweetalert2';
 
 export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position }) => {
 
@@ -17,7 +18,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 		}
 	}
 
-	const handleSelectAction = (type) => {
+	const handleSelectAction = async (type) => {
 
 		switch (type) {
 			case 1:
@@ -52,7 +53,18 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 
 			case 3:
 
-				dispatch(startDeleteFolderLoading(id));
+				const resp = await Swal.fire({
+					title: 'Folders',
+					text: "¿Está seguro de continuar?",
+					icon: "question",
+					showCancelButton: true,
+					focusConfirm: true,
+					heightAuto: false,
+				});
+
+				if (resp.value) {
+					dispatch(startDeleteFolderLoading(id));
+				}
 
 				break;
 

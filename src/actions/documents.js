@@ -1,11 +1,10 @@
 import { fileBase64 } from 'helpers/fileBase64';
-import { toBase64 } from 'helpers/toBase64';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { editDocumentVersion, getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
+import { getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
 import { getTags } from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
-import { KEY_DOC } from '../constants/constUtil';
+import { GENERAL_ERROR, KEY_DOC } from '../constants/constUtil';
 
 export const startDocumentsTypeLoading = () => {
 	return async (dispatch) => {
@@ -101,14 +100,22 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup) => {
 
 			Swal.showLoading();
 
+			Swal.close();
+
 			await saveForm(fileId, folderId, aspectGroup);
 
 			dispatch(saveFormFinish());
 
 		} catch (error) {
 			console.log(error);
-		} finally {
+
 			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
 		}
 
 	}
@@ -142,19 +149,21 @@ export const startDropFileLoading = (files) => {
 
 			const resp = await uploadDocument(KEY_DOC, files[0]);
 
+			Swal.close();
+
 			// SAVE STORE ID LOADED
 			dispatch(saveFileIdLoaded(resp.data.id));
 			dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
 
+		} catch (error) {
+			console.log(error);
+
 			Swal.close();
 
-		} catch (error) {
-			Swal.close();
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
 			Swal.fire({
-				title: 'Upload',
-				text: 'Archivo ya existe',
-				icon: "error",
-				heightAuto: false,
+				title: 'Error', text: message, icon: 'error', heightAuto: false
 			});
 		}
 	}
@@ -220,6 +229,8 @@ export const startDocumentByIdLoading = (fileId) => {
 			const resp = await getDocumentById(fileId);
 
 			Swal.close();
+
+			console.log(resp.data);
 
 			dispatch(documentByIdLoaded(resp.data));
 
@@ -294,7 +305,6 @@ export const startEditDocumentLoading = (
 	fileId,
 	versioningType,
 	versioningComments,
-	folderId,
 	aspectGroup
 ) => {
 	return async (dispatch) => {
@@ -310,9 +320,9 @@ export const startEditDocumentLoading = (
 
 			Swal.showLoading();
 
-			await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
+			//await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
 
-			await saveForm(fileId, folderId, aspectGroup);
+			await saveForm(fileId, aspectGroup);
 
 			dispatch(saveFormFinish());
 
