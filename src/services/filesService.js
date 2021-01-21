@@ -30,7 +30,7 @@ const subscribeDocument = (id) => {
 const uploadDocument = (folderId, file) => {
 
 	const data = new FormData();
-	data.append('folderId', folderId);
+	//data.append('folderId', folderId);
 	data.append('file', file);
 
 	return axiosInstance.post(`/files/upload`, data, {

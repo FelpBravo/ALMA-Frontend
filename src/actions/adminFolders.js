@@ -300,11 +300,16 @@ export const adminFoldersremoveAll = () => {
 
 export const startDeleteFolderLoading = (folderId) => {
 	return (dispatch, getState) => {
+
 		const { folders } = getState().adminFolders;
 
 		try {
 
 			//await remove(folderId);
+
+			//removeFolder(folderId, folders);
+
+			console.log(removeFolder(folderId, folders));
 
 		} catch (error) {
 			console.log(error);
@@ -320,13 +325,25 @@ export const deleteFolderLoaded = (folderId) => {
 	}
 }
 
-const removeFolder = (folderId, folders) => {
+const removeFolder = (folderId, folders = []) => {
 
-	for (const folder of folders) {
+	folders = folders.filter(folder => {
+
+		if (folder.id !== folderId) {
+
+			if (Array.isArray(folder.children)) {
+				folder.children = removeFolder(folderId, folder.children);
+			}
+
+			return folder;
+		} else {
+			console.log(folder);
+		}
+
+	});
 
 
-
-	}
-
-
+	return folders;
 }
+
+//	const exists = folders.find(folder => folder.id === folderId);

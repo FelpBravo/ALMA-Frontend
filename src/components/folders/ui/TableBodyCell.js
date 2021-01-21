@@ -2,7 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { TableCell, TableRow } from '@material-ui/core';
 
-import { openModalFolder, setActionModal, setFolder, startSubFoldersLoading } from 'actions/adminFolders';
+import {
+	openModalFolder, setActionModal, setFolder, startDeleteFolderLoading, startSubFoldersLoading
+} from 'actions/adminFolders';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 
 export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position }) => {
@@ -49,6 +51,8 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				break;
 
 			case 3:
+
+				dispatch(startDeleteFolderLoading(id));
 
 				break;
 
