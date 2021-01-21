@@ -23,6 +23,15 @@ export const DataTableFolders = ({ folders }) => {
 								<TableCell style={{ background: '#369bff', color: '#ffffff' }} >
 									<IntlMessages id="folders.table.column1" />
 								</TableCell>
+								<TableCell style={{ background: '#369bff', color: '#ffffff' }} >
+									<IntlMessages id="folders.table.column4" />
+								</TableCell>
+								<TableCell style={{ background: '#369bff', color: '#ffffff' }} >
+									<IntlMessages id="folders.table.column3" />
+								</TableCell>
+								<TableCell className="text-right" style={{ background: '#369bff', color: '#ffffff' }} >
+									<IntlMessages id="folders.table.column2" />
+								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>

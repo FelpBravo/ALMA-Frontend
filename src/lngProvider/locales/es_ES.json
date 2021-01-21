@@ -612,5 +612,15 @@
 	"document.versioning.title": "Versionamiento",
 	"folders.title": "Administración directorios",
 	"folders.table.column1": "Nombre",
-	"tags.title": "Administración de etiquetas"
+	"tags.title": "Administración de etiquetas",
+	"folders.table.column2": "Acciones",
+	"folders.table.column3": "Estado",
+	"folders.table.column4": "Posición",
+	"folders.modal.title.create": "Crear folder",
+	"folders.modal.title.edit": "Editar folder",
+	"folders.modal.field.name": "Nombre",
+	"folders.modal.field.state": "Estado",
+	"folders.modal.field.position": "Posición",
+	"button.text.cancel": "Cancelar",
+	"button.text.save": "Guardar"
 }

@@ -312,7 +312,7 @@ export const startEditDocumentLoading = (
 
 			await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
 
-			//await saveForm(fileId, folderId, aspectGroup);
+			await saveForm(fileId, folderId, aspectGroup);
 
 			dispatch(saveFormFinish());
 

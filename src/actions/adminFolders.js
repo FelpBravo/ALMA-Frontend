@@ -1,4 +1,6 @@
-import { getFolders, getFoldersById } from 'services/foldersService';
+import { INIT_FOLDER } from 'constants/constUtil';
+import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
+import { create, edit, getFoldersAdmin, getFoldersAdminById } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -16,11 +18,11 @@ export const startFoldersLoading = () => {
 
 			Swal.showLoading();
 
-			const resp = await getFolders();
+			const resp = await getFoldersAdmin();
 
 			dispatch(foldersLoaded(resp.data));
-			dispatch(saveHistory(0, 'Administración'));
-			dispatch(saveCurrentFolders(0, resp.data));
+			dispatch(saveHistory(0, INIT_FOLDER));
+			dispatch(saveCurrentFolders(0, INIT_FOLDER, resp.data));
 
 		} catch (error) {
 			console.log(error);
@@ -39,29 +41,45 @@ export const foldersLoaded = (folders) => {
 };
 
 export const startSubFoldersLoading = (folderId, name) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
 
-		try {
+		const { folders } = getState().adminFolders;
 
-			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
+		const valueSearch = [];
 
-			Swal.showLoading();
+		getCurrentFolderById(folders, folderId, valueSearch);
 
-			const resp = await getFoldersById(folderId);
+		if (valueSearch.length > 0 && Array.isArray(valueSearch[0].children)) {
 
-			dispatch(subFoldersLoaded(folderId, resp.data));
+			dispatch(subFoldersLoaded(folderId, valueSearch[0].children));
 			dispatch(saveHistory(folderId, name));
-			dispatch(saveCurrentFolders(folderId, resp.data));
+			dispatch(saveCurrentFolders(folderId, name, valueSearch[0].children));
 
-		} catch (error) {
-			console.log(error);
-		} finally {
-			Swal.close();
+		} else {
+
+			try {
+
+				Swal.fire({
+					title: 'Loading...',
+					text: 'Please wait...',
+					allowOutsideClick: false,
+					heightAuto: false,
+				});
+
+				Swal.showLoading();
+
+				const resp = await getFoldersAdminById(folderId);
+
+				dispatch(subFoldersLoaded(folderId, resp.data));
+				dispatch(saveHistory(folderId, name));
+				dispatch(saveCurrentFolders(folderId, name, resp.data));
+
+			} catch (error) {
+				console.log(error);
+			} finally {
+				Swal.close();
+			}
+
 		}
 
 	}
@@ -87,11 +105,12 @@ const saveHistory = (folderId, name) => {
 	}
 };
 
-const saveCurrentFolders = (folderId, folders) => {
+const saveCurrentFolders = (folderId, name, folders) => {
 	return {
 		type: types.adminFoldersSaveCurrentFolders,
 		payload: {
 			folderId,
+			name,
 			folders,
 		},
 	}
@@ -104,48 +123,177 @@ export const startSaveCurrentFolder = (folderId) => {
 
 		if (folderId === 0) {
 
-			dispatch(saveCurrentFolders(0, folders));
-			dispatch(updateListHistory([{ id: 0, name: 'Administración' }]));
+			dispatch(saveCurrentFolders(0, INIT_FOLDER, folders));
+			dispatch(updateListHistory([{ id: 0, name: INIT_FOLDER }]));
 
 		} else {
 
-			const resp = getFolderById(folders, folderId);
+			const valueSearch = [];
 
-			const newHistoryFolders = [...historyFolders.slice(0, historyFolders.length - 1)];
+			getCurrentFolderById(folders, folderId, valueSearch);
+
+			const folderSelected = historyFolders.find(history => history.id === folderId);
+
+			const newHistoryFolders = [
+				...historyFolders.slice(0, historyFolders.indexOf(folderSelected) + 1)
+			];
 
 			dispatch(updateListHistory(newHistoryFolders));
 
-			dispatch(saveCurrentFolders(folderId, resp.children));
+			dispatch(saveCurrentFolders(folderId, valueSearch[0].name, valueSearch[0].children));
 
 		}
 
 	}
-}
+};
 
 const updateListHistory = (history) => {
 	return {
 		type: types.adminFoldersUpdateListHistory,
 		payload: history,
 	}
-}
+};
 
-const getFolderById = (folders = [], folderId) => {
+export const openModalFolder = () => {
+	return {
+		type: types.adminFoldersOpenModal,
+	}
+};
 
-	for (const folder of folders) {
+export const closeModalFolder = () => {
+	return {
+		type: types.adminFoldersCloseModal,
+	}
+};
 
-		if (folder.id == folderId) {
+export const setActionModal = (type) => {
+	return {
+		type: types.adminFoldersSetActionModal,
+		payload: type,
+	}
+};
 
-			return folder;
+export const setRemoveActionModal = () => {
+	return {
+		type: types.adminFoldersRemoveActionModal,
+	}
+};
 
-		} else if (Array.isArray(folder.children)) {
+export const setFolder = (folder) => {
+	return {
+		type: types.adminFoldersSetFolder,
+		payload: folder,
+	}
+};
 
-			for (const subFolder of folder.children) {
+export const startCreateFolderLoading = (data, folderId, name) => {
+	return async (dispatch) => {
 
-				getFolderById(subFolder.children, folderId);
+		try {
 
-			}
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
 
+			Swal.showLoading();
+
+			await create(data);
+
+			Swal.close();
+
+			dispatch(startSubFolderLoadingAfterCrete(folderId, name));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
 		}
 
+	}
+};
+
+export const startSubFolderLoadingAfterCrete = (folderId, name) => {
+	return async (dispatch, getState) => {
+
+		const { currentFolders } = getState().adminFolders;
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getFoldersAdminById(folderId);
+
+			dispatch(subFoldersLoaded(folderId, resp.data));
+
+			if (currentFolders.id !== folderId) {
+				dispatch(saveHistory(folderId, name));
+			}
+
+			dispatch(saveCurrentFolders(folderId, name, resp.data));
+
+			dispatch(saveFolderLoaded());
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+const saveFolderLoaded = () => {
+	return {
+		type: types.adminFoldersSaveLoaded,
+	}
+}
+
+export const startEditFolderLoading = (data, folderId, name) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await edit(data);
+
+			dispatch(updateLoaded(data));
+			dispatch(saveFolderLoaded());
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+const updateLoaded = (data) => {
+	return {
+		type: types.adminFoldersUpdateLoaded,
+		payload: data,
+	}
+};
+
+export const adminFoldersremoveAll = () => {
+	return {
+		type: types.adminFoldersRemoveAll,
 	}
 }

@@ -6,6 +6,7 @@ import { types } from '../types/types';
 import { folderRemoveAll } from './folders';
 import { searchRemoveText } from './search';
 import { documentsRemoveAll } from './documents';
+import { adminFoldersremoveAll } from './adminFolders';
 
 export const startUserSignInLogin = (userName, password) => {
 	return async (dispatch) => {
@@ -38,6 +39,7 @@ export const startUserSingOut = () => {
 		dispatch(searchRemoveText());
 		dispatch(userSignOut());
 		dispatch(documentsRemoveAll());
+		dispatch(adminFoldersremoveAll());
 	}
 }
 
