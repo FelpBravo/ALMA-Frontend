@@ -1,12 +1,12 @@
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { types } from 'types/types';
 
-export const startFoldersInitLoading = () => {
+export const startFoldersInitLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
 
-			const resp = await getFolders();
+			const resp = await getFolders(authUser);
 
 			dispatch(foldersInitLoaded(resp.data));
 

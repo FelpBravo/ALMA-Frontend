@@ -37,6 +37,8 @@ const SideBarContent = () => {
 	const dispatch = useDispatch();
 	const { selectedIds = [], initFolders = [], folderId = [] } = useSelector(state => state.folders);
 
+	const { authUser } = useSelector(state => state.auth);
+
 	const history = useHistory();
 
 	const classes = useStyles();
@@ -65,27 +67,23 @@ const SideBarContent = () => {
 
 		setFolders(initFolders);
 
-	}, [initFolders, setFolders])
+	}, [initFolders, setFolders]);
 
 	useEffect(() => {
 
 		setExpanded(selectedIds);
 
-	}, [selectedIds, setExpanded])
+	}, [selectedIds, setExpanded]);
 
 	useEffect(() => {
 
-		if (initFolders.length === 0) {
+		if (initFolders.length === 0 && authUser) {
 
-			setTimeout(() => {
-
-				dispatch(startFoldersInitLoading());
-
-			}, 3000);
+			dispatch(startFoldersInitLoading(authUser));
 
 		}
 
-	}, [dispatch, initFolders]);
+	}, [dispatch, initFolders, authUser]);
 
 	const handleRenderMenu = (folders) => {
 

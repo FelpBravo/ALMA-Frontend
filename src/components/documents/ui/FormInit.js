@@ -45,7 +45,8 @@ export const FormInit = () => {
 				break;
 
 			case 'folder':
-				dispatch(documentSaveFolderId(value ? value : ''));
+
+				dispatch(documentSaveFolderId(value ? parseInt(value) : ''));
 
 			default:
 				break;
