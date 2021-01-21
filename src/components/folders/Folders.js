@@ -2,18 +2,17 @@ import React, { useEffect } from 'react';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { startFoldersLoading, startSaveCurrentFolder } from 'actions/adminFolders';
+import { openModalFolder, setActionModal, setFolder, startFoldersLoading, startSaveCurrentFolder } from 'actions/adminFolders';
 import { DataTableFolders } from './ui/DataTableFolders';
 import SimpleBreadcrumbs from 'components/ui/SimpleBreadcrumbs';
+import FolderDialog from './ui/FolderDialog';
+import { Button, Grid, IconButton } from '@material-ui/core';
+import { ACTION_CREATE } from 'constants/constUtil';
 
 const Folders = () => {
 
 	const dispatch = useDispatch();
 	const { folders = [], currentFolders, historyFolders = [] } = useSelector(state => state.adminFolders);
-
-	console.log(currentFolders);
-
-	console.log(folders);
 
 	useEffect(() => {
 
@@ -28,6 +27,23 @@ const Folders = () => {
 		e.preventDefault();
 
 		dispatch(startSaveCurrentFolder(id));
+
+	}
+
+	const handleNewFolder = () => {
+
+		dispatch(openModalFolder());
+
+		dispatch(setActionModal(ACTION_CREATE));
+
+		dispatch(setFolder({
+			name: '',
+			parentId: currentFolders.id,
+			parentName: currentFolders.name,
+			position: 0,
+			state: true,
+			icon: '',
+		}));
 
 	}
 
@@ -56,6 +72,31 @@ const Folders = () => {
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
+							<Grid
+								container
+								justify="flex-end"
+								alignItems="flex-end"
+
+							>
+
+								<Button
+									color="primary"
+									size="small"
+									type="button"
+									variant="contained"
+									onClick={handleNewFolder}
+								>
+									<i className="fa fa-plus cursor-pointer"></i>
+								</Button>
+
+							</Grid>
+
+						</div>
+					</div>
+
+					<div className="row">
+						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
 							<SimpleBreadcrumbs
 								items={historyFolders}
 								currentItem={currentFolders.id}
@@ -77,6 +118,9 @@ const Folders = () => {
 
 				</div>
 			</div>
+
+			<FolderDialog />
+
 		</div>
 
 	);
