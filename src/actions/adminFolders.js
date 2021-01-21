@@ -202,9 +202,9 @@ export const startCreateFolderLoading = (data, folderId, name) => {
 
 			await create(data);
 
-			dispatch(startSubFolderLoadingAfterCrete(folderId, name));
-
 			Swal.close();
+
+			dispatch(startSubFolderLoadingAfterCrete(folderId, name));
 
 		} catch (error) {
 			Swal.close();
@@ -275,7 +275,6 @@ export const startEditFolderLoading = (data, folderId, name) => {
 
 			dispatch(updateLoaded(data));
 			dispatch(saveFolderLoaded());
-			//dispatch(closeModalFolder());
 
 		} catch (error) {
 			console.log(error);
@@ -290,5 +289,11 @@ const updateLoaded = (data) => {
 	return {
 		type: types.adminFoldersUpdateLoaded,
 		payload: data,
+	}
+};
+
+export const adminFoldersremoveAll = () => {
+	return {
+		type: types.adminFoldersRemoveAll,
 	}
 }

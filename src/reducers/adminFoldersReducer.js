@@ -129,6 +129,28 @@ export const adminFoldersReducer = (state = initialState, action) => {
 				})),
 			}
 
+		case types.adminFoldersRemoveAll:
+			return {
+				...state,
+				folders: [],
+				historyFolders: [],
+				currentFolders: {
+					id: -1,
+					name: '',
+					folders: [],
+				},
+				openModal: false,
+				actionModal: '',
+				folder: {
+					id: 0,
+					name: '',
+					parentId: 0,
+					parentName: '',
+					position: 0,
+					state: true,
+				}
+			}
+
 		default:
 			return state;
 	}
