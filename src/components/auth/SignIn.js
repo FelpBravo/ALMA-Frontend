@@ -15,8 +15,8 @@ const SignIn = () => {
 	const { loader } = useSelector(state => state.uiAuth);
 
 
-	const [email, setEmail] = useState('nadia_apiux');
-	const [password, setPassword] = useState('12345');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
 	const handleLogin = (e) => {
 		e.preventDefault();
