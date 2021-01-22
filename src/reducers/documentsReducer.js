@@ -1,4 +1,5 @@
-import { types } from "types/types";
+import { setFolders } from 'helpers/setFolders';
+import { types } from 'types/types';
 
 const initialState = {
 	documentsType: [],
@@ -7,11 +8,16 @@ const initialState = {
 	},
 	fileIdLoaded: '',
 	folderId: '',
+	folderName: '',
 	thumbnail: null,
 	thumbnailGenerated: false,
 	tags: [],
 	versioningType: '',
 	versioningComments: '',
+	openModalSelectFolder: false,
+	folders: [],
+	historyFoldersBreadcrumbs: [],
+	currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 }
 
 export const documentsReducer = (state = initialState, action) => {
@@ -37,11 +43,15 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
+				folderName: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
 				tags: [],
 				versioningType: '',
 				versioningComments: '',
+				folders: [],
+				historyFoldersBreadcrumbs: [],
+				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 			}
 
 		case types.docsRemoveDetailDocumentType:
@@ -91,6 +101,12 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: action.payload,
 			}
 
+		case types.docsSaveFolderName:
+			return {
+				...state,
+				folderName: action.payload,
+			}
+
 		case types.docsSaveFileIdLoaded:
 			return {
 				...state,
@@ -111,11 +127,15 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
+				folderName: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
 				tags: [],
 				versioningType: '',
 				versioningComments: '',
+				folders: [],
+				historyFoldersBreadcrumbs: [],
+				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 			}
 
 		case types.docsClear:
@@ -126,11 +146,15 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
+				folderName: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
 				tags: [],
 				versioningType: '',
 				versioningComments: '',
+				folders: [],
+				historyFoldersBreadcrumbs: [],
+				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 			}
 
 		case types.docsDocumentByIdLoaded:
@@ -169,6 +193,56 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				versioningComments: '',
+			}
+
+		case types.docsOpenModalSelectFolder:
+			return {
+				...state,
+				openModalSelectFolder: true,
+			}
+
+		case types.docsCloseModalSelectFolder:
+			return {
+				...state,
+				openModalSelectFolder: false,
+			}
+
+		case types.docsFoldersLoaded:
+			return {
+				...state,
+				folders: [...action.payload],
+			}
+
+		case types.docsSetSubFoldersToFolder:
+			return {
+				...state,
+				folders: state.folders.map((folder => {
+
+					const { folderId, folders } = action.payload;
+
+					setFolders(folderId, folders, folder);
+
+					return folder;
+
+				})),
+			}
+
+		case types.docsSaveHistoryFoldersBreadcrumbs:
+			return {
+				...state,
+				historyFoldersBreadcrumbs: [...state.historyFoldersBreadcrumbs, action.payload],
+			}
+
+		case types.docsSaveCurrentFolderBreadcrumbs:
+			return {
+				...state,
+				currentFolderBreadcrumbs: { ...action.payload }
+			}
+
+		case types.docsUpdateHistoryFoldersBreadcrumbs:
+			return {
+				...state,
+				historyFoldersBreadcrumbs: [...action.payload],
 			}
 
 		default:

@@ -53,8 +53,18 @@ const getThumbnail = (id) => {
 
 };
 
-const saveForm = (fileId, aspectGroup, tags = []) => {
-	console.log(JSON.stringify({ fileId, aspectGroup, tags }));
+const saveForm = (fileId, folderId, aspectGroup, tags = []) => {
+
+	return axiosInstance.post(`/files/fullDocument`, { fileId, folderId, aspectGroup, tags }, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+};
+
+const editForm = (fileId, aspectGroup, tags = []) => {
+
 	return axiosInstance.post(`/files/fullDocument`, { fileId, aspectGroup, tags }, {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -98,4 +108,5 @@ export {
 	saveForm,
 	getDocumentById,
 	editDocumentVersion,
+	editForm,
 }

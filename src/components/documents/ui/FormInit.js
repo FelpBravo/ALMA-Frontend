@@ -8,8 +8,9 @@ import {
 	startDocumentsTypeLoading,
 	startDetailDocumentTypeLoading,
 	removeDetailDocumentType,
-	documentSaveFolderId
+	startFoldersLoading
 } from 'actions/documents';
+import { SelectFolder } from './SelectFolder';
 
 export const FormInit = () => {
 
@@ -18,12 +19,9 @@ export const FormInit = () => {
 	const {
 		documentsType = [],
 		detailDocumentType = {},
-		folderId = ''
 	} = useSelector(state => state.documents);
 
 	const { id: documentType = '' } = detailDocumentType;
-
-	const { initFolders = [] } = useSelector(state => state.folders);
 
 	const { authUser } = useSelector(state => state.auth);
 
@@ -49,10 +47,6 @@ export const FormInit = () => {
 				}
 
 				break;
-
-			case 'folder':
-
-				dispatch(documentSaveFolderId(value ? parseInt(value) : ''));
 
 			default:
 				break;
@@ -95,7 +89,9 @@ export const FormInit = () => {
 					<InputLabel>
 						<IntlMessages id="document.loadDocuments.folders" />
 					</InputLabel>
-					<NativeSelect
+
+					<SelectFolder />
+					{/*<NativeSelect
 						value={folderId}
 						name="folder"
 						input={<BootstrapInput />}
@@ -114,7 +110,7 @@ export const FormInit = () => {
 								</option>
 							})
 						}
-					</NativeSelect>
+					</NativeSelect>*/}
 				</FormControl>
 			</div>
 		</div>
