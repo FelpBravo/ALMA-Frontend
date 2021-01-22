@@ -24,11 +24,43 @@ const FolderDialog = () => {
 
 	const { name, position, state, parentId, parentName } = formValues;
 
+	const [messageErrorPosition, setMessageErrorPosition] = useState(null);
+
+	const [messageErrorName, setMessageErrorName] = useState(null)
+
 	useEffect(() => {
 
 		setFormValues({ ...folder });
 
-	}, [folder]);
+	}, [folder, setFormValues]);
+
+	useEffect(() => {
+
+		if (!name || name.length < 3) {
+
+			setMessageErrorName('Este campo debe tener mínimo 3 letras');
+
+		} else {
+
+			setMessageErrorName(null);
+
+		}
+
+	}, [name, setMessageErrorName])
+
+	useEffect(() => {
+
+		if (position <= 0) {
+
+			setMessageErrorPosition('Este campo debe ser mayor a 0');
+
+		} else {
+
+			setMessageErrorPosition(null);
+
+		}
+
+	}, [position, setMessageErrorPosition])
 
 	const handleClose = () => {
 
@@ -88,6 +120,7 @@ const FolderDialog = () => {
 				<DialogContent dividers>
 
 					<div className="row">
+
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 							<TextField
@@ -103,6 +136,11 @@ const FolderDialog = () => {
 							/>
 
 						</div>
+
+						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+							<span className="text-danger text-error">{messageErrorName}</span>
+						</div>
+
 					</div>
 
 					<div className="row mt-3">
@@ -120,6 +158,11 @@ const FolderDialog = () => {
 							/>
 
 						</div>
+
+						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+							<span className="text-danger text-error">{messageErrorPosition}</span>
+						</div>
+
 					</div>
 
 					{
