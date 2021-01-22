@@ -2,10 +2,10 @@ import { axiosInstance } from '../config/axios-instance';
 
 const token = localStorage.getItem('token');
 
-const getAll = () => {
+const getAll = (authUser) => {
 	return axiosInstance.get('/aspectGroups', {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };

@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const AdvancedSearch = () => {
 
+	const { authUser } = useSelector(state => state.auth);
+
 	const classes = useStyles();
 
 	const isMounted = React.useRef(true);
@@ -74,7 +76,7 @@ export const AdvancedSearch = () => {
 			});
 		}
 
-		dispatch(startSearchLoading('', exists));
+		dispatch(startSearchLoading(authUser, '', exists));
 
 		if (location.pathname !== '/search') {
 			history.push(`/search`);

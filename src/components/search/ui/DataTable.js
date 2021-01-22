@@ -17,8 +17,11 @@ import { DataTableHead } from './DataTableHead';
 import { downloadDocument } from 'services/filesService';
 import { startDeleteDocument, startSearchLoading } from 'actions/search';
 import { MenuTable } from './MenuTable';
+import { GENERAL_ERROR } from 'constants/constUtil';
 
 const DataTable = () => {
+
+	const { authUser } = useSelector(state => state.auth);
 
 	const isMounted = useRef(true);
 
@@ -49,7 +52,7 @@ const DataTable = () => {
 		const existsFilters = filters.filter(filter => filter.value);
 
 		//console.log(textSearch, existsFilters, folderId, page + 1);
-		dispatch(startSearchLoading(textSearch, existsFilters, folderId, page + 1));
+		dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId, page + 1));
 
 		setPage(page);
 
@@ -73,12 +76,20 @@ const DataTable = () => {
 
 			const { data } = await downloadDocument(id);
 
+			Swal.close();
+
 			FileSaver.saveAs(data, name);
 
 		} catch (error) {
-			console.log(error);
-		} finally {
+
 			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
+
 		}
 	}
 
