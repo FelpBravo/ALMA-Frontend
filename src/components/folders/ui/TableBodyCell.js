@@ -2,8 +2,11 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { TableCell, TableRow } from '@material-ui/core';
 
-import { openModalFolder, setActionModal, setFolder, startSubFoldersLoading } from 'actions/adminFolders';
+import {
+	openModalFolder, setActionModal, setFolder, startDeleteFolderLoading, startSubFoldersLoading
+} from 'actions/adminFolders';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
+import Swal from 'sweetalert2';
 
 export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position }) => {
 
@@ -15,7 +18,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 		}
 	}
 
-	const handleSelectAction = (type) => {
+	const handleSelectAction = async (type) => {
 
 		switch (type) {
 			case 1:
@@ -49,6 +52,19 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				break;
 
 			case 3:
+
+				const resp = await Swal.fire({
+					title: 'Folders',
+					text: "¿Está seguro de continuar?",
+					icon: "question",
+					showCancelButton: true,
+					focusConfirm: true,
+					heightAuto: false,
+				});
+
+				if (resp.value) {
+					dispatch(startDeleteFolderLoading(id));
+				}
 
 				break;
 
@@ -85,14 +101,17 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 			<TableCell>
 				<div className="custom-td-table">
 					<i
+						title="New"
 						onClick={() => handleSelectAction(1)}
 						className="fa fa-plus cursor-pointer custom-link-dash"
 					></i>
 					<i
+						title="Edit"
 						onClick={() => handleSelectAction(2)}
 						className="far fa-edit cursor-pointer custom-link-dash"
 					></i>
 					<i
+						title="Delete"
 						onClick={() => handleSelectAction(3)}
 						className="far fa-trash-alt cursor-pointer custom-link-dash"
 					></i>

@@ -2,10 +2,10 @@ import { axiosInstance } from '../config/axios-instance';
 
 const token = localStorage.getItem('token');
 
-const getFolders = () => {
+const getFolders = (authUser) => {
 	return axiosInstance.get('/folders', {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };
@@ -50,6 +50,14 @@ const edit = (data) => {
 	});
 };
 
+const remove = (id) => {
+	return axiosInstance.delete(`/folders/admin/${id}`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+};
+
 export {
 	getFolders,
 	getFoldersById,
@@ -57,4 +65,5 @@ export {
 	getFoldersAdminById,
 	create,
 	edit,
+	remove,
 }

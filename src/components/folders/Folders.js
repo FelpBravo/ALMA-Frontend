@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
-import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, Grid } from '@material-ui/core';
 
-import { openModalFolder, setActionModal, setFolder, startFoldersLoading, startSaveCurrentFolder } from 'actions/adminFolders';
+import IntlMessages from 'util/IntlMessages';
+import {
+	openModalFolder, setActionModal, setFolder, startFoldersLoading, startSaveCurrentFolder
+} from 'actions/adminFolders';
 import { DataTableFolders } from './ui/DataTableFolders';
 import SimpleBreadcrumbs from 'components/ui/SimpleBreadcrumbs';
 import FolderDialog from './ui/FolderDialog';
-import { Button, Grid, IconButton } from '@material-ui/core';
 import { ACTION_CREATE } from 'constants/constUtil';
 
 const Folders = () => {
@@ -17,7 +19,9 @@ const Folders = () => {
 	useEffect(() => {
 
 		if (folders.length === 0) {
+
 			dispatch(startFoldersLoading());
+
 		}
 
 	}, [dispatch, folders]);
@@ -69,52 +73,64 @@ const Folders = () => {
 						</div>
 					</div>
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+					{
+						folders.length > 0
+						&&
+						<div className="row">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<Grid
-								container
-								justify="flex-end"
-								alignItems="flex-end"
+								<Grid
+									container
+									justify="flex-end"
+									alignItems="flex-end"
 
-							>
-
-								<Button
-									color="primary"
-									size="small"
-									type="button"
-									variant="contained"
-									onClick={handleNewFolder}
 								>
-									<i className="fa fa-plus cursor-pointer"></i>
-								</Button>
 
-							</Grid>
+									<Button
+										title="New"
+										color="primary"
+										size="small"
+										type="button"
+										variant="contained"
+										onClick={handleNewFolder}
+									>
+										<i className="fa fa-plus cursor-pointer"></i>
+									</Button>
 
+								</Grid>
+
+							</div>
 						</div>
-					</div>
+					}
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+					{
+						folders.length > 0
+						&&
+						<div className="row">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<SimpleBreadcrumbs
-								items={historyFolders}
-								currentItem={currentFolders.id}
-								handleClick={handleClickBreadcrumbs}
-							/>
+								<SimpleBreadcrumbs
+									items={historyFolders}
+									currentItem={currentFolders.id}
+									handleClick={handleClickBreadcrumbs}
+								/>
 
+							</div>
+						</div>}
+
+					{
+						folders.length > 0
+						&&
+						<div className="row">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
+								<DataTableFolders
+									folders={currentFolders.folders}
+								/>
+
+							</div>
 						</div>
-					</div>
-
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
-							<DataTableFolders
-								folders={currentFolders.folders}
-							/>
-
-						</div>
-					</div>
+					}
 
 				</div>
 			</div>

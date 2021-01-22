@@ -1,6 +1,7 @@
-import { INIT_FOLDER } from 'constants/constUtil';
+import { GENERAL_ERROR, INIT_FOLDER } from 'constants/constUtil';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
-import { create, edit, getFoldersAdmin, getFoldersAdminById } from 'services/foldersService';
+import { removeFolder } from 'helpers/removeFolder';
+import { create, edit, getFoldersAdmin, getFoldersAdminById, remove } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -295,5 +296,56 @@ const updateLoaded = (data) => {
 export const adminFoldersremoveAll = () => {
 	return {
 		type: types.adminFoldersRemoveAll,
+	}
+};
+
+export const startDeleteFolderLoading = (folderId) => {
+	return async (dispatch, getState) => {
+
+		const { folders, currentFolders } = getState().adminFolders;
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await remove(folderId);
+
+			Swal.close();
+
+			const newCurrentFolders = currentFolders.folders.filter(folder => folder.id !== folderId);
+
+			const newFolders = removeFolder(folderId, folders);
+
+			dispatch(deleteFolderLoaded(newFolders, newCurrentFolders));
+
+		} catch (error) {
+			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
+		}
+
+	}
+};
+
+export const deleteFolderLoaded = (folders, currentFolders) => {
+	return {
+		type: types.adminFoldersDeleteFolderLoaded,
+		payload: {
+			folders,
+			currentFolders: {
+				folders: currentFolders,
+			}
+		}
 	}
 }
