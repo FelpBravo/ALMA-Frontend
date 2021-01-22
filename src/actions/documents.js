@@ -6,12 +6,12 @@ import Swal from 'sweetalert2';
 import { types } from 'types/types';
 import { GENERAL_ERROR, KEY_DOC } from '../constants/constUtil';
 
-export const startDocumentsTypeLoading = () => {
+export const startDocumentsTypeLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
 
-			const resp = await getAll();
+			const resp = await getAll(authUser);
 
 			dispatch(documentsTypeLoaded(resp.data));
 

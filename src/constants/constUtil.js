@@ -22,3 +22,4 @@ export const ACTION_CREATE = 'create';
 export const ACTION_EDIT = 'edit';
 
 export const GENERAL_ERROR = 'Se presentó un error al procesar la solicitud. Por favor intente de nuevo'
+export const SUCCESS_MESSAGE = 'Operación completada con éxito'

@@ -2,6 +2,7 @@ import { deleteDocument, subscribeDocument } from 'services/filesService';
 import { getSearchFields, search } from 'services/searchService';
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
+import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
 
 export const startSearchFieldsLoading = () => {
 	return async (dispatch) => {
@@ -25,7 +26,7 @@ export const searchFieldsLoaded = (fields) => {
 	}
 };
 
-export const startSearchLoading = (term, filters, folderId, page, maxItems) => {
+export const startSearchLoading = (authUser, term, filters, folderId, page, maxItems) => {
 	return async (dispatch) => {
 
 		try {
@@ -39,7 +40,7 @@ export const startSearchLoading = (term, filters, folderId, page, maxItems) => {
 
 			Swal.showLoading();
 
-			const resp = await search(term, filters, folderId, page, maxItems);
+			const resp = await search(authUser, term, filters, folderId, page, maxItems);
 
 			dispatch(searchLoaded(resp.data));
 
@@ -131,6 +132,7 @@ export const startSubscribeDocument = (id) => {
 	return async (dispatch) => {
 
 		try {
+
 			Swal.fire({
 				title: 'Loading...',
 				text: 'Please wait...',
@@ -142,12 +144,25 @@ export const startSubscribeDocument = (id) => {
 
 			await subscribeDocument(id);
 
+			Swal.close();
+
+			await Swal.fire({
+				title: 'Información', text: SUCCESS_MESSAGE, icon: 'info', heightAuto: false
+			});
+
 			dispatch(subscribeDocumentFinish(id));
 
 		} catch (error) {
 			console.log(error);
-		} finally {
+
 			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
+
 		}
 
 	}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { EditTextSearch } from './ui/EditTextSearch';
 import { TableSearch } from './ui/TableSearch';
@@ -14,15 +14,17 @@ const Search = () => {
 
 	const { folderId } = queryString.parse(location.search);
 
+	const { authUser } = useSelector(state => state.auth);
+
 	useEffect(() => {
 
-		if (!folderId) {
+		if (!folderId || !authUser) {
 			return;
 		}
 
-		dispatch(startSearchLoading(undefined, undefined, folderId));
+		dispatch(startSearchLoading(authUser, undefined, undefined, folderId));
 
-	}, [folderId]);
+	}, [dispatch, folderId, authUser]);
 
 	return (
 		<div>

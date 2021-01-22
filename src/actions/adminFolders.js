@@ -5,7 +5,7 @@ import { create, edit, getFoldersAdmin, getFoldersAdminById, remove } from 'serv
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
-export const startFoldersLoading = () => {
+export const startFoldersLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
@@ -19,7 +19,7 @@ export const startFoldersLoading = () => {
 
 			Swal.showLoading();
 
-			const resp = await getFoldersAdmin();
+			const resp = await getFoldersAdmin(authUser);
 
 			dispatch(foldersLoaded(resp.data));
 			dispatch(saveHistory(0, INIT_FOLDER));

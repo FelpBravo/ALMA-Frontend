@@ -25,11 +25,17 @@ export const FormInit = () => {
 
 	const { initFolders = [] } = useSelector(state => state.folders);
 
+	const { authUser } = useSelector(state => state.auth);
+
 	useEffect(() => {
 
-		dispatch(startDocumentsTypeLoading());
+		if (authUser) {
 
-	}, []);
+			dispatch(startDocumentsTypeLoading(authUser));
+
+		}
+
+	}, [authUser]);
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;

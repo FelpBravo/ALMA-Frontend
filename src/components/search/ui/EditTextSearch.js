@@ -9,6 +9,8 @@ import { AdvancedSearch } from './AdvancedSearch';
 
 export const EditTextSearch = ({ }) => {
 
+	const { authUser } = useSelector(state => state.auth);
+
 	const { textSearch = '', fields } = useSelector(state => state.searchs);
 	const { maxTermLength = 3, minTermLength = 20 } = fields;
 
@@ -53,7 +55,7 @@ export const EditTextSearch = ({ }) => {
 
 	const handleSearch = (e) => {
 		e.preventDefault();
-		dispatch(startSearchLoading(searchText));
+		dispatch(startSearchLoading(authUser, searchText));
 
 		history.push(`/search`);
 	}
