@@ -1,6 +1,6 @@
 import { fileBase64 } from 'helpers/fileBase64';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
+import { editDocumentVersion, getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
 import { getTags } from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
@@ -230,8 +230,6 @@ export const startDocumentByIdLoading = (fileId) => {
 
 			Swal.close();
 
-			console.log(resp.data);
-
 			dispatch(documentByIdLoaded(resp.data));
 
 		} catch (error) {
@@ -320,7 +318,7 @@ export const startEditDocumentLoading = (
 
 			Swal.showLoading();
 
-			//await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
+			await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
 
 			await saveForm(fileId, aspectGroup);
 

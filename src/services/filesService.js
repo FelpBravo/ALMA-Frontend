@@ -20,7 +20,7 @@ const deleteDocument = (id) => {
 };
 
 const subscribeDocument = (id) => {
-	return axiosInstance.post(`/files/${id}/subscribe`, {
+	return axiosInstance.post(`/files/${id}/subscribe`, {}, {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},

@@ -22,6 +22,8 @@ const Search = () => {
 			return;
 		}
 
+		console.log('hashhas');
+
 		dispatch(startSearchLoading(authUser, undefined, undefined, folderId));
 
 	}, [dispatch, folderId, authUser]);

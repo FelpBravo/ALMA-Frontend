@@ -42,6 +42,8 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 
 			const resp = await search(authUser, term, filters, folderId, page, maxItems);
 
+			console.log(resp.data);
+
 			dispatch(searchLoaded(resp.data));
 
 		} catch (error) {

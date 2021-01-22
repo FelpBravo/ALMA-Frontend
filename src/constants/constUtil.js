@@ -4,6 +4,9 @@ export const SUBSCRIPTIONS = 'subscriptions documents';
 export const USERS = 'users';
 export const VIEWED_DOCUMENTS = 'most viewed documents';
 
+// FORMAT
+export const FORMAT_YYYY_MM_DD = 'YYYY-MM-DD';
+
 // TYPES FILTERS
 export const TEXT = 'TEXT';
 export const DATE = 'DATE';

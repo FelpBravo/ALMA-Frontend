@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
+import moment from 'moment';
 
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { FormInit } from './ui/FormInit';
@@ -17,7 +18,7 @@ import {
 	startSaveFormLoading, startTagsLoading, startThumbnailLoading
 } from 'actions/documents';
 import { Versioning } from './ui/Versioning';
-import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
+import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import { DocumentContext } from './helpers/DocumentContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -79,13 +80,34 @@ const Documents = () => {
 
 			// FILTROS DE LOS CAMPOS QUE TIENEN VALOR
 			for (const aspect of aspectList) {
-				const existsWithValue = aspect.customPropertyList.filter(property => property.value);
+
+				const existsWithValue = aspect.customPropertyList
+					.filter(property => {
+
+						if (property.value) {
+
+							if (property.type === DATE) {
+
+								property.value = moment(property.value).format(FORMAT_YYYY_MM_DD);
+
+							}
+
+							return property;
+						}
+
+					});
+
 				if (existsWithValue.length > 0) {
-					filters = [...filters, {
-						...aspect,
-						customPropertyList: existsWithValue,
-					}];
+
+					filters = [
+						...filters,
+						{
+							...aspect,
+							customPropertyList: existsWithValue,
+						}
+					];
 				}
+
 			}
 
 			if (document.length === 0) {
@@ -184,7 +206,8 @@ const Documents = () => {
 												&&
 												(
 													versioningType.length === 0 ||
-													versioningComments.length === 0
+													versioningComments.length === 0 ||
+													!files || files.length === 0
 												)
 											)
 										}
