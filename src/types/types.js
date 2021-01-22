@@ -68,5 +68,9 @@ export const types = {
 	tagsAdd: 'Tags New',
 	tagsEdit: 'Tags Edit',
 	tagsRemove: 'Tags Delete',
+	tagsOpenModal: 'Tags Open Modal',
+	tagsCloseModal: 'Tags Close Modal',
+	tagsSetActionModal: 'Tags Action Modal',
+	
 
 }

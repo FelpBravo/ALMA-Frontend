@@ -9,6 +9,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { TwitterPicker } from 'react-color';
 import TextField from '@material-ui/core/TextField';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModalTags } from 'actions/tags';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,28 +27,27 @@ const useStyles = makeStyles((theme) => ({
 	}));
 
 const ModalTags = () => {
-	const classes = useStyles();
-    const [dense, setDense] = React.useState(false);
-    const [secondary, setSecondary] = React.useState(false);
-   
-    const [open, setOpen] = React.useState(false);
+
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+    const dispatch = useDispatch();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const { openModal } = useSelector(state => state.tags);
 
+
+    const handleClose = () => {
+
+      dispatch(closeModalTags());
+  
+    }
+ 
 	return (
 	
 	<div>
       <Dialog
         fullScreen={fullScreen}
-       open={open}
+        open={openModal}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
@@ -61,7 +62,8 @@ const ModalTags = () => {
           variant="outlined"
           fullWidth
           />
-          <h3>Color de etiqueta</h3>
+          
+          <h3 className='mt-3'>Color de etiqueta</h3>
           <TwitterPicker/>
           </DialogContentText>
         </DialogContent>

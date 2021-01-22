@@ -1,4 +1,4 @@
-import { getTags, addTags, editTags, deleteTags} from 'services/tagsService';
+import { getTags, addTags, editTags, deleteTags} from 'services/tagsServices';
 import { types } from 'types/types';
 
 export const startTagsInitLoading = () => {
@@ -17,10 +17,28 @@ export const startTagsInitLoading = () => {
 	}
 };
 
-export const tagsInitLoaded = (data) => {
+export const tagsInitLoaded = (tagslist) => {
 	return {
 		type: types.tagsInitLoaded,
-		payload: data,
+		payload: tagslist,
 	}
 };
 
+export const openModalTags = () => {
+	return {
+		type: types.tagsOpenModal,
+	}
+};
+
+export const closeModalTags = () => {
+	return {
+		type: types.tagsCloseModal,
+	}
+};
+
+export const setActionModalTags = (type) => {
+	return {
+		type: types.tagsSetActionModal,
+		payload: type,
+	}
+};
