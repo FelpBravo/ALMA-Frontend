@@ -68,10 +68,11 @@ export const types = {
 	tagsInitLoaded: 'Tags List',
 	tagsAdd: 'Tags New',
 	tagsEdit: 'Tags Edit',
-	tagsRemove: 'Tags Delete',
+	tagsDeleteLoaded: 'Tags delete loaded',
 	tagsOpenModal: 'Tags Open Modal',
 	tagsCloseModal: 'Tags Close Modal',
 	tagsSetActionModal: 'Tags Action Modal',
+	tagSetFolder: 'Tags set folder',
 	
 
 }

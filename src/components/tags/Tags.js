@@ -11,10 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
 import { useDispatch, useSelector } from 'react-redux';
-import { startTagsInitLoading, openModalTags } from 'actions/tags';
-import { red } from '@material-ui/core/colors';
+import { startTagsInitLoading, openModalTags, startDeleteTagsLoading, setTagsList } from 'actions/tags';
 import ModalTags from './ui/ModalTags';
 import { Avatar, Divider } from '@material-ui/core';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -47,12 +47,17 @@ const Tags = () => {
     const [secondary, setSecondary] = React.useState(false);
    
 
-  const handleSelectActionTags = (type) => {
+  const handleSelectActionTags = async (type, id) => {
 
 	switch (type) {
 		case 1:
 
 			dispatch(openModalTags());
+			//dispatch(setTagsList({
+				//id: id,
+				//tag: tag,
+				//hex: hex,
+			//}));
 			//dispatch(setActionModalTags(ACTION_CREATE_TAGS));
 			
 			break;
@@ -65,8 +70,21 @@ const Tags = () => {
 			break;
 
 		case 3:
+			
+		    const resp = await Swal.fire({
+			title: 'tags',
+			text: "¿Está seguro de continuar?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
 
-			break;
+		if (resp.value) {
+			dispatch(startDeleteTagsLoading(id));
+		}
+
+		break;
 
 		default:
 			break;
@@ -126,7 +144,7 @@ const Tags = () => {
 													className="far fa-edit cursor-pointer custom-link-dash mr-2"
 												></i>
 												<i
-													onClick={() => handleSelectActionTags(3)}
+													onClick={() => handleSelectActionTags(3, item.id)}
 													className="far fa-trash-alt cursor-pointer custom-link-dash"
 												></i>
 

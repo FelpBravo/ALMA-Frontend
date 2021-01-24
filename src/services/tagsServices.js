@@ -32,9 +32,8 @@ const editTags = () => {
 	);
 };
 */}
-const deleteTags = () => {
-	return axiosInstance.delete(`/tags/{tagId}/delete`,
-		{
+const deleteTags = (tagId) => {
+	return axiosInstance.delete(`/tags/${tagId}/delete`,{
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},

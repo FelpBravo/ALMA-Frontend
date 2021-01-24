@@ -31,6 +31,13 @@ export const tagsReducer = (state = initialState, action) => {
             ...state,
             actionModal: action.payload,
         }
+
+        case types.tagsDeleteLoaded:
+        return {
+            ...state,
+				tagslist: action.payload,
+        }
+        
         
         default:
 			return state;
