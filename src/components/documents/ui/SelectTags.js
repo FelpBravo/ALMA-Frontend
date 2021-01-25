@@ -47,15 +47,50 @@ export const SelectTags = () => {
 
     const handleRenderValue = (tagsSelected) => {
 
-        let selected = '';
+        if (tagsSelected && tagsSelected.length > 0) {
 
-        for (const tagSelected of tagsSelected) {
-
-            selected += `${tagSelected.tag} `;
+            return `${tagsSelected.length} etiquetas seleccionadas`;
 
         }
 
-        return selected;
+        return '0 etiquetas seleccionadas';
+
+    }
+
+    const handleRenderTags = () => {
+
+        if (tagsSelected && tagsSelected.length > 0) {
+            return (
+                <div className="row mt-3">
+                    <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+                        {
+                            tagsSelected.map(({id, tag, hex}) => {
+                                return (
+                                    <span
+                                        key={id}
+                                        style={
+                                            {
+                                                background: hex,
+                                                color: '#ffffff',
+                                                paddingBottom: 5,
+                                                paddingTop: 5,
+                                                paddingLeft: 10,
+                                                paddingRight: 10,
+                                            }
+                                        }
+                                        className="x-2 jr-fs-sm mr-2 mb-0 rounded-xl order-sm-2"
+                                    >
+                                        {tag}
+                                    </span>
+                                )
+                            })
+
+                        }
+                    </div>
+                </div>
+
+            )
+        }
 
     }
 
@@ -105,6 +140,8 @@ export const SelectTags = () => {
 
                     </div>
                 </div>
+
+                {handleRenderTags()}
 
                 <div className="row">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
