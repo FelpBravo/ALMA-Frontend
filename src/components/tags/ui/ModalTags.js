@@ -79,7 +79,7 @@ const ModalTags = () => {
 				</DialogTitle>
       
         <DialogContent>
-          <DialogContentText>
+         
              <TextField
 								value={value}
 								autoFocus
@@ -104,7 +104,7 @@ const ModalTags = () => {
 						</div>
 					}
          
-          </DialogContentText>
+         
         </DialogContent>
        
         <DialogActions>
