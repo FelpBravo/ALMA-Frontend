@@ -73,6 +73,7 @@ export const types = {
 	tagsCloseModal: 'Tags Close Modal',
 	tagsSetActionModal: 'Tags Action Modal',
 	tagSetFolder: 'Tags set folder',
+	tagsSaveLoaded: 'Admin Folders save loaded',
 	
 
 }

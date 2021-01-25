@@ -1,44 +1,57 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 import { TwitterPicker } from 'react-color';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalTags } from 'actions/tags';
+import { closeModalTags, startCreateTagsLoading } from 'actions/tags';
+import IntlMessages from 'util/IntlMessages';
+import { ACTION_CREATE } from 'constants/constUtil';
+import { DialogTitle } from '@material-ui/core';
+import { startEditFolderLoading } from 'actions/adminFolders';
 
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-	flexGrow: 1,
-	marginTop: 30,
-	},
-	demo: {
-	backgroundColor: theme.palette.background.paper,
-	},
-	title: {
-	margin: theme.spacing(4, 0, 2),
-	},
-	}));
+const fieldName = <IntlMessages id="tags.modal.field.name" />
+
 
 const ModalTags = () => {
 
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
     const dispatch = useDispatch();
 
-    const { openModal } = useSelector(state => state.tags);
+    const { openModal, actionModal, tagslist} = useSelector(state => state.tags);
 
+    const [formValues, setFormValues] = useState({});
+    const [color, setColor] = useState('#fff');
+    const [value, setValue] = useState('');
 
+  
     const handleClose = () => {
 
       dispatch(closeModalTags());
+  
+    }
+
+    const handleOnChange = ({ target: { value } }) => {
+      setValue(value)
+
+  
+    }
+    const handleOnSave = () => {
+  
+      if (actionModal === ACTION_CREATE) {
+  
+        dispatch(closeModalTags());
+        dispatch(startCreateTagsLoading(value, color));
+  
+      } else {
+  
+        dispatch(closeModalTags());
+        dispatch(startEditFolderLoading());
+  
+      }
   
     }
  
@@ -46,25 +59,46 @@ const ModalTags = () => {
 	
 	<div>
       <Dialog
-        fullScreen={fullScreen}
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
+				open={openModal}
+				onClose={handleClose}
+				aria-labelledby="form-dialog-title"
+				fullWidth={true}
+			>
+
+        <DialogTitle id="form-dialog-title">
+					{
+						actionModal === ACTION_CREATE
+							? <IntlMessages id="tags.modal.title.create"/>
+							: <IntlMessages id="tags.modal.title.edit" />
+					}
+				</DialogTitle>
       
         <DialogContent>
           <DialogContentText>
-          <h3>Crear etiqueta</h3>
-          <TextField
-          id="outlined-margin-dense"
-          defaultValue="Nombre de etiqueta"
-          margin="dense"
-          variant="outlined"
-          fullWidth
-          />
+             <TextField
+								value={value}
+								autoFocus
+								label={fieldName}
+								type="text"
+								variant="outlined"
+								fullWidth
+								size="small"
+								onChange={handleOnChange}
+							/>
           
           <h3 className='mt-3'>Color de etiqueta</h3>
-          <TwitterPicker/>
+          <TwitterPicker  value={color} onChangeComplete={(color => setColor(color.hex))}/>
+         
+          {
+						actionModal !== ACTION_CREATE
+						&&
+						<div className="row mt-3">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+								<h4>{<IntlMessages id="folders.modal.field.state" />}</h4>
+							</div>
+						</div>
+					}
+         
           </DialogContentText>
         </DialogContent>
        
@@ -72,7 +106,7 @@ const ModalTags = () => {
           <Button autoFocus onClick={handleClose} variant="contained" color="primary">
            Cancelar
           </Button>
-          <Button onClick={handleClose}variant="contained" color="primary" autoFocus>
+          <Button onClick={handleOnSave} variant="contained" color="primary" autoFocus>
             Agregar
           </Button>
         </DialogActions>

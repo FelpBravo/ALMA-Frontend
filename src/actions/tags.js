@@ -1,4 +1,3 @@
-import { removeTags } from 'helpers/removeTags';
 import { getTags, addTags, editTags, deleteTags} from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
@@ -46,10 +45,10 @@ export const setActionModalTags = (type) => {
 	}
 };
 
-export const setTagsList = (tagslist) => {
+export const setTagsList = (tags) => {
 	return {
 		type: types.tagSetFolder,
-		payload: tagslist,
+		payload: tags,
 	}
 };
 
@@ -95,5 +94,37 @@ export const deleteTagsLoaded = (tagsData) => {
 		type: types.tagsDeleteLoaded,
 		payload: tagsData
 		
+	}
+}
+export const startCreateTagsLoading = (tag, hex) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await addTags(tag, hex);
+
+			Swal.close();
+
+			dispatch(saveTagsLoaded());
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+		}
+
+	}
+};
+const saveTagsLoaded = () => {
+	return {
+		type: types.tagsSaveLoaded,
 	}
 }

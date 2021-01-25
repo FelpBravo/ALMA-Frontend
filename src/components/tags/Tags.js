@@ -11,10 +11,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
 import { useDispatch, useSelector } from 'react-redux';
-import { startTagsInitLoading, openModalTags, startDeleteTagsLoading, setTagsList } from 'actions/tags';
+import { startTagsInitLoading, openModalTags, startDeleteTagsLoading, setTagsList, setActionModalTags } from 'actions/tags';
 import ModalTags from './ui/ModalTags';
 import { Avatar, Divider } from '@material-ui/core';
 import Swal from 'sweetalert2';
+import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -43,7 +44,6 @@ const Tags = () => {
 	}, [dispatch, tagslist]);
 
 	const classes = useStyles();
-    const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
    
 
@@ -53,19 +53,19 @@ const Tags = () => {
 		case 1:
 
 			dispatch(openModalTags());
-			//dispatch(setTagsList({
-				//id: id,
-				//tag: tag,
-				//hex: hex,
-			//}));
-			//dispatch(setActionModalTags(ACTION_CREATE_TAGS));
+			dispatch(setActionModalTags(ACTION_CREATE));
+			dispatch(setTagsList({
+				tag: '',
+				hex: '',
+				id: 0,
+			}));
 			
 			break;
 
 		case 2:
 
 			dispatch(openModalTags());
-			//dispatch(setActionModalTags(ACTION_EDIT_TAGS));
+			dispatch(setActionModalTags(ACTION_EDIT));
 
 			break;
 
