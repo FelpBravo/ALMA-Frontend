@@ -10,18 +10,18 @@ const getFolders = (authUser) => {
 	});
 };
 
-const getFoldersById = (folderId) => {
+const getFoldersById = (folderId, authUser) => {
 	return axiosInstance.get(`/folders/${folderId}/children`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };
 
-const getFoldersAdmin = () => {
+const getFoldersAdmin = (authUser) => {
 	return axiosInstance.get('/folders/admin', {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };

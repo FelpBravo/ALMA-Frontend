@@ -38,7 +38,7 @@
 		"jwt-decode": "^3.1.2",
 		"match-sorter": "^4.0.2",
 		"material-ui-pickers": "^2.2.4",
-		"moment": "^2.24.0",
+		"moment": "^2.29.1",
 		"namor": "^2.0.2",
 		"node-sass": "^4.13.0",
 		"nprogress": "^0.2.0",

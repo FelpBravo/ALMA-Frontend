@@ -10,12 +10,12 @@ const getSearchFields = () => {
 	});
 };
 
-const search = (term, filters = [], folderId, page = 1, maxItems = 10) => {
+const search = (authUser, term, filters = [], folderId, page = 1, maxItems = 10) => {
 	return axiosInstance.post(`/search/`,
 		{ term, page, folderId, maxItems, filters, },
 		{
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${authUser}`,
 			},
 		}
 	);

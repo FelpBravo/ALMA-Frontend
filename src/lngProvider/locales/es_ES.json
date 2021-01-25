@@ -610,6 +610,8 @@
 	"document.versioning.type.minor": "Menor",
 	"document.versioning.comments": "Comentarios del versionamiento",
 	"document.versioning.title": "Versionamiento",
+	"document.tags.title": "Etiquetas",
+	"document.select.folder": "Seleccione carpeta",
 	"folders.title": "Administración directorios",
 	"folders.table.column1": "Nombre",
 	"folders.table.column2": "Acciones",

@@ -1,6 +1,7 @@
 import React from 'react'
+import moment from 'moment';
 import PropTypes from 'prop-types';
-import { DATE, NUMERIC, LIST } from 'constants/constUtil';
+import { DATE, NUMERIC, LIST, FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { detailDocumentSetValueField } from 'actions/documents';
@@ -29,11 +30,12 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					variant="outlined"
 					fullWidth
 					type="date"
-					value={value ? value : '2017-05-24'}
+					value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
 					size="small"
 					InputLabelProps={{
 						shrink: true,
-					}}
+					}
+					}
 					onChange={handleOnChange}
 				/>
 			);

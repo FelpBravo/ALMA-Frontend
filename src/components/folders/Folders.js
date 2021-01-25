@@ -14,17 +14,20 @@ import { ACTION_CREATE } from 'constants/constUtil';
 const Folders = () => {
 
 	const dispatch = useDispatch();
+
 	const { folders = [], currentFolders, historyFolders = [] } = useSelector(state => state.adminFolders);
+
+	const { authUser } = useSelector(state => state.auth);
 
 	useEffect(() => {
 
-		if (folders.length === 0) {
+		if (folders.length === 0 && authUser) {
 
-			dispatch(startFoldersLoading());
+			dispatch(startFoldersLoading(authUser));
 
 		}
 
-	}, [dispatch, folders]);
+	}, [dispatch, folders, authUser]);
 
 	const handleClickBreadcrumbs = (e, { id, }) => {
 

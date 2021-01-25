@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
+import moment from 'moment';
 
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { FormInit } from './ui/FormInit';
@@ -12,13 +13,16 @@ import IntlMessages from 'util/IntlMessages';
 import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import {
-	documentsClear, startDocumentByIdLoading,
+	documentsClear,
+	startDocumentByIdLoading,
 	startEditDocumentLoading,
-	startSaveFormLoading, startTagsLoading, startThumbnailLoading
+	startSaveFormLoading,
+	startThumbnailLoading
 } from 'actions/documents';
 import { Versioning } from './ui/Versioning';
-import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
+import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import { DocumentContext } from './helpers/DocumentContext';
+import { SelectTags } from './ui/SelectTags';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -36,11 +40,13 @@ const Documents = () => {
 	const location = useLocation();
 	const history = useHistory();
 
-	const { detailDocumentType = [],
+	const {
+		detailDocumentType = [],
 		fileIdLoaded = '',
 		folderId = '',
 		versioningType = '',
 		versioningComments = '',
+		tagsSelected = [],
 	} = useSelector(state => state.documents);
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
@@ -57,9 +63,10 @@ const Documents = () => {
 		}
 
 		dispatch(documentsClear());
+
 		dispatch(startDocumentByIdLoading(document));
+
 		dispatch(startThumbnailLoading(document));
-		dispatch(startTagsLoading());
 
 	}, [dispatch, document]);
 
@@ -79,18 +86,53 @@ const Documents = () => {
 
 			// FILTROS DE LOS CAMPOS QUE TIENEN VALOR
 			for (const aspect of aspectList) {
-				const existsWithValue = aspect.customPropertyList.filter(property => property.value);
+
+				const existsWithValue = aspect.customPropertyList
+					.filter(property => {
+
+						if (property.value) {
+
+							if (property.type === DATE) {
+
+								property.value = moment(property.value).format(FORMAT_YYYY_MM_DD);
+
+							}
+
+							return property;
+						}
+
+					});
+
 				if (existsWithValue.length > 0) {
-					filters = [...filters, {
-						...aspect,
-						customPropertyList: existsWithValue,
-					}];
+
+					filters = [
+						...filters,
+						{
+							...aspect,
+							customPropertyList: existsWithValue,
+						}
+					];
 				}
+
 			}
+
+			// TODO: se filtran por el nombre del tag. Requiere ajuste back
+			const tags = tagsSelected.map(({ tag }) => {
+
+				return tag
+
+			});
 
 			if (document.length === 0) {
 
-				dispatch(startSaveFormLoading(fileIdLoaded, folderId, { id: documentId, aspectList: filters }));
+				dispatch(
+					startSaveFormLoading(
+						fileIdLoaded,
+						folderId,
+						{ id: documentId, aspectList: filters },
+						tags
+					)
+				);
 
 			} else {
 
@@ -100,11 +142,16 @@ const Documents = () => {
 						fileIdLoaded,
 						versioningType === VERSION_TYPE_MAJOR ? true : false,
 						versioningComments,
-						{ id: documentId, aspectList: filters }
+						{ id: documentId, aspectList: filters },
+						tags
 					)
 				);
 
-				history.goBack();
+				setTimeout(() => {
+
+					history.goBack();
+
+				}, 1000);
 
 			}
 		}
@@ -156,6 +203,8 @@ const Documents = () => {
 						<Versioning />
 					}
 
+					<SelectTags />
+
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
 							<Grid
@@ -181,6 +230,8 @@ const Documents = () => {
 											fileIdLoaded.length === 0 ||
 											folderId.length === 0 ||
 											(document.length > 0
+												&&
+												files && files.length > 0
 												&&
 												(
 													versioningType.length === 0 ||
