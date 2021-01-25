@@ -47,7 +47,7 @@ export const setActionModalTags = (type) => {
 
 export const setTagsList = (tags) => {
 	return {
-		type: types.tagSetFolder,
+		type: types.tagsSetFolder,
 		payload: tags,
 	}
 };
@@ -55,7 +55,7 @@ export const setTagsList = (tags) => {
 export const startDeleteTagsLoading = (tagId) => {
 	return async (dispatch, getState) => {
 
-		const { tagsData } = getState().tags;
+		const { tagslist = [] } = getState().tags;
 
 		try {
 
@@ -72,11 +72,12 @@ export const startDeleteTagsLoading = (tagId) => {
 
 			Swal.close();
 
-			const newCurrentTags = tagsData.filter(tags => tags.id !== tagId);
+			const newCurrentTags = tagslist.filter(tags => tags.id !== tagId);
 
 			dispatch(deleteTagsLoaded(newCurrentTags));
 
 		} catch (error) {
+			console.log('error',error)
 			Swal.close();
 
 			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
@@ -112,9 +113,12 @@ export const startCreateTagsLoading = (tag, hex) => {
 
 			await addTags(tag, hex);
 
+			const resp = await getTags();
+			
 			Swal.close();
 
 			dispatch(saveTagsLoaded());
+			dispatch(tagsInitLoaded(resp.data));
 
 		} catch (error) {
 			Swal.close();
@@ -123,8 +127,48 @@ export const startCreateTagsLoading = (tag, hex) => {
 
 	}
 };
+
 const saveTagsLoaded = () => {
 	return {
 		type: types.tagsSaveLoaded,
 	}
 }
+
+export const startEditTagsLoading = (tag, hex, id) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await editTags(tag, hex, id);
+
+			dispatch(updateTagsLoaded(tag, hex, id));
+			dispatch(saveTagsLoaded());
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+const updateTagsLoaded = (tag, hex, id) => {
+	return {
+		type: types.tagsUpdateLoaded,
+		payload:{
+			hex,
+			tag,
+			id,
+		}
+	}
+};

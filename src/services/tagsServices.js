@@ -11,7 +11,7 @@ const getTags = () => {
 };
 
 const addTags = (tag, hex) => {
-	return axiosInstance.put(`/tags/add`,
+	return axiosInstance.post(`/tags/add`,
 		{ tag, hex },
 		{
 			headers: {
@@ -21,9 +21,9 @@ const addTags = (tag, hex) => {
 	);
 };
 
-{/*const editTags = () => {
-	return axiosInstance.options(`/tags/edit`,
-		{ id, tag, hex },
+const editTags = (id, tag, hex) => {
+	return axiosInstance.put(`/tags/edit`,
+	{"id":id, "hex":hex, "tag":tag },
 		{
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ const addTags = (tag, hex) => {
 		}
 	);
 };
-*/}
+
 const deleteTags = (tagId) => {
 	return axiosInstance.delete(`/tags/${tagId}/delete`,
 {
@@ -49,4 +49,5 @@ export {
 	getTags,
 	deleteTags,
 	addTags,
+	editTags,
 }

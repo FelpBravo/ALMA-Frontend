@@ -37,17 +37,15 @@ const Tags = () => {
 	
 	useEffect(() => {
 
-		if (tagslist.length === 0) {
 			dispatch(startTagsInitLoading());
-		}
-
-	}, [dispatch, tagslist]);
+		
+	}, [dispatch]);
 
 	const classes = useStyles();
     const [secondary, setSecondary] = React.useState(false);
    
 
-  const handleSelectActionTags = async (type, id) => {
+  const handleSelectActionTags = async (type, id, tag, hex) => {
 
 	switch (type) {
 		case 1:
@@ -66,6 +64,11 @@ const Tags = () => {
 
 			dispatch(openModalTags());
 			dispatch(setActionModalTags(ACTION_EDIT));
+			dispatch(setTagsList({
+				tag,
+				hex,
+				id,
+			}));
 
 			break;
 
@@ -140,7 +143,7 @@ const Tags = () => {
 											<ListItemSecondaryAction>
 											<div>
 												<i
-													onClick={() => handleSelectActionTags(2)}
+													onClick={() => handleSelectActionTags(2,item.tag, item.hex, item.id)}
 													className="far fa-edit cursor-pointer custom-link-dash mr-2"
 												></i>
 												<i
