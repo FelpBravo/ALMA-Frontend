@@ -24,12 +24,12 @@ export const foldersInitLoaded = (folders) => {
 	}
 };
 
-export const startFoldersSetChildren = (folderId) => {
+export const startFoldersSetChildren = (folderId, authUser) => {
 	return async (dispatch) => {
 
 		try {
 
-			const resp = await getFoldersById(folderId);
+			const resp = await getFoldersById(folderId, authUser);
 
 			dispatch(foldersSetChildren(folderId, resp.data));
 

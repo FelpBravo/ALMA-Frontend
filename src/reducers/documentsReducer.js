@@ -12,6 +12,7 @@ const initialState = {
 	thumbnail: null,
 	thumbnailGenerated: false,
 	tags: [],
+	tagsSelected: [],
 	versioningType: '',
 	versioningComments: '',
 	openModalSelectFolder: false,
@@ -136,6 +137,7 @@ export const documentsReducer = (state = initialState, action) => {
 				folders: [],
 				historyFoldersBreadcrumbs: [],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
+				tagsSelected: [],
 			}
 
 		case types.docsClear:
@@ -150,6 +152,7 @@ export const documentsReducer = (state = initialState, action) => {
 				thumbnail: null,
 				thumbnailGenerated: false,
 				tags: [],
+				tagsSelected: [],
 				versioningType: '',
 				versioningComments: '',
 				folders: [],
@@ -163,6 +166,7 @@ export const documentsReducer = (state = initialState, action) => {
 				detailDocumentType: { ...action.payload.aspectGroup },
 				fileIdLoaded: action.payload.fileId,
 				folderId: action.payload.folderId,
+				tagsSelected: [...action.payload.tags ],
 			}
 
 		case types.docsTagsLoaded:
@@ -243,6 +247,12 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				historyFoldersBreadcrumbs: [...action.payload],
+			}
+
+		case types.docsAddAndRemoveTag:
+			return {
+				...state,
+				tagsSelected: action.payload,
 			}
 
 		default:
