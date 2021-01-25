@@ -99,8 +99,8 @@
 		"url-search-params": "^1.1.0"
 	},
 	"scripts": {
-		"start": "env-cmd -f.env.local react-scripts start",
-		"start-dev": "env-cmd -f.env.development react-scripts start",
+		"start": "env-cmd -f .env.local react-scripts start",
+		"start-dev": "env-cmd -f .env.development react-scripts start",
 		"start-qa": "env-cmd -f .env.qa react-scripts start",
 		"build": "env-cmd -f .env.production react-scripts --max_old_space_size=6144 build",
 		"build-dev": "env-cmd -f .env.development react-scripts build",

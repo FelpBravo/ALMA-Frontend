@@ -129,7 +129,7 @@ export const AdvancedSearch = () => {
 				<IntlMessages id="dashboard.advancedSearch" />
 			</span>
 
-			<IconButton onClick={handleOpenAdvanced}>
+			<IconButton onClick={handleOpenAdvanced} color='primary'>
 				<i className={`zmdi ${iconAdvancedSearch}`} />
 			</IconButton>
 

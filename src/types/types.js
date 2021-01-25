@@ -74,4 +74,15 @@ export const types = {
 	adminFoldersRemoveAll: 'Admin Folders remove all',
 	adminFoldersDeleteFolderLoaded: 'Admin Folders delete folder loaded',
 
+	tagsInitLoaded: 'Tags List',
+	tagsAdd: 'Tags New',
+	tagsEdit: 'Tags Edit',
+	tagsDeleteLoaded: 'Tags delete loaded',
+	tagsOpenModal: 'Tags Open Modal',
+	tagsCloseModal: 'Tags Close Modal',
+	tagsSetActionModal: 'Tags Action Modal',
+	tagsSetFolder: 'Tags set folder',
+	tagsSaveLoaded: 'Tags save loaded',
+	tagsUpdateLoaded: 'Tags update loaded',
+
 }

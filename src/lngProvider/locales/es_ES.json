@@ -623,5 +623,11 @@
 	"folders.modal.field.state": "Estado",
 	"folders.modal.field.position": "Posición",
 	"button.text.cancel": "Cancelar",
-	"button.text.save": "Guardar"
+	"button.text.save": "Guardar",
+	"tags.modal.title.create": "Crear etiqueta",
+	"tags.modal.title.edit": "Editar etiqueta",
+	"tags.title": "Administración de etiquetas",
+	"tags.modal.field.name": "Nombre de etiqueta"
+	
+
 }

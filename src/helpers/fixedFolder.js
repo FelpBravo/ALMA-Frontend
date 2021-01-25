@@ -14,7 +14,7 @@ export const fixedFolders = [
 			{
 				id: -1,
 				name: 'sidebar.loadDocuments',
-				icon: 'view-dashboard',
+				icon: 'open-in-browser',
 				type: 'item',
 				link: '/documents',
 				bd: false,
@@ -22,7 +22,7 @@ export const fixedFolders = [
 			{
 				id: -3,
 				name: 'sidebar.tags.home',
-				icon: 'view-dashboard',
+				icon: 'label',
 				type: 'item',
 				link: '/tags',
 				bd: false,
@@ -30,7 +30,7 @@ export const fixedFolders = [
 			{
 				id: -4,
 				name: 'sidebar.tags.folders',
-				icon: 'view-dashboard',
+				icon: 'folder',
 				type: 'item',
 				link: '/folders',
 				bd: false,
