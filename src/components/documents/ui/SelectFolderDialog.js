@@ -65,7 +65,7 @@ export const SelectFolderDialog = () => {
 
 		}
 
-		dispatch(startSubFoldersLoading(folder));
+		dispatch(startSubFoldersLoading(folder, authUser));
 
 	}
 

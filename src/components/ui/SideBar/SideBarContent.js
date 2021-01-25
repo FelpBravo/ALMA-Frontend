@@ -108,7 +108,7 @@ const SideBarContent = () => {
 			return;
 		}
 
-		dispatch(startFoldersSetChildren(folderId));
+		dispatch(startFoldersSetChildren(folderId, authUser));
 
 		dispatch(folderSelected(folderId));
 

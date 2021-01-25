@@ -13,13 +13,16 @@ import IntlMessages from 'util/IntlMessages';
 import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import {
-	documentsClear, startDocumentByIdLoading,
+	documentsClear, 
+	startDocumentByIdLoading,
 	startEditDocumentLoading,
-	startSaveFormLoading, startTagsLoading, startThumbnailLoading
+	startSaveFormLoading, 
+	startThumbnailLoading
 } from 'actions/documents';
 import { Versioning } from './ui/Versioning';
 import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import { DocumentContext } from './helpers/DocumentContext';
+import { SelectTags } from './ui/SelectTags';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -37,11 +40,13 @@ const Documents = () => {
 	const location = useLocation();
 	const history = useHistory();
 
-	const { detailDocumentType = [],
+	const { 
+		detailDocumentType = [],
 		fileIdLoaded = '',
 		folderId = '',
 		versioningType = '',
 		versioningComments = '',
+		tagsSelected = [],
 	} = useSelector(state => state.documents);
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
@@ -58,9 +63,10 @@ const Documents = () => {
 		}
 
 		dispatch(documentsClear());
+
 		dispatch(startDocumentByIdLoading(document));
+		
 		dispatch(startThumbnailLoading(document));
-		dispatch(startTagsLoading());
 
 	}, [dispatch, document]);
 
@@ -110,9 +116,23 @@ const Documents = () => {
 
 			}
 
+			// TODO: se filtran por el nombre del tag. Requiere ajuste back
+			const tags = tagsSelected.map(({ tag }) => {
+
+				return tag
+
+			});
+
 			if (document.length === 0) {
 
-				dispatch(startSaveFormLoading(fileIdLoaded, folderId, { id: documentId, aspectList: filters }));
+				dispatch(
+					startSaveFormLoading(
+						fileIdLoaded, 
+						folderId, 
+						{ id: documentId, aspectList: filters },
+						tags
+					)
+				);
 
 			} else {
 
@@ -122,11 +142,16 @@ const Documents = () => {
 						fileIdLoaded,
 						versioningType === VERSION_TYPE_MAJOR ? true : false,
 						versioningComments,
-						{ id: documentId, aspectList: filters }
+						{ id: documentId, aspectList: filters },
+						tags
 					)
 				);
 
-				history.goBack();
+				setTimeout(() => {
+				
+					history.goBack();
+
+				}, 1000);
 
 			}
 		}
@@ -179,6 +204,14 @@ const Documents = () => {
 					}
 
 					<div className="row">
+						<div className="col-xl-4 col-lg-4 col-md-12 col-12 mt-3">
+
+							<SelectTags />
+
+						</div>
+					</div>
+
+					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
 							<Grid
 								container
@@ -206,8 +239,7 @@ const Documents = () => {
 												&&
 												(
 													versioningType.length === 0 ||
-													versioningComments.length === 0 ||
-													!files || files.length === 0
+													versioningComments.length === 0
 												)
 											)
 										}

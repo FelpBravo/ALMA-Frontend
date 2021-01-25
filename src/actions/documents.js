@@ -118,7 +118,7 @@ export const detailDocumentSetValueField = (sectionId, name, value) => {
 	}
 };
 
-export const startSaveFormLoading = (fileId, folderId, aspectGroup) => {
+export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 	return async (dispatch) => {
 
 		try {
@@ -134,7 +134,7 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup) => {
 
 			Swal.close();
 
-			await saveForm(fileId, folderId, aspectGroup);
+			await saveForm(fileId, folderId, aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 
@@ -279,11 +279,11 @@ export const startDocumentByIdLoading = (fileId) => {
 	}
 };
 
-const documentByIdLoaded = ({ aspectGroup, fileId, folderId }) => {
+const documentByIdLoaded = ({ aspectGroup, fileId, folderId, tags = [] }) => {
 	return {
 		type: types.docsDocumentByIdLoaded,
 		payload: {
-			aspectGroup, fileId, folderId
+			aspectGroup, fileId, folderId, tags,
 		}
 	}
 }
@@ -342,7 +342,8 @@ export const startEditDocumentLoading = (
 	fileId,
 	versioningType,
 	versioningComments,
-	aspectGroup
+	aspectGroup,
+	tags
 ) => {
 	return async (dispatch) => {
 
@@ -357,9 +358,13 @@ export const startEditDocumentLoading = (
 
 			Swal.showLoading();
 
-			await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
+			if (files) {
+				
+				await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
 
-			await editForm(fileId, aspectGroup);
+			}
+
+			await editForm(fileId, aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 
@@ -384,7 +389,7 @@ export const closeModalSelectFolder = () => {
 	}
 };
 
-export const startSubFoldersLoading = (folder) => {
+export const startSubFoldersLoading = (folder, authUser) => {
 	return async (dispatch, getState) => {
 
 		const { folders } = getState().documents;
@@ -403,7 +408,7 @@ export const startSubFoldersLoading = (folder) => {
 
 			try {
 
-				const resp = await getFoldersById(folder.id);
+				const resp = await getFoldersById(folder.id, authUser);
 
 				dispatch(addHistoryFoldersBreadcrumbs({ ...folder }));
 
@@ -486,4 +491,37 @@ const updateHistoryFoldersBreadcrumbs = (history) => {
 		payload: history,
 	}
 };
+
+export const startAddAndRemoveTag = (id) => {
+	return (dispatch, getState) => {
+
+		const { tagsSelected, tags = [] } = getState().documents;
+
+		const existsTag = tagsSelected.find(x => x.id === parseInt(id));
+
+		let newTags = [];
+
+		if (!existsTag) {
+
+			const tag = tags.find(x => x.id === parseInt(id));
+
+			newTags = [ ...tagsSelected, { ... tag } ];
+
+		} else {
+
+			newTags = tagsSelected.filter(tag => tag.id !== parseInt(id));
+
+		}
+
+		dispatch(addAndRemoveTagLoaded(newTags));
+
+	}
+};
+
+const addAndRemoveTagLoaded = (tags) => {
+	return {
+		type: types.docsAddAndRemoveTag,
+		payload: tags,
+	}
+}
 
