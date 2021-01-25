@@ -13,10 +13,10 @@ import IntlMessages from 'util/IntlMessages';
 import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import {
-	documentsClear, 
+	documentsClear,
 	startDocumentByIdLoading,
 	startEditDocumentLoading,
-	startSaveFormLoading, 
+	startSaveFormLoading,
 	startThumbnailLoading
 } from 'actions/documents';
 import { Versioning } from './ui/Versioning';
@@ -40,7 +40,7 @@ const Documents = () => {
 	const location = useLocation();
 	const history = useHistory();
 
-	const { 
+	const {
 		detailDocumentType = [],
 		fileIdLoaded = '',
 		folderId = '',
@@ -65,7 +65,7 @@ const Documents = () => {
 		dispatch(documentsClear());
 
 		dispatch(startDocumentByIdLoading(document));
-		
+
 		dispatch(startThumbnailLoading(document));
 
 	}, [dispatch, document]);
@@ -127,8 +127,8 @@ const Documents = () => {
 
 				dispatch(
 					startSaveFormLoading(
-						fileIdLoaded, 
-						folderId, 
+						fileIdLoaded,
+						folderId,
 						{ id: documentId, aspectList: filters },
 						tags
 					)
@@ -148,7 +148,7 @@ const Documents = () => {
 				);
 
 				setTimeout(() => {
-				
+
 					history.goBack();
 
 				}, 1000);
@@ -203,13 +203,9 @@ const Documents = () => {
 						<Versioning />
 					}
 
-					<div className="row">
-						<div className="col-xl-4 col-lg-4 col-md-12 col-12 mt-3">
 
-							<SelectTags />
+					<SelectTags />
 
-						</div>
-					</div>
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">

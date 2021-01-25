@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startAddAndRemoveTag, startTagsLoading } from 'actions/documents';
 import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
 import IntlMessages from 'util/IntlMessages';
+import { Divider } from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -68,9 +69,8 @@ export const SelectTags = () => {
                     </div>
                 </div>
 
-
                 <div className="row">
-                    <div className="col-xl-4 col-lg-4 col-md-12 col-12 mt-3">
+                    <div className="col-xl-4 col-lg-4 col-md-12 col-12">
                         <FormControl fullWidth>
 
                             <InputLabel>Seleccionar etiquetas</InputLabel>
@@ -103,6 +103,12 @@ export const SelectTags = () => {
                             </Select>
                         </FormControl>
 
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+                        <Divider />
                     </div>
                 </div>
 
