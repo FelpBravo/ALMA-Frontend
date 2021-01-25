@@ -203,9 +203,7 @@ const Documents = () => {
 						<Versioning />
 					}
 
-
 					<SelectTags />
-
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
@@ -232,6 +230,8 @@ const Documents = () => {
 											fileIdLoaded.length === 0 ||
 											folderId.length === 0 ||
 											(document.length > 0
+												&&
+												files && files.length > 0
 												&&
 												(
 													versioningType.length === 0 ||
