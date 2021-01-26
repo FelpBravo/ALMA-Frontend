@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import TreeItem from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
 import MailIcon from '@material-ui/icons/Folder';
+import StopRounded from '@material-ui/icons/StopRounded';
 
 import CustomScrollbars from 'util/CustomScrollbars';
 import Navigation from '../components/Navigation';
@@ -16,24 +17,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fixedFolders } from 'helpers/fixedFolder';
 import { searchRemoveText } from 'actions/search';
 
-/*const useStyles = makeStyles({
-	root: {
-		height: 240,
-		flexGrow: 1,
-		maxWidth: 400,
-	},
-	treeItem: {
-		fontSize: 14,
-		color: '#A1A1A1',
-		fontFamily: 'Roboto, sans-serif',
-
-
-		'&:hover': {
-			color: '#FFFFFF',
-		},
-	}
-});*/
-
 const useTreeItemStyles = makeStyles((theme) => ({
 	root: {
 		color: theme.palette.text.secondary,
@@ -42,7 +25,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
 			color: '#FFFFFF'
 		},
 		'&:focus > $content, &$selected > $content': {
-			backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
+			backgroundColor: '#1d1d1d', //`var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
 			color: '#FFFFFF',
 		},
 		'&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
@@ -192,7 +175,7 @@ const SideBarContent = () => {
 				key={folder.id}
 				nodeId={String(folder.id)}
 				labelText={folder.name}
-				labelIcon={MailIcon} 
+				labelIcon={folder.hashSubFolders ? MailIcon : StopRounded} 
 			>
 				{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
 			</StyledTreeItem>
