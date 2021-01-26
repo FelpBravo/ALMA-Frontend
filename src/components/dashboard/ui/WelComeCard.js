@@ -24,10 +24,10 @@ const WelComeCard = () => {
 
 		if (widgets && widgets.length > 0) {
 
-			const resumens = widgets.filter((w) => w.title === ACTIVIY_RESUME);
-			if (resumens && resumens.length > 0) {
+			const resumens = widgets.find((w) => w.title === ACTIVIY_RESUME);
+			if (resumens) {
 				if (isMounted.current) {
-					setResumeLeft(resumens[0]);
+					setResumeLeft(resumens);
 				}
 			}
 

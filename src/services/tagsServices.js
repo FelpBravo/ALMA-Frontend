@@ -2,20 +2,20 @@ import { axiosInstance } from '../config/axios-instance';
 
 const token = localStorage.getItem('token');
 
-const getTags = () => {
+const getTags = (authUser) => {
 	return axiosInstance.get('/tags/', {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };
 
-const addTags = (tag, hex) => {
+const addTags = (authUser, tag, hex) => {
 	return axiosInstance.post(`/tags/add`,
 		{ tag, hex },
 		{
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${authUser}`,
 			},
 		}
 	);

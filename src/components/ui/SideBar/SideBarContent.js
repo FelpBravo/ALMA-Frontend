@@ -4,108 +4,20 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useHistory } from 'react-router-dom';
-import TreeItem from '@material-ui/lab/TreeItem';
-import Typography from '@material-ui/core/Typography';
 import MailIcon from '@material-ui/icons/Folder';
-import StopRounded from '@material-ui/icons/StopRounded';
+import FiberManualRecord from '@material-ui/icons/FiberManualRecordOutlined';
 
 import CustomScrollbars from 'util/CustomScrollbars';
 import Navigation from '../components/Navigation';
 import { SideBarContext } from './SideBarContext';
-import { folderSelected, removeFoldersId, saveFoldersId, startFoldersInitLoading, startFoldersSetChildren } from 'actions/folders';
+import {
+	folderSelected, removeFoldersId, saveFoldersId,
+	startFoldersInitLoading, startFoldersSetChildren
+} from 'actions/folders';
 import { useDispatch, useSelector } from 'react-redux';
 import { fixedFolders } from 'helpers/fixedFolder';
 import { searchRemoveText } from 'actions/search';
-
-const useTreeItemStyles = makeStyles((theme) => ({
-	root: {
-		color: theme.palette.text.secondary,
-		'&:hover > $content': {
-			backgroundColor: '#1d1d1d',
-			color: '#FFFFFF'
-		},
-		'&:focus > $content, &$selected > $content': {
-			backgroundColor: '#1d1d1d', //`var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
-			color: '#FFFFFF',
-		},
-		'&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
-			backgroundColor: 'transparent',
-			color: '#FFFFFF'
-		},
-	},
-	content: {
-		color: theme.palette.text.secondary,
-		borderTopRightRadius: theme.spacing(2),
-		borderBottomRightRadius: theme.spacing(2),
-		paddingRight: theme.spacing(1),
-		fontWeight: theme.typography.fontWeightMedium,
-		'$expanded > &': {
-			fontWeight: theme.typography.fontWeightRegular,
-		},
-	},
-	group: {
-		marginLeft: 0,
-		'& $content': {
-			paddingLeft: theme.spacing(2),
-		},
-	},
-	expanded: {},
-	selected: {},
-	label: {
-		fontWeight: 'inherit',
-		color: 'inherit',
-	},
-	labelRoot: {
-		display: 'flex',
-		alignItems: 'center',
-		padding: theme.spacing(0.5, 0),
-	},
-	labelIcon: {
-		marginRight: theme.spacing(2),
-		fontSize: 15,
-		color: '#a1a1a1'
-	},
-	labelText: {
-		fontWeight: 'inherit',
-		flexGrow: 1,
-		color: '#a1a1a1',
-		padding: theme.spacing(0.5, 0),
-	},
-}));
-
-function StyledTreeItem(props) {
-	const classes = useTreeItemStyles();
-	const { labelText, labelIcon: LabelIcon, labelInfo, color, bgColor, ...other } = props;
-
-	return (
-		<TreeItem
-			label={
-				<div className={classes.labelRoot}>
-					<LabelIcon color="inherit" sty className={classes.labelIcon} />
-					<Typography variant="body2" className={classes.labelText}>
-						{labelText}
-					</Typography>
-					<Typography variant="caption" color="inherit">
-						{labelInfo}
-					</Typography>
-				</div>
-			}
-			style={{
-				'--tree-view-color': color,
-				'--tree-view-bg-color': bgColor,
-			}}
-			classes={{
-				root: classes.root,
-				content: classes.content,
-				expanded: classes.expanded,
-				selected: classes.selected,
-				group: classes.group,
-				label: classes.label,
-			}}
-			{...other}
-		/>
-	);
-}
+import StyledTreeItem from '../StyledTreeItem';
 
 const useStyles = makeStyles({
 	root: {
@@ -175,7 +87,7 @@ const SideBarContent = () => {
 				key={folder.id}
 				nodeId={String(folder.id)}
 				labelText={folder.name}
-				labelIcon={folder.hashSubFolders ? MailIcon : StopRounded} 
+				labelIcon={folder.hashSubFolders ? MailIcon : FiberManualRecord}
 			>
 				{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
 			</StyledTreeItem>

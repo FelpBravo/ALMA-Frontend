@@ -1,3 +1,4 @@
+import { createUUID } from 'helpers/createUUID';
 import React from 'react';
 import OrderTableCell from './OrderTableCell';
 
@@ -25,7 +26,7 @@ const OrderTable = ({ dataTable = data }) => {
 				<tbody>
 					{dataTable.map(data => {
 						return (
-							<OrderTableCell key={data.id} data={data} />
+							<OrderTableCell key={createUUID()} data={data} />
 						);
 					})}
 				</tbody>

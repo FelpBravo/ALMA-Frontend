@@ -627,7 +627,11 @@
 	"tags.modal.title.create": "Crear etiqueta",
 	"tags.modal.title.edit": "Editar etiqueta",
 	"tags.title": "Administración de etiquetas",
-	"tags.modal.field.name": "Nombre de etiqueta"
+	"tags.modal.field.name": "Nombre de etiqueta",
+	"dashboard.type.activity.subscribed": "Subscribió",
+	"dashboard.type.activity.uploaded": "Subió",
+	"dashboard.type.activity.viewed": "Vió",
+	"dashboard.type.activity.updated": "Actualizó"
 	
 
 }

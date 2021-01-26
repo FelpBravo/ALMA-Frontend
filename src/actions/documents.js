@@ -288,12 +288,12 @@ const documentByIdLoaded = ({ aspectGroup, fileId, folderId, tags = [] }) => {
 	}
 }
 
-export const startTagsLoading = () => {
+export const startTagsLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
 
-			const resp = await getTags();
+			const resp = await getTags(authUser);
 
 			dispatch(tagsLoaded(resp.data));
 

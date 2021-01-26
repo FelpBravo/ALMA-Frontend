@@ -49,7 +49,7 @@ export const TotalSummary = () => {
 
 	useEffect(() => {
 
-		if (widgets && widgets.length > 0) {
+		/*if (widgets && widgets.length > 0) {
 
 			const subscriptions = widgets.filter((w) => w.title === SUBSCRIPTIONS);
 
@@ -65,7 +65,7 @@ export const TotalSummary = () => {
 
 			}
 
-		}
+		}*/
 
 	}, [widgets]);
 

@@ -29,10 +29,11 @@ export const SelectTags = () => {
 
     const { tags = [], tagsSelected } = useSelector(state => state.documents);
 
+    const { authUser } = useSelector(state => state.auth);
 
     useEffect(() => {
 
-        dispatch(startTagsLoading());
+        dispatch(startTagsLoading(authUser));
 
     }, [dispatch]);
 

@@ -9,6 +9,7 @@ export const Subscriptions = () => {
 	const isMounted = useRef(true);
 
 	const { audits } = useSelector(state => state.audit);
+	
 	const { widgets } = audits;
 
 	const [documents, setDocuments] = useState([]);
@@ -25,22 +26,30 @@ export const Subscriptions = () => {
 
 		if (widgets && widgets.length > 0) {
 
-			const documents = widgets.filter((w) => w.title === SUBSCRIPTIONS);
+			const documents = widgets.find((w) => w.title === SUBSCRIPTIONS);
 
-			if (documents && documents.length > 0) {
+			if (documents) {
 
-				const list = documents[0].list.map(({ file_id, file_name, tags, folder }) => {
-					return {
-						id: file_id,
-						name: file_name,
-						icon: 'far fa-file-pdf',
-						tags,
-						folder,
-					};
-				});
+				const { activities } = documents;
 
-				if (isMounted.current) {
-					setDocuments(list);
+				if (Array.isArray(activities)) {
+
+					const list = activities.map(({ fileId, fileName, tags, folder, activityDate }) => {
+						return {
+							id: fileId,
+							name: fileName,
+							icon: 'far fa-file-pdf',
+							tags,
+							folder,
+							date: activityDate,
+							isSubscriptions: true,
+						};
+					});
+
+					if (isMounted.current) {
+						setDocuments(list);
+					}
+
 				}
 
 			}

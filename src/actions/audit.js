@@ -2,12 +2,13 @@ import { getAudits } from 'services/auditService';
 import { types } from 'types/types';
 import { uiAuditFinishLoading } from './uiAudit'
 
-export const startAuditsLoading = () => {
+export const startAuditsLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
 
-			const resp = await getAudits();
+			const resp = await getAudits(authUser);
+			console.log(resp.data);
 			dispatch(auditsLoaded(resp.data));
 
 		} catch (error) {
