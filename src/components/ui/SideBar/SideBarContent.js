@@ -4,7 +4,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useHistory } from 'react-router-dom';
-import MailIcon from '@material-ui/icons/Folder';
+import MailIcon from '@material-ui/icons/FolderOutlined';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecordOutlined';
 
 import CustomScrollbars from 'util/CustomScrollbars';
