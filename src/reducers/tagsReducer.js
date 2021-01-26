@@ -1,7 +1,7 @@
 import { types } from 'types/types';
 
 const initialState = {
-    tagslist: [],
+    taglist: [],
     openModal: false,
     actionModal: '',
     tags: {
@@ -18,7 +18,7 @@ export const tagsReducer = (state = initialState, action) => {
 		case types.tagsInitLoaded:
 			return {
 				...state,
-				tagslist: action.payload,
+				taglist: action.payload,
             }
             
         case types.tagsOpenModal:
@@ -42,7 +42,7 @@ export const tagsReducer = (state = initialState, action) => {
         case types.tagsDeleteLoaded:
         return {
             ...state,
-				tagslist: action.payload,
+				taglist: action.payload,
         }
 
         case types.tagsSetFolder:

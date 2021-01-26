@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Tags = () => {
 	const dispatch = useDispatch();
-	const { tagslist = [],} = useSelector(state => state.tags);
-	console.log('somos los tags',tagslist)
+	const { taglist = [],} = useSelector(state => state.tags);
+	console.log('somos los tags',taglist)
 
 	
 	useEffect(() => {
@@ -126,7 +126,7 @@ const Tags = () => {
 									</Grid>
 									<div className={classes.demo} >
 									{ 
-										  tagslist.map((item) => (
+										  taglist.map((item) => (
 										<List key={item.id}> 
 										
 											<ListItem >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, InputBase, Grid } from '@material-ui/core';
+import { Button, InputBase, Grid, makeStyles, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -7,10 +7,31 @@ import IntlMessages from 'util/IntlMessages';
 import { searchSetText, startSearchLoading } from 'actions/search';
 import { AdvancedSearch } from './AdvancedSearch';
 import SearchIcon from '@material-ui/icons/Search';
-//import SearchIcon from './search.svg';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+      background: '#E1F0FF',
+      border: 'none',
+      boxShadow: 'none',
+    },
+    input: {
+      color: '#3699FF',
+      fontSize: '14px',
+      radius: '4px',
+      fontFamily:'Poppins !important',
+      "&::placeholder": {
+        color: '#E1F0FF',
+        fontSize: '18px',
+        fontWeight: '600',
+        align: 'left',
+      }
+    },
+  }))
 
 export const EditTextSearch = ({ }) => {
 
+	const classes = useStyles();
+	
 	const { authUser } = useSelector(state => state.auth);
 
 	const { textSearch = '', fields } = useSelector(state => state.searchs);
@@ -81,15 +102,18 @@ export const EditTextSearch = ({ }) => {
 						<Grid container spacing={2}>
 
 							<Grid item xs={9}>
-                                <InputBase
-								    component={SearchIcon} 
+							<Paper className={classes.root} component="form">
+								<SearchIcon color="primary" />
+								<InputBase
+									className={classes.input}
 									value={searchText}
 									name="inputSearch"
-									className="custom-text-field"
+									//className="custom-text-field"
 									fullWidth
 									placeholder="Buscar por nombre de documento"
 									onChange={handleOnChange}
 								/>
+								</Paper>
 								<span className="text-danger text-error">{messageError}</span>
 							</Grid>
 

@@ -19,10 +19,10 @@ export const startTagsInitLoading = () => {
 	}
 };
 
-export const tagsInitLoaded = (tagslist) => {
+export const tagsInitLoaded = (taglist) => {
 	return {
 		type: types.tagsInitLoaded,
-		payload: tagslist,
+		payload: taglist,
 	}
 };
 
@@ -55,7 +55,7 @@ export const setTagsList = (tags) => {
 export const startDeleteTagsLoading = (tagId) => {
 	return async (dispatch, getState) => {
 
-		const { tagslist = [] } = getState().tags;
+		const { taglist = [] } = getState().tags;
 
 		try {
 
@@ -72,7 +72,7 @@ export const startDeleteTagsLoading = (tagId) => {
 
 			Swal.close();
 
-			const newCurrentTags = tagslist.filter(tags => tags.id !== tagId);
+			const newCurrentTags = taglist.filter(tags => tags.id !== tagId);
 
 			dispatch(deleteTagsLoaded(newCurrentTags));
 
