@@ -19,6 +19,7 @@ const initialState = {
 	folders: [],
 	historyFoldersBreadcrumbs: [],
 	currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
+	loadingFolderModal: false,
 }
 
 export const documentsReducer = (state = initialState, action) => {
@@ -166,7 +167,7 @@ export const documentsReducer = (state = initialState, action) => {
 				detailDocumentType: { ...action.payload.aspectGroup },
 				fileIdLoaded: action.payload.fileId,
 				folderId: action.payload.folderId,
-				tagsSelected: [...action.payload.tags ],
+				tagsSelected: [...action.payload.tags],
 			}
 
 		case types.docsTagsLoaded:
@@ -253,6 +254,12 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				tagsSelected: action.payload,
+			}
+
+		case types.docsLoadingModalFolder:
+			return {
+				...state,
+				loadingFolderModal: !state.loadingFolderModal,
 			}
 
 		default:

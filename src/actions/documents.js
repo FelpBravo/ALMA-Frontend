@@ -38,7 +38,6 @@ export const startFoldersLoading = (authUser) => {
 
 		try {
 
-			console.log('gagaga');
 			const resp = await getFolders(authUser);
 
 			dispatch(foldersLoaded(resp.data));

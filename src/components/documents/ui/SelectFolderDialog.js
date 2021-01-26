@@ -6,6 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import IntlMessages from 'util/IntlMessages';
 import {
@@ -25,17 +26,18 @@ export const SelectFolderDialog = () => {
 		openModalSelectFolder = false,
 		currentFolderBreadcrumbs,
 		historyFoldersBreadcrumbs,
+		loadingFolderModal = false,
 	} = useSelector(state => state.documents);
 
 	const { authUser } = useSelector(state => state.auth);
 
 	useEffect(() => {
 
-		if (authUser && folders.length === 0) {
+		if (folders.length === 0) {
 			dispatch(startFoldersLoading(authUser));
 		}
 
-	}, [dispatch, authUser, folders])
+	}, [dispatch, folders])
 
 	const handleClose = () => {
 
@@ -109,27 +111,43 @@ export const SelectFolderDialog = () => {
 
 				<DialogContent dividers>
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+					{
+						!loadingFolderModal
+						&&
+						<>
+							<div className="row">
+								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<SimpleBreadcrumbs
-								items={historyFoldersBreadcrumbs}
-								currentItem={currentFolderBreadcrumbs.id}
-								handleClick={handleClickBreadcrumbs}
-							/>
+									<SimpleBreadcrumbs
+										items={historyFoldersBreadcrumbs}
+										currentItem={currentFolderBreadcrumbs.id}
+										handleClick={handleClickBreadcrumbs}
+									/>
 
+								</div>
+							</div>
+
+							<div className="row">
+								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+									{
+
+										handleRenderItems()
+
+									}
+								</div>
+							</div>
+						</>
+					}
+
+					{
+						loadingFolderModal
+						&&
+						<div>
+							<Skeleton variant="text" />
+							<Skeleton variant="circle" width={40} height={40} />
+							<Skeleton variant="rect" width={210} height={118} />
 						</div>
-					</div>
-
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-							{
-
-								handleRenderItems()
-
-							}
-						</div>
-					</div>
+					}
 
 				</DialogContent>
 
