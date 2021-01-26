@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
 import { searchSetText, startSearchLoading } from 'actions/search';
 import { AdvancedSearch } from './AdvancedSearch';
+import SearchIcon from '@material-ui/icons/Search';
+//import SearchIcon from './search.svg';
 
 export const EditTextSearch = ({ }) => {
 
@@ -79,7 +81,8 @@ export const EditTextSearch = ({ }) => {
 						<Grid container spacing={2}>
 
 							<Grid item xs={9}>
-								<InputBase
+                                <InputBase
+								    component={SearchIcon} 
 									value={searchText}
 									name="inputSearch"
 									className="custom-text-field"

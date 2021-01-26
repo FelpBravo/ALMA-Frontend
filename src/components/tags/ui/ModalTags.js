@@ -11,7 +11,6 @@ import { closeModalTags, startCreateTagsLoading, startEditTagsLoading } from 'ac
 import IntlMessages from 'util/IntlMessages';
 import { ACTION_CREATE } from 'constants/constUtil';
 import { DialogTitle } from '@material-ui/core';
-import { startEditFolderLoading } from 'actions/adminFolders';
 
 
 const fieldName = <IntlMessages id="tags.modal.field.name" />
@@ -21,7 +20,7 @@ const ModalTags = () => {
 
     const dispatch = useDispatch();
 
-    const { openModal, actionModal, tagslist} = useSelector(state => state.tags);
+    const { openModal, actionModal, tags} = useSelector(state => state.tags);
 
     const [formValues, setFormValues] = useState({});
     const [color, setColor] = useState('#fff');
@@ -30,9 +29,9 @@ const ModalTags = () => {
 
     useEffect(() => {
 
-      setFormValues({ ...tagslist });
+      setFormValues({ ...tags });
   
-    }, [tagslist]);
+    }, [tags]);
   
     const handleClose = () => {
 
