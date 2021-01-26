@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { startAuditsLoading } from 'actions/audit';
 import { uiAuditShowLoading } from 'actions/uiAudit';
@@ -17,13 +17,15 @@ const Dashboard = () => {
 
 	const dispatch = useDispatch();
 
+	const { authUser } = useSelector(state => state.auth);
+
 	useEffect(() => {
 
 		dispatch(uiAuditShowLoading())
-		dispatch(startAuditsLoading());
-		dispatch(startSearchFieldsLoading());
+		dispatch(startAuditsLoading(authUser));
+		dispatch(startSearchFieldsLoading(authUser));
 
-	}, [dispatch]);
+	}, [dispatch, authUser]);
 
 	return (
 		<div className="dashboard animated slideInUpTiny animation-duration-3">
@@ -46,11 +48,15 @@ const Dashboard = () => {
 					<div className="row">
 
 						<div className="col-xl-6 col-lg-6 col-md-12 col-12">
+							
 							<Subscriptions />
+
 						</div>
 
 						<div className="col-xl-6 col-lg-6 col-md-12 col-12">
-							<TopUsers />
+							
+							{<TopUsers />}
+
 						</div>
 
 					</div>
@@ -58,7 +64,7 @@ const Dashboard = () => {
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<TotalSummary />
+							{<TotalSummary />}
 
 						</div>
 					</div>
@@ -78,7 +84,7 @@ const Dashboard = () => {
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<UploadDocuments />
+							{<UploadDocuments />}
 
 						</div>
 					</div>
@@ -86,7 +92,7 @@ const Dashboard = () => {
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<RecentsActivities />
+							{<RecentsActivities />}
 
 						</div>
 					</div>

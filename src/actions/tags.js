@@ -3,12 +3,12 @@ import Swal from 'sweetalert2';
 import { types } from 'types/types';
 import { GENERAL_ERROR } from 'constants/constUtil';
 
-export const startTagsInitLoading = () => {
+export const startTagsInitLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
 
-			const resp = await getTags();
+			const resp = await getTags(authUser);
 
 			dispatch(tagsInitLoaded(resp.data));
 
@@ -97,7 +97,7 @@ export const deleteTagsLoaded = (tagsData) => {
 		
 	}
 }
-export const startCreateTagsLoading = (tag, hex) => {
+export const startCreateTagsLoading = (authUser, tag, hex) => {
 	return async (dispatch) => {
 
 		try {
@@ -111,9 +111,9 @@ export const startCreateTagsLoading = (tag, hex) => {
 
 			Swal.showLoading();
 
-			await addTags(tag, hex);
+			await addTags(authUser, tag, hex);
 
-			const resp = await getTags();
+			const resp = await getTags(authUser);
 			
 			Swal.close();
 

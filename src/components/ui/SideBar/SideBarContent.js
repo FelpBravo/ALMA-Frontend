@@ -3,36 +3,33 @@ import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
 import { useHistory } from 'react-router-dom';
+import MailIcon from '@material-ui/icons/Folder';
+import FiberManualRecord from '@material-ui/icons/FiberManualRecordOutlined';
 
 import CustomScrollbars from 'util/CustomScrollbars';
 import Navigation from '../components/Navigation';
 import { SideBarContext } from './SideBarContext';
-import { folderSelected, removeFoldersId, saveFoldersId, startFoldersInitLoading, startFoldersSetChildren } from 'actions/folders';
+import {
+	folderSelected, removeFoldersId, saveFoldersId,
+	startFoldersInitLoading, startFoldersSetChildren
+} from 'actions/folders';
 import { useDispatch, useSelector } from 'react-redux';
 import { fixedFolders } from 'helpers/fixedFolder';
 import { searchRemoveText } from 'actions/search';
+import StyledTreeItem from '../StyledTreeItem';
 
 const useStyles = makeStyles({
 	root: {
-		height: 240,
+		height: 264,
 		flexGrow: 1,
 		maxWidth: 400,
 	},
-	treeItem: {
-		fontSize: 14,
-		color: '#A1A1A1',
-		fontFamily: 'Roboto, sans-serif',
-
-
-		'&:hover': {
-			color: '#FFFFFF',
-		},
-	}
 });
 
 const SideBarContent = () => {
+
+	const classes = useStyles();
 
 	const dispatch = useDispatch();
 	const { selectedIds = [], initFolders = [], folderId = [] } = useSelector(state => state.folders);
@@ -40,8 +37,6 @@ const SideBarContent = () => {
 	const { authUser } = useSelector(state => state.auth);
 
 	const history = useHistory();
-
-	const classes = useStyles();
 
 	const isMounted = useRef(true);
 
@@ -88,16 +83,14 @@ const SideBarContent = () => {
 	const handleRenderMenu = (folders) => {
 
 		return folders.map((folder) => {
-			return <TreeItem
+			return <StyledTreeItem
 				key={folder.id}
 				nodeId={String(folder.id)}
-				label={folder.name}
-				classes={
-					{ label: classes.treeItem }
-				}
+				labelText={folder.name}
+				labelIcon={folder.hashSubFolders ? MailIcon : FiberManualRecord}
 			>
 				{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
-			</TreeItem>
+			</StyledTreeItem>
 		});
 
 	}

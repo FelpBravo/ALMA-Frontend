@@ -3,7 +3,22 @@ import Avatar from '@material-ui/core/Avatar';
 
 const OrderTableCell = (props) => {
 
-	const { id, name, image, status, icon, tags, folder, large } = props.data;
+	const {
+		id,
+		name,
+		image,
+		status,
+		icon,
+		tags,
+		folder,
+		large,
+		date,
+		activity,
+		userName,
+		isViewedDocuments = false,
+		owner,
+		isSubscriptions,
+	} = props.data;
 
 	let statusStyle = 'text-white bg-grey';
 
@@ -30,12 +45,46 @@ const OrderTableCell = (props) => {
 
 						<h5 className="user-name custom-color-table">
 							{
-								icon && <i className={icon}></i>
+								!userName && icon && <i className={icon}></i>
 							}
-							{` ${name}`}
+
+							{userName && ` ${userName} `}
+							
+							{
+								activity
+								&&
+								<span className="description-activity">{activity}</span>
+							}
+
+							{` ${name} `}
 						</h5>
 
-						<p className="user-description">{`@domnic.brown`}</p>
+						{
+							!isSubscriptions
+							&&
+							!isViewedDocuments
+							&&
+							date
+							&&
+							<p className="user-description">{`Creado el ${date}`}</p>
+						}
+
+						{
+							!isSubscriptions
+							&&
+							isViewedDocuments
+							&&
+							date
+							&&
+							owner
+							&&
+							<p className="user-description">
+								{`Subido por `}
+								<span className="owner-most-viewed-documents">{owner}</span>
+								{`, ${date}`}
+							</p>
+						}
+
 					</div>
 				</div>
 			</td>

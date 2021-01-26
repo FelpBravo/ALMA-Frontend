@@ -1,11 +1,9 @@
 import { axiosInstance } from '../config/axios-instance';
 
-const token = localStorage.getItem('token');
-
-const getSearchFields = () => {
+const getSearchFields = (authUser) => {
 	return axiosInstance.get(`/search/filters`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };

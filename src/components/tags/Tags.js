@@ -30,14 +30,18 @@ const useStyles = makeStyles((theme) => ({
 	}));
 
 const Tags = () => {
+	
 	const dispatch = useDispatch();
-	const { taglist = [],} = useSelector(state => state.tags);
-	console.log('somos los tags',taglist)
+	
+	const { authUser } = useSelector(state => state.auth);
 
+	const { tagslist = [],} = useSelector(state => state.tags);
+	
+	console.log('somos los tags',tagslist)
 	
 	useEffect(() => {
 
-			dispatch(startTagsInitLoading());
+			dispatch(startTagsInitLoading(authUser));
 		
 	}, [dispatch]);
 

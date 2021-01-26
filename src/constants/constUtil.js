@@ -3,6 +3,7 @@ export const UPLOAD_DOCUMENTS = 'upload documents';
 export const SUBSCRIPTIONS = 'subscriptions documents';
 export const USERS = 'users';
 export const VIEWED_DOCUMENTS = 'most viewed documents';
+export const RECENT_ACTIVITY = 'recent activity';
 
 // FORMAT
 export const FORMAT_YYYY_MM_DD = 'YYYY-MM-DD';

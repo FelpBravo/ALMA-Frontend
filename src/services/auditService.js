@@ -1,12 +1,10 @@
 import { axiosInstance } from '../config/axios-instance';
 
-const token = localStorage.getItem('token');
-
-const getAudits = () => {
+const getAudits = (authUser) => {
 
 	return axiosInstance.get('/audits', {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 
