@@ -24,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	demo: {
 	width: '53%',
-	//border:'2px solid #E1F0FF',
-	//borderRadius:'5px',
 	},
 	}));
 
@@ -130,7 +128,7 @@ const Tags = () => {
 									</Grid>
 									<div className={classes.demo} >
 									{ 
-										  taglist.map((item) => (
+										  tagslist.map((item) => (
 										<List key={item.id}> 
 										
 											<ListItem >

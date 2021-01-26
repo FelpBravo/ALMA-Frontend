@@ -40,14 +40,14 @@ const Dashboard = () => {
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<ActivityResume />
+							{/*<ActivityResume />*/}
 
 						</div>
 					</div>
 
 					<div className="row">
 
-						<div className="col-xl-6 col-lg-6 col-md-12 col-12">
+						<div className="col-xl-12 col-lg-6 col-md-12 col-12">
 							
 							<Subscriptions />
 
@@ -55,7 +55,7 @@ const Dashboard = () => {
 
 						<div className="col-xl-6 col-lg-6 col-md-12 col-12">
 							
-							{<TopUsers />}
+							{/*<TopUsers />*/}
 
 						</div>
 

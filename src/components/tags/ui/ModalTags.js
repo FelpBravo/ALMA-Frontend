@@ -22,7 +22,7 @@ const ModalTags = () => {
 
     const { authUser } = useSelector(state => state.auth);
 
-    const { openModal, actionModal, tagslist} = useSelector(state => state.tags);
+    const { openModal, actionModal, tags} = useSelector(state => state.tags);
 
     const [formValues, setFormValues] = useState({});
     const [color, setColor] = useState('#fff');

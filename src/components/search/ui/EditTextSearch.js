@@ -10,10 +10,14 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(theme => ({
     root: {
-      background: '#E1F0FF',
-      border: 'none',
-      boxShadow: 'none',
-    },
+		background: "#E1F0FF",
+		border: "none",
+		boxShadow: "none",
+		padding: "2px 4px",
+		display: "flex",
+		alignItems: "center",
+		padding: 10,
+	  },
     input: {
       color: '#3699FF',
       fontSize: '14px',
@@ -102,7 +106,7 @@ export const EditTextSearch = ({ }) => {
 						<Grid container spacing={2}>
 
 							<Grid item xs={9}>
-							<Paper className={classes.root} component="form">
+							<Paper className={classes.root}>
 								<SearchIcon color="primary" />
 								<InputBase
 									className={classes.input}
@@ -119,6 +123,7 @@ export const EditTextSearch = ({ }) => {
 
 							<Grid item xs={3}>
 								<Button
+								    style={{ paddingTop: "13px", paddingBottom: "13px" }}
 									disabled={disabledButton}
 									variant="contained"
 									type="submit"
