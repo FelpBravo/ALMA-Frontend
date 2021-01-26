@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
-import UserInfo from 'components/ui/components/UserInfo';
+
 import { COLLAPSED_DRAWER, FIXED_DRAWER, HORIZONTAL_NAVIGATION } from 'constants/ActionTypes';
 import { toggleCollapsedNav, updateWindowWidth } from 'actions/setting';
+
 import SideBarContent from "./SideBarContent";
 
 const SideBar = () => {
@@ -43,7 +44,10 @@ const SideBar = () => {
 					paper: 'side-nav',
 				}}
 			>
-				<UserInfo />
+				{/*<UserInfo />*/}
+				<Link className="app-logo mr-2 d-none d-sm-block" to="/">
+					<img src={require("assets/images/logo.png")} alt="Jambo" title="Jambo" />
+				</Link>
 				<SideBarContent />
 			</Drawer>
 		</div>

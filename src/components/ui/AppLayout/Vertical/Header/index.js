@@ -1,110 +1,34 @@
 import React, { useState } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
+
 import { COLLAPSED_DRAWER, FIXED_DRAWER } from "constants/ActionTypes";
-import SearchBox from "components/ui/components/SearchBox";
 import { switchLanguage, toggleCollapsedNav } from "actions/setting";
-import IntlMessages from "util/IntlMessages";
 import LanguageSwitcher from "components/ui/components/LanguageSwitcher";
+import UserInfo from "components/ui/components/UserInfo";
 
 const Index = (props) => {
 
 	const dispatch = useDispatch();
 	const { navCollapsed } = useSelector(({ common }) => common);
 	const { drawerType, locale } = useSelector(({ settings }) => settings);
-	const [langSwitcher, setLangSwitcher] = useState(false);
-	const [mailNotification, setMailNotification] = useState(false);
-	const [appNotification, setAppNotification] = useState(false);
-	const [searchBox, setSearchBox] = useState(false);
-	const [apps, setApps] = useState(false);
-	const [searchText, setSearchText] = useState('');
+	const [ langSwitcher, setLangSwitcher ] = useState(false);
 
-	const onAppNotificationSelect = () => {
-		setAppNotification(!appNotification)
-	};
-
-	const onMailNotificationSelect = () => {
-		setMailNotification(!mailNotification)
-	};
 	const onLangSwitcherSelect = (event) => {
 		setLangSwitcher(!langSwitcher);
 	};
 
-	const onSearchBoxSelect = () => {
-		setSearchBox(!searchBox)
-	};
-	const onAppsSelect = () => {
-		setApps(!apps)
-	};
-
 	const handleRequestClose = () => {
-		setSearchBox(false);
 		setLangSwitcher(false);
-		setMailNotification(false);
-		setSearchBox(false);
-		setApps(false);
 	};
 
 	const onToggleCollapsedNav = (e) => {
 		const val = !navCollapsed;
 		dispatch(toggleCollapsedNav(val));
-	};
-
-
-	const Apps = () => {
-		return (
-			<ul className="jr-list jr-list-half">
-				<li className="jr-list-item">
-					<Link className="jr-list-link" to="/app/calendar/basic">
-						<i className="zmdi zmdi-calendar zmdi-hc-fw" />
-						<span className="jr-list-text"><IntlMessages id="sidebar.calendar.basic" /></span>
-					</Link>
-				</li>
-
-				<li className="jr-list-item">
-					<Link className="jr-list-link" to="/app/to-do">
-						<i className="zmdi zmdi-check-square zmdi-hc-fw" />
-						<span className="jr-list-text"><IntlMessages id="sidebar.appModule.toDo" /></span>
-					</Link>
-				</li>
-
-				<li className="jr-list-item">
-					<Link className="jr-list-link" to="/app/mail">
-						<i className="zmdi zmdi-email zmdi-hc-fw" />
-						<span className="jr-list-text"><IntlMessages id="sidebar.appModule.mail" /></span>
-					</Link>
-				</li>
-
-				<li className="jr-list-item">
-					<Link className="jr-list-link" to="/app/chat">
-						<i className="zmdi zmdi-comment zmdi-hc-fw" />
-						<span className="jr-list-text"><IntlMessages id="sidebar.appModule.chat" /></span>
-					</Link>
-				</li>
-
-				<li className="jr-list-item">
-					<Link className="jr-list-link" to="/app/contact">
-						<i className="zmdi zmdi-account-box zmdi-hc-fw" />
-						<span className="jr-list-text"><IntlMessages id="sidebar.appModule.contact" /></span>
-					</Link>
-				</li>
-
-				<li className="jr-list-item">
-					<Link className="jr-list-link" to="/">
-						<i className="zmdi zmdi-plus-circle-o zmdi-hc-fw" />
-						<span className="jr-list-text">Add New</span>
-					</Link>
-				</li>
-			</ul>);
-	};
-
-
-	const updateSearchText = (evt) => {
-		setSearchText(evt.target.value);
 	};
 
 	const onSwitchLanguage = (lang) => {
@@ -155,6 +79,7 @@ const Index = (props) => {
 						</Dropdown>
 					</li>*/}
 
+					{/*
 					<li className="d-inline-block d-lg-none list-inline-item">
 						<Dropdown
 							className="quick-menu nav-searchbox"
@@ -177,8 +102,10 @@ const Index = (props) => {
 							</DropdownMenu>
 						</Dropdown>
 					</li>
+					*/}
 
 					<li className="list-inline-item">
+						
 						<Dropdown
 							className="quick-menu"
 							isOpen={langSwitcher}
@@ -199,6 +126,11 @@ const Index = (props) => {
 							</DropdownMenu>
 						</Dropdown>
 
+					</li>
+
+					<li className="list-inline-item">
+						
+						<UserInfo />
 
 					</li>
 

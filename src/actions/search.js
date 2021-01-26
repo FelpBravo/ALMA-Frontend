@@ -4,12 +4,12 @@ import { types } from 'types/types';
 import Swal from 'sweetalert2';
 import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
 
-export const startSearchFieldsLoading = () => {
+export const startSearchFieldsLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
 
-			const resp = await getSearchFields();
+			const resp = await getSearchFields(authUser);
 			dispatch(searchFieldsLoaded(resp.data));
 
 		} catch (error) {
@@ -41,8 +41,6 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 			Swal.showLoading();
 
 			const resp = await search(authUser, term, filters, folderId, page, maxItems);
-
-			console.log(resp.data);
 
 			dispatch(searchLoaded(resp.data));
 
