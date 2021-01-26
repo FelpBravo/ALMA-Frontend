@@ -1,9 +1,8 @@
 import { axiosInstance } from '../config/axios-instance';
 
-//const token = localStorage.getItem('token');
+const token = localStorage.getItem('token');
 
 const getTags = () => {
-	const token = localStorage.getItem('token');
 	return axiosInstance.get('/tags/', {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -12,7 +11,6 @@ const getTags = () => {
 };
 
 const addTags = (tag, hex) => {
-	const token = localStorage.getItem('token');
 	return axiosInstance.post(`/tags/add`,
 		{ tag, hex },{
 			headers: {
@@ -23,7 +21,6 @@ const addTags = (tag, hex) => {
 };
 
 const editTags = (id, tag, hex) => {
-	const token = localStorage.getItem('token');
 	return axiosInstance.put(`/tags/edit`,
 	{"id":id, "hex":hex, "tag":tag },
 		{
@@ -35,7 +32,6 @@ const editTags = (id, tag, hex) => {
 };
 
 const deleteTags = (tagId) => {
-	const token = localStorage.getItem('token');
 	return axiosInstance.delete(`/tags/${tagId}/delete`,
 {
 			headers: {
