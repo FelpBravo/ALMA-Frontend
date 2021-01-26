@@ -21,6 +21,8 @@ const ModalTags = () => {
 
     const dispatch = useDispatch();
 
+    const { authUser } = useSelector(state => state.auth);
+
     const { openModal, actionModal, tagslist} = useSelector(state => state.tags);
 
     const [formValues, setFormValues] = useState({});
@@ -49,7 +51,7 @@ const ModalTags = () => {
       if (actionModal === ACTION_CREATE) {
   
         dispatch(closeModalTags());
-        dispatch(startCreateTagsLoading(value, color));
+        dispatch(startCreateTagsLoading(authUser, value, color));
   
       } else {
   

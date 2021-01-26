@@ -56,10 +56,10 @@ const UserInfo = () => {
 
 			<div className="user-detail">
 				<h4 className="user-name d-flex" onClick={handleClick}>
-					<span className='text-truncate'>
+					<span className='text-truncate user-info-text'>
 						{`${user.firstName && user.firstName} ${user.lastName && user.lastName}`}
 					</span>
-					<i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
+					<i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle user-info-text" />
 				</h4>
 			</div>
 

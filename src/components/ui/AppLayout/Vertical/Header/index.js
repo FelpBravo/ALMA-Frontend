@@ -39,6 +39,7 @@ const Index = (props) => {
 
 	return (
 		<AppBar className="app-main-header">
+			
 			<Toolbar className="app-toolbar" disableGutters={false}>
 
 				<IconButton className={`jr-menu-icon mr-3 ${drawerStyle}`} aria-label="Menu"
