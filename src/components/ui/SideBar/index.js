@@ -36,7 +36,7 @@ const SideBar = () => {
 
 	return (
 		<div className={`app-sidebar d-none ${drawerStyle}`}>
-			
+
 			<Drawer className="app-sidebar-content"
 				variant={type}
 				open={type.includes('temporary') ? navCollapsed : true}
@@ -45,10 +45,15 @@ const SideBar = () => {
 					paper: 'side-nav',
 				}}
 			>
-				
-				<div className="user-profile d-flex flex-row align-items-center">
 
-					<Link className="app-logo mr-2 d-none d-sm-block" to="/">
+				<div
+					className="user-profile d-flex flex-row align-items-center"
+				>
+
+					<Link
+						className="app-logo mr-2 d-none d-sm-block"
+						to="/"
+					>
 						<img src={require("assets/images/logo-banner.png")} alt="Jambo" title="Jambo" />
 					</Link>
 
@@ -57,7 +62,7 @@ const SideBar = () => {
 				<SideBarContent />
 
 			</Drawer>
-			
+
 		</div>
 	);
 };
