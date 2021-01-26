@@ -6,25 +6,25 @@ import IconWithTextCard from './ui/IconWithTextCard';
 
 export const dataMetrics = [
 	{
-		title: '78',
+		title: '0',
 		subTitle: 'Total documentos',
 		imageIcon: require('assets/images/dashboard/project-icon.png'),
 		cardColor: 'secondary',
 	},
 	{
-		title: '106',
+		title: '0',
 		subTitle: 'Total usuarios',
 		imageIcon: require('assets/images/dashboard/project-icon.png'),
 		cardColor: 'info',
 	},
 	{
-		title: '34',
+		title: '0',
 		subTitle: 'Total subidos',
 		imageIcon: require('assets/images/dashboard/project-icon.png'),
 		cardColor: 'warning',
 	},
 	{
-		title: '62',
+		title: '0',
 		subTitle: 'Documentos visualizados',
 		imageIcon: require('assets/images/dashboard/project-icon.png'),
 		cardColor: 'danger',
