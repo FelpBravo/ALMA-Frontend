@@ -14,8 +14,7 @@ const getTags = () => {
 const addTags = (tag, hex) => {
 	const token = localStorage.getItem('token');
 	return axiosInstance.post(`/tags/add`,
-		{ tag, hex },
-		{
+		{ tag, hex },{
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
