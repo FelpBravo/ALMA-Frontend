@@ -6,7 +6,6 @@ import SideBar from "components/ui/SideBar";
 import Footer from "components/ui/components/Footer";
 import Tour from "components/ui/components/Tour";
 import { COLLAPSED_DRAWER, FIXED_DRAWER } from "constants/ActionTypes";
-import ColorOption from "components/ui/Customizer/ColorOption";
 import { isIOS, isMobile } from "react-device-detect";
 
 const Vertical = (props) => {
