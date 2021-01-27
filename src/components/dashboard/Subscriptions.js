@@ -67,7 +67,7 @@ export const Subscriptions = () => {
 				</h3>
 				<div className="ml-auto">
 					<span className="custom-link-dash">
-						<IntlMessages id="dashboard.moreInfo" /> <i className="fas fa-arrow-right"></i>
+						{/*<IntlMessages id="dashboard.moreInfo" /> <i className="fas fa-arrow-right"></i>*/}
 					</span>
 				</div>
 			</div>
