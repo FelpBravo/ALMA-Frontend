@@ -13,7 +13,7 @@ export const SelectFolder = () => {
 	const { folderName = '' } = useSelector(state => state.documents);
 
 	const handleOpenModal = () => {
-
+		
 		dispatch(openModalSelectFolder());
 
 	}
@@ -24,7 +24,7 @@ export const SelectFolder = () => {
 				onClick={handleOpenModal}
 				name="folder"
 				value={folderName}
-				disabled={true}
+				
 				input={<BootstrapInput />}
 			>
 				<option aria-label="None" value="">--SELECCIONE--</option>
