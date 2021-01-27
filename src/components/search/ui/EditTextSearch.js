@@ -21,13 +21,15 @@ const useStyles = makeStyles(theme => ({
     input: {
       color: '#3699FF',
       fontSize: '14px',
-      radius: '4px',
-      fontFamily:'Poppins !important',
+	  radius: '4px',
+	  fontWeight: 500,
+	  fontFamily: "Poppins, sans-serif !important ",
+
       "&::placeholder": {
-        color: '#E1F0FF',
-        fontSize: '18px',
-        fontWeight: '600',
-        align: 'left',
+		fontFamily: "Poppins, sans-serif !important ",
+        color: '#3699FF',
+		align: 'left',
+		fontWeight: 500,
       }
     },
   }))
@@ -123,7 +125,7 @@ export const EditTextSearch = ({ }) => {
 
 							<Grid item xs={3}>
 								<Button
-								    style={{ paddingTop: "13px", paddingBottom: "13px" }}
+								    style={{ paddingTop: "13px", paddingBottom: "13px", fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 600, }}
 									disabled={disabledButton}
 									variant="contained"
 									type="submit"
