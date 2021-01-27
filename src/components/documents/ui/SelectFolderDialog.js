@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -9,10 +9,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import IntlMessages from 'util/IntlMessages';
 import {
-	closeModalSelectFolder, documentSaveFolderId,
-	startSaveCurrentFolderBreadcrumbs, startSubFoldersLoading,
+	closeModalSelectFolder, 
+	documentSaveFolderId,
+	startSaveCurrentFolderBreadcrumbs, 
+	startSubFoldersLoading,
 	documentSaveFolderName,
-	startFoldersLoading
 } from 'actions/documents';
 import SimpleBreadcrumbs from '../../ui/SimpleBreadcrumbs';
 import SkeletonApp from 'components/ui/SkeletonApp';
@@ -30,14 +31,6 @@ export const SelectFolderDialog = () => {
 	} = useSelector(state => state.documents);
 
 	const { authUser } = useSelector(state => state.auth);
-
-	useEffect(() => {
-
-		if (folders.length === 0) {
-			dispatch(startFoldersLoading(authUser));
-		}
-
-	}, [dispatch, folders])
 
 	const handleClose = () => {
 

@@ -23,10 +23,10 @@ const initialState = {
 			name: '#',
 		}
 	],
-	currentFolderBreadcrumbs: { 
-		id: 0, 
-		name: '#', 
-		folders: [] 
+	currentFolderBreadcrumbs: {
+		id: 0,
+		name: '#',
+		folders: []
 	},
 	loadingFolderModal: false,
 }
