@@ -15,7 +15,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import { downloadDocument } from 'services/filesService';
-import { startDeleteDocument, startSearchLoading } from 'actions/search';
+import { startDeleteDocument, startSearchLoading, startSubscribeDocument } from 'actions/search';
 import { MenuTable } from './MenuTable';
 import { GENERAL_ERROR } from 'constants/constUtil';
 
@@ -111,6 +111,10 @@ const DataTable = () => {
 		}
 	}
 
+	const handleSubscribe = (id) => {
+		dispatch(startSubscribeDocument(id));
+	}
+
 	return (
 		<Paper>
 			<div className="flex-auto">
@@ -125,7 +129,7 @@ const DataTable = () => {
 									name,
 									createdAt,
 									modifiedAt,
-									tags,
+									tags = [],
 									version,
 									isFavorite,
 									createdByUser
@@ -143,36 +147,57 @@ const DataTable = () => {
 										<TableCell>{`${createdByUser}`}</TableCell>
 										<TableCell>{createdAt}</TableCell>
 										<TableCell>{modifiedAt}</TableCell>
-										<TableCell>{``}</TableCell>
+										<TableCell>
+											{
+												tags.length > 0
+												&&
+												tags.map((tag) => {
+													return (
+														<i
+															key={tag.id}
+															style={{ color: tag.hex, margin: 1 }}
+															className="zmdi zmdi-circle jr-fs-xxs"
+														/>
+													)
+												})
+											}
+										</TableCell>
 										<TableCell>{version}</TableCell>
-										{/*<TableCell>{id}</TableCell>*/}
 										<TableCell></TableCell>
 										<TableCell>
 
 											<div className="custom-td-table">
 												<i
+													title='Download'
 													onClick={() => handleDownload(id, name)}
 													className="fa fa-download cursor-pointer custom-link-dash"
 												></i>
 												<i
+													title="Edit"
 													onClick={() => handleEdit(id)}
 													className="far fa-edit cursor-pointer custom-link-dash"
 												></i>
 												<i
+													title="Remove"
 													onClick={() => handleDelete(id)}
 													className="far fa-trash-alt cursor-pointer custom-link-dash"
+												></i>
+												<i
+													title={isFavorite ? 'Desuscribir' : 'Suscribir'}
+													onClick={() => handleSubscribe(id)}
+													className="far fa-hand-pointer cursor-pointer custom-link-dash"
 												></i>
 
 											</div>
 
 										</TableCell>
 
-										<TableCell>
+										{/*<TableCell>
 											<MenuTable
 												id={id}
 												isFavorite={isFavorite}
 											/>
-										</TableCell>
+										</TableCell>*/}
 
 									</TableRow>
 								);
