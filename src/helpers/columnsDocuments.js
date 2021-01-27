@@ -57,12 +57,12 @@ export const columnsDocuments = [
 		disablePadding: false,
 		label: <IntlMessages id="table.search.actions" />
 	},
-	{
+	/*{
 		id: createUUID(),
 		align: true,
 		disablePadding: false,
 		label: ''
-	},
+	},*/
 ];
 
 export const getDate = (date) => {

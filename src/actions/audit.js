@@ -8,7 +8,7 @@ export const startAuditsLoading = (authUser) => {
 		try {
 
 			const resp = await getAudits(authUser);
-			console.log(resp.data);
+			
 			dispatch(auditsLoaded(resp.data));
 
 		} catch (error) {
