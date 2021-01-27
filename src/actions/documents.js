@@ -16,7 +16,7 @@ export const startDocumentsTypeLoading = (authUser) => {
 		try {
 
 			const resp = await getAll(authUser);
-			
+
 			dispatch(documentsTypeLoaded(resp.data));
 
 		} catch (error) {
@@ -390,18 +390,6 @@ export const startEditDocumentLoading = (
 			Swal.close();
 		}
 
-	}
-};
-
-export const openModalSelectFolder = () => {
-	return {
-		type: types.docsOpenModalSelectFolder,
-	}
-};
-
-export const closeModalSelectFolder = () => {
-	return {
-		type: types.docsCloseModalSelectFolder,
 	}
 };
 

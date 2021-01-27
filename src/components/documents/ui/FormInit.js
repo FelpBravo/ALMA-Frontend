@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormControl, NativeSelect, InputLabel } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -56,73 +56,67 @@ export const FormInit = () => {
 
 	return (
 		<div className="row">
-			<div className="col-xl-4 col-lg-4 col-md-4 col-4">
-				{
-					documentsType.length > 0
-					&&
-					<FormControl fullWidth>
-						<InputLabel>
-							<IntlMessages id="document.loadDocuments.typeDoc" />
-						</InputLabel>
-						<NativeSelect
-							value={documentType}
-							name="documentsType"
-							input={<BootstrapInput />}
-							onChange={handleOnChange}
-						>
-							<option aria-label="None" value="">--SELECCIONE--</option>
-							{
-								documentsType.length > 0
-								&&
-								documentsType.map(({ id, name }) => {
-									return <option
-										value={id}
-										key={id}
-									>
-										{name}
-									</option>
-								})
-							}
-						</NativeSelect>
-					</FormControl>
-				}
-				{
-					documentsType.length === 0
-					&&
-					<>
-						<Skeleton variant="circle" width={40} height={40} />
-						<Skeleton
-							variant="text"
-							height={40}
-							style={{ width: '100%' }} />
-					</>
-				}
-			</div>
 
-			<div className="col-xl-4 col-lg-4 col-md-4 col-4">
-				{
-					folders.length > 0
-					&&
-					<FormControl fullWidth>
-						<InputLabel>
-							<IntlMessages id="document.loadDocuments.folders" />
-						</InputLabel>
+			{
+				(
+					documentsType.length === 0
+					||
+					folders.length === 0
+				)
+				&&
+				<div className="col-xl-4 col-lg-4 col-md-4 col-4">
+					<Skeleton variant="circle" width={40} height={40} />
+					<Skeleton
+						variant="text"
+						height={40}
+						style={{ width: '100%' }} />
+				</div>
+			}
+
+			{
+				documentsType.length > 0
+				&&
+				folders.length > 0
+				&&
+				<>
+					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
+
+						<FormControl fullWidth>
+							<InputLabel>
+								<IntlMessages id="document.loadDocuments.typeDoc" />
+							</InputLabel>
+							<NativeSelect
+								value={documentType}
+								name="documentsType"
+								input={<BootstrapInput />}
+								onChange={handleOnChange}
+							>
+								<option aria-label="None" value="">--SELECCIONE--</option>
+								{
+									documentsType.length > 0
+									&&
+									documentsType.map(({ id, name }) => {
+										return <option
+											value={id}
+											key={id}
+										>
+											{name}
+										</option>
+									})
+								}
+							</NativeSelect>
+						</FormControl>
+
+
+					</div>
+
+					<div className="col-xl-4 col-lg-4 col-md-4 col-4" style={{marginTop: 24}}>
 
 						<SelectFolder />
-					</FormControl>
-				}
-				{
-					folders.length === 0
-					&&
-					<>
-						<Skeleton variant="circle" width={40} height={40} />
-						<Skeleton
-							variant="text"
-							height={40}
-							style={{ width: '100%' }} />
-					</>
-				}
-			</div>
+
+					</div>
+				</>
+			}
 		</div>
 	)
 }

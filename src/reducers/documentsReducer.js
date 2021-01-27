@@ -15,7 +15,6 @@ const initialState = {
 	tagsSelected: [],
 	versioningType: '',
 	versioningComments: '',
-	openModalSelectFolder: false,
 	folders: [],
 	historyFoldersBreadcrumbs: [
 		{
@@ -68,7 +67,6 @@ export const documentsReducer = (state = initialState, action) => {
 					}
 				],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
-				openModalSelectFolder: false,
 			}
 
 		case types.docsRemoveDetailDocumentType:
@@ -159,7 +157,6 @@ export const documentsReducer = (state = initialState, action) => {
 				],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 				tagsSelected: [],
-				openModalSelectFolder: false,
 			}
 
 		case types.docsClear:
@@ -177,7 +174,7 @@ export const documentsReducer = (state = initialState, action) => {
 				tagsSelected: [],
 				versioningType: '',
 				versioningComments: '',
-				folders: [],
+				//folders: [],
 				historyFoldersBreadcrumbs: [
 					{
 						id: 0,
@@ -185,7 +182,6 @@ export const documentsReducer = (state = initialState, action) => {
 					}
 				],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
-				openModalSelectFolder: false,
 			}
 
 		case types.docsDocumentByIdLoaded:
@@ -225,18 +221,6 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				versioningComments: '',
-			}
-
-		case types.docsOpenModalSelectFolder:
-			return {
-				...state,
-				openModalSelectFolder: true,
-			}
-
-		case types.docsCloseModalSelectFolder:
-			return {
-				...state,
-				openModalSelectFolder: false,
 			}
 
 		case types.docsFoldersLoaded:

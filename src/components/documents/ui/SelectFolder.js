@@ -1,38 +1,35 @@
-import React from 'react';
-import { NativeSelect } from '@material-ui/core';
-import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { TextField } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import { SelectFolderDialog } from './SelectFolderDialog';
-import { openModalSelectFolder } from 'actions/documents';
+import IntlMessages from 'util/IntlMessages';
+
+const lblText = <IntlMessages id="document.loadDocuments.folders" />
 
 export const SelectFolder = () => {
 
-	const dispatch = useDispatch();
-
 	const { folderName = '' } = useSelector(state => state.documents);
 
-	const handleOpenModal = () => {
-
-		dispatch(openModalSelectFolder());
-
-	}
+	const [openModal, setOpenModal] = useState(false);
 
 	return (
 		<>
-			<NativeSelect
-				onClick={handleOpenModal}
-				name="folder"
+			<TextField
+				className="modal-select-folder"
+				onClick={() => setOpenModal(!openModal)}
+				label={lblText}
+				variant="outlined"
+				color="primary"
 				value={folderName}
-				input={<BootstrapInput />}
-			>
-				<option aria-label="None" value="">--SELECCIONE--</option>
-				{
-					folderName.length > 0 && <option value={folderName}>{folderName}</option>
-				}
-			</NativeSelect>
+				fullWidth
+				size="small"
+			/>
 
-			<SelectFolderDialog />
+			<SelectFolderDialog
+				setOpenModal={setOpenModal}
+				openModal={openModal}
+			/>
 		</>
 	)
 }
