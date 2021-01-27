@@ -4,7 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { Divider, List, ListItem, ListItemText } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 
 import IntlMessages from 'util/IntlMessages';
@@ -74,28 +74,37 @@ export const SelectFolderDialog = () => {
 		return (
 			<List>
 				{
-					currentFolderBreadcrumbs.folders.map(folder => {
+					currentFolderBreadcrumbs.folders.map((folder, i) => {
 						return (
-							<ListItem key={folder.id}>
-								<ListItemText
-									className="modal-select-folder"
-									onClick={() => handleSelectItem(folder)}
-								>
-									{`${folder.name} `}
-								</ListItemText>
-								
-								{
-									folder.hashSubFolders
-									&&
-									<i
-										onClick={() => handleLoadChilds(folder)}
-										className="fas fa-chevron-right modal-select-folder"
-										style={{ fontSize: 12 }}
+							<div key={folder.id}>
+								<ListItem>
+									<ListItemText
+										className="modal-select-folder"
+										onClick={() => handleSelectItem(folder)}
 									>
-									</i>
+										{`${folder.name} `}
+									</ListItemText>
+
+									{
+										folder.hashSubFolders
+										&&
+										<i
+											onClick={() => handleLoadChilds(folder)}
+											className="fas fa-chevron-right modal-select-folder"
+											style={{ fontSize: 12 }}
+										>
+										</i>
+									}
+
+								</ListItem>
+
+								{
+									(currentFolderBreadcrumbs.folders.length - 1) !== i
+									&&
+									<Divider component="li" />
 								}
 
-							</ListItem>
+							</div>
 						)
 					})
 				}
@@ -105,62 +114,64 @@ export const SelectFolderDialog = () => {
 	}
 
 	return (
-		<Dialog
-			open={openModalSelectFolder}
-			onClose={handleClose}
-			aria-labelledby="form-dialog-title"
-			fullWidth={true}
-		>
-			<DialogTitle id="form-dialog-title">
-				<IntlMessages id="document.select.folder" />
-			</DialogTitle>
+		<div>
+			<Dialog
+				open={openModalSelectFolder}
+				onClose={handleClose}
+				aria-labelledby="form-dialog-title"
+				fullWidth={true}
+			>
+				<DialogTitle id="form-dialog-title">
+					<IntlMessages id="document.select.folder" />
+				</DialogTitle>
 
-			<DialogContent dividers>
+				<DialogContent dividers>
 
-				{
-					!loadingFolderModal
-					&&
-					<>
-						<div className="row">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+					{
+						!loadingFolderModal
+						&&
+						<>
+							<div className="row">
+								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-								<SimpleBreadcrumbs
-									items={historyFoldersBreadcrumbs}
-									currentItem={currentFolderBreadcrumbs.id}
-									handleClick={handleClickBreadcrumbs}
-								/>
+									<SimpleBreadcrumbs
+										items={historyFoldersBreadcrumbs}
+										currentItem={currentFolderBreadcrumbs.id}
+										handleClick={handleClickBreadcrumbs}
+									/>
 
+								</div>
 							</div>
-						</div>
 
-						<div className="row">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-								{
-									handleRenderItems()
-								}
+							<div className="row">
+								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+									{
+										handleRenderItems()
+									}
+								</div>
 							</div>
-						</div>
-					</>
-				}
+						</>
+					}
 
-				{
-					loadingFolderModal
-					&&
-					<SkeletonApp />
-				}
+					{
+						loadingFolderModal
+						&&
+						<SkeletonApp />
+					}
 
-			</DialogContent>
+				</DialogContent>
 
-			<DialogActions>
+				<DialogActions>
 
-				<Button
-					onClick={handleClose}
-					color="primary">
-					<IntlMessages id="button.text.cancel" />
-				</Button>
+					<Button
+						onClick={handleClose}
+						color="primary">
+						<IntlMessages id="button.text.cancel" />
+					</Button>
 
-			</DialogActions>
+				</DialogActions>
 
-		</Dialog>
+			</Dialog>
+		</div>
 	)
 }

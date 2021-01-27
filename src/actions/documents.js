@@ -42,8 +42,6 @@ export const startFoldersLoading = (authUser) => {
 
 			dispatch(foldersLoaded(resp.data));
 
-			dispatch(addHistoryFoldersBreadcrumbs({ id: 0, name: '#' }));
-
 			dispatch(setCurrentFolderBreadcrumbs({ id: 0, name: '#', folders: [...resp.data] }));
 
 		} catch (error) {

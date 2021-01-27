@@ -58,11 +58,11 @@ const Documents = () => {
 
 	useEffect(() => {
 
+		dispatch(documentsClear());
+
 		if (document.length === 0) {
 			return;
 		}
-
-		dispatch(documentsClear());
 
 		dispatch(startDocumentByIdLoading(document));
 

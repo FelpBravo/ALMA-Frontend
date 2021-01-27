@@ -8,7 +8,6 @@ import {
 	startDocumentsTypeLoading,
 	startDetailDocumentTypeLoading,
 	removeDetailDocumentType,
-	startFoldersLoading
 } from 'actions/documents';
 import { SelectFolder } from './SelectFolder';
 
@@ -27,13 +26,9 @@ export const FormInit = () => {
 
 	useEffect(() => {
 
-		if (authUser) {
+		dispatch(startDocumentsTypeLoading(authUser));
 
-			dispatch(startDocumentsTypeLoading(authUser));
-
-		}
-
-	}, [authUser]);
+	}, [dispatch, authUser]);
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
@@ -91,26 +86,6 @@ export const FormInit = () => {
 					</InputLabel>
 
 					<SelectFolder />
-					{/*<NativeSelect
-						value={folderId}
-						name="folder"
-						input={<BootstrapInput />}
-						onChange={handleOnChange}
-					>
-						<option aria-label="None" value="">--SELECCIONE--</option>
-						{
-							initFolders.length > 0
-							&&
-							initFolders.map(({ id, name }) => {
-								return <option
-									value={id}
-									key={id}
-								>
-									{name}
-								</option>
-							})
-						}
-					</NativeSelect>*/}
 				</FormControl>
 			</div>
 		</div>
