@@ -26,7 +26,7 @@ const getFoldersAdmin = (authUser) => {
 	});
 };
 
-const getFoldersAdminById = (folderId) => {
+const getFoldersAdminById = (authUser, folderId) => {
 	return axiosInstance.get(`/folders/admin/${folderId}/children`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -34,26 +34,26 @@ const getFoldersAdminById = (folderId) => {
 	});
 };
 
-const create = (data) => {
+const create = (authUser, data) => {
 	return axiosInstance.post('/folders/admin', data, {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };
 
-const edit = (data) => {
+const edit = (authUser, data) => {
 	return axiosInstance.put('/folders/admin', data, {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };
 
-const remove = (id) => {
+const remove = (authUser, id) => {
 	return axiosInstance.delete(`/folders/admin/${id}`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };

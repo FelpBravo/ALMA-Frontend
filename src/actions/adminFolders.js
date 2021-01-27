@@ -41,7 +41,7 @@ export const foldersLoaded = (folders) => {
 	}
 };
 
-export const startSubFoldersLoading = (folderId, name) => {
+export const startSubFoldersLoading = (authUser, folderId, name) => {
 	return async (dispatch, getState) => {
 
 		const { folders } = getState().adminFolders;
@@ -69,7 +69,7 @@ export const startSubFoldersLoading = (folderId, name) => {
 
 				Swal.showLoading();
 
-				const resp = await getFoldersAdminById(folderId);
+				const resp = await getFoldersAdminById(authUser, folderId);
 
 				dispatch(subFoldersLoaded(folderId, resp.data));
 				dispatch(saveHistory(folderId, name));
@@ -187,7 +187,7 @@ export const setFolder = (folder) => {
 	}
 };
 
-export const startCreateFolderLoading = (data, folderId, name) => {
+export const startCreateFolderLoading = (authUser, data, folderId, name) => {
 	return async (dispatch) => {
 
 		try {
@@ -201,11 +201,11 @@ export const startCreateFolderLoading = (data, folderId, name) => {
 
 			Swal.showLoading();
 
-			await create(data);
+			await create(authUser, data);
 
 			Swal.close();
 
-			dispatch(startSubFolderLoadingAfterCrete(folderId, name));
+			dispatch(startSubFolderLoadingAfterCrete(authUser, folderId, name));
 
 		} catch (error) {
 			Swal.close();
@@ -215,7 +215,7 @@ export const startCreateFolderLoading = (data, folderId, name) => {
 	}
 };
 
-export const startSubFolderLoadingAfterCrete = (folderId, name) => {
+export const startSubFolderLoadingAfterCrete = (authUser, folderId, name) => {
 	return async (dispatch, getState) => {
 
 		const { currentFolders } = getState().adminFolders;
@@ -231,7 +231,7 @@ export const startSubFolderLoadingAfterCrete = (folderId, name) => {
 
 			Swal.showLoading();
 
-			const resp = await getFoldersAdminById(folderId);
+			const resp = await getFoldersAdminById(authUser, folderId);
 
 			dispatch(subFoldersLoaded(folderId, resp.data));
 
@@ -258,7 +258,7 @@ const saveFolderLoaded = () => {
 	}
 }
 
-export const startEditFolderLoading = (data, folderId, name) => {
+export const startEditFolderLoading = (authUser, data, folderId, name) => {
 	return async (dispatch) => {
 
 		try {
@@ -272,7 +272,7 @@ export const startEditFolderLoading = (data, folderId, name) => {
 
 			Swal.showLoading();
 
-			await edit(data);
+			await edit(authUser, data);
 
 			dispatch(updateLoaded(data));
 			dispatch(saveFolderLoaded());
@@ -299,7 +299,7 @@ export const adminFoldersremoveAll = () => {
 	}
 };
 
-export const startDeleteFolderLoading = (folderId) => {
+export const startDeleteFolderLoading = (authUser, folderId) => {
 	return async (dispatch, getState) => {
 
 		const { folders, currentFolders } = getState().adminFolders;
@@ -315,7 +315,7 @@ export const startDeleteFolderLoading = (folderId) => {
 
 			Swal.showLoading();
 
-			await remove(folderId);
+			await remove(authUser, folderId);
 
 			Swal.close();
 

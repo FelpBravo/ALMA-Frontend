@@ -19,83 +19,81 @@ import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-	flexGrow: 1,
-	marginTop: 30,
+		flexGrow: 1,
+		marginTop: 30,
 	},
 	demo: {
-	width: '53%',
+		width: '53%',
 	},
-	}));
+}));
 
 const Tags = () => {
-	
+
 	const dispatch = useDispatch();
-	
+
 	const { authUser } = useSelector(state => state.auth);
 
-	const { tagslist = [],} = useSelector(state => state.tags);
-	
-	console.log('somos los tags',tagslist)
-	
+	const { tagslist = [], } = useSelector(state => state.tags);
+
 	useEffect(() => {
 
-			dispatch(startTagsInitLoading(authUser));
-		
+		dispatch(startTagsInitLoading(authUser));
+
 	}, [dispatch]);
 
 	const classes = useStyles();
-    const [secondary, setSecondary] = React.useState(false);
-   
+	const [secondary, setSecondary] = React.useState(false);
 
-  const handleSelectActionTags = async (type, id, tag, hex) => {
 
-	switch (type) {
-		case 1:
+	const handleSelectActionTags = async (type, id, tag, hex) => {
 
-			dispatch(openModalTags());
-			dispatch(setActionModalTags(ACTION_CREATE));
-			dispatch(setTagsList({
-				tag: '',
-				hex: '',
-				id: 0,
-			}));
-			
-			break;
+		switch (type) {
+			case 1:
 
-		case 2:
+				dispatch(openModalTags());
+				dispatch(setActionModalTags(ACTION_CREATE));
+				dispatch(setTagsList({
+					tag: '',
+					hex: '',
+					id: 0,
+				}));
 
-			dispatch(openModalTags());
-			dispatch(setActionModalTags(ACTION_EDIT));
-			dispatch(setTagsList({
-				tag,
-				hex,
-				id,
-			}));
+				break;
 
-			break;
+			case 2:
 
-		case 3:
-			
-		    const resp = await Swal.fire({
-			title: 'tags',
-			text: "¿Está seguro de continuar?",
-			icon: "question",
-			showCancelButton: true,
-			focusConfirm: true,
-			heightAuto: false,
-		});
+				dispatch(openModalTags());
+				dispatch(setActionModalTags(ACTION_EDIT));
+				dispatch(setTagsList({
+					tag,
+					hex,
+					id,
+				}));
 
-		if (resp.value) {
-			dispatch(startDeleteTagsLoading(id));
+				break;
+
+			case 3:
+
+				const resp = await Swal.fire({
+					title: 'tags',
+					text: "¿Está seguro de continuar?",
+					icon: "question",
+					showCancelButton: true,
+					focusConfirm: true,
+					heightAuto: false,
+				});
+
+				if (resp.value) {
+					dispatch(startDeleteTagsLoading(id));
+				}
+
+				break;
+
+			default:
+				break;
 		}
 
-		break;
-
-		default:
-			break;
 	}
-
-}
 
 	return (
 		<div className="row">
@@ -109,68 +107,68 @@ const Tags = () => {
 								<h3 className="mb-0">
 									<IntlMessages id="tags.title" />
 								</h3>
-								</div>
+							</div>
 
-								<div className={classes.root}>
-									<Grid container spacing={3}>
-										<Grid item xs={4}>
-											<h4>
+							<div className={classes.root}>
+								<Grid container spacing={3}>
+									<Grid item xs={4}>
+										<h4>
 											Listado actual de etiquetas
-											</h4>
-										</Grid>
+										</h4>
+									</Grid>
 
-										<Grid item xs={4}>
-											<Link component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
-												<AddIcon color='primary'/>
+									<Grid item xs={4}>
+										<Link component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
+											<AddIcon color='primary' />
 												Crear nueva etiqueta
 											</Link>
-										</Grid>
 									</Grid>
-									<div className={classes.demo} >
-									{ 
-										  tagslist.map((item) => (
-										<List key={item.id}> 
-										
-											<ListItem >
-												
-											<ListItemAvatar>
-												<Avatar style={{ backgroundColor:'#E1F0FF'}}>
-												<LabelIcon color='primary'/>
-												</Avatar>
-											</ListItemAvatar>
-											<ListItemText
-											primary={item.tag}
-											secondary={secondary ? 'Secondary text' : null}
-											/>
-											<ListItemSecondaryAction>
-											<div>
-												<i
-													onClick={() => handleSelectActionTags(2,item.tag, item.hex, item.id)}
-													className="far fa-edit cursor-pointer custom-link-dash mr-2"
-												></i>
-												<i
-													onClick={() => handleSelectActionTags(3, item.id)}
-													className="far fa-trash-alt cursor-pointer custom-link-dash"
-												></i>
+								</Grid>
+								<div className={classes.demo} >
+									{
+										tagslist.map((item) => (
+											<List key={item.id}>
 
-											</div>
-											
-											</ListItemSecondaryAction>
-											
-											</ListItem>
-											
-											<Divider className="mt-2" style={{ backgroundColor:'#E1F0FF'}}/>
-										</List>
+												<ListItem >
+
+													<ListItemAvatar>
+														<Avatar style={{ backgroundColor: '#E1F0FF' }}>
+															<LabelIcon color='primary' />
+														</Avatar>
+													</ListItemAvatar>
+													<ListItemText
+														primary={item.tag}
+														secondary={secondary ? 'Secondary text' : null}
+													/>
+													<ListItemSecondaryAction>
+														<div>
+															<i
+																onClick={() => handleSelectActionTags(2, item.tag, item.hex, item.id)}
+																className="far fa-edit cursor-pointer custom-link-dash mr-2"
+															></i>
+															<i
+																onClick={() => handleSelectActionTags(3, item.id)}
+																className="far fa-trash-alt cursor-pointer custom-link-dash"
+															></i>
+
+														</div>
+
+													</ListItemSecondaryAction>
+
+												</ListItem>
+
+												<Divider className="mt-2" style={{ backgroundColor: '#E1F0FF' }} />
+											</List>
 										))}
-									</div>
 								</div>
+							</div>
 
 						</div>
 					</div>
 
 				</div>
 			</div>
-			<ModalTags/>
+			<ModalTags />
 		</div>
 
 	)
