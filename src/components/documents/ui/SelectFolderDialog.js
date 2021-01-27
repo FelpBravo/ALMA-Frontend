@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -9,41 +9,25 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import IntlMessages from 'util/IntlMessages';
 import {
-	closeModalSelectFolder, documentSaveFolderId,
-	startSaveCurrentFolderBreadcrumbs, startSubFoldersLoading,
+	documentSaveFolderId,
+	startSaveCurrentFolderBreadcrumbs,
+	startSubFoldersLoading,
 	documentSaveFolderName,
-	startFoldersLoading
 } from 'actions/documents';
 import SimpleBreadcrumbs from '../../ui/SimpleBreadcrumbs';
 import SkeletonApp from 'components/ui/SkeletonApp';
 
-export const SelectFolderDialog = () => {
+export const SelectFolderDialog = ({ setOpenModal, openModal }) => {
 
 	const dispatch = useDispatch();
 
 	const {
-		folders = [],
-		openModalSelectFolder = false,
 		currentFolderBreadcrumbs,
 		historyFoldersBreadcrumbs,
 		loadingFolderModal = false,
 	} = useSelector(state => state.documents);
 
 	const { authUser } = useSelector(state => state.auth);
-
-	useEffect(() => {
-
-		if (folders.length === 0) {
-			dispatch(startFoldersLoading(authUser));
-		}
-
-	}, [dispatch, folders])
-
-	const handleClose = () => {
-
-		dispatch(closeModalSelectFolder());
-
-	}
 
 	const handleClickBreadcrumbs = (e, { id, }) => {
 
@@ -59,7 +43,7 @@ export const SelectFolderDialog = () => {
 
 		dispatch(documentSaveFolderName(folder.name));
 
-		dispatch(closeModalSelectFolder());
+		setOpenModal(!openModal);
 
 	}
 
@@ -116,8 +100,7 @@ export const SelectFolderDialog = () => {
 	return (
 		<div>
 			<Dialog
-				open={openModalSelectFolder}
-				onClose={handleClose}
+				open={openModal}
 				aria-labelledby="form-dialog-title"
 				fullWidth={true}
 			>
@@ -164,7 +147,7 @@ export const SelectFolderDialog = () => {
 				<DialogActions>
 
 					<Button
-						onClick={handleClose}
+						onClick={() => setOpenModal(!openModal)}
 						color="primary">
 						<IntlMessages id="button.text.cancel" />
 					</Button>

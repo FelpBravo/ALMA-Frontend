@@ -8,7 +8,7 @@ import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
-import { GENERAL_ERROR, KEY_DOC } from '../constants/constUtil';
+import { GENERAL_ERROR } from '../constants/constUtil';
 
 export const startDocumentsTypeLoading = (authUser) => {
 	return async (dispatch) => {
@@ -59,7 +59,9 @@ const foldersLoaded = (folders) => {
 };
 
 export const startDetailDocumentTypeLoading = (id) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 
@@ -72,7 +74,7 @@ export const startDetailDocumentTypeLoading = (id) => {
 
 			Swal.showLoading();
 
-			const resp = await getById(id);
+			const resp = await getById(authUser, id);
 
 			dispatch(detailDocumentTypeLoaded(resp.data));
 
@@ -116,7 +118,9 @@ export const detailDocumentSetValueField = (sectionId, name, value) => {
 };
 
 export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 
@@ -131,7 +135,7 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 
 			Swal.close();
 
-			await saveForm(fileId, folderId, aspectGroup, tags);
+			await saveForm(authUser, fileId, folderId, aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 
@@ -171,7 +175,10 @@ export const documentSaveFolderName = (name) => {
 };
 
 export const startDropFileLoading = (files) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
+
 		try {
 
 			Swal.fire({
@@ -183,7 +190,7 @@ export const startDropFileLoading = (files) => {
 
 			Swal.showLoading();
 
-			const resp = await uploadDocument(KEY_DOC, files[0]);
+			const resp = await uploadDocument(authUser, files[0]);
 
 			Swal.close();
 
@@ -220,11 +227,13 @@ const saveThumbnailGenerated = (thumbnailGenerated) => {
 };
 
 export const startThumbnailLoading = (fileId) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 
-			const resp = await getThumbnail(fileId);
+			const resp = await getThumbnail(authUser, fileId);
 
 			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`));
 
@@ -249,7 +258,9 @@ export const documentsClear = () => {
 };
 
 export const startDocumentByIdLoading = (fileId) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 
@@ -262,7 +273,7 @@ export const startDocumentByIdLoading = (fileId) => {
 
 			Swal.showLoading();
 
-			const resp = await getDocumentById(fileId);
+			const resp = await getDocumentById(authUser, fileId);
 
 			Swal.close();
 
@@ -342,7 +353,9 @@ export const startEditDocumentLoading = (
 	aspectGroup,
 	tags
 ) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 
@@ -356,12 +369,18 @@ export const startEditDocumentLoading = (
 			Swal.showLoading();
 
 			if (files) {
-				
-				await editDocumentVersion(files[0], fileId, versioningType, versioningComments);
+
+				await editDocumentVersion(
+					authUser,
+					files[0],
+					fileId,
+					versioningType,
+					versioningComments
+				);
 
 			}
 
-			await editForm(fileId, aspectGroup, tags);
+			await editForm(authUser, fileId, aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 
@@ -371,18 +390,6 @@ export const startEditDocumentLoading = (
 			Swal.close();
 		}
 
-	}
-};
-
-export const openModalSelectFolder = () => {
-	return {
-		type: types.docsOpenModalSelectFolder,
-	}
-};
-
-export const closeModalSelectFolder = () => {
-	return {
-		type: types.docsCloseModalSelectFolder,
 	}
 };
 
@@ -512,7 +519,7 @@ export const startAddAndRemoveTag = (id) => {
 
 			const tag = tags.find(x => x.id === parseInt(id));
 
-			newTags = [ ...tagsSelected, { ... tag } ];
+			newTags = [...tagsSelected, { ...tag }];
 
 		} else {
 

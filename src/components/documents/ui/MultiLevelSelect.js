@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { detailDocumentSetValueField } from 'actions/documents';
+import { createUUID } from 'helpers/createUUID';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -79,7 +80,7 @@ export const MultiLevelSelect = (
 		return currentValues.map((element) =>
 			element ? (
 				<ListItem
-					key={element.value}
+					key={createUUID()}
 					button
 					onClick={() => handleClickItem(element)}
 				>
@@ -100,7 +101,7 @@ export const MultiLevelSelect = (
 		return propertyItemList.map((element) =>
 			element ? (
 				<ListItem
-					key={element.value}
+					key={createUUID()}
 					button
 					onClick={() => handleClickItem(element)}
 				>

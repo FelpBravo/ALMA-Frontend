@@ -51,7 +51,6 @@ const DataTable = () => {
 
 		const existsFilters = filters.filter(filter => filter.value);
 
-		//console.log(textSearch, existsFilters, folderId, page + 1);
 		dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId, page + 1));
 
 		setPage(page);
@@ -74,7 +73,7 @@ const DataTable = () => {
 
 			Swal.showLoading();
 
-			const { data } = await downloadDocument(id);
+			const { data } = await downloadDocument(authUser, id);
 
 			Swal.close();
 

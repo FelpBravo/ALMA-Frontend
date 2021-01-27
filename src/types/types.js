@@ -49,8 +49,6 @@ export const types = {
 	docsSaveVersioningComments: 'Documents Save versioning comments',
 	docsClearVersioningType: 'Documents Clear versioning type',
 	docsClearVersioningComments: 'Documents Clear versioning comments',
-	docsOpenModalSelectFolder: 'Documents Open modal select folder',
-	docsCloseModalSelectFolder: 'Documents Close modal select folder',
 	docsFoldersLoaded: 'Documents Folders Loaded',
 	docsSetSubFoldersToFolder: 'Documents Set Sub Folder to folder',
 	docsSaveHistoryFoldersBreadcrumbs: 'Documents Save history folders Breadcrumbs',
