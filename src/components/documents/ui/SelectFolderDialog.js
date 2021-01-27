@@ -4,7 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import { Divider, List, ListItem, ListItemText } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 
 import IntlMessages from 'util/IntlMessages';
@@ -15,6 +15,7 @@ import {
 	startFoldersLoading
 } from 'actions/documents';
 import SimpleBreadcrumbs from '../../ui/SimpleBreadcrumbs';
+import SkeletonApp from 'components/ui/SkeletonApp';
 
 export const SelectFolderDialog = () => {
 
@@ -25,17 +26,18 @@ export const SelectFolderDialog = () => {
 		openModalSelectFolder = false,
 		currentFolderBreadcrumbs,
 		historyFoldersBreadcrumbs,
+		loadingFolderModal = false,
 	} = useSelector(state => state.documents);
 
 	const { authUser } = useSelector(state => state.auth);
 
 	useEffect(() => {
 
-		if (authUser && folders.length === 0) {
+		if (folders.length === 0) {
 			dispatch(startFoldersLoading(authUser));
 		}
 
-	}, [dispatch, authUser, folders])
+	}, [dispatch, folders])
 
 	const handleClose = () => {
 
@@ -51,19 +53,17 @@ export const SelectFolderDialog = () => {
 
 	}
 
-	const handleSelectItem = async (folder) => {
+	const handleSelectItem = (folder) => {
 
-		if (!folder.hashSubFolders) {
+		dispatch(documentSaveFolderId(folder.id));
 
-			dispatch(documentSaveFolderId(folder.id));
+		dispatch(documentSaveFolderName(folder.name));
 
-			dispatch(documentSaveFolderName(folder.name));
+		dispatch(closeModalSelectFolder());
 
-			dispatch(closeModalSelectFolder());
+	}
 
-			return;
-
-		}
+	const handleLoadChilds = (folder) => {
 
 		dispatch(startSubFoldersLoading(folder, authUser));
 
@@ -74,20 +74,37 @@ export const SelectFolderDialog = () => {
 		return (
 			<List>
 				{
-					currentFolderBreadcrumbs.folders.map(folder => {
+					currentFolderBreadcrumbs.folders.map((folder, i) => {
 						return (
-							<ListItem key={folder.id}>
-								<ListItemText
-									className="modal-select-folder"
-									onClick={() => handleSelectItem(folder)}
-								>
-									{`${folder.name} `}
+							<div key={folder.id}>
+								<ListItem>
+									<ListItemText
+										className="modal-select-folder"
+										onClick={() => handleSelectItem(folder)}
+									>
+										{`${folder.name} `}
+									</ListItemText>
+
 									{
 										folder.hashSubFolders
-										&& <i className="fas fa-chevron-right" style={{ fontSize: 12 }}></i>
+										&&
+										<i
+											onClick={() => handleLoadChilds(folder)}
+											className="fas fa-chevron-right modal-select-folder"
+											style={{ fontSize: 12 }}
+										>
+										</i>
 									}
-								</ListItemText>
-							</ListItem>
+
+								</ListItem>
+
+								{
+									(currentFolderBreadcrumbs.folders.length - 1) !== i
+									&&
+									<Divider component="li" />
+								}
+
+							</div>
 						)
 					})
 				}
@@ -102,6 +119,7 @@ export const SelectFolderDialog = () => {
 				open={openModalSelectFolder}
 				onClose={handleClose}
 				aria-labelledby="form-dialog-title"
+				fullWidth={true}
 			>
 				<DialogTitle id="form-dialog-title">
 					<IntlMessages id="document.select.folder" />
@@ -109,36 +127,48 @@ export const SelectFolderDialog = () => {
 
 				<DialogContent dividers>
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+					{
+						!loadingFolderModal
+						&&
+						<>
+							<div className="row">
+								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<SimpleBreadcrumbs
-								items={historyFoldersBreadcrumbs}
-								currentItem={currentFolderBreadcrumbs.id}
-								handleClick={handleClickBreadcrumbs}
-							/>
+									<SimpleBreadcrumbs
+										items={historyFoldersBreadcrumbs}
+										currentItem={currentFolderBreadcrumbs.id}
+										handleClick={handleClickBreadcrumbs}
+									/>
 
-						</div>
-					</div>
+								</div>
+							</div>
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-							{
+							<div className="row">
+								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+									{
+										handleRenderItems()
+									}
+								</div>
+							</div>
+						</>
+					}
 
-								handleRenderItems()
-
-							}
-						</div>
-					</div>
+					{
+						loadingFolderModal
+						&&
+						<SkeletonApp />
+					}
 
 				</DialogContent>
 
 				<DialogActions>
+
 					<Button
 						onClick={handleClose}
 						color="primary">
 						<IntlMessages id="button.text.cancel" />
 					</Button>
+
 				</DialogActions>
 
 			</Dialog>

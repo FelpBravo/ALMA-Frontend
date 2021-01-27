@@ -58,6 +58,7 @@ export const types = {
 	docsUpdateHistoryFoldersBreadcrumbs: 'Documents Update history folders Breadcrumbs',
 	docsSaveFolderName: 'Documents Save folder name',
 	docsAddAndRemoveTag: 'Documents Add and Remove tag',
+	docsLoadingModalFolder: 'Documents Loading modal folder',
 
 	adminFoldersLoaded: 'Admin Folders loaded',
 	adminFoldersSubFoldersLoaded: 'Admin Folders sub folders loaded',

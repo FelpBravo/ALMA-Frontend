@@ -38,12 +38,9 @@ export const startFoldersLoading = (authUser) => {
 
 		try {
 
-			console.log('gagaga');
 			const resp = await getFolders(authUser);
 
 			dispatch(foldersLoaded(resp.data));
-
-			dispatch(addHistoryFoldersBreadcrumbs({ id: 0, name: '#' }));
 
 			dispatch(setCurrentFolderBreadcrumbs({ id: 0, name: '#', folders: [...resp.data] }));
 
@@ -408,6 +405,8 @@ export const startSubFoldersLoading = (folder, authUser) => {
 
 			try {
 
+				dispatch(docsLoadingModalFolder());
+
 				const resp = await getFoldersById(folder.id, authUser);
 
 				dispatch(addHistoryFoldersBreadcrumbs({ ...folder }));
@@ -418,10 +417,18 @@ export const startSubFoldersLoading = (folder, authUser) => {
 
 			} catch (error) {
 				console.log(error);
+			} finally {
+				dispatch(docsLoadingModalFolder());
 			}
 
 		}
 
+	}
+}
+
+const docsLoadingModalFolder = () => {
+	return {
+		type: types.docsLoadingModalFolder,
 	}
 }
 
