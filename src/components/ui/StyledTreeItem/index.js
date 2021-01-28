@@ -4,14 +4,14 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import Typography from '@material-ui/core/Typography';
 
 const useTreeItemStyles = makeStyles((theme) => ({
-    root: {
+   root: {
         color: theme.palette.text.secondary,
         '&:hover > $content': {
-            backgroundColor: '#1d1d1d',
+            backgroundColor: '#181824',
             color: '#FFFFFF'
         },
         '&:focus > $content, &$selected > $content': {
-            backgroundColor: '#1d1d1d', //`var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
+            backgroundColor: '#181824', //`var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
             color: '#FFFFFF',
         },
         '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
@@ -19,6 +19,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
             color: '#FFFFFF'
         },
     },
+
     content: {
         color: theme.palette.text.secondary,
         borderTopRightRadius: theme.spacing(2),

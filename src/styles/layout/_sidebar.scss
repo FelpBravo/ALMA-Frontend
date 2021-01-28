@@ -2,13 +2,13 @@
 
 .side-nav {
   width: $side-nav-width;
-  background-color: $sidebar-bg !important;
+  background-color: #1F1E2E !important;
   color: $sidebar-text-color !important;
   border-right: 0 none !important;
   z-index: 1250 !important;
 
   & .user-profile {
-    background-color: $sidebar-bg-darken;
+    background-color: #181824;
     padding: 16px 17px;
   }
 
@@ -154,8 +154,8 @@
 
   &.open {
     & .nav-menu-item .nav-menu-link.active {
-      background-color: $sidebar-bg-darken-highlight;
-      color: $sidebar-hover-color;
+      background-color: #181824;
+      color: #3699FF;
     }
   }
 

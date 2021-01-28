@@ -324,7 +324,7 @@ $font-weight-black:           900 !default;
 
 $h1-font-size:                1.5rem; //24px
 $h2-font-size:                1.25rem; //20px
-$h3-font-size:                1.125rem; //18px
+$h3-font-size:                1.0rem; //16px
 $h4-font-size:                1rem; //16px
 $h5-font-size:                0.875rem; //14px
 $h6-font-size:                0.75rem; //12px
@@ -1190,7 +1190,7 @@ $side-nav-width: 250px !default;
 $mini-drawer-width: 80px !default;
 $sidebar-bg: #252525 !default;
 $sidebar-text-color: #a1a1a1 !default;
-$sidebar-bg-darken: darken($sidebar-bg, 3%);
+$sidebar-bg-darken: #181824;
 $sidebar-hover-color: $white;
 $sidebar-bg-darken-highlight: $app-primary;
 

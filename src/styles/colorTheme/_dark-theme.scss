@@ -253,7 +253,7 @@ body.dark-theme {
     &:focus,
     &:hover,
     &.active {
-      background-color: $sidebar-darken-dark-theme;
+      background-color: #181824;
       color: $white;
     }
 
@@ -264,7 +264,7 @@ body.dark-theme {
 
   &.open {
     & .nav-menu-item .nav-menu-link.active {
-      background-color: darken($sidebar-dark-theme, 5%);
+      background-color: #181824;
       color: $white;
     }
   }
@@ -276,7 +276,7 @@ body.dark-theme {
     &:focus,
     &:hover,
     &.active {
-      background-color: $sidebar-darken-dark-theme;
+      background-color: #181824;
       color: $white;
     }
   }
