@@ -11,11 +11,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
 import { useDispatch, useSelector } from 'react-redux';
-import { startTagsInitLoading, openModalTags, startDeleteTagsLoading, setTagsList, setActionModalTags } from 'actions/tags';
+import {
+	saveTagsLoaded, startTagsInitLoading, openModalTags, startDeleteTagsLoading,
+	setTagsList, setActionModalTags
+} from 'actions/tags';
 import ModalTags from './ui/ModalTags';
 import { Avatar, Divider } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
+import SkeletonApp from 'components/ui/SkeletonApp';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -23,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: 30,
 	},
 	demo: {
-		width: '53%',
+		width: '100%',
 	},
 }));
 
@@ -37,7 +41,11 @@ const Tags = () => {
 
 	useEffect(() => {
 
-		dispatch(startTagsInitLoading(authUser));
+		if (tagslist.length === 0) {
+			dispatch(startTagsInitLoading(authUser));
+		}
+
+		dispatch(saveTagsLoaded());
 
 	}, [dispatch]);
 
@@ -126,6 +134,13 @@ const Tags = () => {
 								</Grid>
 								<div className={classes.demo} >
 									{
+										tagslist.length === 0
+										&&
+										<SkeletonApp />
+									}
+									{
+										tagslist.length > 0
+										&&
 										tagslist.map((item) => (
 											<List key={item.id}>
 
@@ -143,7 +158,7 @@ const Tags = () => {
 													<ListItemSecondaryAction>
 														<div>
 															<i
-																onClick={() => handleSelectActionTags(2, item.tag, item.hex, item.id)}
+																onClick={() => handleSelectActionTags(2, item.id, item.tag, item.hex)}
 																className="far fa-edit cursor-pointer custom-link-dash mr-2"
 															></i>
 															<i
@@ -159,7 +174,8 @@ const Tags = () => {
 
 												<Divider className="mt-2" style={{ backgroundColor: '#E1F0FF' }} />
 											</List>
-										))}
+										))
+									}
 								</div>
 							</div>
 

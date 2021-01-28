@@ -128,14 +128,16 @@ export const startCreateTagsLoading = (authUser, tag, hex) => {
 	}
 };
 
-const saveTagsLoaded = () => {
+export const saveTagsLoaded = () => {
 	return {
 		type: types.tagsSaveLoaded,
 	}
 }
 
-export const startEditTagsLoading = (tag, hex, id) => {
-	return async (dispatch) => {
+export const startEditTagsLoading = (id, tag, hex) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 
@@ -148,9 +150,9 @@ export const startEditTagsLoading = (tag, hex, id) => {
 
 			Swal.showLoading();
 
-			await editTags(tag, hex, id);
+			await editTags(authUser, id, tag, hex);
 
-			dispatch(updateTagsLoaded(tag, hex, id));
+			dispatch(updateTagsLoaded(id, tag, hex));
 			dispatch(saveTagsLoaded());
 
 		} catch (error) {
@@ -162,13 +164,19 @@ export const startEditTagsLoading = (tag, hex, id) => {
 	}
 };
 
-const updateTagsLoaded = (tag, hex, id) => {
+const updateTagsLoaded = (id, tag, hex) => {
 	return {
 		type: types.tagsUpdateLoaded,
 		payload:{
-			hex,
-			tag,
 			id,
+			tag,
+			hex,
 		}
+	}
+};
+
+export const tagsRemoveAll = () => {
+	return {
+		type: types.tagsRemoveAll,
 	}
 };

@@ -83,5 +83,6 @@ export const types = {
 	tagsSetFolder: 'Tags set folder',
 	tagsSaveLoaded: 'Tags save loaded',
 	tagsUpdateLoaded: 'Tags update loaded',
+	tagsRemoveAll: 'Tags Remove all',
 
 }
