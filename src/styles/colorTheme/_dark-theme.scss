@@ -276,7 +276,7 @@ body.dark-theme {
     &:focus,
     &:hover,
     &.active {
-      background-color: #181824;
+      background-color: $sidebar-darken-dark-theme;
       color: $white;
     }
   }

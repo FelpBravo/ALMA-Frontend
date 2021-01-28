@@ -1,5 +1,3 @@
-import MailIcon from '@material-ui/icons/FolderOutlined';
-
 export const fixedFolders = [
 	{
 		name: 'sidebar.main',
@@ -8,7 +6,7 @@ export const fixedFolders = [
 			{
 				id: -2,
 				name: 'sidebar.home',
-				icon: 'dashboard',
+				icon: 'view-dashboard',
 				type: 'item',
 				link: '/dashboard',
 				bd: false,
