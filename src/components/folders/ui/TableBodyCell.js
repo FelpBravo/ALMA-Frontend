@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TableCell, TableRow } from '@material-ui/core';
 
 import {
@@ -12,9 +12,11 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 
 	const dispatch = useDispatch();
 
+	const { authUser } = useSelector(state => state.auth);
+
 	const handleOnClick = () => {
 		if (hashSubFolders) {
-			dispatch(startSubFoldersLoading(id, name));
+			dispatch(startSubFoldersLoading(authUser, id, name));
 		}
 	}
 
@@ -63,7 +65,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				});
 
 				if (resp.value) {
-					dispatch(startDeleteFolderLoading(id));
+					dispatch(startDeleteFolderLoading(authUser, id));
 				}
 
 				break;

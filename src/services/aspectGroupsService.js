@@ -1,7 +1,5 @@
 import { axiosInstance } from '../config/axios-instance';
 
-const token = localStorage.getItem('token');
-
 const getAll = (authUser) => {
 	return axiosInstance.get('/aspectGroups', {
 		headers: {
@@ -10,10 +8,10 @@ const getAll = (authUser) => {
 	});
 };
 
-const getById = (id) => {
+const getById = (authUser, id) => {
 	return axiosInstance.get(`/aspectGroups/${id}/aspects`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };

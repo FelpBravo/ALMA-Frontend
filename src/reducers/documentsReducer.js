@@ -15,10 +15,19 @@ const initialState = {
 	tagsSelected: [],
 	versioningType: '',
 	versioningComments: '',
-	openModalSelectFolder: false,
 	folders: [],
-	historyFoldersBreadcrumbs: [],
-	currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
+	historyFoldersBreadcrumbs: [
+		{
+			id: 0,
+			name: '#',
+		}
+	],
+	currentFolderBreadcrumbs: {
+		id: 0,
+		name: '#',
+		folders: []
+	},
+	loadingFolderModal: false,
 }
 
 export const documentsReducer = (state = initialState, action) => {
@@ -51,7 +60,12 @@ export const documentsReducer = (state = initialState, action) => {
 				versioningType: '',
 				versioningComments: '',
 				folders: [],
-				historyFoldersBreadcrumbs: [],
+				historyFoldersBreadcrumbs: [
+					{
+						id: 0,
+						name: '#',
+					}
+				],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 			}
 
@@ -135,7 +149,12 @@ export const documentsReducer = (state = initialState, action) => {
 				versioningType: '',
 				versioningComments: '',
 				folders: [],
-				historyFoldersBreadcrumbs: [],
+				historyFoldersBreadcrumbs: [
+					{
+						id: 0,
+						name: '#',
+					}
+				],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 				tagsSelected: [],
 			}
@@ -155,8 +174,13 @@ export const documentsReducer = (state = initialState, action) => {
 				tagsSelected: [],
 				versioningType: '',
 				versioningComments: '',
-				folders: [],
-				historyFoldersBreadcrumbs: [],
+				//folders: [],
+				historyFoldersBreadcrumbs: [
+					{
+						id: 0,
+						name: '#',
+					}
+				],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
 			}
 
@@ -166,7 +190,7 @@ export const documentsReducer = (state = initialState, action) => {
 				detailDocumentType: { ...action.payload.aspectGroup },
 				fileIdLoaded: action.payload.fileId,
 				folderId: action.payload.folderId,
-				tagsSelected: [...action.payload.tags ],
+				tagsSelected: [...action.payload.tags],
 			}
 
 		case types.docsTagsLoaded:
@@ -197,18 +221,6 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				versioningComments: '',
-			}
-
-		case types.docsOpenModalSelectFolder:
-			return {
-				...state,
-				openModalSelectFolder: true,
-			}
-
-		case types.docsCloseModalSelectFolder:
-			return {
-				...state,
-				openModalSelectFolder: false,
 			}
 
 		case types.docsFoldersLoaded:
@@ -253,6 +265,12 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				tagsSelected: action.payload,
+			}
+
+		case types.docsLoadingModalFolder:
+			return {
+				...state,
+				loadingFolderModal: !state.loadingFolderModal,
 			}
 
 		default:

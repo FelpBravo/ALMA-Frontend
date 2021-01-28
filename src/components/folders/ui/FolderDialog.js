@@ -18,6 +18,8 @@ const FolderDialog = () => {
 
 	const dispatch = useDispatch();
 
+	const { authUser } = useSelector(state => state.auth);
+
 	const { openModal, folder, actionModal } = useSelector(state => state.adminFolders);
 
 	const [formValues, setFormValues] = useState({});
@@ -90,12 +92,12 @@ const FolderDialog = () => {
 		if (actionModal === ACTION_CREATE) {
 
 			dispatch(closeModalFolder());
-			dispatch(startCreateFolderLoading(data, parentId, parentName));
+			dispatch(startCreateFolderLoading(authUser, data, parentId, parentName));
 
 		} else {
 
 			dispatch(closeModalFolder());
-			dispatch(startEditFolderLoading(data, parentId, parentName));
+			dispatch(startEditFolderLoading(authUser, data, parentId, parentName));
 
 		}
 

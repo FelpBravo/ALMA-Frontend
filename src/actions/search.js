@@ -61,7 +61,9 @@ export const searchLoaded = (documents) => {
 };
 
 export const startDeleteDocument = (id) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 			Swal.fire({
@@ -73,7 +75,7 @@ export const startDeleteDocument = (id) => {
 
 			Swal.showLoading();
 
-			await deleteDocument(id);
+			await deleteDocument(authUser, id);
 
 			dispatch(deletedDocumentFinish(id));
 
@@ -129,7 +131,9 @@ export const searchClearAllFilters = () => {
 };
 
 export const startSubscribeDocument = (id) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
 
 		try {
 
@@ -142,7 +146,7 @@ export const startSubscribeDocument = (id) => {
 
 			Swal.showLoading();
 
-			await subscribeDocument(id);
+			await subscribeDocument(authUser, id);
 
 			Swal.close();
 
