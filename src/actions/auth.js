@@ -7,6 +7,7 @@ import { folderRemoveAll } from './folders';
 import { searchRemoveText } from './search';
 import { documentsRemoveAll } from './documents';
 import { adminFoldersremoveAll } from './adminFolders';
+import { tagsRemoveAll } from './tags';
 
 export const startUserSignInLogin = (userName, password) => {
 	return async (dispatch) => {
@@ -40,6 +41,7 @@ export const startUserSingOut = () => {
 		dispatch(userSignOut());
 		dispatch(documentsRemoveAll());
 		dispatch(adminFoldersremoveAll());
+		dispatch(tagsRemoveAll());
 	}
 }
 

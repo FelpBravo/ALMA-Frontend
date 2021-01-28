@@ -3,123 +3,172 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import { TwitterPicker } from 'react-color';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalTags, startCreateTagsLoading, startEditTagsLoading } from 'actions/tags';
-import IntlMessages from 'util/IntlMessages';
-import { ACTION_CREATE } from 'constants/constUtil';
-import { DialogTitle } from '@material-ui/core';
 
+import { 
+  closeModalTags, saveTagsLoaded, startCreateTagsLoading, startEditTagsLoading 
+} from 'actions/tags';
+import IntlMessages from 'util/IntlMessages';
+import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
+import { DialogTitle } from '@material-ui/core';
 
 const fieldName = <IntlMessages id="tags.modal.field.name" />
 
-
 const ModalTags = () => {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const { authUser } = useSelector(state => state.auth);
+  const { authUser } = useSelector(state => state.auth);
 
-    const { openModal, actionModal, tags} = useSelector(state => state.tags);
+  const { openModal, actionModal, tags } = useSelector(state => state.tags);
 
-    const [formValues, setFormValues] = useState({});
-    const [color, setColor] = useState('#fff');
-    const [value, setValue] = useState('');
-  
+  const [color, setColor] = useState('#fff');
 
-    useEffect(() => {
+  const [value, setValue] = useState('');
 
-      setFormValues({ ...tags });
-  
-    }, [tags]);
-  
-    const handleClose = () => {
+  const [messageErrorName, setMessageErrorName] = useState(null);
+
+
+  useEffect(() => {
+
+    if (actionModal === ACTION_EDIT) {
+
+      const { hex = '#fff', tag = '' } = tags;
+
+      setColor(hex);
+
+      setValue(tag);
+
+    }
+
+  }, [actionModal, tags, setColor, setValue]);
+
+  useEffect(() => {
+
+    if (!value || value.length < 3) {
+
+      setMessageErrorName('Este campo debe tener mínimo 3 letras');
+
+    } else {
+
+      setMessageErrorName(null);
+
+    }
+
+  }, [value, setMessageErrorName]);
+
+  const handleClose = () => {
+
+    dispatch(closeModalTags());
+    
+    dispatch(saveTagsLoaded());
+
+    setValue('');
+
+  }
+
+  const handleOnChange = ({ target: { value } }) => {
+    setValue(value)
+  }
+
+  const handleOnSave = () => {
+
+    if (actionModal === ACTION_CREATE) {
 
       dispatch(closeModalTags());
-  
+      dispatch(startCreateTagsLoading(authUser, value, color));
+
+    } else {
+
+      dispatch(closeModalTags());
+      dispatch(startEditTagsLoading(tags.id, value, color));
+
     }
 
-    const handleOnChange = ({ target: { value } }) => {
-      setValue(value)
-    }
-    
-    const handleOnSave = (id) => {
-  
-      if (actionModal === ACTION_CREATE) {
-  
-        dispatch(closeModalTags());
-        dispatch(startCreateTagsLoading(authUser, value, color));
-  
-      } else {
-  
-        dispatch(closeModalTags());
-        dispatch(startEditTagsLoading(value, color, id));
-  
-      }
-  
-    }
- 
-	return (
-	
-	<div>
+  }
+
+  const handleOnChangeColor = ({ hex }) => {
+
+    setColor(hex);
+
+  }
+
+  return (
+
+    <div>
       <Dialog
-				open={openModal}
-				onClose={handleClose}
-				aria-labelledby="form-dialog-title"
-				fullWidth={true}
-			>
+        open={openModal}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+        fullWidth={true}
+      >
 
         <DialogTitle id="form-dialog-title">
-					{
-						actionModal === ACTION_CREATE
-							? <IntlMessages id="tags.modal.title.create"/>
-							: <IntlMessages id="tags.modal.title.edit" />
-					}
-				</DialogTitle>
-      
-        <DialogContent>
-         
-             <TextField
-								value={value}
-								autoFocus
-								label={fieldName}
-								type="text"
-								variant="outlined"
-								fullWidth
-								size="small"
-								onChange={handleOnChange}
-							/>
-          
-          <h3 className='mt-3'>Color de etiqueta</h3>
-          <TwitterPicker  value={color} onChangeComplete={(color => setColor(color.hex))}/>
-         
           {
-						actionModal !== ACTION_CREATE
-						&&
-						<div className="row mt-3">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-								<h4>{<IntlMessages id="folders.modal.field.state" />}</h4>
-							</div>
-						</div>
-					}
-         
-         
+            actionModal === ACTION_CREATE
+              ? <IntlMessages id="tags.modal.title.create" />
+              : <IntlMessages id="tags.modal.title.edit" />
+          }
+        </DialogTitle>
+
+        <DialogContent>
+
+          <TextField
+            value={value}
+            autoFocus
+            label={fieldName}
+            type="text"
+            variant="outlined"
+            fullWidth
+            size="small"
+            onChange={handleOnChange}
+          />
+
+          <span className="text-danger text-error">{messageErrorName}</span>
+
+          <h3 className='mt-3'>Color de etiqueta</h3>
+
+          <TwitterPicker value={color} onChange={handleOnChangeColor} />
+
         </DialogContent>
-       
+
         <DialogActions>
-          <Button autoFocus onClick={handleClose} variant="contained" color="primary">
-           Cancelar
+
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            color="primary"
+          >
+            Cancelar
           </Button>
-          <Button onClick={handleOnSave} variant="contained" color="primary" autoFocus>
-            Agregar
+
+          <Button
+            onClick={handleOnSave}
+            variant="contained"
+            color="primary"
+            autoFocus
+            disabled={messageErrorName}
+          >
+            
+            {
+              actionModal === ACTION_EDIT 
+              ? 
+              'Editar' 
+              : 
+              'Guardar'
+            }
+
           </Button>
+
         </DialogActions>
+
       </Dialog>
+
     </div>
-       					
-	)
+
+  )
 }
 
 export default ModalTags;

@@ -14,55 +14,88 @@ const initialState = {
 
 export const tagsReducer = (state = initialState, action) => {
 
-	switch (action.type) {
-		case types.tagsInitLoaded:
-			return {
-				...state,
-				tagslist: action.payload,
+    switch (action.type) {
+        case types.tagsInitLoaded:
+            return {
+                ...state,
+                tagslist: action.payload,
             }
-            
+
         case types.tagsOpenModal:
-        return {
-            ...state,
-            openModal: true,
-        }
+            return {
+                ...state,
+                openModal: true,
+            }
 
         case types.tagsCloseModal:
-        return {
-            ...state,
-            openModal: false,
-        }
-        
+            return {
+                ...state,
+                openModal: false,
+            }
+
         case types.tagsSetActionModal:
-        return {
-            ...state,
-            actionModal: action.payload,
-        }
+            return {
+                ...state,
+                actionModal: action.payload,
+            }
 
         case types.tagsDeleteLoaded:
-        return {
-            ...state,
-				tagslist: action.payload,
-        }
+            return {
+                ...state,
+                tagslist: action.payload,
+            }
 
         case types.tagsSetFolder:
-			return {
-				...state,
-				tags: { ...action.payload }
+            return {
+                ...state,
+                tags: { ...action.payload }
             }
-            
+
         case types.tagsSaveLoaded:
-			return {
-				...state,
-				tags: {
-					id: 0,
-					tag: '',
-				    hex: '',
-					state: true,
-				}
-			}
+            return {
+                ...state,
+                openModal: false,
+                tags: {
+                    id: 0,
+                    tag: '',
+                    hex: '',
+                    state: true,
+                }
+            }
+
+        case types.tagsUpdateLoaded:
+            return {
+                ...state,
+                tagslist: state.tagslist.map((item) => {
+
+                    const { id, tag, hex } = action.payload;
+
+                    if (item.id === id) {
+
+                        item.tag = tag;
+                        item.hex = hex;
+
+                    }
+
+                    return item;
+
+                }),
+            }
+
+        case types.tagsRemoveAll:
+            return {
+                tagslist: [],
+                openModal: false,
+                actionModal: '',
+                tags: {
+                    id: 0,
+                    tag: '',
+                    hex: '',
+                    state: true,
+                }
+            }
 
         default:
-			return state;
+            return state;
     }
 };
