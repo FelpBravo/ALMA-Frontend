@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 		padding: "2px 4px",
 		display: "flex",
 		alignItems: "center",
-		padding: 10,
+		padding: 7,
 	  },
     input: {
       color: '#3699FF',
@@ -98,11 +98,6 @@ export const EditTextSearch = ({ }) => {
 						<h3 className="mb-0">
 							<IntlMessages id="dashboard.searchDocuments" />
 						</h3>
-						<div className="ml-auto">
-							<span className="custom-link-dash">
-
-							</span>
-						</div>
 					</div>
 					<form onSubmit={handleSearch}>
 						<Grid container spacing={2}>
@@ -125,7 +120,7 @@ export const EditTextSearch = ({ }) => {
 
 							<Grid item xs={3}>
 								<Button
-								    style={{ paddingTop: "13px", paddingBottom: "13px", fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 600, }}
+								    style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
 									disabled={disabledButton}
 									variant="contained"
 									type="submit"

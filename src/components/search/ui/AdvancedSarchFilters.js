@@ -5,6 +5,8 @@ import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { searchSetValueFilter } from 'actions/search';
 
+
+
 export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 
 	const dispatch = useDispatch();
@@ -31,6 +33,8 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 					size="small"
 					InputLabelProps={{
 						shrink: true,
+					}}
+					style={{ color: '#3699FF',	
 					}}
 					onChange={handleOnChange}
 				/>

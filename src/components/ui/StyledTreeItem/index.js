@@ -56,6 +56,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
         flexGrow: 1,
         color: '#a1a1a1',
         padding: theme.spacing(0.5, 0),
+        fontFamily: 'Poppins'
     },
 }));
 

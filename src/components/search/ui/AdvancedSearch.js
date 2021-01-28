@@ -155,6 +155,8 @@ export const AdvancedSearch = () => {
 						>
 							<div className={classes.buttons}>
 								<Button
+								    style={{ backgroundColor:'#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, 	border: "none",
+									boxShadow: "none", height:'50px',width: '120px'}}
 									type="button"
 									variant="contained"
 									onClick={handleAdvanceSearchClear}
@@ -163,6 +165,8 @@ export const AdvancedSearch = () => {
 								</Button>
 
 								<Button
+								    style={{  fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+									boxShadow: "none",height:'50px',width: '120px'}}
 									type="submit"
 									variant="contained"
 									color="primary"
