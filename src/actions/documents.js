@@ -133,9 +133,9 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 
 			Swal.showLoading();
 
-			Swal.close();
-
 			await saveForm(authUser, fileId, folderId, aspectGroup, tags);
+
+			Swal.close();
 
 			dispatch(saveFormFinish());
 

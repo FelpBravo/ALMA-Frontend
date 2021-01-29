@@ -145,17 +145,17 @@ export const documentsReducer = (state = initialState, action) => {
 				folderName: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
-				tags: [],
+				//tags: [],
 				versioningType: '',
 				versioningComments: '',
-				folders: [],
+				//folders: [],
 				historyFoldersBreadcrumbs: [
 					{
 						id: 0,
 						name: '#',
 					}
 				],
-				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
+				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [...state.folders] },
 				tagsSelected: [],
 			}
 
@@ -170,7 +170,7 @@ export const documentsReducer = (state = initialState, action) => {
 				folderName: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
-				tags: [],
+				//tags: [],
 				tagsSelected: [],
 				versioningType: '',
 				versioningComments: '',
@@ -181,7 +181,7 @@ export const documentsReducer = (state = initialState, action) => {
 						name: '#',
 					}
 				],
-				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [] },
+				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [...state.folders] },
 			}
 
 		case types.docsDocumentByIdLoaded:
