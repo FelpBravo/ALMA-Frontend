@@ -39,7 +39,7 @@ export const DropZoneDocument = () => {
 
 			loadThumbnail();
 
-		}, 1000);
+		}, 3000);
 
 	}, [fileIdLoaded, thumbnailGenerated]);
 
