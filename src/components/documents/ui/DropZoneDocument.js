@@ -66,14 +66,14 @@ export const DropZoneDocument = () => {
 				<div className="row">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-						<section className="mt-4">
+						<section className="mt-4 data-table-cell">
 							<div {...getRootProps({})} className="drop-down">
 								<input {...getInputProps()} />
 								<i className="fas fa-cloud-upload-alt" style={{ fontSize: 50 }}></i>
 								<span>
 									<IntlMessages id="document.dropDocument" />
 								</span>
-								<button className="btn" type="button" onClick={open}>
+								<button className="load-bts btn" type="button" onClick={open}>
 									<IntlMessages id="document.selectDocument" />
 								</button>
 							</div>

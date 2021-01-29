@@ -144,9 +144,9 @@ const DataTable = () => {
 											<i className="far fa-file-pdf custom-link-dash"></i>{` `}
 											<span className="custom-link-dash">{name}</span>
 										</TableCell>
-										<TableCell className="data-table-cell">{`${createdByUser}`}</TableCell>
-										<TableCell className="data-table-cell">{createdAt}</TableCell>
-										<TableCell className="data-table-cell">{modifiedAt}</TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt}</TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{modifiedAt}</TableCell>
 										<TableCell>
 											{
 												tags.length > 0
@@ -162,7 +162,7 @@ const DataTable = () => {
 												})
 											}
 										</TableCell>
-										<TableCell className="data-table-cell">{version}</TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{version}</TableCell>
 										<TableCell></TableCell>
 										<TableCell>
 

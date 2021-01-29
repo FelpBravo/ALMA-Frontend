@@ -166,7 +166,7 @@ export const AdvancedSearch = () => {
 
 								<Button
 								    style={{  fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
-									boxShadow: "none",height:'45px',width: '120px'}}
+									boxShadow: "none", height:'45px', width: '120px'}}
 									type="submit"
 									variant="contained"
 									color="primary"

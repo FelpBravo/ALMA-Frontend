@@ -215,6 +215,7 @@ const Documents = () => {
 							>
 								<div className={classes.buttons}>
 									<Button
+									    style={{ border: "none", boxShadow: "none",backgroundColor:'#E1F0FF', color:'#3699FF', fontFamily: "Poppins", fontSize: '14px', fontWeight: 500 }}
 										type="button"
 										variant="contained"
 										onClick={handleClear}
@@ -223,6 +224,7 @@ const Documents = () => {
 									</Button>
 
 									<Button
+									style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 500 }}
 										disabled={
 											detailDocumentType.length === 0 ||
 											documentId.length === 0 ||

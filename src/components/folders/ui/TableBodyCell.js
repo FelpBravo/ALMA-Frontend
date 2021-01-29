@@ -79,6 +79,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	return (
 		<TableRow hover>
 			<TableCell
+			    style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
 				onClick={handleOnClick}
 				component="th"
 				scope="row"
@@ -87,12 +88,14 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				{name}
 			</TableCell>
 			<TableCell
+			     style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
 				className="folders-table-row"
 				onClick={handleOnClick}
 			>
 				{position}
 			</TableCell>
 			<TableCell
+			    style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
 				className="folders-table-row"
 				onClick={handleOnClick}
 			>

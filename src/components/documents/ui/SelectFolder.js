@@ -16,6 +16,7 @@ export const SelectFolder = () => {
 	return (
 		<>
 			<TextField
+			    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
 				className="modal-select-folder"
 				onClick={() => setOpenModal(!openModal)}
 				label={lblText}

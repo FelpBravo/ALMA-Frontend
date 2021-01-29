@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 		padding: "2px 4px",
 		display: "flex",
 		alignItems: "center",
-		padding: 7,
+		padding: 6,
 	  },
     input: {
       color: '#3699FF',

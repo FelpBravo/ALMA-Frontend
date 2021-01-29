@@ -18,16 +18,8 @@ const BootstrapInput = withStyles((theme) => ({
 		transition: theme.transitions.create(['border-color', 'box-shadow']),
 		// Use the system font instead of the default Roboto font.
 		fontFamily: [
-			'-apple-system',
-			'BlinkMacSystemFont',
-			'"Segoe UI"',
-			'Roboto',
-			'"Helvetica Neue"',
-			'Arial',
+			'Poppins',
 			'sans-serif',
-			'"Apple Color Emoji"',
-			'"Segoe UI Emoji"',
-			'"Segoe UI Symbol"',
 		].join(','),
 		'&:focus': {
 			borderRadius: 4,

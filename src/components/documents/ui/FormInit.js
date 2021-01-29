@@ -82,16 +82,14 @@ export const FormInit = () => {
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
 						<FormControl fullWidth>
-							<InputLabel>
-								<IntlMessages id="document.loadDocuments.typeDoc" />
-							</InputLabel>
 							<NativeSelect
+							    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
 								value={documentType}
 								name="documentsType"
 								input={<BootstrapInput />}
 								onChange={handleOnChange}
 							>
-								<option aria-label="None" value="">--SELECCIONE--</option>
+								<option aria-label="None" value="">Seleccione</option>
 								{
 									documentsType.length > 0
 									&&
@@ -110,7 +108,7 @@ export const FormInit = () => {
 
 					</div>
 
-					<div className="col-xl-4 col-lg-4 col-md-4 col-4" style={{marginTop: 24}}>
+					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
 						<SelectFolder />
 

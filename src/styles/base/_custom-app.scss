@@ -19,7 +19,7 @@
 
 .text-color-apiux {
 	 color: $app-primary-apiux;
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: bold;
 }
 
@@ -113,11 +113,24 @@
 	display: flex;
 	flex-direction: column;
 	border-style: dashed;
+	font-family: "Poppins";
+
 }
 
 .drop-down button {
-	background: $app-primary-apiux;
-	color: white;
+	background: #E1F0FF;
+	color: #3699FF;
+	font-family: "Poppins";
+	font-size: '14px';
+	font-weight: 600;
+}
+
+.load-bts{
+	background: #E1F0FF;
+	color: #3699FF;
+	font-family: "Poppins";
+	font-size: '14px';
+	font-weight: 600;
 }
 
 .drop-down button:hover {
@@ -128,6 +141,9 @@
 
 .drop-down span {
 	margin: 20px;
+	font-family: "Poppins";
+	font-size: '14px';
+	font-weight: 500;
 }
 
 .general-link {
