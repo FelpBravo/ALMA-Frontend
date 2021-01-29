@@ -21,14 +21,24 @@ const App = (props) => {
 	const [isLogin, setIsLogin] = useState(false);
 	const dispatch = useDispatch();
 	const { themeColor, darkTheme, locale, isDirectionRTL } = useSelector(({ settings }) => settings);
-	const { authUser, initURL } = useSelector(({ auth }) => auth);
+	const { authUser } = useSelector(({ auth }) => auth);
 
 	const isDarkTheme = darkTheme;
 	const { match } = props;
 
 	useEffect(() => {
-		setIsLogin(authUser ? true : false);
-	}, [authUser]);
+
+		if (authUser) {
+
+			setIsLogin(true);
+
+		} else {
+
+			setIsLogin(false);
+
+		}
+
+	}, [dispatch, setIsLogin, authUser]);
 
 	useEffect(() => {
 
@@ -43,7 +53,7 @@ const App = (props) => {
 			dispatch(setDarkTheme());
 		}
 
-	}, [dispatch, initURL, props.history.location.pathname, props.location.search]);
+	}, [dispatch, props.history.location.pathname, props.location.search]);
 
 	const currentAppLocale = AppLocale[locale.locale];
 

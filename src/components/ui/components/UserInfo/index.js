@@ -24,13 +24,19 @@ const UserInfo = () => {
 			return;
 		}
 
-		const { user } = jwt_decode(authUser);
+		try {
 
-		if (user) {
-			setUser(user);
+			const { user } = jwt_decode(authUser);
+
+			if (user) {
+				setUser(user);
+			}
+
+		} catch (err) {
+			console.log((err));
 		}
 
-	}, [authUser]);
+	}, [authUser, setUser]);
 
 	const handleClick = event => {
 		setOpen(true);
