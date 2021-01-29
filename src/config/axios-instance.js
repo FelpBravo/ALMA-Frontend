@@ -6,23 +6,6 @@ const axiosInstance = axios.create({
 
 });
 
-axiosInstance.interceptors.response.use(
-	(response) => {
-
-		return response;
-
-	}
-	,
-	(error) => {
-
-		if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
-
-		}
-
-		return Promise.reject(error);
-
-	});
-
 export {
 	axiosInstance,
 }
