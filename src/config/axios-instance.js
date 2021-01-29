@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { startUserSingOut } from '../actions/auth';
 
 const axiosInstance = axios.create({
 
@@ -15,7 +17,12 @@ axiosInstance.interceptors.response.use(
 	,
 	(error) => {
 
-		if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
+		const dispatch = useDispatch();
+
+		if (error && error.response 
+			&& (error.response.status === 401 || error.response.status === 403)) {
+			
+			dispatch(startUserSingOut());
 
 		}
 
