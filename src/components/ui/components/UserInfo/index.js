@@ -56,7 +56,7 @@ const UserInfo = () => {
 		<div className="user-profile d-flex flex-row align-items-center">
 			<Avatar
 				alt='...'
-				src={"https://via.placeholder.com/150x150"}
+				src={require("assets/images/usuario.png")}
 				className="user-avatar "
 			/>
 
