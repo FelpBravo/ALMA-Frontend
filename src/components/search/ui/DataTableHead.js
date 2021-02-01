@@ -7,9 +7,10 @@ export const DataTableHead = ({ columns = [] }) => {
 		<TableHead borderRadius={16}>
 			<TableRow>
 				{columns.map(column => {
+					console.log(columns)
 					return (
 						<TableCell
-							style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
+							style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign:'justify' }}
 							key={column.id}
 							align={column.numeric}
 							padding="default"

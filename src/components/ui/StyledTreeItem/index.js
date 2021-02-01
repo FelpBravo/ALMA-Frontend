@@ -15,7 +15,7 @@ const StyledTreeItem = (props) => {
             label={
                 <div>
                     <Typography style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, padding:"4px 30px 8px 0px" }}>
-                    <LabelIcon  className="mr-2" color="inherit"/>
+                    <LabelIcon style={{fontSize: '14px'}} className="mr-2" color="inherit"/>
                         {labelText}
                     </Typography>
                     <Typography>
