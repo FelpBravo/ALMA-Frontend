@@ -178,3 +178,14 @@ const subscribeDocumentFinish = (id) => {
 		payload: id
 	}
 };
+export const openModalVisibility = () => {
+	return {
+		type: types.visibilityOpenModal,
+	}
+};
+
+export const closeModalVisibility = () => {
+	return {
+		type: types.visibilityCloseModal,
+	}
+};

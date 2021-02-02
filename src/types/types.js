@@ -30,6 +30,8 @@ export const types = {
 	searchSetValueFilter: 'Search Set value filter',
 	searchClearAllFilters: 'Search Clear all filters',
 	searchSubscribeDocumentFinish: 'Search subscribe document finish',
+	visibilityOpenModal: 'Visibility Open Modal',
+	visibilityCloseModal: 'Visibility Close Modal',
 
 	docsDocumentsTypeLoaded: 'Documents Type documents loaded',
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',

@@ -15,7 +15,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import { downloadDocument } from 'services/filesService';
-import { startDeleteDocument, startSearchLoading, startSubscribeDocument } from 'actions/search';
+import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility } from 'actions/search';
 import { MenuTable } from './MenuTable';
 import { GENERAL_ERROR } from 'constants/constUtil';
 import { MoreVert } from '@material-ui/icons';
@@ -23,9 +23,12 @@ import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import PlaylistAddCheckOutlinedIcon from '@material-ui/icons/PlaylistAddCheckOutlined';
 import { makeStyles } from '@material-ui/core';
 import TableActionButton from './TableActionButton';
-import PlaylistAddCheckOutlinedIcon from '@material-ui/icons/PlaylistAddCheckOutlined';
+import ModalVisibility from './ModalVisivility';
+
+
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -85,8 +88,10 @@ const DataTable = () => {
 	}, []);
 
 	const handleVisibility=() =>{
-		console.log()
-	}
+		console.log("soy la visualización")
+
+		dispatch(openModalVisibility());
+	};
 
 	const handleChangePage = (event, page) => {
 
@@ -205,54 +210,54 @@ const DataTable = () => {
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{version}</TableCell>
 										<TableCell></TableCell>
-					<TableCell>
-						<div className={classes.iconsHolder}>
-						<TableActionButton
-                                materialIcon={
-                                  <VisibilityOutlinedIcon
-                                    className={classes.iconos}
-                                    onClick={() => handleVisibility()}
-                                  />
-                                }
-                              />
-                              <TableActionButton
-                                materialIcon={
-                                  <SaveAltOutlinedIcon
-                                    className={classes.iconos}
-                                    onClick={() => handleDownload(id, name)}
-                                  />
-                                }
-                              />
-                              <TableActionButton
-                                materialIcon={
-                                  <BorderColorOutlinedIcon
-                                    className={classes.iconos}
-									onClick={() => handleEdit(id)}
-                                  />
-                                }
-                              />
-                              <TableActionButton
-                                materialIcon={
-                                  <DeleteOutlinedIcon
-                                    className={classes.iconos}
-									onClick={() => handleDelete(id)}
-                                  />
-                                }
-                              />
-							  <TableActionButton
-                                materialIcon={
-                                  <PlaylistAddCheckOutlinedIcon
-                                    className={classes.iconos}
-									onClick={() => handleSubscribe(id)}
-                                  />
-                                }
-                              />
-                              <MoreVert
-                                className={classes.iconos}
-                                onClick={() => console.log("test")}
-                              />
-                            </div>
-						</TableCell>
+										<TableCell>
+											<div className={classes.iconsHolder}>
+											<TableActionButton
+													materialIcon={
+													<VisibilityOutlinedIcon
+														className={classes.iconos}
+														onClick={() => handleVisibility()}
+													/>
+													}
+												/>
+												<TableActionButton
+													materialIcon={
+													<SaveAltOutlinedIcon
+														className={classes.iconos}
+														onClick={() => handleDownload(id, name)}
+													/>
+													}
+												/>
+												<TableActionButton
+													materialIcon={
+													<BorderColorOutlinedIcon
+														className={classes.iconos}
+														onClick={() => handleEdit(id)}
+													/>
+													}
+												/>
+												<TableActionButton
+													materialIcon={
+													<DeleteOutlinedIcon
+														className={classes.iconos}
+														onClick={() => handleDelete(id)}
+													/>
+													}
+												/>
+												{/*<TableActionButton
+													materialIcon={
+													<PlaylistAddCheckOutlinedIcon
+														className={classes.iconos}
+														onClick={() => handleSubscribe(id)}
+													/>
+													}
+												/>*/}
+												<MoreVert
+													className={classes.iconos}
+													onClick={() => console.log("test")}
+												/>
+												</div>
+											</TableCell>
 										{/*<TableCell>
 
 											<div className="custom-td-table">
@@ -305,6 +310,7 @@ const DataTable = () => {
 						</TableFooter>
 					</Table>
 				</div>
+				<ModalVisibility/>
 			</div>
 		</Paper>
 	);

@@ -631,7 +631,8 @@
 	"dashboard.type.activity.subscribed": "Subscribió",
 	"dashboard.type.activity.uploaded": "Subió",
 	"dashboard.type.activity.viewed": "Vió",
-	"dashboard.type.activity.updated": "Actualizó"
+	"dashboard.type.activity.updated": "Actualizó",
+	"visibility.modal.title": "Previsualización de Documentos"
 	
 
 }

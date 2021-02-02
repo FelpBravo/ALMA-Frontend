@@ -8,6 +8,7 @@ const initialState = {
 	},
 	textSearch: '',
 	openAdvanceSearch: false,
+	openModal: false,
 };
 
 export const searchReducer = (state = initialState, action) => {
@@ -103,6 +104,18 @@ export const searchReducer = (state = initialState, action) => {
 					}),
 				}
 			}
+
+			case types.visibilityOpenModal:
+				return {
+					...state,
+					openModal: true,
+				}
+	
+			case types.visibilityCloseModal:
+				return {
+					...state,
+					openModal: false,
+				}	
 
 		default:
 			return state;
