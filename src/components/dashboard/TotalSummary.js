@@ -7,8 +7,8 @@ import IconWithTextCard from './ui/IconWithTextCard';
 export const dataMetrics = [
 	{
 		title: '0',
-		subTitle: 'Total documentos',
-		imageIcon: require('assets/images/dashboard/project-icon.png'),
+		subTitle: 'Total docs',
+		imageIcon: require('assets/images/dashboard/documento.png'),
 		cardColor: 'secondary',
 	},
 	{
