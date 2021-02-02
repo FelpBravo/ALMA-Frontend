@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModalVisibility } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle } from '@material-ui/core';
+import { startDocumentByIdLoading, visibilityDocuments } from 'actions/documents';
 
 
-
+ 
 const ModalVisibility = () => {
 
   const dispatch = useDispatch();
@@ -18,10 +19,14 @@ const ModalVisibility = () => {
 
   const { openModal} = useSelector(state => state.searchs);
 
+  const { docs } = useSelector(state => state.documents);
+  console.log("nadia", docs)
+
 
   const handleClose = () => {
     dispatch(closeModalVisibility());
   }
+
 
   return (
 

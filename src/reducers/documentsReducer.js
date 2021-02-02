@@ -28,6 +28,7 @@ const initialState = {
 		folders: []
 	},
 	loadingFolderModal: false,
+	docs: {},
 }
 
 export const documentsReducer = (state = initialState, action) => {
@@ -192,6 +193,12 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: action.payload.folderId,
 				tagsSelected: [...action.payload.tags],
 			}
+
+		case types.docsDocumentByIdVisibility:
+			return {
+				...state,
+				docs: action.payload,
+			}	
 
 		case types.docsTagsLoaded:
 			return {

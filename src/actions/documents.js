@@ -279,6 +279,7 @@ export const startDocumentByIdLoading = (fileId) => {
 
 			dispatch(documentByIdLoaded(resp.data));
 
+
 		} catch (error) {
 			Swal.close();
 			console.log(error);
@@ -294,7 +295,46 @@ const documentByIdLoaded = ({ aspectGroup, fileId, folderId, tags = [] }) => {
 			aspectGroup, fileId, folderId, tags,
 		}
 	}
+};
+
+export const startDocumentByIdVisibility = (id) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getDocumentById(authUser, id);
+			console.log('soy la dataaa', resp)
+
+			Swal.close();
+
+			dispatch(documentVisibility(resp.data));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+		}
+
+	}
+};
+
+const documentVisibility= (docs) => {
+	return {
+		type: types.docsDocumentByIdVisibility,
+		payload: docs,
+	}
 }
+
 
 export const startTagsLoading = (authUser) => {
 	return async (dispatch) => {

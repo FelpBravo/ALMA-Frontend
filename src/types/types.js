@@ -59,6 +59,7 @@ export const types = {
 	docsSaveFolderName: 'Documents Save folder name',
 	docsAddAndRemoveTag: 'Documents Add and Remove tag',
 	docsLoadingModalFolder: 'Documents Loading modal folder',
+	docsDocumentByIdVisibility: 'Documents Visibility',
 
 	adminFoldersLoaded: 'Admin Folders loaded',
 	adminFoldersSubFoldersLoaded: 'Admin Folders sub folders loaded',

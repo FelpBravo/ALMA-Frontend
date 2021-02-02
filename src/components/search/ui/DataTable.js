@@ -27,6 +27,7 @@ import PlaylistAddCheckOutlinedIcon from '@material-ui/icons/PlaylistAddCheckOut
 import { makeStyles } from '@material-ui/core';
 import TableActionButton from './TableActionButton';
 import ModalVisibility from './ModalVisivility';
+import { startDocumentByIdVisibility } from 'actions/documents';
 
 
 
@@ -87,10 +88,11 @@ const DataTable = () => {
 
 	}, []);
 
-	const handleVisibility=() =>{
-		console.log("soy la visualización")
+	const handleVisibility=(id, name) =>{
+		console.log("soy la visualización", id)
 
 		dispatch(openModalVisibility());
+		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
 	const handleChangePage = (event, page) => {
@@ -171,7 +173,7 @@ const DataTable = () => {
 						/>
 						<TableBody >
 							{data.map((
-								{ id,
+								{   id,
 									name,
 									createdAt,
 									modifiedAt,
@@ -216,7 +218,7 @@ const DataTable = () => {
 													materialIcon={
 													<VisibilityOutlinedIcon
 														className={classes.iconos}
-														onClick={() => handleVisibility()}
+														onClick={() => handleVisibility(id, name)}
 													/>
 													}
 												/>
