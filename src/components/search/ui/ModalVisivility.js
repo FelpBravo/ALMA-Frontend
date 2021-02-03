@@ -9,19 +9,11 @@ import IntlMessages from 'util/IntlMessages';
 import { DialogTitle } from '@material-ui/core';
 import { startDocumentByIdLoading, visibilityDocuments } from 'actions/documents';
 import Grid from '@material-ui/core/Grid';
-import { startDocumentByIdLoading } from 'actions/documents';
 import PDFViewer from 'pdf-viewer-reactjs' 
 import { downloadDocument } from 'services/filesService';
 import Swal from 'sweetalert2';
 import { InterfaceColorSet } from '@amcharts/amcharts4/core';
 
-
-let data2 = {
-  name:'prueba',
-  fecha:'34-03-2020',
-
-
-}
 
 const ModalVisibility = () => {
 
@@ -118,7 +110,7 @@ const Metadatacomponent = () => {
         </DialogTitle>
 
         <DialogContent>
-          <p>Imagen de previsualización {data2.name} </p>
+          <p>Imagen de previsualización</p>
           <Metadatacomponent/>
           <PDFcomponent/>
         </DialogContent>
