@@ -7,12 +7,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModalVisibility } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle } from '@material-ui/core';
-import { startDocumentByIdLoading, visibilityDocuments } from 'actions/documents';
 import Grid from '@material-ui/core/Grid';
 import PDFViewer from 'pdf-viewer-reactjs' 
+import { startDocumentByIdLoading } from 'actions/documents';
+import PDFViewer from 'pdf-viewer-reactjs'
 import { downloadDocument } from 'services/filesService';
 import Swal from 'sweetalert2';
 import { InterfaceColorSet } from '@amcharts/amcharts4/core';
+
+
+let data2 = {
+  name: 'prueba',
+  fecha: '34-03-2020',
+
+
+}
 
 
 const ModalVisibility = () => {
@@ -21,7 +30,7 @@ const ModalVisibility = () => {
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal} = useSelector(state => state.searchs);
+  const { openModal } = useSelector(state => state.searchs);
 
   const { docs } = useSelector(state => state.documents);
 
@@ -36,7 +45,7 @@ const ModalVisibility = () => {
 
   //const {customPropertyList, label } = aspectList;
 
- 
+
 
   const handleClose = () => {
     setPDF('')
@@ -45,32 +54,31 @@ const ModalVisibility = () => {
 
   const getPDF = async () => {
     setPDF('')
-    if(docs.fileId){
-    const { data } = await downloadDocument(authUser, docs.fileId);
-    const file = new Blob([data],{tipo: 'application/pdf'});
-    setPDF(URL.createObjectURL(file))
+    if (docs.fileId) {
+      const { data } = await downloadDocument(authUser, docs.fileId);
+      const file = new Blob([data], { tipo: 'application/pdf' });
+      setPDF(URL.createObjectURL(file))
 
     }
-  } 
-  useEffect(()=>{
+  }
+  useEffect(() => {
     getPDF()
-  },[docs])
+  }, [docs])
 
 
   const PDFcomponent = () => {
-    if(pdf != ''){
+    if (pdf != '') {
       return (
         <PDFViewer
-            document={{
-                url: pdf,
-            }}
-            navbarOnTop={true}
-            loader={true}
+          document={{
+            url: pdf,
+          }}
+          navbarOnTop={true}
+          loader={true}
         />
-    )
+      )
     }
-    else
-    {
+    else {
       return (<><p>Cargando...</p></>)
     }
     
@@ -86,15 +94,14 @@ const Metadatacomponent = () => {
               return <p>{p.label} {p.value}</p>
            })}</p>
           })}
-      </div>
-  )
+        </div>
+      )
+    }
+    else {
+      return (<></>)
+    }
+
   }
-  else
-  {
-    return (<></>)
-  }
-  
-}
 
 
   return (
@@ -109,14 +116,20 @@ const Metadatacomponent = () => {
       >
 
         <DialogTitle id="form-dialog-title">
-     
-            <IntlMessages id="visibility.modal.title" />
-             
+
+          <IntlMessages id="visibility.modal.title" />
+
         </DialogTitle>
 
-        <DialogContent>
-          <Metadatacomponent/>
-          <PDFcomponent/>
+        <DialogContent> 
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Metadatacomponent />
+            </Grid>
+            <Grid item xs={8}>
+               <PDFcomponent />
+            </Grid>
+          </Grid>
         </DialogContent>
 
         <DialogActions>
