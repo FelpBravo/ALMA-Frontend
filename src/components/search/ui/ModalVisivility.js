@@ -8,7 +8,7 @@ import { closeModalVisibility } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle } from '@material-ui/core';
 import { startDocumentByIdLoading, visibilityDocuments } from 'actions/documents';
-
+import Grid from '@material-ui/core/Grid';
 
  
 const ModalVisibility = () => {
@@ -21,6 +21,13 @@ const ModalVisibility = () => {
 
   const { docs } = useSelector(state => state.documents);
   console.log("nadia", docs)
+  
+  const { aspectGroup, tags, fileId, folderId } = docs;
+  console.log(aspectGroup)
+
+  //const { name } = aspectGroup;
+
+  //const {customPropertyList, label } = aspectList;
 
 
   const handleClose = () => {
@@ -46,6 +53,11 @@ const ModalVisibility = () => {
 
         <DialogContent>
           <p>Imagen de previsualización</p>
+
+        {/*h3>Tipo de documento : {name}</h3>*/}
+       
+
+
         </DialogContent>
 
         <DialogActions>
