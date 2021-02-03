@@ -81,7 +81,13 @@ const Metadatacomponent = () => {
     return (
       <div>
           <p>{docs.fileId}</p>
-          <p>{docs.folderId}</p>
+          <p>{docs.aspectGroup.name}</p>
+          {docs.aspectGroup.aspectList.map((a)=>{
+            return <p>{a.id} {a.name} { 
+              a.customPropertyList.map((p)=>{
+              return <p>{p.name}  {p.label} {p.value}</p>
+           })}</p>
+          })}
       </div>
   )
   }
