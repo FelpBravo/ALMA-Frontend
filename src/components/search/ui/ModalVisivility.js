@@ -10,18 +10,9 @@ import { DialogTitle } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import PDFViewer from 'pdf-viewer-reactjs' 
 import { startDocumentByIdLoading } from 'actions/documents';
-import PDFViewer from 'pdf-viewer-reactjs'
 import { downloadDocument } from 'services/filesService';
 import Swal from 'sweetalert2';
 import { InterfaceColorSet } from '@amcharts/amcharts4/core';
-
-
-let data2 = {
-  name: 'prueba',
-  fecha: '34-03-2020',
-
-
-}
 
 
 const ModalVisibility = () => {
