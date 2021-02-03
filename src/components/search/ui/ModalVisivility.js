@@ -79,12 +79,11 @@ const Metadatacomponent = () => {
   if(docs.fileId){
     return (
       <div>
-          <p>{docs.fileId}</p>
-          <p>{docs.aspectGroup.name}</p>
+          <h3>Tipo de Documento: {docs.aspectGroup.name}</h3>
           {docs.aspectGroup.aspectList.map((a)=>{
-            return <p>{a.id} {a.name} { 
+            return <p>{a.id} {a.label} { 
               a.customPropertyList.map((p)=>{
-              return <p>{p.name}  {p.label} {p.value}</p>
+              return <p>{p.label} {p.value}</p>
            })}</p>
           })}
       </div>
@@ -116,7 +115,6 @@ const Metadatacomponent = () => {
         </DialogTitle>
 
         <DialogContent>
-          <p>Imagen de previsualización</p>
           <Metadatacomponent/>
           <PDFcomponent/>
         </DialogContent>

@@ -164,7 +164,7 @@ const DataTable = () => {
 	}
 
 	return (
-		<Paper  style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
+		<Paper style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
 			<div className="flex-auto">
 				<div className="table-responsive-material">
 					<Table className="">
