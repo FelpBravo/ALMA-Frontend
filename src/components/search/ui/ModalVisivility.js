@@ -9,8 +9,20 @@ import IntlMessages from 'util/IntlMessages';
 import { DialogTitle } from '@material-ui/core';
 import { startDocumentByIdLoading, visibilityDocuments } from 'actions/documents';
 import Grid from '@material-ui/core/Grid';
+import { startDocumentByIdLoading } from 'actions/documents';
+import PDFViewer from 'pdf-viewer-reactjs' 
+import { downloadDocument } from 'services/filesService';
+import Swal from 'sweetalert2';
+import { InterfaceColorSet } from '@amcharts/amcharts4/core';
 
- 
+
+let data2 = {
+  name:'prueba',
+  fecha:'34-03-2020',
+
+
+}
+
 const ModalVisibility = () => {
 
   const dispatch = useDispatch();
@@ -20,6 +32,9 @@ const ModalVisibility = () => {
   const { openModal} = useSelector(state => state.searchs);
 
   const { docs } = useSelector(state => state.documents);
+
+  const [pdf, setPDF] = useState('')
+
   console.log("nadia", docs)
   
   const { aspectGroup, tags, fileId, folderId } = docs;
@@ -29,10 +44,60 @@ const ModalVisibility = () => {
 
   //const {customPropertyList, label } = aspectList;
 
+ 
 
   const handleClose = () => {
+    setPDF('')
     dispatch(closeModalVisibility());
   }
+
+  const getPDF = async () => {
+    setPDF('')
+    if(docs.fileId){
+    const { data } = await downloadDocument(authUser, docs.fileId);
+    const file = new Blob([data],{tipo: 'application/pdf'});
+    setPDF(URL.createObjectURL(file))
+
+    }
+  } 
+  useEffect(()=>{
+    getPDF()
+  },[docs])
+
+
+  const PDFcomponent = () => {
+    if(pdf != ''){
+      return (
+        <PDFViewer
+            document={{
+                url: pdf,
+            }}
+            navbarOnTop={true}
+            loader={true}
+        />
+    )
+    }
+    else
+    {
+      return (<><p>Cargando...</p></>)
+    }
+    
+}
+const Metadatacomponent = () => {
+  if(docs.fileId){
+    return (
+      <div>
+          <p>{docs.fileId}</p>
+          <p>{docs.folderId}</p>
+      </div>
+  )
+  }
+  else
+  {
+    return (<></>)
+  }
+  
+}
 
 
   return (
@@ -43,6 +108,7 @@ const ModalVisibility = () => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
+        maxWidth={true}
       >
 
         <DialogTitle id="form-dialog-title">
@@ -52,12 +118,9 @@ const ModalVisibility = () => {
         </DialogTitle>
 
         <DialogContent>
-          <p>Imagen de previsualización</p>
-
-        {/*h3>Tipo de documento : {name}</h3>*/}
-       
-
-
+          <p>Imagen de previsualización {data2.name} </p>
+          <Metadatacomponent/>
+          <PDFcomponent/>
         </DialogContent>
 
         <DialogActions>
