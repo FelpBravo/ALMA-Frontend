@@ -43,7 +43,6 @@
 		"node-sass": "^4.13.0",
 		"nprogress": "^0.2.0",
 		"path": "^0.12.7",
-		"pdf-viewer-reactjs": "^2.2.2",
 		"prettier": "^1.19.1",
 		"prop-types": "^15.7.2",
 		"query-string": "^6.13.8",
@@ -123,5 +122,6 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
-	}
+	},
+	"devDependencies": {}
 }

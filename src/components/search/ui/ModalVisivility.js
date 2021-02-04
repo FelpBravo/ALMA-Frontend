@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, makeStyles } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -8,23 +8,15 @@ import { closeModalVisibility } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle } from '@material-ui/core';
 import { startDocumentByIdLoading } from 'actions/documents';
-import PDFViewer from 'pdf-viewer-reactjs'
+
 import { downloadDocument } from 'services/filesService';
-import Swal from 'sweetalert2';
+
 import { InterfaceColorSet } from '@amcharts/amcharts4/core';
 import Grid from '@material-ui/core/Grid';
 
 
-let data2 = {
-  name: 'prueba',
-  fecha: '34-03-2020',
-
-
-}
-
-
-
 const ModalVisibility = () => {
+
 
   const dispatch = useDispatch();
 
@@ -37,9 +29,7 @@ const ModalVisibility = () => {
   const [pdf, setPDF] = useState('')
 
   console.log("nadia", docs)
-
-
-
+  
   const handleClose = () => {
     setPDF('')
     dispatch(closeModalVisibility());
@@ -49,26 +39,38 @@ const ModalVisibility = () => {
     setPDF('')
     if (docs.fileId) {
       const { data } = await downloadDocument(authUser, docs.fileId);
-      const file = new Blob([data], { tipo: 'application/pdf' });
+      const file = new Blob([data], { type: 'application/pdf' });
       setPDF(URL.createObjectURL(file))
 
     }
   }
+
+  
   useEffect(() => {
     getPDF()
   }, [docs])
 
+  
+   
 
   const PDFcomponent = () => {
     if (pdf != '') {
       return (
-        <PDFViewer
-          document={{
-            url: pdf,
-          }}
-          navbarOnTop={true}
-          loader={true}
-        />
+        <div style={{ width: '100%', height: '100%'}}>
+                <object
+                data={pdf}
+                type="application/pdf"
+                width="100%"
+                height="100%"
+                >
+                    <br />
+                    <a href={pdf} id="enlaceDescargarPdf"
+                    download={docs.name}
+                    >Tu dispositivo no puede visualizar los PDF, da click aquí para descargarlo</a>
+                </object>
+            </div>
+   
+        
       )
     }
     else {
@@ -76,6 +78,18 @@ const ModalVisibility = () => {
     }
 
   }
+
+
+    
+  
+
+
+
+
+
+
+
+  
   const Metadatacomponent = () => {
     if (docs.fileId) {
       return (
@@ -108,23 +122,14 @@ const ModalVisibility = () => {
         fullWidth={true}
         maxWidth={true}
       >
-
-        <DialogTitle id="form-dialog-title">
-
-          <IntlMessages id="visibility.modal.title" />
-
-        </DialogTitle>
-
         <DialogContent>
-          <p>Imagen de previsualización {data2.name} </p>
-         
-          
           <Grid container spacing={2}>
             <Grid item xs={4}>
+              <IntlMessages id="visibility.modal.title" />
               <Metadatacomponent />
             </Grid>
             <Grid item xs={8}>
-               <PDFcomponent />
+              <PDFcomponent />
             </Grid>
           </Grid>
         </DialogContent>
