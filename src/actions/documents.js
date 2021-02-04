@@ -314,8 +314,7 @@ export const startDocumentByIdVisibility = (id) => {
 			Swal.showLoading();
 
 			const resp = await getDocumentById(authUser, id);
-			console.log('soy la dataaa', resp)
-
+		
 			Swal.close();
 
 			dispatch(documentVisibility(resp.data));

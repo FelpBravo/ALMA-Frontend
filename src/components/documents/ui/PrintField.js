@@ -14,8 +14,6 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
 
-		//console.log(name, value);
-
 		dispatch(detailDocumentSetValueField(sectionId, name, value));
 
 	}

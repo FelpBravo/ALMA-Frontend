@@ -6,7 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModalVisibility } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
-import { DialogTitle } from '@material-ui/core';
+import { DialogTitle, makeStyles, Paper } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import PDFViewer from 'pdf-viewer-reactjs' 
 import { startDocumentByIdLoading } from 'actions/documents';
@@ -14,8 +14,21 @@ import { downloadDocument } from 'services/filesService';
 import Swal from 'sweetalert2';
 import { InterfaceColorSet } from '@amcharts/amcharts4/core';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    overflow: 'hidden',
+    padding: theme.spacing(0, 3),
+  },
+  paper: {
+    maxWidth: 500,
+    margin: `${theme.spacing(1)}px auto`,
+    padding: theme.spacing(2),
+  },
+}));
 
-const ModalVisibility = () => {
+const ModalVisibility = () => {  
+  const classes = useStyles();
 
   const dispatch = useDispatch();
 
@@ -26,17 +39,6 @@ const ModalVisibility = () => {
   const { docs } = useSelector(state => state.documents);
 
   const [pdf, setPDF] = useState('')
-
-  console.log("nadia", docs)
-  
-  const { aspectGroup, tags, fileId, folderId } = docs;
-  console.log(aspectGroup)
-
-  //const { name } = aspectGroup;
-
-  //const {customPropertyList, label } = aspectList;
-
-
 
   const handleClose = () => {
     setPDF('')
@@ -77,14 +79,28 @@ const ModalVisibility = () => {
 const Metadatacomponent = () => {
   if(docs.fileId){
     return (
-      <div>
+      <div className='mt-3'>
           <h3>Tipo de Documento: {docs.aspectGroup.name}</h3>
           {docs.aspectGroup.aspectList.map((a)=>{
-            return <p>{a.id} {a.label} { 
-              a.customPropertyList.map((p)=>{
-              return <p>{p.label} {p.value}</p>
-           })}</p>
+            return  <div className={classes.root}>
+              <h3 className='mt-2'>{a.label}</h3>
+            <Paper className={classes.paper}>
+              {a.customPropertyList.map((p)=>{
+              return <div className="container">
+              <div className="row">
+                <div style={{ fontWeight:'bold'}}>
+                {p.label}:
+                </div>
+                <div className='ml-1'>
+                {p.value}
+                </div>
+              </div>
+            </div>
+           })}
+            </Paper>
+            </div>
           })}
+         
         </div>
       )
     }
@@ -94,11 +110,10 @@ const Metadatacomponent = () => {
 
   }
 
-
   return (
 
     <div>
-      <Dialog
+      <Dialog  
         open={openModal}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
@@ -106,10 +121,10 @@ const Metadatacomponent = () => {
         maxWidth={true}
       >
 
-        <DialogTitle id="form-dialog-title">
-
+        <DialogTitle >
+          <div style={{ fontFamily: "Poppins",}}>
           <IntlMessages id="visibility.modal.title" />
-
+          </div>
         </DialogTitle>
 
         <DialogContent> 

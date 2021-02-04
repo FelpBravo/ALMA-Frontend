@@ -63,7 +63,7 @@ export const SelectTags = () => {
         if (tagsSelected && tagsSelected.length > 0) {
             return (
                 <div className="row">
-                    <div className="col-xl-12 col-lg-12 col-md-12 col-12">
+                    <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2">
                         {
                             tagsSelected.map(({id, tag, hex}) => {
                                 return (

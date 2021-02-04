@@ -148,7 +148,7 @@ const Tags = () => {
 
 													<ListItemAvatar>
 														<Avatar style={{ backgroundColor: '#E1F0FF' }}>
-															<LabelIcon color='primary' />
+															<LabelIcon style={{ color: item.hex }} />
 														</Avatar>
 													</ListItemAvatar>
 													<ListItemText

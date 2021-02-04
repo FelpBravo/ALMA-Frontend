@@ -89,9 +89,7 @@ const DataTable = () => {
 	}, []);
 
 	const handleVisibility=(id, name) =>{
-		console.log("soy la visualización", id)
-
-		dispatch(openModalVisibility());
+    	dispatch(openModalVisibility());
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
