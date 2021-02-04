@@ -191,8 +191,8 @@ const DataTable = () => {
 											<span className="custom-link-dash">{name}</span>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
-										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt}</TableCell>
-										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{modifiedAt}</TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0,10)}</TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{modifiedAt.substr(0,10)}</TableCell>
 										<TableCell>
 											{
 												tags.length > 0
