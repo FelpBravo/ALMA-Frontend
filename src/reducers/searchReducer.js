@@ -29,11 +29,7 @@ export const searchReducer = (state = initialState, action) => {
 		case types.searchDocumentDeleted:
 			return {
 				...state,
-				documents: {
-					...state.documents,
-					totalItems: state.documents.totalItems - 1,
-					data: state.documents.data.filter(d => d.id !== action.payload)
-				},
+				documents: action.payload,
 			}
 
 		case types.searchSetText:

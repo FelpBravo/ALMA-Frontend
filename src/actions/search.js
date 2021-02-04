@@ -64,7 +64,12 @@ export const startDeleteDocument = (id) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
-
+		
+		const { documents } = getState().searchs;
+		console.log(documents);
+		documents.data.map((doc)=>{
+			console.log(doc);
+		})	
 		try {
 			Swal.fire({
 				title: 'Deleting...',
@@ -77,11 +82,18 @@ export const startDeleteDocument = (id) => {
 
 			await deleteDocument(authUser, id);
 
-			dispatch(deletedDocumentFinish(id));
+			Swal.close();
+
+			const newlistdocuments = {
+				totalItems: documents.totalItems - 1,
+				data: documents.data.filter(doc => doc.id !== id),
+			}
+			console.log(newlistdocuments);
+			dispatch(deletedDocumentFinish(newlistdocuments));
 
 		} catch (error) {
+			console.log("entro errror");
 			console.log(error);
-		} finally {
 			Swal.close();
 		}
 
