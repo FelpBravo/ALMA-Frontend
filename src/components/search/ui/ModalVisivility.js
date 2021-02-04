@@ -8,7 +8,6 @@ import { closeModalVisibility } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, makeStyles, Paper } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import PDFViewer from 'pdf-viewer-reactjs' 
 import { downloadDocument } from 'services/filesService';
 
  
@@ -98,7 +97,7 @@ const Metadatacomponent = () => {
                 {p.label}:
                 </div>
                 <div className='ml-1'>
-                {p.value}
+                {isNaN(Date.parse(p.value))? p.value : new Date(p.value).toLocaleDateString()}
                 </div>
               </div>
             </div>
