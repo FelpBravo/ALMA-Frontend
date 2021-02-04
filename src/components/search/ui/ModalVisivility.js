@@ -1,4 +1,4 @@
-import React, { useEffect, useState, makeStyles } from 'react';
+import React, { useEffect, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,16 +9,9 @@ import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, makeStyles, Paper } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import PDFViewer from 'pdf-viewer-reactjs' 
-import { startDocumentByIdLoading } from 'actions/documents';
-<<<<<<< HEAD
-=======
-
->>>>>>> 20c639eafdd264a9aca9a4f6db4998ae04eec7e7
 import { downloadDocument } from 'services/filesService';
 
-import { InterfaceColorSet } from '@amcharts/amcharts4/core';
-
-<<<<<<< HEAD
+ 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -34,10 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ModalVisibility = () => {  
   const classes = useStyles();
-=======
-const ModalVisibility = () => {
->>>>>>> 20c639eafdd264a9aca9a4f6db4998ae04eec7e7
-
 
   const dispatch = useDispatch();
 
@@ -49,11 +38,6 @@ const ModalVisibility = () => {
 
   const [pdf, setPDF] = useState('')
 
-<<<<<<< HEAD
-=======
-  console.log("nadia", docs)
-  
->>>>>>> 20c639eafdd264a9aca9a4f6db4998ae04eec7e7
   const handleClose = () => {
     setPDF('')
     dispatch(closeModalVisibility());
@@ -69,13 +53,9 @@ const ModalVisibility = () => {
     }
   }
 
-  
   useEffect(() => {
     getPDF()
   }, [docs])
-
-  
-   
 
   const PDFcomponent = () => {
     if (pdf != '') {
@@ -156,7 +136,6 @@ const Metadatacomponent = () => {
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <IntlMessages id="visibility.modal.title" />
               <Metadatacomponent />
             </Grid>
             <Grid item xs={8}>
