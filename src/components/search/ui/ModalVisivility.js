@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     maxWidth: 500,
     margin: `${theme.spacing(1)}px auto`,
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
   },
 }));
 
@@ -86,18 +86,18 @@ const Metadatacomponent = () => {
   if(docs.fileId){
     return (
       <div className='mt-3'>
-          <h3>Tipo de Documento: {docs.aspectGroup.name}</h3>
+         <span className="badge badge-primary ">{docs.aspectGroup.name}</span>
           {docs.aspectGroup.aspectList.map((a)=>{
             return  <div className={classes.root}>
-              <h3 className='mt-2'>{a.label}</h3>
             <Paper className={classes.paper}>
+            <div style={{ fontSize:'18px'}} className='mt-2'>{a.label}</div>
               {a.customPropertyList.map((p)=>{
               return <div className="container">
-              <div className="row">
-                <div style={{ fontWeight:'bold'}}>
+              <div className="row mt-3">
+                <div style={{ fontWeight:'bold', fontSize:'14px'}}>
                 {p.label}:
                 </div>
-                <div className='ml-1'>
+                <div style={{ fontSize:'14px'}} className='ml-1'>
                 {p.value}
                 </div>
               </div>

@@ -26,16 +26,21 @@ export const searchReducer = (state = initialState, action) => {
 				documents: action.payload,
 			}
 
-		case types.searchDocumentDeleted:
+	case types.searchDocumentDeleted:
 			return {
 				...state,
 				documents: {
 					...state.documents,
 					totalItems: state.documents.totalItems - 1,
-					data: state.documents.data.filter(d => d.id !== action.payload)
+					data:[ state.documents.data.filter(d => d.id !== action.payload)]
 				},
 			}
 
+			{/*	case types.searchDocumentDeleted:
+				return {
+					...state,
+					documents: action.payload,
+				}*/}
 		case types.searchSetText:
 			return {
 				...state,
