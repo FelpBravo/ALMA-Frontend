@@ -107,8 +107,9 @@ const DataTable = () => {
 
 	};
 
-	const handleChangeRowsPerPage = event => {
-		setRowsPerPage(event.target.value);
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
 	};
 
 	const handleDownload = async (id, name) => {

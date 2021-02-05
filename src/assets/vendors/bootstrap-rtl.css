@@ -5062,13 +5062,13 @@ tbody.collapse.show {
 
 .badge-primary {
     color: #fff;
-    background-color:  #369bff ;
+    background-color:  #369bff!important;
 }
 
 .badge-primary[href]:hover, .badge-primary[href]:focus {
     color: #fff;
     text-decoration: none;
-    background-color: #0062cc;
+    background-color: #369bff;
 }
 
 .badge-secondary {
