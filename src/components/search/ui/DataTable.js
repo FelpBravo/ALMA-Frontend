@@ -151,7 +151,6 @@ const DataTable = () => {
 			focusConfirm: true,
 			heightAuto: false,
 		});
-
 		if (resp.value) {
 			dispatch(startDeleteDocument(id));
 		}
