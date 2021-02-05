@@ -302,18 +302,6 @@ const DataTable = () => {
 						</TableBody>
 						<TableFooter>
 							<TableRow>
-								{/* <TablePagination
-									count={totalItems}
-									rowsPerPage={rowsPerPage}
-									page={page}
-									onChangePage={handleChangePage}
-									onChangeRowsPerPage={handleChangeRowsPerPage}
-									
-								/> */
-								console.log(documents),
-								console.log(),
-								console.log("count:"+totalItems+' rowperpa:'+rowsPerPage+ '  page:'+page)
-								}
 								<div className={classes.pagination}>
 									<Pagination count={Math.ceil(totalItems/rowsPerPage)} color="primary" shape="rounded" total={totalItems} onChange={handleChangePage}/>
 								</div>
