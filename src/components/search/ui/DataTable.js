@@ -28,8 +28,7 @@ import { makeStyles } from '@material-ui/core';
 import TableActionButton from './TableActionButton';
 import ModalVisibility from './ModalVisivility';
 import { startDocumentByIdVisibility } from 'actions/documents';
-import { Pagination } from '@material-ui/lab';
-
+import Pagination from '@material-ui/lab/Pagination';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
 	  margin: "0 auto",
 	  fontFamily: "Poppins",
 	},
+	pagination: {
+		marginBottom:'10px',
+		marginTop:'10px',
+		width:'100%'
+	  },
   }));
 
 const DataTable = () => {
@@ -95,10 +99,9 @@ const DataTable = () => {
 	};
 
 	const handleChangePage = (event, page) => {
-
 		const existsFilters = filters.filter(filter => filter.value);
 
-		dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId, page + 1));
+		dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId, page));
 
 		setPage(page);
 
@@ -161,7 +164,7 @@ const DataTable = () => {
 	const handleSubscribe = (id) => {
 		dispatch(startSubscribeDocument(id));
 	}
-
+	
 	return (
 		<Paper style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
 			<div className="flex-auto">
@@ -300,14 +303,21 @@ const DataTable = () => {
 						</TableBody>
 						<TableFooter>
 							<TableRow>
-								<TablePagination
+								{/* <TablePagination
 									count={totalItems}
 									rowsPerPage={rowsPerPage}
 									page={page}
 									onChangePage={handleChangePage}
 									onChangeRowsPerPage={handleChangeRowsPerPage}
-								/>
-                            
+									
+								/> */
+								console.log(documents),
+								console.log(),
+								console.log("count:"+totalItems+' rowperpa:'+rowsPerPage+ '  page:'+page)
+								}
+								<div className={classes.pagination}>
+									<Pagination count={Math.ceil(totalItems/rowsPerPage)} color="primary" shape="rounded" total={totalItems} onChange={handleChangePage}/>
+								</div>
 							</TableRow>
 						</TableFooter>
 					</Table>

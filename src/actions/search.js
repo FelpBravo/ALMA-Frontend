@@ -39,8 +39,7 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 			});
 
 			Swal.showLoading();
-
-			const resp = await search(authUser, term, filters, folderId, page, maxItems);
+			const resp = await search(authUser, term, filters, folderId, page? page:1, maxItems);
 
 			dispatch(searchLoaded(resp.data));
 
