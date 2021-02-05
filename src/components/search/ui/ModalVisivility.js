@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     overflow: 'hidden',
-    padding: theme.spacing(0, 3),
+    padding: theme.spacing(0, 2),
   },
   paper: {
     maxWidth: 500,
@@ -86,19 +86,19 @@ const ModalVisibility = () => {
   const Metadatacomponent = () => {
     if (docs.fileId) {
       return (
-        <div className='mt-3'>
+        <div>
           <span className="badge badge-primary ">{docs.aspectGroup.name}</span>
           {docs.aspectGroup.aspectList.map((a) => {
             return <div className={classes.root}>
-              <h3 className='mt-2'>{a.label}</h3>
               <Paper className={classes.paper}>
+              <div style={{ fontSize:"16px", fontFamily:"Poppins", fontWeight: '500' }}className='mt-2'>{a.label}</div>
                 {a.customPropertyList.map((p) => {
                   return <div className="container">
-                    <div className="row">
-                      <div style={{ fontWeight: 'bold' }}>
+                    <div  style={{ padding: "9px 6px 9px 0px"}} className="row">
+                      <div style={{ fontSize:"13px", fontFamily:"Poppins", fontWeight: 'bold' }}>
                         {p.label}:
                 </div>
-                      <div className='ml-1'>
+                      <div style={{ fontSize:"13px", fontFamily:"Poppins"}} className='ml-1'>
                         {isNaN(Date.parse(p.value)) ? p.value : new Date(p.value).toLocaleDateString()}
                       </div>
                     </div>
@@ -114,7 +114,6 @@ const ModalVisibility = () => {
     else {
       return (<></>)
     }
-
   }
 
   return (

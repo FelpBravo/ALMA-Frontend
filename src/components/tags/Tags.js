@@ -16,7 +16,7 @@ import {
 	setTagsList, setActionModalTags
 } from 'actions/tags';
 import ModalTags from './ui/ModalTags';
-import { Avatar, Divider } from '@material-ui/core';
+import { Avatar, Divider, Table } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import SkeletonApp from 'components/ui/SkeletonApp';
@@ -116,8 +116,62 @@ const Tags = () => {
 									<IntlMessages id="tags.title" />
 								</h3>
 							</div>
+								<div className="d-flex flex-row mb-3">
+									<h3 className="mb-0"> Listado actual de etiquetas</h3>
+									<Link  className="ml-5" component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
+																		<AddIcon color='primary' />
+																			Crear nueva etiqueta
+																		</Link>
+								</div>
+								<div className="table-responsive-material">
+									<Table className="default-table table-unbordered table table-sm table-hover" style={{width:"60%"}}>
+									<thead className="table-head-sm th-border-b">
+									<tr>
+										<th>Nombre de etiquetas</th>
+										<th>Acciones</th>
+									</tr>
+									</thead>
+									<tbody>
+									{
+										tagslist.length === 0
+										&&
+										<SkeletonApp />
+									}
+									{
+										tagslist.length > 0
+										&&
+									    tagslist.map((item) => {
+										return <tr key={item.id}>
+										<td>
+											<div className="d-flex align-items-center">
+											<LabelIcon style={{ color: item.hex }} />
+											<div className="user-detail">
+												<h5 className="user-name ml-3">{item.tag}</h5>
+											</div>
+											</div>
+										</td>
+										<td>
+											<div className="pointer text-primary">
+											<div>
+												<i
+												onClick={() => handleSelectActionTags(2, item.id, item.tag, item.hex)}
+												className="far fa-edit cursor-pointer custom-link-dash mr-2"
+												></i>
+												<i
+												onClick={() => handleSelectActionTags(3, item.id)}
+												className="far fa-trash-alt cursor-pointer custom-link-dash"
+												></i>
 
-							<div className={classes.root}>
+												</div>
+
+											</div>
+										</td>
+										</tr>
+									})}
+									</tbody>
+									</Table>
+								</div>
+							{/*<div className={classes.root}>
 								<Grid container spacing={3}>
 									<Grid item xs={4}>
 										<h4>
@@ -177,7 +231,7 @@ const Tags = () => {
 										))
 									}
 								</div>
-							</div>
+							</div>*/}
 
 						</div>
 					</div>

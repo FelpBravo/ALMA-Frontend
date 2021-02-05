@@ -28,6 +28,7 @@ import { makeStyles } from '@material-ui/core';
 import TableActionButton from './TableActionButton';
 import ModalVisibility from './ModalVisivility';
 import { startDocumentByIdVisibility } from 'actions/documents';
+import { Pagination } from '@material-ui/lab';
 
 
 
@@ -103,8 +104,9 @@ const DataTable = () => {
 
 	};
 
-	const handleChangeRowsPerPage = event => {
-		setRowsPerPage(event.target.value);
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
 	};
 
 	const handleDownload = async (id, name) => {
@@ -305,6 +307,7 @@ const DataTable = () => {
 									onChangePage={handleChangePage}
 									onChangeRowsPerPage={handleChangeRowsPerPage}
 								/>
+                            
 							</TableRow>
 						</TableFooter>
 					</Table>
