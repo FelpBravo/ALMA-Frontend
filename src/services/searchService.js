@@ -8,7 +8,7 @@ const getSearchFields = (authUser) => {
 	});
 };
 
-const search = (authUser, term, filters = [], folderId, page = 1, maxItems = 10) => {
+const search = (authUser, term, filters = [], folderId, page, maxItems = 10) => {
 	return axiosInstance.post(`/search/`,
 		{ term, page, folderId, maxItems, filters, },
 		{
