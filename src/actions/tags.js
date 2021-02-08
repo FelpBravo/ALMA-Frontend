@@ -150,7 +150,9 @@ export const startEditTagsLoading = (id, tag, hex) => {
 
 			Swal.showLoading();
 
-			await editTags(authUser, id, tag, hex);
+			await editTags(authUser, id, tag, hex).catch((err)=>{
+				console.log(err);
+			});
 
 			dispatch(updateTagsLoaded(id, tag, hex));
 			dispatch(saveTagsLoaded());

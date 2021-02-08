@@ -22,7 +22,7 @@ const ModalTags = () => {
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal, actionModal, tags } = useSelector(state => state.tags);
+  const { openModal, actionModal, tags , tagslist = [] } = useSelector(state => state.tags);
 
   const [color, setColor] = useState('#fff');
 
@@ -51,9 +51,27 @@ const ModalTags = () => {
 
       setMessageErrorName('Este campo debe tener mínimo 3 letras');
 
-    } else {
-
-      setMessageErrorName(null);
+    } else
+     {
+      const searchtag = tagslist.find(list=>list.tag === value)
+      if(searchtag)
+      {
+        if(searchtag.id === tags.id)
+        {
+          setMessageErrorName(null);
+        }
+        else
+        {
+          setMessageErrorName('Nombre del tags tiene que ser unico');
+        }
+          
+      }
+      else
+      {
+        setMessageErrorName(null);
+      }
+        
+        
 
     }
 
@@ -74,7 +92,6 @@ const ModalTags = () => {
   }
 
   const handleOnSave = () => {
-
     if (actionModal === ACTION_CREATE) {
 
       dispatch(closeModalTags());
@@ -90,7 +107,7 @@ const ModalTags = () => {
   }
 
   const handleOnChangeColor = ({ hex }) => {
-
+    console.log("Color: "+ hex);
     setColor(hex);
 
   }
