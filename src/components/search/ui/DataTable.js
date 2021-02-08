@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import queryString from 'query-string';
 import Swal from 'sweetalert2';
@@ -29,6 +27,7 @@ import TableActionButton from './TableActionButton';
 import ModalVisibility from './ModalVisivility';
 import { startDocumentByIdVisibility } from 'actions/documents';
 import Pagination from '@material-ui/lab/Pagination';
+import Grid from '@material-ui/core/Grid';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 	pagination: {
 		marginBottom:'10px',
 		marginTop:'10px',
-		width:'100%'
+		width:'100%',
 	  },
   }));
 
@@ -300,27 +299,22 @@ const DataTable = () => {
 									</TableRow>
 								);
 							})}
-						</TableBody>
-						<TableFooter>
-							<TableRow>
-								{/* <TablePagination
-									count={totalItems}
-									rowsPerPage={rowsPerPage}
-									page={page}
-									onChangePage={handleChangePage}
-									onChangeRowsPerPage={handleChangeRowsPerPage}
-									
-								/> */
-								console.log(documents),
-								console.log(),
-								console.log("count:"+totalItems+' rowperpa:'+rowsPerPage+ '  page:'+page)
-								}
-								<div className={classes.pagination}>
-									<Pagination count={Math.ceil(totalItems/rowsPerPage)} color="primary" shape="rounded" total={totalItems} onChange={handleChangePage}/>
-								</div>
-							</TableRow>
-						</TableFooter>
+						</TableBody>		
 					</Table>
+					<Grid className="mt-3 mb-3 mr-3"
+									container
+									justify="flex-end"
+									alignItems="flex-end"
+
+								>
+									<Pagination 
+									style={{color: '#369bff'}}
+									count={Math.ceil(totalItems/rowsPerPage)} 
+									color="primary" 
+									shape="rounded" 
+									total={totalItems} 
+									onChange={handleChangePage}/>
+								</Grid>
 				</div>
 				<ModalVisibility/>
 			</div>

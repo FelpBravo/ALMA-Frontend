@@ -117,7 +117,7 @@ const Tags = () => {
 								</h3>
 							</div>
 								<div className="d-flex flex-row mb-3">
-									<h3 className="mb-0"> Listado actual de etiquetas</h3>
+									<h4 className="mb-0"> Listado actual de etiquetas</h4>
 									<Link  className="ml-5" component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
 																		<AddIcon color='primary' />
 																			Crear nueva etiqueta
