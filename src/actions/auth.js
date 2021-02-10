@@ -12,10 +12,10 @@ import { tagsRemoveAll } from './tags';
 export const startUserSignInLogin = (userName, password) => {
 	return async (dispatch) => {
 		try {
-			const resp = await login(userName, password);
-			localStorage.setItem('token', resp.data.token);
+			const resp = await login(userName, password, 'password');
+			localStorage.setItem('token', resp.data.access_token);
 			dispatch(uiFinishLoading());
-			dispatch(userSignInSuccess(resp.data.token));
+			dispatch(userSignInSuccess(resp.data.access_token));
 		} catch (error) {
 			console.log(error);
 			dispatch(uiFinishLoading());

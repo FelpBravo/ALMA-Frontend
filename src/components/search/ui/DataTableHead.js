@@ -4,7 +4,7 @@ import { TableCell, TableRow } from '@material-ui/core';
 
 export const DataTableHead = ({ columns = [] }) => {
 	return (
-		<TableHead borderRadius={16}>
+		<TableHead >
 			<TableRow>
 				{columns.map(column => {
 					return (

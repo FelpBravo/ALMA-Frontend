@@ -14,7 +14,6 @@ import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import { downloadDocument } from 'services/filesService';
 import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility } from 'actions/search';
-import { MenuTable } from './MenuTable';
 import { GENERAL_ERROR } from 'constants/constUtil';
 import { MoreVert } from '@material-ui/icons';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
