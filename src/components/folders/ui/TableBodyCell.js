@@ -8,7 +8,7 @@ import {
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import Swal from 'sweetalert2';
 
-export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position }) => {
+export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges }) => {
 
 	const dispatch = useDispatch();
 
@@ -79,7 +79,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	return (
 		<TableRow hover>
 			<TableCell
-			    style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
+				style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}
 				onClick={handleOnClick}
 				component="th"
 				scope="row"
@@ -88,14 +88,14 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				{name}
 			</TableCell>
 			<TableCell
-			     style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
+				style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}
 				className="folders-table-row"
 				onClick={handleOnClick}
 			>
 				{position}
 			</TableCell>
 			<TableCell
-			    style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
+				style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}
 				className="folders-table-row"
 				onClick={handleOnClick}
 			>
@@ -105,21 +105,30 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 			</TableCell>
 			<TableCell>
 				<div className="custom-td-table">
-					<i
-						title="New"
-						onClick={() => handleSelectAction(1)}
-						className="fa fa-plus cursor-pointer custom-link-dash"
-					></i>
-					<i
-						title="Edit"
-						onClick={() => handleSelectAction(2)}
-						className="far fa-edit cursor-pointer custom-link-dash"
-					></i>
-					<i
-						title="Delete"
-						onClick={() => handleSelectAction(3)}
-						className="far fa-trash-alt cursor-pointer custom-link-dash"
-					></i>
+					{privileges.map((rol) => {
+						if ('ROLE_FOLDER_CREATE' === rol) {
+							return <i
+								title="New"
+								onClick={() => handleSelectAction(1)}
+								className="fa fa-plus cursor-pointer custom-link-dash"
+							/>
+						}
+						else if ('ROLE_FOLDER_UPDATE' === rol) {
+							return <i
+								title="Edit"
+								onClick={() => handleSelectAction(2)}
+								className="far fa-edit cursor-pointer custom-link-dash"
+							/>
+						}
+						else if ('ROLE_FOLDER_DELETE' === rol) {
+							return <i
+								title="Delete"
+								onClick={() => handleSelectAction(3)}
+								className="far fa-trash-alt cursor-pointer custom-link-dash"
+							/>
+						}
+					})}
+
 
 				</div>
 			</TableCell>

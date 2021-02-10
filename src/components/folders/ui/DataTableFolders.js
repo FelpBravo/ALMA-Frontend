@@ -10,8 +10,21 @@ import { TableBodyCell } from './TableBodyCell';
 
 import IntlMessages from 'util/IntlMessages';
 
-export const DataTableFolders = ({ folders }) => {
-
+export const DataTableFolders = ({ folders ,privileges}) => {
+	let listRol =[];
+	privileges.map((rol)=>{
+		switch (rol) {
+			case 'ROLE_FOLDER_UPDATE':
+				listRol.push(rol)
+			break;
+			case 'ROLE_FOLDER_DELETE':
+				listRol.push(rol)
+			break;
+			case 'ROLE_FOLDER_CREATE':
+				listRol.push(rol)
+			break;
+		}
+	});
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -36,8 +49,11 @@ export const DataTableFolders = ({ folders }) => {
 						</TableHead>
 						<TableBody>
 							{
+								
+								
 								folders.map((folder) => (
 									<TableBodyCell
+										privileges={listRol}
 										key={folder.id}
 										{...folder}
 									/>
