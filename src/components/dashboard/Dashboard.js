@@ -34,6 +34,13 @@ const Dashboard = () => {
 			<EditTextSearch />
 
 			<div className="row">
+				<div className="ml-4">
+			      <img src={require("assets/images/user2.png")} alt="jambo" title="jambo" />
+			    </div>
+			<p className="ml-2">¡Bienvenido Nadia!</p>
+			</div>
+          
+			<div className="row">
 
 				<div className="col-xl-8 col-lg-8 col-md-12 col-12">
 

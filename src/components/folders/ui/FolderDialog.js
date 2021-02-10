@@ -213,6 +213,7 @@ const FolderDialog = () => {
 				<DialogActions>
 					<Button
 						onClick={handleClose}
+						variant="contained"
 						color="primary">
 						<IntlMessages id="button.text.cancel" />
 					</Button>
@@ -220,6 +221,7 @@ const FolderDialog = () => {
 					<Button
 						disabled={(!name || name.length < 3) || position <= 0}
 						onClick={handleOnSave}
+						variant="contained"
 						color="primary"
 					>
 						<IntlMessages id="button.text.save" />
