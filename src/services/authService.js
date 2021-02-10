@@ -1,14 +1,16 @@
 import { axiosInstance } from '../config/axios-instance';
 import qs from 'querystring';
 
-const login = (userName, password) => {
+const login = (userName, password, grant_type) => {
 
-	const authData = { username: userName, password };
+	const authData = { username: userName, password , grant_type};
 
-	return axiosInstance.post(`/login`, qs.stringify(authData), {
+	return axiosInstance.post(`/security/oauth/token`, qs.stringify(authData), {
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
-			'Accept': '*/*'
+			'Accept': '*/*',
+			'Authorization': 'Basic bGlicnV4LXJlYWN0LWFwcDphI2JGa2VjJV1RVFNKdihYTW41dSloQSc='
+
 		}
 	});
 
