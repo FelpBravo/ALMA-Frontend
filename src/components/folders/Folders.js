@@ -17,14 +17,14 @@ const Folders = () => {
 
 	const { folders = [], currentFolders, historyFolders = [] } = useSelector(state => state.adminFolders);
 
-	const { authUser } = useSelector(state => state.auth);
+	const { authUser, authorities } = useSelector(state => state.auth);
+
 
 	useEffect(() => {
 
 		if (folders.length === 0 && authUser) {
-
 			dispatch(startFoldersLoading(authUser));
-
+			
 		}
 
 	}, [dispatch, folders, authUser]);
@@ -53,6 +53,8 @@ const Folders = () => {
 		}));
 
 	}
+	const valid_create = authorities.find(rol=>rol === 'ROLE_FOLDER_CREATE')? false : true
+
 
 	return (
 		<div className="row">
@@ -88,7 +90,6 @@ const Folders = () => {
 									alignItems="flex-end"
 
 								>
-
 									<Button
 										title="New"
 										color="primary"
@@ -96,10 +97,10 @@ const Folders = () => {
 										type="button"
 										variant="contained"
 										onClick={handleNewFolder}
+										disabled={valid_create}
 									>
 										<i className="fa fa-plus cursor-pointer"></i>
 									</Button>
-
 								</Grid>
 
 							</div>
@@ -129,6 +130,7 @@ const Folders = () => {
 
 								<DataTableFolders
 									folders={currentFolders.folders}
+									privileges={authorities}
 								/>
 
 							</div>

@@ -34,7 +34,7 @@ const SideBarContent = () => {
 	const dispatch = useDispatch();
 	const { selectedIds = [], initFolders = [], folderId = [] } = useSelector(state => state.folders);
 
-	const { authUser } = useSelector(state => state.auth);
+	const { authUser, authorities } = useSelector(state => state.auth);
 
 	const history = useHistory();
 
@@ -121,7 +121,7 @@ const SideBarContent = () => {
 	return (
 		<CustomScrollbars className="scrollbar" >
 			<SideBarContext.Provider value={{}}>
-				<Navigation menuItems={fixedFolders} />
+				<Navigation menuItems={fixedFolders} privileges={authorities} />
 				<TreeView
 					className={classes.root}
 					defaultCollapseIcon={<ExpandMoreIcon />}

@@ -12,7 +12,7 @@ const login = (userName, password, grant_type) => {
 			'Authorization': 'Basic bGlicnV4LXJlYWN0LWFwcDphI2JGa2VjJV1RVFNKdihYTW41dSloQSc='
 
 		}
-	});
+	})
 
 };
 

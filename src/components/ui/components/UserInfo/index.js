@@ -16,7 +16,7 @@ const UserInfo = () => {
 	const [open, setOpen] = useState(false);
 	const [user, setUser] = useState({ firstName: '', lastName: '' });
 
-	const { authUser } = useSelector(state => state.auth);
+	const { authUser, authorities } = useSelector(state => state.auth);
 
 	useEffect(() => {
 
@@ -25,7 +25,6 @@ const UserInfo = () => {
 		}
 
 		try {
-
 			const { user } = jwt_decode(authUser);
 
 			if (user) {

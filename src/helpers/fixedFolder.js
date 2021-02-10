@@ -9,6 +9,7 @@ export const fixedFolders = [
 				icon: 'view-dashboard',
 				type: 'item',
 				link: '/dashboard',
+				auth:'ROLE_DASHBOARD_MENU',
 				bd: false,
 			},
 			{
@@ -17,6 +18,7 @@ export const fixedFolders = [
 				icon: 'open-in-browser',
 				type: 'item',
 				link: '/documents',
+				auth:'ROLE_FILE_MENU',
 				bd: false,
 			},
 			{
@@ -25,6 +27,7 @@ export const fixedFolders = [
 				icon: 'label',
 				type: 'item',
 				link: '/tags',
+				auth:'ROLE_TAG_MENU',
 				bd: false,
 			},
 			{
@@ -33,6 +36,7 @@ export const fixedFolders = [
 				icon: 'folder',
 				type: 'item',
 				link: '/folders',
+				auth: 'ROLE_FOLDER_MENU',
 				bd: false,
 			},
 		],

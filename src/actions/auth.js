@@ -8,11 +8,12 @@ import { searchRemoveText } from './search';
 import { documentsRemoveAll } from './documents';
 import { adminFoldersremoveAll } from './adminFolders';
 import { tagsRemoveAll } from './tags';
-
+import jwt_decode from 'jwt-decode'
 export const startUserSignInLogin = (userName, password) => {
 	return async (dispatch) => {
 		try {
-			const resp = await login(userName, password, 'password');
+			const resp = await login(userName, password,'password');
+			console.log(resp);
 			localStorage.setItem('token', resp.data.access_token);
 			dispatch(uiFinishLoading());
 			dispatch(userSignInSuccess(resp.data.access_token));
@@ -27,9 +28,14 @@ export const startUserSignInLogin = (userName, password) => {
 };
 
 export const userSignInSuccess = (authUser) => {
+	const { authorities } = jwt_decode(authUser)
 	return {
 		type: types.login,
-		payload: authUser,
+		payload: {
+			authUser : authUser,
+			authorities: authorities
+		}
+		
 	}
 };
 

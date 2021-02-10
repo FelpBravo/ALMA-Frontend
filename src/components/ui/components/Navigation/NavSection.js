@@ -6,7 +6,7 @@ import NavMenuItem from "./NavMenuItem";
 import NavCollapse from "./NavCollapse";
 
 const NavSection = props => {
-	const { name, icon, children = [] } = props;
+	const { name, icon, children = [], privileges } = props;
 	const isExpandable = children && children.length > 0;
 
 	const MenuCollapse = (
@@ -29,7 +29,15 @@ const NavSection = props => {
 						case 'collapse':
 							return <NavCollapse {...item} key={index} />;
 						case 'item':
-							return <NavMenuItem {...item} key={index} />;
+							if('ROLE_DASHBOARD_MENU' === item.auth){
+								return <NavMenuItem {...item} key={index} />;
+							  }
+							 return privileges.map((rol)=>{
+								if(rol === item.auth){
+								  return <NavMenuItem {...item} key={index} />;
+								}
+							  })
+							
 					}
 				})
 			}
