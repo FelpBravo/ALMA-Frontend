@@ -6,7 +6,7 @@ export const fixedFolders = [
 			{
 				id: -2,
 				name: 'sidebar.home',
-				icon: 'view-dashboard',
+				icon: 'home',
 				type: 'item',
 				link: '/dashboard',
 				auth:'ROLE_DASHBOARD_MENU',
@@ -15,7 +15,7 @@ export const fixedFolders = [
 			{
 				id: -1,
 				name: 'sidebar.loadDocuments',
-				icon: 'open-in-browser',
+				icon: 'upload',
 				type: 'item',
 				link: '/documents',
 				auth:'ROLE_FILE_MENU',
@@ -24,7 +24,7 @@ export const fixedFolders = [
 			{
 				id: -3,
 				name: 'sidebar.tags.home',
-				icon: 'label',
+				icon: 'tag',
 				type: 'item',
 				link: '/tags',
 				auth:'ROLE_TAG_MENU',
