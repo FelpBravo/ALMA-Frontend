@@ -12,6 +12,10 @@ export const auditReducer = (state = initialState, action) => {
 				...state,
 				audits: action.payload,
 			}
+		case types.auditRemoveAll:
+				return {
+					audits: {}
+				}
 
 		default:
 			return state;
