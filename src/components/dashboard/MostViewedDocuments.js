@@ -8,9 +8,9 @@ export const MostViewedDocuments = () => {
 
 	const isMounted = useRef(true);
 
-	const { audits } = useSelector(state => state.audit);
-	const { widgets } = audits;
-
+	const { audits }  = useSelector(state => state.audit);
+	const view_document = audits.view_document
+	
 	const [documents, setDocuments] = useState([]);
 
 	useEffect(() => {
@@ -23,42 +23,29 @@ export const MostViewedDocuments = () => {
 
 	useEffect(() => {
 
-		if (widgets && widgets.length > 0) {
+		if (view_document && view_document.length > 0) {
 
-			const documents = widgets.find((w) => w.title === VIEWED_DOCUMENTS);
-
-			if (documents) {
-
-				const { activities } = documents;
-
-				if (Array.isArray(activities)) {
-
-					const list = activities.map((
-						{ fileId, fileName, tags, activityDate, uploadOwnerId }
+					const list = view_document.map((
+						{ fileId, fileName, userFullName }
 					) => {
+						console.log(fileId);
+						console.log(fileName);
+						console.log(userFullName);
 						return {
 							id: fileId,
 							name: fileName,
 							icon: 'far fa-file-pdf',
-							tags,
 							large: true,
-							date: activityDate,
 							isViewedDocuments: true,
-							owner: uploadOwnerId,
+							owner: userFullName,
 						};
 					});
 
-					if (isMounted.current) {
-						setDocuments(list);
-					}
-
-				}
-
-			}
+					setDocuments(list)
 
 		}
 
-	}, [widgets]);
+	}, [view_document]);
 
 	return (
 		<div className="jr-card">

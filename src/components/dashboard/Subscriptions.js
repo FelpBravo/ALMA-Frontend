@@ -9,8 +9,8 @@ export const Subscriptions = () => {
 	const isMounted = useRef(true);
 
 	const { audits } = useSelector(state => state.audit);
-	
-	const { widgets } = audits;
+	console.log(audits);
+	const subscribed_document = audits.subscribed_document
 
 	const [documents, setDocuments] = useState([]);
 
@@ -24,17 +24,9 @@ export const Subscriptions = () => {
 
 	useEffect(() => {
 
-		if (widgets && widgets.length > 0) {
+		if (subscribed_document && subscribed_document.length > 0) {
 
-			const documents = widgets.find((w) => w.title === SUBSCRIPTIONS);
-
-			if (documents) {
-
-				const { activities } = documents;
-
-				if (Array.isArray(activities)) {
-
-					const list = activities.map(({ fileId, fileName, tags, folder, activityDate }) => {
+					const list = subscribed_document.map(({ fileId, fileName, tags, folder, activityDate }) => {
 						return {
 							id: fileId,
 							name: fileName,
@@ -50,13 +42,11 @@ export const Subscriptions = () => {
 						setDocuments(list);
 					}
 
-				}
-
-			}
+			
 
 		}
 
-	}, [widgets]);
+	}, [subscribed_document]);
 
 	return (
 		<div className="jr-card">
