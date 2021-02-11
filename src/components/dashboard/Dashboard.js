@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startAuditsLoading } from 'actions/audit';
@@ -12,12 +12,35 @@ import { UploadDocuments } from './UploadDocuments';
 import { RecentsActivities } from './RecentsActivities';
 import { startSearchFieldsLoading } from 'actions/search';
 import { EditTextSearch } from 'components/search/ui/EditTextSearch';
+import jwt_decode from "jwt-decode";
+
 
 const Dashboard = () => {
 
 	const dispatch = useDispatch();
+	const [user, setUser] = useState({ firstName: '', lastName: '' });
 
 	const { authUser } = useSelector(state => state.auth);
+	
+
+	useEffect(() => {
+
+		if (!authUser) {
+			return;
+		}
+
+		try {
+			const { user } = jwt_decode(authUser);
+
+			if (user) {
+				setUser(user);
+			}
+
+		} catch (err) {
+			console.log((err));
+		}
+
+	}, [authUser, setUser]);
 
 	useEffect(() => {
 
@@ -35,9 +58,9 @@ const Dashboard = () => {
 
 			<div className="row">
 				<div className="ml-4">
-			      <img src={require("assets/images/user2.png")} alt="jambo" title="jambo" />
+			      <img src={require("assets/images/dashboard/usuario.png")} alt="jambo" title="jambo" />
 			    </div>
-			<p className="ml-2">¡Bienvenido Nadia!</p>
+			<p style={{fontFamily: "Poppins", fontSize: '18px', fontWeight: 600 }} className="ml-2"> ¡Bienvenido {`${user.firstName && user.firstName}`}!</p>
 			</div>
           
 			<div className="row">
