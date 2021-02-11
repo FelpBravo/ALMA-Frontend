@@ -39,6 +39,15 @@ export const fixedFolders = [
 				auth: 'ROLE_FOLDER_MENU',
 				bd: false,
 			},
+			{
+				id: -5,
+				name: 'sidebar.tags.report',
+				icon: 'chart',
+				type: 'item',
+				link: '/reports',
+				auth: 'ROLE_REPORTS_MENU',
+				bd: false,
+			},
 		],
 	},
 	/*{

@@ -584,7 +584,8 @@
 	"sidebar.modern": "Moderno",
 	"sidebar.home": "Panel de inicio",
 	"sidebar.tags.home": "Etiquetas",
-	"sidebar.tags.folders": "Folders",
+	"sidebar.tags.folders": "Carpetas",
+	"sidebar.tags.report": "Reportes",
 	"sidebar.loadDocuments": "Carga documentos",
 	"company.name": "APIUX",
 	"table.search.documentName": "Nombre documento",
@@ -632,7 +633,8 @@
 	"dashboard.type.activity.uploaded": "Subió",
 	"dashboard.type.activity.viewed": "Vió",
 	"dashboard.type.activity.updated": "Actualizó",
-	"visibility.modal.title": "Previsualización de Documentos"
+	"visibility.modal.title": "Previsualización de Documentos",
+	"reports.title": "Reportes de carga masiva"
 	
 
 }
