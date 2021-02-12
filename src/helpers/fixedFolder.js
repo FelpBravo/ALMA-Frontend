@@ -45,7 +45,7 @@ export const fixedFolders = [
 				icon: 'chart',
 				type: 'item',
 				link: '/reports',
-				auth: 'ROLE_REPORTS_MENU',
+				auth: 'ROLE_REPORT_MENU',
 				bd: false,
 			},
 		],

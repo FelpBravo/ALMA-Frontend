@@ -31,7 +31,7 @@ const NavSection = props => {
 						case 'item':
 							if('ROLE_DASHBOARD_MENU' === item.auth){
 								return <NavMenuItem {...item} key={index} />;
-							  };
+							  }
 							 return privileges.map((rol)=>{
 								if(rol === item.auth){
 								  return <NavMenuItem {...item} key={index} />;
