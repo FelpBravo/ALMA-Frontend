@@ -10,7 +10,8 @@ export const RecentsActivities = () => {
 	const isMounted = useRef(true);
 
 	const { audits } = useSelector(state => state.audit);
-	const { widgets } = audits;
+
+	const view_documents = audits.view_document
 
 	const [documents, setDocuments] = useState([]);
 
@@ -24,18 +25,11 @@ export const RecentsActivities = () => {
 
 	useEffect(() => {
 
-		if (widgets && widgets.length > 0) {
+		if (view_documents && view_documents.length > 0) {
 
-			const documents = widgets.find((w) => w.title === RECENT_ACTIVITY);
-
-			if (documents) {
-
-				const { activities } = documents;
-
-				if (Array.isArray(activities)) {
-
-					const list = activities.map((
-						{ fileId, fileName, tags, activityDate, activity, uploadOwnerName }
+			
+					const list = view_documents.map((
+						{ fileId, fileName, tags, activityDate, activity, userFullName }
 					) => {
 						return {
 							id: fileId,
@@ -44,7 +38,7 @@ export const RecentsActivities = () => {
 							tags,
 							date: activityDate,
 							activity: getActivityType(activity),
-							userName: uploadOwnerName,
+							userName: userFullName,
 						};
 					});
 
@@ -52,13 +46,11 @@ export const RecentsActivities = () => {
 						setDocuments(list);
 					}
 
-				}
-
-			}
+				
 
 		}
 
-	}, [widgets]);
+	}, [view_documents]);
 
 	return (
 		<div className="jr-card">

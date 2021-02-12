@@ -26,3 +26,9 @@ export const auditsLoaded = (audits) => {
 		payload: audits,
 	}
 };
+
+export const auditRemoveAll = () => {
+	return {
+		type: types.auditRemoveAll,
+	}
+};

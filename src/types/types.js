@@ -17,6 +17,7 @@ export const types = {
 	foldersRemoveAll: 'Folders Remove All',
 
 	auditDataLoaded: 'Audit Data Loaded',
+	auditRemoveAll: 'Audit Remove all',
 
 	uiAuditShowLoader: 'UI Audit show loading',
 	uiAuditFinishLoader: 'UI Audit finish loading',
