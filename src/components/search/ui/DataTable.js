@@ -147,7 +147,7 @@ const DataTable = () => {
 
 	const handleDelete = async (id) => {
 		const resp = await Swal.fire({
-			title: 'ELiminar',
+			title: 'Eliminar',
 			text: "¿Está seguro que quiere eliminar el documento?",
 			icon: "question",
 			showCancelButton: true,
