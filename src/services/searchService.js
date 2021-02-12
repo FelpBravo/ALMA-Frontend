@@ -1,7 +1,7 @@
 import { axiosInstance } from '../config/axios-instance';
 
 const getSearchFields = (authUser) => {
-	return axiosInstance.get(`/searchs/filters`, {
+	return axiosInstance.get(`/searches/filters`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -9,7 +9,7 @@ const getSearchFields = (authUser) => {
 };
 
 const search = (authUser, term, filters = [], folderId, page, maxItems = 10) => {
-	return axiosInstance.post(`/searchs/`,
+	return axiosInstance.post(`/searches/`,
 		{ term, page, folderId, maxItems, filters, },
 		{
 			headers: {

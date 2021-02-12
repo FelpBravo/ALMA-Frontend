@@ -65,7 +65,7 @@ const DataTable = () => {
 
 	const classes = useStyles();
 
-	const { authUser } = useSelector(state => state.auth);
+	const { authUser, authorities  } = useSelector(state => state.auth);
 
 	const isMounted = useRef(true);
 
@@ -163,6 +163,15 @@ const DataTable = () => {
 		dispatch(startSubscribeDocument(id));
 	}
 	
+	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
+
+	const ROLE_FILE_UPDATE = authorities.find(rol=> rol === 'ROLE_FILE_UPDATE') 
+
+	const ROLE_FILE_DELETE = authorities.find(rol=> rol === 'ROLE_FILE_DELETE') 
+
+	const ROLE_FILE_PREVIEW = authorities.find(rol=> rol === 'ROLE_FILE_PREVIEW') 
+
+
 	return (
 		<Paper style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
 			<div className="flex-auto">
@@ -214,14 +223,16 @@ const DataTable = () => {
 										<TableCell></TableCell>
 										<TableCell>
 											<div className={classes.iconsHolder}>
-											<TableActionButton
+											{ ROLE_FILE_PREVIEW &&
+											   <TableActionButton
 													materialIcon={
 													<VisibilityOutlinedIcon
 														className={classes.iconos}
 														onClick={() => handleVisibility(id, name)}
 													/>
 													}
-												/>
+												/>}
+                                            { ROLE_FILE_DOWNLOAD &&
 												<TableActionButton
 													materialIcon={
 													<SaveAltOutlinedIcon
@@ -229,7 +240,8 @@ const DataTable = () => {
 														onClick={() => handleDownload(id, name)}
 													/>
 													}
-												/>
+												/>}
+											{ ROLE_FILE_UPDATE &&
 												<TableActionButton
 													materialIcon={
 													<BorderColorOutlinedIcon
@@ -237,7 +249,8 @@ const DataTable = () => {
 														onClick={() => handleEdit(id)}
 													/>
 													}
-												/>
+												/>}
+                                            { ROLE_FILE_DELETE &&
 												<TableActionButton
 													materialIcon={
 													<DeleteOutlinedIcon
@@ -245,7 +258,7 @@ const DataTable = () => {
 														onClick={() => handleDelete(id)}
 													/>
 													}
-												/>
+												/>}
 												{/*<TableActionButton
 													materialIcon={
 													<PlaylistAddCheckOutlinedIcon
