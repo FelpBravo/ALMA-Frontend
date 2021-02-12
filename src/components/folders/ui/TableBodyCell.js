@@ -56,8 +56,8 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 			case 3:
 
 				const resp = await Swal.fire({
-					title: 'Folders',
-					text: "¿Está seguro de continuar?",
+					title: 'Eliminar',
+					text: "¿Está seguro que quiere eliminar la carpeta?",
 					icon: "question",
 					showCancelButton: true,
 					focusConfirm: true,

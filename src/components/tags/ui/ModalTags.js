@@ -62,7 +62,7 @@ const ModalTags = () => {
         }
         else
         {
-          setMessageErrorName('Nombre del tags tiene que ser unico');
+          setMessageErrorName('Nombre de la etiqueta tiene que ser unico');
         }
           
       }
