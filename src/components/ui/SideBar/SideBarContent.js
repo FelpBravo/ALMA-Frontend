@@ -72,11 +72,11 @@ const SideBarContent = () => {
 
 	useEffect(() => {
 		console.log(authorities);
-		const valid_view = authorities.find(rol=>rol === 'ROLE_FOLDER_VIEW')? false : true
 
-		console.log("VALIDO",valid_view);
+		const ROLE_FOLDER_VIEW = authorities.find(rol=>rol === 'ROLE_FOLDER_VIEW')
 
-		if (initFolders.length === 0 && authUser && valid_view === true) {
+
+		if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
 
 
 			dispatch(startFoldersInitLoading(authUser));

@@ -97,17 +97,14 @@ const Tags = () => {
 
 	}
 
-	const Iconos = (item)=>{
-		return authorities.map((rol)=>{
-			switch (rol) {
-				case 'ROLE_TAG_UPDATE':
-					return 
-				case 'ROLE_TAG_DELETE':
-					return
-			}
-		})
-	}
+	const ROLE_TAG_CREATE = authorities.find(rol=> rol === 'ROLE_TAG_CREATE')
 
+	const ROLE_TAG_UPDATE = authorities.find(rol=> rol === 'ROLE_TAG_UPDATE') 
+
+	const ROLE_TAG_DELETE = authorities.find(rol=> rol === 'ROLE_TAG_DELETE') 
+
+	
+	console.log(ROLE_TAG_DELETE)
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -123,7 +120,7 @@ const Tags = () => {
 							</div>
 								<div className="d-flex flex-row mb-3">
 									<h4 className="mb-0"> Listado actual de etiquetas</h4>
-									{	authorities.find(rol=> rol === 'ROLE_TAG_CREATE') &&
+									{ ROLE_TAG_CREATE &&
 									<Link  className="ml-5" component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
 																		<AddIcon color='primary' />
 																			Crear nueva etiqueta
@@ -161,13 +158,16 @@ const Tags = () => {
 											<div className="pointer text-primary">
 											<div>
 
-												{ authorities.find(rol=> rol === 'ROLE_TAG_UPDATE') &&
+												{ ROLE_TAG_UPDATE &&
 													<i
 													onClick={() => handleSelectActionTags(2, item.id, item.tag, item.hex)}
 													className="far fa-edit cursor-pointer custom-link-dash mr-2"
 													></i>
 												}
-												{ authorities.find(rol=> rol === 'ROLE_TAG_DELETE') &&
+
+
+												
+												{ ROLE_TAG_DELETE &&
 													<i
 													onClick={() => handleSelectActionTags(3, item.id)}
 													className="far fa-trash-alt cursor-pointer custom-link-dash"
