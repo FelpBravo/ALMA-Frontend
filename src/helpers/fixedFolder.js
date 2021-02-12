@@ -6,7 +6,7 @@ export const fixedFolders = [
 			{
 				id: -2,
 				name: 'sidebar.home',
-				icon: 'home',
+				icon: 'view-dashboard',
 				type: 'item',
 				link: '/dashboard',
 				auth:'ROLE_DASHBOARD_MENU',

@@ -11,7 +11,7 @@ const NavMenuItem = props => {
 		<List component="div" className='nav-menu-item'>
 			<NavLink className="prepend-icon nav-menu-link" to={link}>
 				{!!icon && (
-					<i className={'fas fa-' + icon} />
+					<i className={'zmdi zmdi-hc-fw  zmdi-' + icon} />
 				)}
 				<span className="nav-text">
 					{
