@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
 const Reports = () => {
 
     const classes = useStyles();
+
+	const handleOnChange = ({ target }) => {
+		const { value } = target;
+
+	}
+
 	
 	return (
 		<div className="row">
@@ -42,7 +48,7 @@ const Reports = () => {
 										shrink: true,
 									}
 									}
-									//onChange={handleOnChange}
+									onChange={handleOnChange}
 								/>
 								</Grid>
 								<Grid className="ml-3" item xs={3}>
@@ -57,7 +63,7 @@ const Reports = () => {
 										shrink: true,
 									}
 									}
-									//onChange={handleOnChange}
+									onChange={handleOnChange}
 								/>
 								</Grid>
 											</Grid>

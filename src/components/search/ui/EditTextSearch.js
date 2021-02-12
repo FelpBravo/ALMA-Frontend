@@ -62,13 +62,13 @@ export const EditTextSearch = ({ }) => {
 
 		if (searchText.length < minTermLength) {
 			setDisabledButton(true);
-			setMessageError(`Mínimo caracteres ${minTermLength}`);
+			setMessageError(`Minimo ${minTermLength} caracteres`);
 			return;
 		}
 
 		if (searchText.length > maxTermLength) {
 			setDisabledButton(true);
-			setMessageError(`Mánimo caracteres ${maxTermLength}`);
+			setMessageError(`Máximo ${maxTermLength} caracteres`);
 			return;
 		}
 

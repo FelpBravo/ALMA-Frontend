@@ -1,7 +1,7 @@
 import { axiosInstance } from '../config/axios-instance';
 
 const getAll = (authUser) => {
-	return axiosInstance.get('/aspectGroups', {
+	return axiosInstance.get('/aspects', {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -9,7 +9,7 @@ const getAll = (authUser) => {
 };
 
 const getById = (authUser, id) => {
-	return axiosInstance.get(`/aspectGroups/${id}/aspects`, {
+	return axiosInstance.get(`/aspects/${id}/aspects`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
