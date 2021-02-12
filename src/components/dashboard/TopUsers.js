@@ -1,34 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 import { Avatar } from '@material-ui/core';
 
-const userImageList = [
-	{
-		id: 1,
-		image: "https://via.placeholder.com/208x208",
-		name: 'Adrián',
-	},
-	{
-		id: 2,
-		image: "https://via.placeholder.com/150x150",
-		name: 'Mila',
-	},
-	{
-		id: 3,
-		image: "https://via.placeholder.com/150x150",
-		name: 'Felipe',
 
-	},
-	{
-		id: 4,
-		image: "https://via.placeholder.com/150x150",
-		name: 'Daniel',
-		rating: '5.0',
-		deals: '27 Deals'
-	},
-];
 
 export const TopUsers = () => {
+	const { audits } = useSelector(state => state.audit);
+	const userImageList = audits.top_users
+
+	const View_Avatar = () => {
+		if (userImageList && userImageList.length > 0) {
+			return (<ul className="list-inline mb-0">
+				{userImageList.map((user, index) =>
+					<li className="list-inline-item mr-0" key={index}>
+						<Avatar className="size-50" src='https://via.placeholder.com/150x150' />
+						<p className="custom-top-users">{user.userFullName}</p>
+					</li>
+				)}
+			</ul>)
+		}
+		else {
+			return (<></>)
+		}
+	}
+
+
+
 	return (
 		<div className="jr-card">
 
@@ -44,14 +42,7 @@ export const TopUsers = () => {
 			</div>
 
 			<div className="jr-customers">
-				<ul className="list-inline mb-0">
-					{userImageList.map((user, index) =>
-						<li className="list-inline-item mr-0" key={index}>
-							<Avatar className="size-50" src={user.image} />
-							<p className="custom-top-users">{user.name}</p>
-						</li>
-					)}
-				</ul>
+					<View_Avatar/>
 			</div>
 
 		</div>

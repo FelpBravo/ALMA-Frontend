@@ -4,40 +4,12 @@ import { useSelector } from "react-redux";
 import { SUBSCRIPTIONS } from 'constants/constUtil';
 import IconWithTextCard from './ui/IconWithTextCard';
 
-export const dataMetrics = [
-	{
-		title: '0',
-		subTitle: 'Total documentos',
-		imageIcon: require('assets/images/dashboard/nounfiles.png'),
-		cardColor: 'secondary',
-	},
-	{
-		title: '0',
-		subTitle: 'Total usuarios',
-		imageIcon: require('assets/images/dashboard/noun_users.png'),
-		cardColor: 'info',
-	},
-	{
-		title: '0',
-		subTitle: 'Documentos subidos',
-		imageIcon: require('assets/images/dashboard/noun_File.png'),
-		cardColor: 'warning',
-	},
-	{
-		title: '0',
-		subTitle: 'Documentos visualizados',
-		imageIcon: require('assets/images/dashboard/noun_study.png'),
-		cardColor: 'danger',
-	}
-];
-
-
 export const TotalSummary = () => {
 
 	const isMounted = useRef(true);
 	const { audits } = useSelector(state => state.audit);
-	const { widgets } = audits;
-	const [subscriptions, setSubscriptions] = useState({})
+	
+	const statistics = audits.statistics
 
 	useEffect(() => {
 
@@ -47,34 +19,51 @@ export const TotalSummary = () => {
 
 	}, []);
 
-	useEffect(() => {
-
-		/*if (widgets && widgets.length > 0) {
-
-			const subscriptions = widgets.filter((w) => w.title === SUBSCRIPTIONS);
-
-			if (subscriptions && subscriptions.length > 0) {
-
-				const list = subscriptions[0].list.map((obj) => {
-					return obj;
-				});
-
-				if (isMounted.current) {
-					setSubscriptions(list);
+	const Metrics = ()=>{
+		if(statistics && statistics.length >0 ){
+			const dataMetrics = [
+				{
+					title: statistics[0].totalDocuments.toString(),
+					subTitle: 'Total documentos',
+					imageIcon: require('assets/images/dashboard/nounfiles.png'),
+					cardColor: 'secondary',
+				},
+				{
+					title: statistics[0].totalUsers,
+					subTitle: 'Total usuarios',
+					imageIcon: require('assets/images/dashboard/noun_users.png'),
+					cardColor: 'info',
+				},
+				{
+					title: statistics[0].userDocumentsUploaded,
+					subTitle: 'Documentos subidos',
+					imageIcon: require('assets/images/dashboard/noun_File.png'),
+					cardColor: 'warning',
+				},
+				{
+					title: statistics[0].userDocumentsViewed,
+					subTitle: 'Documentos visualizados',
+					imageIcon: require('assets/images/dashboard/noun_study.png'),
+					cardColor: 'danger',
 				}
+			];
+			return (dataMetrics.map((data, index) =>
+				<div key={index} className="col-lg-3 col-sm-6 col-12">
+					<IconWithTextCard data={data} />
+				</div>
+			))
 
-			}
-
-		}*/
-
-	}, [widgets]);
+		}
+		else
+		{
+			return(<></>)
+		}
+	}
+	
 
 	return (
 		<div className="row">
-			{dataMetrics.map((data, index) =>
-				<div key={index} className="col-lg-3 col-sm-6 col-12">
-					<IconWithTextCard data={data} />
-				</div>)}
+			<Metrics/>
 		</div>
 	)
 }

@@ -3,13 +3,13 @@ import { types } from 'types/types';
 import { uiAuditFinishLoading } from './uiAudit'
 
 export const startAuditsLoading = (authUser) => {
-	return async (dispatch) => {
+	return  async(dispatch) => {
 
 		try {
 
-			const resp = await getAudits(authUser);
+			const resp =  await getAudits(authUser);
 			
-			dispatch(auditsLoaded(resp.data));
+			dispatch(auditsLoaded(resp));
 
 		} catch (error) {
 			console.log(error);
@@ -24,5 +24,11 @@ export const auditsLoaded = (audits) => {
 	return {
 		type: types.auditDataLoaded,
 		payload: audits,
+	}
+};
+
+export const auditRemoveAll = () => {
+	return {
+		type: types.auditRemoveAll,
 	}
 };

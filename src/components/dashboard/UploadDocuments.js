@@ -9,7 +9,8 @@ export const UploadDocuments = () => {
 	const isMounted = useRef(true);
 
 	const { audits } = useSelector(state => state.audit);
-	const { widgets } = audits;
+
+	const upload_documents = audits.upload_document
 
 	const [documents, setDocuments] = useState([]);
 
@@ -23,17 +24,10 @@ export const UploadDocuments = () => {
 
 	useEffect(() => {
 
-		if (widgets && widgets.length > 0) {
+		if (upload_documents && upload_documents.length > 0) {
 
-			const documents = widgets.find((w) => w.title === UPLOAD_DOCUMENTS);
 
-			if (documents) {
-
-				const { activities } = documents;
-
-				if (Array.isArray(activities)) {
-
-					const list = activities.map((
+					const list = upload_documents.map((
 						{ fileId, fileName, tags, activityDate }
 					) => {
 						return {
@@ -49,13 +43,10 @@ export const UploadDocuments = () => {
 						setDocuments(list);
 					}
 
-				}
-
-			}
 
 		}
 
-	}, [widgets]);
+	}, [upload_documents]);
 
 	return (
 		<div className="jr-card">

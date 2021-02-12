@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, makeStyles } from '@material-ui/core';
+import { Button, Divider, Grid, makeStyles, TextField } from '@material-ui/core';
 import React from 'react';
 import IntlMessages from 'util/IntlMessages';
 
@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
 const Reports = () => {
 
     const classes = useStyles();
+
+	const handleOnChange = ({ target }) => {
+		const { value } = target;
+
+	}
+
 	
 	return (
 		<div className="row">
@@ -29,7 +35,38 @@ const Reports = () => {
 							</div>
                             <Grid item xs={12}>
 
-						
+							<Grid container>
+							<Grid item xs={3}>
+								<TextField
+									label= "Desde"
+									variant="outlined"
+									fullWidth
+									type="date"
+									//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
+									size="small"
+									InputLabelProps={{
+										shrink: true,
+									}
+									}
+									onChange={handleOnChange}
+								/>
+								</Grid>
+								<Grid className="ml-3" item xs={3}>
+								<TextField
+									label="Hasta"
+									variant="outlined"
+									fullWidth
+									type="date"
+									//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
+									size="small"
+									InputLabelProps={{
+										shrink: true,
+									}
+									}
+									onChange={handleOnChange}
+								/>
+								</Grid>
+											</Grid>
 
 						<Divider className="mt-3" />
 

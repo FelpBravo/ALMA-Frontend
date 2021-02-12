@@ -8,6 +8,7 @@ import { searchRemoveText } from './search';
 import { documentsRemoveAll } from './documents';
 import { adminFoldersremoveAll } from './adminFolders';
 import { tagsRemoveAll } from './tags';
+import { auditRemoveAll } from './audit';
 import jwt_decode from 'jwt-decode'
 export const startUserSignInLogin = (userName, password) => {
 	return async (dispatch) => {
@@ -48,6 +49,7 @@ export const startUserSingOut = () => {
 		dispatch(documentsRemoveAll());
 		dispatch(adminFoldersremoveAll());
 		dispatch(tagsRemoveAll());
+		dispatch(auditRemoveAll())
 	}
 }
 

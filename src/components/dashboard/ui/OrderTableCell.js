@@ -70,12 +70,12 @@ const OrderTableCell = (props) => {
 						}
 
 						{
-							!isSubscriptions
+							/* !isSubscriptions
 							&&
 							isViewedDocuments
 							&&
 							date
-							&&
+							&& */
 							owner
 							&&
 							<p className="user-description">
