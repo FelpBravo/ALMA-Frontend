@@ -81,6 +81,12 @@ export const FormInit = () => {
 				<>
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
+					<SelectFolder />
+
+					</div>
+					
+					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
+
 						<FormControl fullWidth>
 							<NativeSelect
 							    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
@@ -108,11 +114,7 @@ export const FormInit = () => {
 
 					</div>
 
-					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
-
-						<SelectFolder />
-
-					</div>
+					
 				</>
 			}
 		</div>
