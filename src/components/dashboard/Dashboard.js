@@ -74,14 +74,21 @@ const Dashboard = () => {
 
 						</div>
 					</div>
-
+					
 					<div className="row">
+						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
+							{<UploadDocuments />}
+
+						</div>
+					</div>
+
+					
+					{/*<div className="row">
 
 						<div className="col-xl-7 col-lg-6 col-md-12 col-12">
 							
 							<Subscriptions />
-
-						</div>
 
 						<div className="col-xl-5 col-lg-6 col-md-12 col-12">
 							
@@ -89,7 +96,8 @@ const Dashboard = () => {
 
 						</div>
 
-					</div>
+						</div>
+					</div>*/}
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -111,13 +119,14 @@ const Dashboard = () => {
 
 				<div className="col-xl-4 col-lg-4 col-md-12 col-12">
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				    <div className="row">
+					    <div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							{<UploadDocuments />}
+							{<TopUsers />}
 
 						</div>
 					</div>
+					
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">

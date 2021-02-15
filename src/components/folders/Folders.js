@@ -100,7 +100,7 @@ const Folders = () => {
 									<Grid item xs={2}>
 									<Link component="button" variant="body2" onClick={handleNewFolder}>
 																		<AddIcon color='primary' />
-																			Crear nueva etiqueta
+																			Crear nueva carpeta
 									</Link>
 									</Grid>
 								</Grid>
