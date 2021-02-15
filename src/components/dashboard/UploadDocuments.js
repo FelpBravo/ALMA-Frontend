@@ -36,7 +36,6 @@ export const UploadDocuments = () => {
 							icon: 'far fa-file-pdf',
 							tags,
 							activity:'Subio',
-							image:"https://via.placeholder.com/150x150",
 							userName: userFirstName + " "+userLastName,
 							date: new Date(activityDate).toLocaleString("es-ES",{weekday:"short", year: "numeric", month: "long", day: "numeric", hour:"numeric",minute:"numeric"}),
 						};

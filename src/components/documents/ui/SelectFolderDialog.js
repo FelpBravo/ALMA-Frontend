@@ -75,8 +75,8 @@ export const SelectFolderDialog = ({ setOpenModal, openModal }) => {
 										&&
 										<i
 											onClick={() => handleLoadChilds(folder)}
-											className="fas fa-chevron-right modal-select-folder"
-											style={{ fontSize: 12 }}
+											className="zmdi zmdi-hc-2x zmdi-chevron-right"
+											style={{ cursor:"pointer" }}
 										>
 										</i>
 									}

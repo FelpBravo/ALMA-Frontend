@@ -28,7 +28,8 @@ const OrderTableCell = (props) => {
 			: status.includes("On Hold") ? "bg-amber"
 				: status.includes("Delayed") ? "text-white bg-danger" : "text-white bg-grey";
 	}
-
+	console.log(userName);
+	console.log(icon);
 	return (
 		<tr tabIndex={-1} key={id}>
 			<td>
@@ -45,9 +46,10 @@ const OrderTableCell = (props) => {
 
 						<h5 className="user-name custom-color-table">
 							{
-								!userName && icon && <i className={icon}></i>
+							
+								userName && icon && <i className={icon}></i>
 							}
-
+							
 							{userName && ` ${userName} `}
 							
 							{

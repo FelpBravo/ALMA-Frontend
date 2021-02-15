@@ -47,7 +47,7 @@ const Dashboard = () => {
 		dispatch(uiAuditShowLoading())
 		dispatch(startAuditsLoading(authUser));
 		dispatch(startSearchFieldsLoading(authUser));
-
+		
 	}, [dispatch, authUser]);
 
 	return (

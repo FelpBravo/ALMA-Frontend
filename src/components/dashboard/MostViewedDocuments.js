@@ -36,6 +36,7 @@ export const MostViewedDocuments = () => {
 							large: true,
 							date:new Date(activityDate).toLocaleString("es-ES",{ year: "numeric", month: "long", day: "numeric"}),
 							isViewedDocuments: true,
+							userName: userFirstName + " "+userLastName,
 							owner: userFirstName +" "+ userLastName,
 						};
 					});
