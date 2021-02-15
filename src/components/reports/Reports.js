@@ -19,6 +19,13 @@ const Reports = () => {
 
 	}
 
+	const handleSearchReports = (e) => {
+		e.preventDefault();
+	
+		//history.push(`/search`);
+	}
+	
+
 	
 	return (
 		<div className="row">
@@ -92,7 +99,7 @@ const Reports = () => {
 									type="submit"
 									variant="contained"
 									color="primary"
-									//onClick={handleAdvanceSearch}
+									onClick={handleSearchReports}
 								>
 									<IntlMessages id="dashboard.advancedSearchText" />
 								</Button>

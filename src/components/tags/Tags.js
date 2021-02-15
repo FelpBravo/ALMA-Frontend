@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 	  },
 	  iconsHolder: {
 		display: "flex",
-		alignItems: "center",
+		justifyContent: "center",
 	  },
 }));
 
@@ -130,7 +130,7 @@ const Tags = () => {
 								<Grid container spacing={2}>
 
 										<Grid item xs={10}>
-										<h4 className="mb-0"> Listado actual de etiquetas</h4>
+										<p className="mb-0"> Listado actual de etiquetas</p>
 										</Grid>
 
 										<Grid item xs={2}>
@@ -155,7 +155,7 @@ const Tags = () => {
 													<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400  }} >
 														<IntlMessages id="folders.table.column1" />
 													</TableCell>
-													<TableCell className='m5-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center'}} >
+													<TableCell  style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center'}} >
 														<IntlMessages id="folders.table.column2" />
 													</TableCell>
 												</TableRow>

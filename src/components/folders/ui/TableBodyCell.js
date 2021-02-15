@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	iconsHolder: {
 		display: "flex",
-		float: "right",
+		justifyContent: "center",
 	  },
 	
   }));
