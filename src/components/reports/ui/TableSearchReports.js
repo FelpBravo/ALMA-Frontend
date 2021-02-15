@@ -1,8 +1,5 @@
 import React from 'react';
 import IntlMessages from 'util/IntlMessages';
-import DataTable from './DataTable';
-import StarOutlineOutlinedIcon from '@material-ui/icons/StarOutlineOutlined';
-import { useSelector } from 'react-redux';
 
 export const TableSearchReports = () => {
 
@@ -22,8 +19,7 @@ export const TableSearchReports = () => {
 						</div>
 					</div>
 
-					<DataTable />
-
+		
 				</div>
 			</div>
 		</div>
