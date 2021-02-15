@@ -32,6 +32,7 @@ const SideBarContent = () => {
 	const classes = useStyles();
 
 	const dispatch = useDispatch();
+	
 	const { selectedIds = [], initFolders = [], folderId = [] } = useSelector(state => state.folders);
 
 	const { authUser, authorities } = useSelector(state => state.auth);
@@ -53,24 +54,28 @@ const SideBarContent = () => {
 	}, []);
 
 	useEffect(() => {
-
+		console.log("FOLDER");
+		console.log(folderId);
 		setSelected([folderId]);
 
 	}, [folderId, setSelected]);
 
 	useEffect(() => {
-
+		console.log("INIT");
+		console.log(initFolders);
 		setFolders(initFolders);
 
 	}, [initFolders, setFolders]);
 
 	useEffect(() => {
-
+		console.log("SELECTED");
+		console.log(selectedIds);
 		setExpanded(selectedIds);
 
 	}, [selectedIds, setExpanded]);
 
 	useEffect(() => {
+		console.log(dispatch);
 		if (authorities) {
 			console.log(authorities);
 
