@@ -54,6 +54,8 @@ const Documents = () => {
 	// ID DOCUMENTO URL
 	const { document = '' } = queryString.parse(location.search);
 
+	console.log(detailDocumentType);
+
 	const [files, setFiles] = useState(null);
 
 	useEffect(() => {

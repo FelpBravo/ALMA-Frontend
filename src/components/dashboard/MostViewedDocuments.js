@@ -9,6 +9,7 @@ export const MostViewedDocuments = () => {
 	const isMounted = useRef(true);
 
 	const { audits }  = useSelector(state => state.audit);
+	console.log(audits);
 	const view_document = audits.view_document
 	
 	const [documents, setDocuments] = useState([]);
@@ -26,18 +27,16 @@ export const MostViewedDocuments = () => {
 		if (view_document && view_document.length > 0) {
 
 					const list = view_document.map((
-						{ fileId, fileName, userFullName }
+						{ fileId, fileName, userFirstName ,userLastName ,activityDate}
 					) => {
-						console.log(fileId);
-						console.log(fileName);
-						console.log(userFullName);
 						return {
 							id: fileId,
 							name: fileName,
 							icon: 'far fa-file-pdf',
 							large: true,
+							date:new Date(activityDate).toLocaleString("es-ES",{ year: "numeric", month: "long", day: "numeric"}),
 							isViewedDocuments: true,
-							owner: userFullName,
+							owner: userFirstName +" "+ userLastName,
 						};
 					});
 

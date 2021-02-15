@@ -71,10 +71,11 @@ const SideBarContent = () => {
 	}, [selectedIds, setExpanded]);
 
 	useEffect(() => {
-		console.log(authorities);
+		if (authorities) {
+			console.log(authorities);
 
-		const ROLE_FOLDER_VIEW = authorities.find(rol=>rol === 'ROLE_FOLDER_VIEW')
-
+			const ROLE_FOLDER_VIEW = authorities.find(rol => rol === 'ROLE_FOLDER_VIEW')
+		
 
 		if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
 
@@ -82,6 +83,7 @@ const SideBarContent = () => {
 			dispatch(startFoldersInitLoading(authUser));
 
 		}
+	}
 
 	}, [dispatch, initFolders, authUser]);
 

@@ -15,7 +15,7 @@ export const TopUsers = () => {
 				{userImageList.map((user, index) =>
 					<li className="list-inline-item mr-0" key={index}>
 						<Avatar className="size-50" src='https://via.placeholder.com/150x150' />
-						<p className="custom-top-users">{user.userFullName}</p>
+						<p className="custom-top-users">{user.userFirstName}</p>
 					</li>
 				)}
 			</ul>)

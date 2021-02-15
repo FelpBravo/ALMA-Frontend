@@ -3,21 +3,9 @@ import React from 'react';
 import OrderTableCell from './OrderTableCell';
 
 
-let counter = 0;
 
-function createData(orderId, name, image, orderDate, deliveryDate, status) {
-	counter += 1;
-	return { id: counter, orderId, name, image, orderDate, deliveryDate, status };
-}
 
-const data = [
-	createData('23545', 'Alex Dolgove', "https://via.placeholder.com/150x150", '25 Oct', '25 Oct', 'Completed'),
-	createData('23653', 'Domnic Brown', "https://via.placeholder.com/150x150", '28 Oct', '1 Nov', 'On Hold'),
-	createData('24567', 'Garry Sobars', "https://via.placeholder.com/150x150", '5 Nov', '10 Nov', 'Delayed'),
-	createData('25745', 'Stella Johnson', "https://via.placeholder.com/150x150", '23 Nov', '26 Nov', 'Cancelled'),
-];
-
-const OrderTable = ({ dataTable = data }) => {
+const OrderTable = ({ dataTable }) => {
 
 	return (
 		<div className="table-responsive-material">

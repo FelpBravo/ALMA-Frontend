@@ -54,10 +54,11 @@ export const SelectFolderDialog = ({ setOpenModal, openModal }) => {
 	}
 
 	const handleRenderItems = () => {
-
+		console.log(currentFolderBreadcrumbs.folders);
 		return (
 			<List>
 				{
+					
 					currentFolderBreadcrumbs.folders.map((folder, i) => {
 						return (
 							<div key={folder.id}>

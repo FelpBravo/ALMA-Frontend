@@ -41,7 +41,7 @@ export const EditTextSearch = ({ }) => {
 	const { authUser } = useSelector(state => state.auth);
 
 	const { textSearch = '', fields } = useSelector(state => state.searchs);
-	const { maxTermLength = 3, minTermLength = 20 } = fields;
+	const { maxTermLength = 20, minTermLength = 3 } = fields;
 
 	const dispatch = useDispatch();
 

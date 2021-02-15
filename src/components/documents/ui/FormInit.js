@@ -53,7 +53,7 @@ export const FormInit = () => {
 		}
 
 	}
-
+	console.log(documentsType);
 	return (
 		<div className="row">
 
@@ -91,9 +91,11 @@ export const FormInit = () => {
 							>
 								<option aria-label="None" value="">Seleccione</option>
 								{
+									
 									documentsType.length > 0
 									&&
 									documentsType.map(({ id, name }) => {
+										
 										return <option
 											value={id}
 											key={id}

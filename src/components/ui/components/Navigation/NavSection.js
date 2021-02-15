@@ -29,18 +29,20 @@ const NavSection = props => {
 						case 'collapse':
 							return <NavCollapse {...item} key={index} />;
 						case 'item':
-							if('ROLE_DASHBOARD_MENU' === item.auth){
+							if ('ROLE_DASHBOARD_MENU' === item.auth) {
 								return <NavMenuItem {...item} key={index} />;
-							  }
-							if('ROLE_REPORTS_MENU' === item.auth){
+							}
+							if ('ROLE_REPORTS_MENU' === item.auth) {
 								return <NavMenuItem {...item} key={index} />;
-							  }
-							 return privileges.map((rol)=>{
-								if(rol === item.auth){
-								  return <NavMenuItem {...item} key={index} />;
-								}
-							  })
-							
+							}
+							if (privileges) {
+								return privileges.map((rol) => {
+									if (rol === item.auth) {
+										return <NavMenuItem {...item} key={index} />;
+									}
+								})
+							}
+
 					}
 				})
 			}

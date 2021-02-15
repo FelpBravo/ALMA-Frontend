@@ -29,7 +29,7 @@ export const RecentsActivities = () => {
 
 			
 					const list = view_documents.map((
-						{ fileId, fileName, tags, activityDate, activity, userFullName }
+						{ fileId, fileName, tags, activityDate, activity ,userFirstName ,userLastName }
 					) => {
 						return {
 							id: fileId,
@@ -38,7 +38,10 @@ export const RecentsActivities = () => {
 							tags,
 							date: activityDate,
 							activity: getActivityType(activity),
-							userName: userFullName,
+							image:"https://via.placeholder.com/150x150",
+							userName: userFirstName + " "+userLastName,
+							date: new Date(activityDate).toLocaleString("es-ES",{weekday:"short", year: "numeric", month: "long", day: "numeric", hour:"numeric",minute:"numeric"}),
+	
 						};
 					});
 

@@ -28,14 +28,17 @@ export const UploadDocuments = () => {
 
 
 					const list = upload_documents.map((
-						{ fileId, fileName, tags, activityDate }
+						{ fileId, fileName, tags, activityDate ,userFirstName ,userLastName }
 					) => {
 						return {
 							id: fileId,
 							name: fileName,
 							icon: 'far fa-file-pdf',
 							tags,
-							date: activityDate,
+							activity:'Subio',
+							image:"https://via.placeholder.com/150x150",
+							userName: userFirstName + " "+userLastName,
+							date: new Date(activityDate).toLocaleString("es-ES",{weekday:"short", year: "numeric", month: "long", day: "numeric", hour:"numeric",minute:"numeric"}),
 						};
 					});
 
