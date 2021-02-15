@@ -1,5 +1,6 @@
 import React from 'react';
 import IntlMessages from 'util/IntlMessages';
+import { DataTableReports } from './DataTableReports';
 
 export const TableSearchReports = () => {
 
@@ -18,7 +19,8 @@ export const TableSearchReports = () => {
 						<div style={{color: '#FFA800'}} className="row ml-auto">		
 						</div>
 					</div>
-
+                
+				<DataTableReports/>
 		
 				</div>
 			</div>

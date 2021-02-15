@@ -634,7 +634,13 @@
 	"dashboard.type.activity.viewed": "Vió",
 	"dashboard.type.activity.updated": "Actualizó",
 	"visibility.modal.title": "Previsualización de Documentos",
-	"reports.title": "Reportes de carga masiva"
+	"reports.title": "Reportes de carga masiva",
+	"reports.table.column1": "Id del proceso",
+	"reports.table.column2": "Inicio del proceso",
+	"reports.table.column3": "Fin del proceso",
+	"reports.table.column4": "Archivo fuente",
+	"reports.table.column5": "Filas procesadas",
+	"reports.table.column6": "Archivos con error"
 	
 
 }
