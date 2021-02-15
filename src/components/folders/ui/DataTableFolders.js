@@ -33,16 +33,16 @@ export const DataTableFolders = ({ folders ,privileges}) => {
 					<Table size="small" aria-label="a dense table">
 						<TableHead>
 							<TableRow>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '14px', fontWeight: 400  }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400  }} >
 									<IntlMessages id="folders.table.column1" />
 								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff',fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff',fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="folders.table.column4" />
 								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="folders.table.column3" />
 								</TableCell>
-								<TableCell className="text-right" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} >
+								<TableCell className='m5-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'right' }} >
 									<IntlMessages id="folders.table.column2" />
 								</TableCell>
 							</TableRow>

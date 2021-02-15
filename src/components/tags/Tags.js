@@ -136,11 +136,7 @@ const Tags = () => {
 									</tr>
 									</thead>
 									<tbody>
-									{
-										tagslist.length === 0
-										&&
-										<SkeletonApp />
-									}
+									
 									{
 										tagslist.length > 0
 										&&
