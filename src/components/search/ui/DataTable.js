@@ -3,6 +3,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import TableContainer from '@material-ui/core/TableContainer';
 import queryString from 'query-string';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
@@ -173,10 +174,13 @@ const DataTable = () => {
 
 
 	return (
-		<Paper style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
-			<div className="flex-auto">
-				<div className="table-responsive-material">
-					<Table className="">
+		<div className="row mt-3">
+
+		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
+			<TableContainer component={Paper}>
+				<Table size="small" aria-label="a dense table">
+	
 						<DataTableHead
 							columns={columnsDocuments}
 						/>
@@ -273,33 +277,6 @@ const DataTable = () => {
 												/>
 												</div>
 											</TableCell>
-										{/*<TableCell>
-
-											<div className="custom-td-table">
-												<i
-													title='Download'
-													onClick={() => handleDownload(id, name)}
-													className="fa fa-download cursor-pointer custom-link-dash"
-												></i>
-												<i
-													title="Edit"
-													onClick={() => handleEdit(id)}
-													className="far fa-edit cursor-pointer custom-link-dash"
-												></i>
-												<i
-													title="Remove"
-													onClick={() => handleDelete(id)}
-													className="far fa-trash-alt cursor-pointer custom-link-dash"
-												></i>
-												<i
-													title={isFavorite ? 'Desuscribir' : 'Suscribir'}
-													onClick={() => handleSubscribe(id)}
-													className="far fa-hand-pointer cursor-pointer custom-link-dash"
-												></i>
-
-											</div>
-
-										</TableCell>*/}
 
 										{/*<TableCell>
 											<MenuTable
@@ -327,10 +304,12 @@ const DataTable = () => {
 									total={totalItems} 
 									onChange={handleChangePage}/>
 								</Grid>
-				</div>
+				</TableContainer>
 				<ModalVisibility/>
+
 			</div>
-		</Paper>
+		</div>
+	
 	);
 };
 

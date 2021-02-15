@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import IntlMessages from 'util/IntlMessages';
-import LabelIcon from '@material-ui/icons/Label';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,19 +9,27 @@ import {
 	setTagsList, setActionModalTags
 } from 'actions/tags';
 import ModalTags from './ui/ModalTags';
-import { Avatar, Divider, Table } from '@material-ui/core';
+import {Table, TableCell, TableRow, TableContainer, Paper, TableHead, TableBody, Grid} from '@material-ui/core';
 import Swal from 'sweetalert2';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import SkeletonApp from 'components/ui/SkeletonApp';
+import TableActionButton from 'components/search/ui/TableActionButton';
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import LabelIcon from '@material-ui/icons/Label';
+
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-		marginTop: 30,
-	},
-	demo: {
-		width: '100%',
-	},
+	
+	iconos: {
+		cursor: "pointer",
+		color: "#2196f3",
+		fontSize: '18px',
+	  },
+	  iconsHolder: {
+		display: "flex",
+		alignItems: "center",
+	  },
 }));
 
 const Tags = () => {
@@ -78,7 +85,7 @@ const Tags = () => {
 
 				const resp = await Swal.fire({
 					title: 'Eliminar',
-					text: "¿Está seguro que quiere eliminar la etiqueta?",
+					text: "¿Estas seguro que quiere eliminar la etiqueta?",
 					icon: "question",
 					showCancelButton: true,
 					focusConfirm: true,
@@ -103,91 +110,111 @@ const Tags = () => {
 
 	const ROLE_TAG_DELETE = authorities.find(rol=> rol === 'ROLE_TAG_DELETE') 
 
-	
-	console.log(ROLE_TAG_DELETE)
 	return (
-		<div className="row">
-			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-				<div className="jr-card">
+	<div className="row">
+		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+			<div className="jr-card">
 
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				<div className="row">
+					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-							<div className="jr-card-header d-flex align-items-center">
-								<h3 className="mb-0">
-									<IntlMessages id="tags.title" />
-								</h3>
-							</div>
-								<div className="d-flex flex-row mb-3">
-									<h4 className="mb-0"> Listado actual de etiquetas</h4>
-									{ ROLE_TAG_CREATE &&
-									<Link  className="ml-5" component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
-																		<AddIcon color='primary' />
-																			Crear nueva etiqueta
-									</Link>
-									}
-								</div>
-								<div className="table-responsive-material">
-									<Table className="default-table table-unbordered table table-sm table-hover" style={{width:"60%"}}>
-									<thead className="table-head-sm th-border-b">
-									<tr>
-										<th>Nombre de etiquetas</th>
-										<th>Acciones</th>
-									</tr>
-									</thead>
-									<tbody>
-									
-									{
-										tagslist.length > 0
-										&&
-									    tagslist.map((item) => {
-										return <tr key={item.id}>
-										<td>
-											<div className="d-flex align-items-center">
-											<LabelIcon style={{ color: item.hex }} />
-											<div className="user-detail">
-												<h5 className="user-name ml-3">{item.tag}</h5>
-											</div>
-											</div>
-										</td>
-										<td>
-											<div className="pointer text-primary">
-											<div>
-
-												{ ROLE_TAG_UPDATE &&
-													<i
-													onClick={() => handleSelectActionTags(2, item.id, item.tag, item.hex)}
-													className="far fa-edit cursor-pointer custom-link-dash mr-2"
-													></i>
-												}
-
-
-												
-												{ ROLE_TAG_DELETE &&
-													<i
-													onClick={() => handleSelectActionTags(3, item.id)}
-													className="far fa-trash-alt cursor-pointer custom-link-dash"
-													></i>
-												}
-												
-
-											</div>
-
-											</div>
-										</td>
-										</tr>
-									})}
-									</tbody>
-									</Table>
-								</div>	
+						<div className="jr-card-header d-flex align-items-center">
+							<h3 className="mb-0">
+								<IntlMessages id="tags.title" />
+							</h3>
 						</div>
-					</div>
 
-				</div>
-			</div>
-			<ModalTags />
+						<div className="row mt-3">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
+								<Grid container spacing={2}>
+
+										<Grid item xs={10}>
+										<h4 className="mb-0"> Listado actual de etiquetas</h4>
+										</Grid>
+
+										<Grid item xs={2}>
+										{ ROLE_TAG_CREATE &&
+											<Link component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
+																				<AddIcon color='primary' />
+																					Crear nueva etiqueta
+											</Link>
+										}
+										</Grid>
+								</Grid>
+							</div>
+						</div>
+
+							<div className="row mt-3">
+								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
+									<TableContainer component={Paper}>
+										<Table size="small" aria-label="a dense table">
+											<TableHead>
+												<TableRow>
+													<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400  }} >
+														<IntlMessages id="folders.table.column1" />
+													</TableCell>
+													<TableCell className='m5-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center'}} >
+														<IntlMessages id="folders.table.column2" />
+													</TableCell>
+												</TableRow>
+											</TableHead>
+
+											<TableBody>
+												{
+														tagslist.length > 0
+														&&
+														tagslist.map((item) => {
+															console.log(item)
+															return<TableRow hover key={item.id}>
+														<TableCell
+															style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
+															component="th"
+															scope="row"
+															className="folders-table-row"
+														>
+															<LabelIcon className='mr-3' style={{ color: item.hex }} />
+															{item.tag}
+														</TableCell>
+														
+														<TableCell>
+														<div className={classes.iconsHolder}>
+														{ ROLE_TAG_UPDATE &&
+																	<TableActionButton
+																		materialIcon={
+																		<BorderColorOutlinedIcon
+																			className={classes.iconos}
+																			onClick={() => handleSelectActionTags(2, item.id, item.tag, item.hex)}
+																		/>
+																		}
+																	/>}
+														{ ROLE_TAG_DELETE &&
+																	<TableActionButton
+																		materialIcon={
+																		<DeleteOutlinedIcon
+																			className={classes.iconos}
+																			onClick={() => handleSelectActionTags(3, item.id)}
+																		/>
+																		}
+																	/>}			
+															</div>
+														</TableCell>
+													</TableRow>
+													})}
+											</TableBody>
+										</Table>
+									</TableContainer>
+
+								</div>
+	                        </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+			<ModalTags/>
 		</div>
-
+		
 	)
 }
 
