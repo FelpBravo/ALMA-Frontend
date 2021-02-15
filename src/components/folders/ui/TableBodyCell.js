@@ -1,16 +1,35 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TableCell, TableRow } from '@material-ui/core';
+import { makeStyles, TableCell, TableRow } from '@material-ui/core';
 
 import {
 	openModalFolder, setActionModal, setFolder, startDeleteFolderLoading, startSubFoldersLoading
 } from 'actions/adminFolders';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import Swal from 'sweetalert2';
+import AddIcon from '@material-ui/icons/Add';
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import TableActionButton from 'components/search/ui/TableActionButton';
+
+const useStyles = makeStyles((theme) => ({
+	iconos: {
+	  cursor: "pointer",
+	  color: "#2196f3",
+	  fontSize: '18px',
+	},
+	iconsHolder: {
+		display: "flex",
+		float: "right",
+	  },
+	
+  }));
 
 export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges }) => {
 
 	const dispatch = useDispatch();
+	
+	const classes = useStyles();
 
 	const { authUser } = useSelector(state => state.auth);
 
@@ -56,8 +75,8 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 			case 3:
 
 				const resp = await Swal.fire({
-					title: 'Folders',
-					text: "¿Está seguro de continuar?",
+					title: 'Eliminar',
+					text: "¿Está seguro que quiere eliminar la carpeta?",
 					icon: "question",
 					showCancelButton: true,
 					focusConfirm: true,
@@ -79,7 +98,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	return (
 		<TableRow hover>
 			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}
+				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
 				onClick={handleOnClick}
 				component="th"
 				scope="row"
@@ -88,14 +107,14 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				{name}
 			</TableCell>
 			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}
+				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
 				className="folders-table-row"
 				onClick={handleOnClick}
 			>
 				{position}
 			</TableCell>
 			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}
+				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
 				className="folders-table-row"
 				onClick={handleOnClick}
 			>
@@ -104,28 +123,37 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				}
 			</TableCell>
 			<TableCell>
-				<div className="custom-td-table">
+				<div className={classes.iconsHolder}>
 					{privileges.map((rol) => {
 						if ('ROLE_FOLDER_CREATE' === rol) {
-							return <i
-								title="New"
+							return <TableActionButton
+							materialIcon={
+							<AddIcon
+								className={classes.iconos}
 								onClick={() => handleSelectAction(1)}
-								className="fa fa-plus cursor-pointer custom-link-dash"
 							/>
+							}
+						/>
 						}
 						else if ('ROLE_FOLDER_UPDATE' === rol) {
-							return <i
-								title="Edit"
+							return <TableActionButton
+							materialIcon={
+							<BorderColorOutlinedIcon
+								className={classes.iconos}
 								onClick={() => handleSelectAction(2)}
-								className="far fa-edit cursor-pointer custom-link-dash"
 							/>
+							}
+						/>
 						}
 						else if ('ROLE_FOLDER_DELETE' === rol) {
-							return <i
-								title="Delete"
+							return <TableActionButton
+							materialIcon={
+							<DeleteOutlinedIcon
+								className={classes.iconos}
 								onClick={() => handleSelectAction(3)}
-								className="far fa-trash-alt cursor-pointer custom-link-dash"
 							/>
+							}
+						/>
 						}
 					})}
 

@@ -10,6 +10,8 @@ import { DataTableFolders } from './ui/DataTableFolders';
 import SimpleBreadcrumbs from 'components/ui/SimpleBreadcrumbs';
 import FolderDialog from './ui/FolderDialog';
 import { ACTION_CREATE } from 'constants/constUtil';
+import AddIcon from '@material-ui/icons/Add';
+import Link from '@material-ui/core/Link';
 
 const Folders = () => {
 
@@ -84,48 +86,32 @@ const Folders = () => {
 						<div className="row">
 							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-								<Grid
-									container
-									justify="flex-end"
-									alignItems="flex-end"
+								<Grid container spacing={2}>
 
-								>
-									<Button
-										title="New"
-										color="primary"
-										size="small"
-										type="button"
-										variant="contained"
-										onClick={handleNewFolder}
-										disabled={valid_create}
-									>
-										<i className="fa fa-plus cursor-pointer"></i>
-									</Button>
+									<Grid item xs={10}>
+
+									<SimpleBreadcrumbs
+									items={historyFolders}
+									currentItem={currentFolders.id}
+									handleClick={handleClickBreadcrumbs}
+								/>
+									</Grid>
+
+									<Grid item xs={2}>
+									<Link component="button" variant="body2" onClick={handleNewFolder}>
+																		<AddIcon color='primary' />
+																			Crear nueva etiqueta
+									</Link>
+									</Grid>
 								</Grid>
 
 							</div>
 						</div>
 					}
-
 					{
 						folders.length > 0
 						&&
-						<div className="row">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
-								<SimpleBreadcrumbs
-									items={historyFolders}
-									currentItem={currentFolders.id}
-									handleClick={handleClickBreadcrumbs}
-								/>
-
-							</div>
-						</div>}
-
-					{
-						folders.length > 0
-						&&
-						<div className="row">
+						<div className="row mt-3">
 							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 								<DataTableFolders

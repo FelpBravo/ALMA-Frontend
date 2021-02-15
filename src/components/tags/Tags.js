@@ -77,8 +77,8 @@ const Tags = () => {
 			case 3:
 
 				const resp = await Swal.fire({
-					title: 'tags',
-					text: "¿Está seguro de continuar?",
+					title: 'Eliminar',
+					text: "¿Está seguro que quiere eliminar la etiqueta?",
 					icon: "question",
 					showCancelButton: true,
 					focusConfirm: true,
@@ -136,11 +136,7 @@ const Tags = () => {
 									</tr>
 									</thead>
 									<tbody>
-									{
-										tagslist.length === 0
-										&&
-										<SkeletonApp />
-									}
+									
 									{
 										tagslist.length > 0
 										&&

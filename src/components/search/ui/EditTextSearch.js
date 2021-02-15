@@ -41,6 +41,7 @@ export const EditTextSearch = ({ }) => {
 	const { authUser } = useSelector(state => state.auth);
 
 	const { textSearch = '', fields } = useSelector(state => state.searchs);
+
 	const { maxTermLength = 20, minTermLength = 3 } = fields;
 
 	const dispatch = useDispatch();
@@ -62,13 +63,13 @@ export const EditTextSearch = ({ }) => {
 
 		if (searchText.length < minTermLength) {
 			setDisabledButton(true);
-			setMessageError(`Mínimo caracteres ${minTermLength}`);
+			setMessageError(`Minimo ${minTermLength} caracteres`);
 			return;
 		}
 
 		if (searchText.length > maxTermLength) {
 			setDisabledButton(true);
-			setMessageError(`Mánimo caracteres ${maxTermLength}`);
+			setMessageError(`Máximo ${maxTermLength} caracteres`);
 			return;
 		}
 
