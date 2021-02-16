@@ -60,8 +60,8 @@ export const startDeleteTagsLoading = (tagId) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -103,8 +103,8 @@ export const startCreateTagsLoading = (authUser, tag, hex) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -142,8 +142,8 @@ export const startEditTagsLoading = (id, tag, hex) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});

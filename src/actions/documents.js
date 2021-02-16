@@ -66,8 +66,8 @@ export const startDetailDocumentTypeLoading = (id) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -127,8 +127,8 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -184,8 +184,8 @@ export const startDropFileLoading = (files) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -195,6 +195,13 @@ export const startDropFileLoading = (files) => {
 			const resp = await uploadDocument(authUser, files[0]);
 
 			Swal.close();
+
+			Swal.fire({
+				icon: 'success',
+				title: 'Documento cargado con exito',
+				showConfirmButton: false,
+				timer: 1500
+			  })
 
 			// SAVE STORE ID LOADED
 			dispatch(saveFileIdLoaded(resp.data.id));
@@ -267,8 +274,8 @@ export const startDocumentByIdLoading = (fileId) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -307,8 +314,8 @@ export const startDocumentByIdVisibility = (id) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -401,8 +408,8 @@ export const startEditDocumentLoading = (
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});

@@ -32,8 +32,8 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -71,8 +71,8 @@ export const startDeleteDocument = (id) => {
 		})	
 		try {
 			Swal.fire({
-				title: 'Deleting...',
-				text: 'Please wait...',
+				title: 'Eliminando...',
+				text: 'Por favor espere',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -149,8 +149,8 @@ export const startSubscribeDocument = (id) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
