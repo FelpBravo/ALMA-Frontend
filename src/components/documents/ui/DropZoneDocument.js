@@ -59,6 +59,7 @@ export const DropZoneDocument = () => {
 
 	}
 
+
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -84,6 +85,8 @@ export const DropZoneDocument = () => {
 
 				{
 					acceptedFiles
+					&&
+					fileIdLoaded
 					&&
 					acceptedFiles.length > 0
 					&&
