@@ -29,7 +29,7 @@ const getFoldersAdmin = (authUser) => {
 const getFoldersAdminById = (authUser, folderId) => {
 	return axiosInstance.get(`/folders/admin/${folderId}/children`, {
 		headers: {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };

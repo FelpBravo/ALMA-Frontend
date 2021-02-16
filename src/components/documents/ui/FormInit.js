@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormControl, NativeSelect, InputLabel } from '@material-ui/core';
+import { FormControl, NativeSelect, InputLabel, Select} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Skeleton from '@material-ui/lab/Skeleton';
 
@@ -12,6 +12,7 @@ import {
 	startFoldersLoading,
 } from 'actions/documents';
 import { SelectFolder } from './SelectFolder';
+
 
 export const FormInit = () => {
 
@@ -88,14 +89,15 @@ export const FormInit = () => {
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
 						<FormControl fullWidth>
+						<InputLabel htmlFor="outlined-age-native-simple">Tipo de Documento</InputLabel>
 							<NativeSelect
-							    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
+							    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, marginTop: '0px' }}
 								value={documentType}
 								name="documentsType"
 								input={<BootstrapInput />}
 								onChange={handleOnChange}
 							>
-								<option aria-label="None" value="">Seleccione</option>
+								<option aria-label="None" value=""></option>
 								{
 									
 									documentsType.length > 0

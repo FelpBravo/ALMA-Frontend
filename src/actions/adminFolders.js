@@ -11,8 +11,8 @@ export const startFoldersLoading = (authUser) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -61,8 +61,8 @@ export const startSubFoldersLoading = (authUser, folderId, name) => {
 			try {
 
 				Swal.fire({
-					title: 'Loading...',
-					text: 'Please wait...',
+					title: 'Cargando...',
+				    text: 'Por favor espere...',
 					allowOutsideClick: false,
 					heightAuto: false,
 				});
@@ -193,8 +193,8 @@ export const startCreateFolderLoading = (authUser, data, folderId, name) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -223,8 +223,8 @@ export const startSubFolderLoadingAfterCrete = (authUser, folderId, name) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -264,8 +264,8 @@ export const startEditFolderLoading = (authUser, data, folderId, name) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -307,8 +307,8 @@ export const startDeleteFolderLoading = (authUser, folderId) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
