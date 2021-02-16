@@ -14,7 +14,6 @@ export const startUserSignInLogin = (userName, password) => {
 	return async (dispatch) => {
 		try {
 			const resp = await login(userName, password,'password');
-			console.log(resp);
 			localStorage.setItem('token', resp.data.access_token);
 			dispatch(uiFinishLoading());
 			dispatch(userSignInSuccess(resp.data.access_token));

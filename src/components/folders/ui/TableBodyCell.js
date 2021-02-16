@@ -124,7 +124,9 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 			</TableCell>
 			<TableCell>
 				<div className={classes.iconsHolder}>
-					{privileges.map((rol) => {
+					{privileges &&
+					
+					privileges.map((rol) => {
 						if ('ROLE_FOLDER_CREATE' === rol) {
 							return <TableActionButton
 							materialIcon={
@@ -155,7 +157,9 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 							}
 						/>
 						}
-					})}
+					})
+					
+					}
 
 
 				</div>

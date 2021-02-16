@@ -66,7 +66,6 @@ const Dashboard = () => {
 			<div className="row">
 
 				<div className="col-xl-8 col-lg-8 col-md-12 col-12">
-
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 						

@@ -13,11 +13,11 @@ const SideBar = () => {
 	const { drawerType, width, navigationStyle } = useSelector(({ settings }) => settings);
 	const { navCollapsed } = useSelector(({ common }) => common);
 
-	useEffect(() => {
+	/* useEffect(() => {
 		window.addEventListener('resize', () => {
 			dispatch(updateWindowWidth(window.innerWidth))
 		});
-	}, [dispatch]);
+	}, [dispatch]); */
 
 	const onToggleCollapsedNav = (e) => {
 		dispatch(toggleCollapsedNav());

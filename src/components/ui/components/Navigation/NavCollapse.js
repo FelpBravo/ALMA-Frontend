@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import IntlMessages from "../../../../util/IntlMessages";
 import NavSection from "./NavSection";
 import NavMenuItem from "./NavMenuItem";
-import { useDispatch } from 'react-redux';
 
 const NavCollapse = props => {
 

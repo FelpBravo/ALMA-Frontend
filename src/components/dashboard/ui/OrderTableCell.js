@@ -28,8 +28,6 @@ const OrderTableCell = (props) => {
 			: status.includes("On Hold") ? "bg-amber"
 				: status.includes("Delayed") ? "text-white bg-danger" : "text-white bg-grey";
 	}
-	console.log(userName);
-	console.log(icon);
 	return (
 		<tr tabIndex={-1} key={id}>
 			<td>

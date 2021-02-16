@@ -17,10 +17,13 @@ export const types = {
 	foldersRemoveAll: 'Folders Remove All',
 
 	auditDataLoaded: 'Audit Data Loaded',
-	auditRemoveAll: 'Audit Remove all',
+	auditRemoveAll: 'Audit Remove All',
 
 	uiAuditShowLoader: 'UI Audit show loading',
 	uiAuditFinishLoader: 'UI Audit finish loading',
+
+	reportsDataLoaded: 'Reports Data Loaded',
+	reportsRemoveAll:'Reports Remove All',
 
 	searchFieldsLoaded: 'Search Fields loaded',
 	searchLoaded: 'Search Loaded',

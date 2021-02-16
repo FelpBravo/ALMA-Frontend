@@ -1,9 +1,13 @@
 import React from 'react';
 import IntlMessages from 'util/IntlMessages';
 import { DataTableReports } from './DataTableReports';
+import { useSelector } from 'react-redux'
+
 
 export const TableSearchReports = () => {
 
+	const { reports = {} } = useSelector( state => state.reports)
+	const { data = [], totalItems = 0 } = reports;
 
 	return (
 		<div className="row">
@@ -15,6 +19,7 @@ export const TableSearchReports = () => {
 						<h3 className="mb-0">
 							<IntlMessages id="dashboard.searchResults" />
 						</h3>
+						<p className="user-description mt-2 mr-2">Total documentos encontrados {totalItems}</p>
 						</div>
 						<div style={{color: '#FFA800'}} className="row ml-auto">		
 						</div>

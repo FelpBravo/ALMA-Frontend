@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -6,12 +6,44 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
-
 import IntlMessages from 'util/IntlMessages';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { startReportsLoading } from 'actions/reports'
+import Pagination from '@material-ui/lab/Pagination';
+import Grid from '@material-ui/core/Grid';
 
-export const DataTableReports = () => {
+
+
+const DataTableReports = () => {
+
+	const isMounted = useRef(true)
+	const history = useHistory()
+	const dispatch = useDispatch()
 	
+	const { authUser } = useSelector(state => state.reports)
+	const { reports = {}, date = {} } = useSelector(state => state.reports)
+	const { data=[], totalItems= 0 } = reports
+
+
+	const [page, setPage] = useState(0)
+
+
+	useEffect(()=>{
+		return ()=>{
+			isMounted.current = false
+		}
+	},[])
+
+	const handleChangePage = (event, page) => {
+		console.log(date);
+		console.log(date.startDate,date.endDate);
+		dispatch(startReportsLoading(authUser,date.startDate,date.endDate,page));
+
+		setPage(page);
+
+	};
+
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -41,12 +73,42 @@ export const DataTableReports = () => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
+							
+							{	data.map(({jobId,startProcessing,endProcessing,sourceFile,processedRows,errorCount},index)=>{
+								return <TableRow key={index}>
+									<TableCell>{jobId}</TableCell>
+									<TableCell>{new Date(startProcessing).toLocaleString()}</TableCell>
+									<TableCell>{new Date(endProcessing).toLocaleString()}</TableCell>
+									<TableCell>{sourceFile}</TableCell>
+									<TableCell>{processedRows}</TableCell>
+									<TableCell>{errorCount}</TableCell>
+								</TableRow>
+
+								})
+
+							}
 						
 						</TableBody>
 					</Table>
+					<Grid className="mt-3 mb-3 mr-3"
+									container
+									justify="flex-end"
+									alignItems="flex-end"
+
+								>
+									<Pagination 
+									style={{color: '#369bff'}}
+									count={Math.ceil(totalItems/10)} 
+									color="primary" 
+									shape="rounded" 
+									total={totalItems} 
+									onChange={handleChangePage}/>
+								</Grid>
 				</TableContainer>
 
 			</div>
 		</div>
 	)
 }
+
+export { DataTableReports}
