@@ -89,7 +89,6 @@ export const FormInit = () => {
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
 						<FormControl fullWidth>
-						<InputLabel htmlFor="outlined-age-native-simple">Tipo de Documento</InputLabel>
 							<NativeSelect
 							    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, marginTop: '0px' }}
 								value={documentType}

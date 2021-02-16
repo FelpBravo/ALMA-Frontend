@@ -127,11 +127,11 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 		try {
 
 			Swal.fire({
-				title: 'Cargando...',
-				text: 'Por favor espere...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
+				icon: 'success',
+				title: 'Documento cargado con exito',
+				showConfirmButton: false,
+				timer: 1500
+			  })
 
 			Swal.showLoading();
 
@@ -195,13 +195,6 @@ export const startDropFileLoading = (files) => {
 			const resp = await uploadDocument(authUser, files[0]);
 
 			Swal.close();
-
-			Swal.fire({
-				icon: 'success',
-				title: 'Documento cargado con exito',
-				showConfirmButton: false,
-				timer: 1500
-			  })
 
 			// SAVE STORE ID LOADED
 			dispatch(saveFileIdLoaded(resp.data.id));

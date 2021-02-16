@@ -147,7 +147,6 @@ const Documents = () => {
 						tags
 					)
 				);
-
 				setTimeout(() => {
 
 					history.goBack();
