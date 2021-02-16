@@ -23,6 +23,7 @@ import { Versioning } from './ui/Versioning';
 import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import { DocumentContext } from './helpers/DocumentContext';
 import { SelectTags } from './ui/SelectTags';
+import { SelectFolder } from './ui/SelectFolder';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -179,6 +180,17 @@ const Documents = () => {
 						<FormInit />
 					}
 
+                    {
+						document.length > 0
+						&&
+                    <div className="row">
+						<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
+						<SelectFolder/>
+						</div>
+					</div>
+					}
+
+
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
 							<Divider />
@@ -191,6 +203,7 @@ const Documents = () => {
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+						
 							<Divider />
 						</div>
 					</div>
