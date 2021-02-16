@@ -117,8 +117,7 @@ export const detailDocumentSetValueField = (sectionId, name, value) => {
 	}
 };
 
-/// aca es el tema
-
+///
 export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 	return async (dispatch, getState) => {
 
@@ -208,6 +207,9 @@ export const startDropFileLoading = (files) => {
 			dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
 
 		} catch (error) {
+
+			dispatch(documentsClear())
+
 			console.log(error);
 
 			Swal.close();

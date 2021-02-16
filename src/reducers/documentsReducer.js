@@ -161,6 +161,7 @@ export const documentsReducer = (state = initialState, action) => {
 			}
 
 		case types.docsClear:
+			console.log("Prueba");
 			return {
 				...state,
 				detailDocumentType: {
@@ -170,8 +171,8 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				folderName: '',
 				thumbnail: '',
-				acceptedFiles: '',
-				thumbnailGenerated: true,
+				acceptedFiles: [],
+				thumbnailGenerated: false,
 				//tags: [],
 				tagsSelected: [],
 				versioningType: '',
