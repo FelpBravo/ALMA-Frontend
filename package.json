@@ -97,6 +97,7 @@
 		"redux-thunk": "^2.3.0",
 		"save": "^2.4.0",
 		"slick-carousel": "^1.8.1",
+		"styled-components": "^5.2.1",
 		"sweetalert2": "^10.13.0",
 		"typeface-roboto": "^0.0.75",
 		"url-search-params": "^1.1.0"
