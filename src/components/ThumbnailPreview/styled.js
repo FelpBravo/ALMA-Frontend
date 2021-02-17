@@ -6,13 +6,13 @@ export const ThumbnailPreviewWrapper = styled.div`
   padding: 15px;
   position: relative;
   min-height: 200px;
-  max-width: 250px;
+  max-width: 225px;
 `;
 
 export const ThumbnailPreviewImage = styled.img`
   display: block;
-  margin: 0 auto;
-  width: 80%;
+  margin: 20px 0px 0px 32px;
+  width: 65%;
 `;
 
 export const ThumbnailPreviewNameWrapper = styled.div`
@@ -29,17 +29,21 @@ export const ThumbnailPreviewNameWrapper = styled.div`
 
 export const ThumbnailPreviewName = styled.span`
  color: #e9ecef;
-
+ font-family: "Poppins", sans-serif;
+ font-size: 12px;
+ font-weight: 400;
  `;
 
-export const ThumbnailPreviewIconsHolder = styled.div``;
+export const ThumbnailPreviewIconsHolder = styled.div`
+float: right
+`;
 
 export const ThumbnailPreviewIcon = styled.div`
   border-radius: 8px;
-  padding: 4px;
+  padding: 3px;
   height: 30px;
   width: 30px;
-  margin: 4px 0;
+  margin: 0px;
   cursor: pointer;
   background: #3599fe;
 `;

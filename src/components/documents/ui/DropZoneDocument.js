@@ -128,7 +128,7 @@ export const DropZoneDocument = () => {
 						<ThumbnailPreview
 						thumbnail={thumbnail}
 						remove={() => setShouldDisplayThumbnail(false)}
-                        name='asdas'
+                        name='Documento'
 						/>
 						<div></div>
 				</Paper>
