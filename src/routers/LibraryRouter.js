@@ -44,8 +44,8 @@ const LibraryRouter = () => {
 					/>
 				<Route
 
-				path="/edit"
-				component={asyncComponent(() => import('../components/documents/EditUpload'))}
+					path="/edit"
+					component={asyncComponent(() => import('../components/documents/EditUpload'))}
 				/>
 
 				<Redirect to="/dashboard" />

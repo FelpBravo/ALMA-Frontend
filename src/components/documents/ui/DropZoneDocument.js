@@ -70,10 +70,14 @@ export const DropZoneDocument = () => {
 						<section className="mt-4">
 							<div {...getRootProps({})} className="drop-down">
 								<input {...getInputProps()} />
-								<i className="fas fa-cloud-upload-alt" style={{ fontSize: 60 }}></i>
-								<span>
+								<img src={require("assets/images/upload.png")} alt="jambo" title="jambo" />
+							    <div>
 									<IntlMessages id="document.dropDocument" />
-								</span>
+								</div>
+								<div>
+								    <IntlMessages id="document.dropDocuments" />
+								</div>
+								
 								<button className="btn" type="button" onClick={open}>
 									<IntlMessages id="document.selectDocument" />
 								</button>

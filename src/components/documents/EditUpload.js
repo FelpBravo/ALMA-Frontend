@@ -183,14 +183,15 @@ const EditUpload = () => {
                     <div className="row">
                         <div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
 						<div>
-                            <h4>Directorio Actual</h4>
+                            <h5>Directorio Actual</h5>
                             <p></p>
 
                         </div>
 						</div>
 						<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
-						<Fab color="primary" aria-label="edit">
+						<Fab color="primary" style={{width: 35, height: 35}}>
                            <EditIcon
+                           style={{width: 15, height: 15}}
                            onClick={() => setOpenModal(!openModal)} 
                            value={folderName}/>
                         </Fab>
