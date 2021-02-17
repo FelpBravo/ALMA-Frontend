@@ -115,8 +115,8 @@ const DataTable = () => {
 		try {
 
 			Swal.fire({
-				title: 'Downloading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});

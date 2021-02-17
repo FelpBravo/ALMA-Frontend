@@ -186,20 +186,20 @@ const EditUpload = () => {
 					</div>
 
                     <div className="row">
-                        <div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
+                        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
 						<div>
-                           <h4>Directorio {!pathFolderName || pathFolderName === path? 'Actual' : 'Nuevo'} </h4><p>{!pathFolderName || pathFolderName === path? path : pathFolderName}</p>
+                           <h4>Directorio {!pathFolderName || pathFolderName === path? 'Actual' : 'Nuevo'} </h4><p>{!pathFolderName || pathFolderName === path? path : pathFolderName}
+						   <Fab color="primary" style={{width: 35, height: 35, marginLeft:20}}>
+                           <EditIcon
+                           style={{width: 15, height: 15}}
+                           onClick={() => setOpenModal(!openModal)} 
+                           value={folderName}/>
+                        </Fab></p>
 						
-								
-
                         </div>
 						</div>
 						<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
-						<Fab color="primary" aria-label="edit">
-                           <EditIcon
-                           onClick={() => setOpenModal(!openModal)} 
-                           value={folderName}/>
-                        </Fab>
+						
              
                         <SelectFolderDialog
                             setOpenModal={setOpenModal}
