@@ -143,7 +143,7 @@ const DataTable = () => {
 	}
 
 	const handleEdit = (id) => {
-		history.push(`/documents?document=${id}`);
+		history.push(`/edit/?document=${id}`);
 	}
 
 	const handleDelete = async (id) => {
