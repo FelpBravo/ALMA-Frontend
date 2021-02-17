@@ -28,7 +28,7 @@ export const DropZoneDocument = () => {
 		thumbnailGenerated = false,
 		fileIdLoaded = '' ,} = useSelector(state => state.documents);
 
-	const prueba = useSelector(state => state.documents);
+
 
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({
 		onDrop: (acceptedFiles) => dropFile(acceptedFiles),
@@ -36,7 +36,6 @@ export const DropZoneDocument = () => {
 		noKeyboard: true,
 	});
     const {path} = acceptedFiles
-	console.log(prueba)
 
 	useEffect(() => {
 
@@ -109,7 +108,6 @@ export const DropZoneDocument = () => {
 						thumbnail={thumbnail}
 						remove={() => setShouldDisplayThumbnail(false)}
                         name={acceptedFiles.map((file) => {
-							console.log("Prueba kasdjask");
                                         return (
                                         <>{file.path}</>
                                           

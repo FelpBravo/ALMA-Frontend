@@ -28,6 +28,7 @@ import { SelectFolder } from './ui/SelectFolder';
 import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
+import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -41,7 +42,7 @@ const EditUpload = () => {
 
 	const classes = useStyles();
 
-    const [openModal, setOpenModal] = useState(false);
+	const [openModal, setOpenModal] = useState(false);
 	const { authUser } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -49,8 +50,8 @@ const EditUpload = () => {
 	const {
 		detailDocumentType = [],
 		fileIdLoaded = '',
-		folderName = '', 
-		path = '', 
+		folderName = '',
+		path = '',
 		pathFolderName = '',
 		folderId = '',
 		versioningType = '',
@@ -62,9 +63,11 @@ const EditUpload = () => {
 
 	// ID DOCUMENTO URL
 	const { document = '' } = queryString.parse(location.search);
-	
+
 
 	const [files, setFiles] = useState(null);
+
+	const [directorio, setDirectorio] = useState(false)
 
 	useEffect(() => {
 
@@ -172,7 +175,50 @@ const EditUpload = () => {
 	const handleClear = () => {
 		dispatch(documentsClear());
 	}
-	
+
+	const clearPath = () => {
+		setDirectorio(false)
+	}
+	useEffect(() => {
+		if (pathFolderName != path && pathFolderName) {
+			setDirectorio(true)
+		}
+		else {
+			setDirectorio(false)
+		}
+
+	}, [pathFolderName, path])
+
+	const Directory = () => {
+		if (directorio) {
+			return <>
+				<div style={{display:'flex'}}>
+					<h4 style={{marginTop:10}}>Directorio Nuevo</h4>
+				</div>
+
+				<p>{pathFolderName}
+					<BackspaceSharpIcon
+						onClick={clearPath}
+						style={{ marginLeft: 20 }}
+					/>
+				</p>
+			</>
+
+		}
+		else {
+			return <><div style={{display:'flex'}}>
+				<h4 style={{marginTop:10}}>Directorio Actual</h4>
+				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 20 }}>
+					<EditIcon
+						style={{ width: 15, height: 15 }}
+						onClick={() => setOpenModal(!openModal)}
+						value={folderName} />
+				</Fab>
+			</div>
+				<p> {path} </p></>
+		}
+	}
+
 
 	return (
 		<div className="row">
@@ -185,29 +231,23 @@ const EditUpload = () => {
 						</div>
 					</div>
 
-                    <div className="row">
-                        <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-						<div>
-                           <h4>Directorio {!pathFolderName || pathFolderName === path? 'Actual' : 'Nuevo'} </h4><p>{!pathFolderName || pathFolderName === path? path : pathFolderName}
-						   <Fab color="primary" style={{width: 35, height: 35, marginLeft:20}}>
-                           <EditIcon
-                           style={{width: 15, height: 15}}
-                           onClick={() => setOpenModal(!openModal)} 
-                           value={folderName}/>
-                        </Fab></p>
-						
-                        </div>
+					<div className="row">
+						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+							<span onClick={()=>{
+								console.log(folderId);
+							}}>Prueba</span>
+							<Directory />
 						</div>
 						<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
-						
-             
-                        <SelectFolderDialog
-                            setOpenModal={setOpenModal}
-                            openModal={openModal}
-                        />
+
+
+							<SelectFolderDialog
+								setOpenModal={setOpenModal}
+								openModal={openModal}
+							/>
 						</div>
 					</div>
-				
+
 
 
 					<div className="row">
@@ -222,16 +262,16 @@ const EditUpload = () => {
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-						
+
 							<Divider />
 						</div>
 					</div>
 
 					<DetailDocumentType />
 
-					
-						<Versioning />
-			
+
+					<Versioning />
+
 
 					<SelectTags />
 
@@ -245,7 +285,7 @@ const EditUpload = () => {
 							>
 								<div className={classes.buttons}>
 									<Button
-									    style={{ border: "none", boxShadow: "none",backgroundColor:'#E1F0FF', color:'#3699FF', fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+										style={{ border: "none", boxShadow: "none", backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
 										type="button"
 										variant="contained"
 										onClick={handleClear}
@@ -254,7 +294,7 @@ const EditUpload = () => {
 									</Button>
 
 									<Button
-									style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+										style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
 										disabled={
 											detailDocumentType.length === 0 ||
 											documentId.length === 0 ||
