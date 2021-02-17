@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { types } from 'types/types';
 import { GENERAL_ERROR } from '../constants/constUtil';
 
+
 export const startDocumentsTypeLoading = (authUser) => {
 	return async (dispatch) => {
 
@@ -130,7 +131,7 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 				title: 'Documento cargado con exito',
 				showConfirmButton: false,
 				timer: 1500
-			  })
+			})
 
 			Swal.showLoading();
 
@@ -278,6 +279,7 @@ export const startDocumentByIdLoading = (fileId) => {
 			Swal.showLoading();
 
 			const resp = await getDocumentById(authUser, fileId);
+			console.log(resp);
 
 			Swal.close();
 
@@ -287,16 +289,17 @@ export const startDocumentByIdLoading = (fileId) => {
 		} catch (error) {
 			Swal.close();
 			console.log(error);
+			dispatch(documentsClear())
 		}
 
 	}
-};
+};   
 
-const documentByIdLoaded = ({ aspectGroup, fileId, folderId, tags = [] }) => {
+const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, tags = [] }) => {
 	return {
 		type: types.docsDocumentByIdLoaded,
 		payload: {
-			aspectGroup, fileId, folderId, tags,
+			aspectGroup, fileId, folderId, tags, path
 		}
 	}
 };
@@ -318,7 +321,7 @@ export const startDocumentByIdVisibility = (id) => {
 			Swal.showLoading();
 
 			const resp = await getDocumentById(authUser, id);
-		
+
 			Swal.close();
 
 			dispatch(documentVisibility(resp.data));
@@ -331,7 +334,7 @@ export const startDocumentByIdVisibility = (id) => {
 	}
 };
 
-const documentVisibility= (docs) => {
+const documentVisibility = (docs) => {
 	return {
 		type: types.docsDocumentByIdVisibility,
 		payload: docs,
@@ -368,6 +371,28 @@ export const saveVersioningType = (type) => {
 		payload: type,
 	}
 };
+
+export const getpathFolderName = (folderName) => {
+	return async (dispatch, getState) => {
+		const { historyFoldersBreadcrumbs } = getState().documents;
+		const pathselect = historyFoldersBreadcrumbs.filter(folder => folder.name != '#')
+		let path = '/'
+		pathselect.map((folder) => {
+			path = path+folder.name + '/'
+		})
+		path = path + folderName 
+		console.log(path);
+		dispatch(savepathFolderName(path))
+	}
+}
+
+export const savepathFolderName = (path) =>{
+	return {
+		type: types.pathFolderName,
+		payload: path
+	}
+}
+
 
 export const saveVersioningComments = (comments) => {
 	return {
@@ -472,6 +497,9 @@ export const startSubFoldersLoading = (folder, authUser) => {
 			}
 
 		}
+		
+
+		
 
 	}
 }
@@ -490,6 +518,7 @@ export const addHistoryFoldersBreadcrumbs = (folder) => {
 }
 
 export const setCurrentFolderBreadcrumbs = (currentFolder) => {
+	
 	return {
 		type: types.docsSaveCurrentFolderBreadcrumbs,
 		payload: currentFolder,
@@ -538,7 +567,6 @@ export const startSaveCurrentFolderBreadcrumbs = (folderId) => {
 			}));
 
 		}
-
 	}
 };
 

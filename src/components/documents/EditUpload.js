@@ -17,7 +17,8 @@ import {
 	startDocumentByIdLoading,
 	startEditDocumentLoading,
 	startSaveFormLoading,
-	startThumbnailLoading
+	startThumbnailLoading,
+	startFoldersLoading
 } from 'actions/documents';
 import { Versioning } from './ui/Versioning';
 import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil';
@@ -41,15 +42,16 @@ const EditUpload = () => {
 	const classes = useStyles();
 
     const [openModal, setOpenModal] = useState(false);
-    const { folderName = '' } = useSelector(state => state.documents);
-
+	const { authUser } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const history = useHistory();
-
 	const {
 		detailDocumentType = [],
 		fileIdLoaded = '',
+		folderName = '', 
+		path = '', 
+		pathFolderName = '',
 		folderId = '',
 		versioningType = '',
 		versioningComments = '',
@@ -75,6 +77,8 @@ const EditUpload = () => {
 		dispatch(startDocumentByIdLoading(document));
 
 		dispatch(startThumbnailLoading(document));
+
+		dispatch(startFoldersLoading(authUser))
 
 	}, [dispatch, document]);
 
@@ -168,6 +172,7 @@ const EditUpload = () => {
 	const handleClear = () => {
 		dispatch(documentsClear());
 	}
+	
 
 	return (
 		<div className="row">
@@ -183,8 +188,9 @@ const EditUpload = () => {
                     <div className="row">
                         <div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
 						<div>
-                            <h4>Directorio Actual</h4>
-                            <p></p>
+                           <h4>Directorio {!pathFolderName || pathFolderName === path? 'Actual' : 'Nuevo'} </h4><p>{!pathFolderName || pathFolderName === path? path : pathFolderName}</p>
+						
+								
 
                         </div>
 						</div>

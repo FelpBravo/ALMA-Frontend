@@ -13,6 +13,7 @@ import {
 	startSaveCurrentFolderBreadcrumbs,
 	startSubFoldersLoading,
 	documentSaveFolderName,
+	getpathFolderName,
 } from 'actions/documents';
 import SimpleBreadcrumbs from '../../ui/SimpleBreadcrumbs';
 import SkeletonApp from 'components/ui/SkeletonApp';
@@ -43,6 +44,8 @@ export const SelectFolderDialog = ({ setOpenModal, openModal }) => {
 
 		dispatch(documentSaveFolderName(folder.name));
 
+		dispatch(getpathFolderName(folder.name))
+
 		setOpenModal(!openModal);
 
 	}
@@ -54,7 +57,6 @@ export const SelectFolderDialog = ({ setOpenModal, openModal }) => {
 	}
 
 	const handleRenderItems = () => {
-		console.log(currentFolderBreadcrumbs.folders);
 		return (
 			<List>
 				{

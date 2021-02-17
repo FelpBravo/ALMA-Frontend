@@ -15,6 +15,7 @@ export const types = {
 	foldersSaveAll: 'Folders Save all folders',
 	foldersSelected: 'Folders Selected',
 	foldersRemoveAll: 'Folders Remove All',
+	pathFolderName:'Folders Name Path',
 
 	auditDataLoaded: 'Audit Data Loaded',
 	auditRemoveAll: 'Audit Remove All',
@@ -64,6 +65,7 @@ export const types = {
 	docsAddAndRemoveTag: 'Documents Add and Remove tag',
 	docsLoadingModalFolder: 'Documents Loading modal folder',
 	docsDocumentByIdVisibility: 'Documents Visibility',
+
 
 	adminFoldersLoaded: 'Admin Folders loaded',
 	adminFoldersSubFoldersLoaded: 'Admin Folders sub folders loaded',

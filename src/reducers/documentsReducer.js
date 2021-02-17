@@ -8,6 +8,8 @@ const initialState = {
 	},
 	fileIdLoaded: '',
 	folderId: '',
+	path: '',
+	pathFolderName: '',
 	folderName: '',
 	thumbnail: null,
 	thumbnailGenerated: false,
@@ -53,6 +55,8 @@ export const documentsReducer = (state = initialState, action) => {
 					aspectList: [],
 				},
 				fileIdLoaded: '',
+				path: '',
+				pathFolderName: '',
 				folderId: '',
 				folderName: '',
 				thumbnail: null,
@@ -122,6 +126,11 @@ export const documentsReducer = (state = initialState, action) => {
 				...state,
 				folderName: action.payload,
 			}
+		case types.pathFolderName:
+			return {
+				...state,
+				pathFolderName: action.payload,
+			}
 
 		case types.docsSaveFileIdLoaded:
 			return {
@@ -143,6 +152,8 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
+				path: '',
+				pathFolderName: '',
 				folderName: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
@@ -170,6 +181,8 @@ export const documentsReducer = (state = initialState, action) => {
 				fileIdLoaded: '',
 				folderId: '',
 				folderName: '',
+				path: '',
+				pathFolderName: '',
 				thumbnail: '',
 				acceptedFiles: [],
 				thumbnailGenerated: false,
@@ -193,6 +206,7 @@ export const documentsReducer = (state = initialState, action) => {
 				detailDocumentType: { ...action.payload.aspectGroup },
 				fileIdLoaded: action.payload.fileId,
 				folderId: action.payload.folderId,
+				path: action.payload.path,
 				tagsSelected: [...action.payload.tags],
 			}
 
@@ -200,7 +214,7 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				docs: action.payload,
-			}	
+			}
 
 		case types.docsTagsLoaded:
 			return {

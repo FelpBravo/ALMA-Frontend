@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { TextField } from '@material-ui/core';
+import React, { useState, Text} from 'react';
+import { TextField,  } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 import { SelectFolderDialog } from './SelectFolderDialog';
@@ -15,6 +15,7 @@ export const SelectFolder = () => {
 
 	return (
 		<>
+			
 			<TextField
 			    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
 				className="modal-select-folder"
@@ -26,6 +27,7 @@ export const SelectFolder = () => {
 				fullWidth
 				size="small"
 			/>
+
 
 			<SelectFolderDialog
 				setOpenModal={setOpenModal}
