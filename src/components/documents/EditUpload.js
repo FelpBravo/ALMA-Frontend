@@ -24,6 +24,9 @@ import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil
 import { DocumentContext } from './helpers/DocumentContext';
 import { SelectTags } from './ui/SelectTags';
 import { SelectFolder } from './ui/SelectFolder';
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
+import { SelectFolderDialog } from './ui/SelectFolderDialog';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -36,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
 const EditUpload = () => {
 
 	const classes = useStyles();
+
+    const [openModal, setOpenModal] = useState(false);
+    const { folderName = '' } = useSelector(state => state.documents);
 
 	const dispatch = useDispatch();
 	const location = useLocation();
@@ -74,8 +80,8 @@ const EditUpload = () => {
 
 	const handleSaveForm = async () => {
 		const resp = await Swal.fire({
-			title: 'Carga de documento',
-			text: "¿Está seguro de cargar este archivo?",
+			title: 'Edición documento',
+			text: "¿Está seguro de editar este archivo?",
 			icon: "question",
 			showCancelButton: true,
 			focusConfirm: true,
@@ -173,10 +179,26 @@ const EditUpload = () => {
 							<TitleCard message="Edición Documento" />
 						</div>
 					</div>
-                    
+
                     <div className="row">
+                        <div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
+						<div>
+                            <h4>Directorio Actual</h4>
+                            <p></p>
+
+                        </div>
+						</div>
 						<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
-						<SelectFolder/>
+						<Fab color="primary" aria-label="edit">
+                           <EditIcon
+                           onClick={() => setOpenModal(!openModal)} 
+                           value={folderName}/>
+                        </Fab>
+             
+                        <SelectFolderDialog
+                            setOpenModal={setOpenModal}
+                            openModal={openModal}
+                        />
 						</div>
 					</div>
 				
