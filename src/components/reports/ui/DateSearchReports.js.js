@@ -49,7 +49,7 @@ const DateSearchReports = () => {
 	const handleSearchReports = (e) => {
 		e.preventDefault();
 		dispatch(startReportsLoading(authUser, reportsDate.startDate, reportsDate.endDate, 1))
-		history.push(`/reports`);
+		history.push(`/bulk`);
 	}
 
 

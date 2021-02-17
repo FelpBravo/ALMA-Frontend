@@ -47,7 +47,11 @@ const LibraryRouter = () => {
 					path="/edit"
 					component={asyncComponent(() => import('../components/documents/EditUpload'))}
 				/>
+                <Route
 
+					path="/bulk"
+					component={asyncComponent(() => import('../components/reports/ui/TableSearchReports'))}
+				/>
 				<Redirect to="/dashboard" />
 
 			</Switch>
