@@ -198,6 +198,7 @@ const EditUpload = () => {
 
 				<p>{pathFolderName}
 					<BackspaceSharpIcon
+					    color="primary"
 						onClick={clearPath}
 						style={{ marginLeft: 20 }}
 					/>
@@ -208,7 +209,7 @@ const EditUpload = () => {
 		else {
 			return <><div style={{display:'flex'}}>
 				<h4 style={{marginTop:10}}>Directorio Actual</h4>
-				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 20 }}>
+				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 70 }}>
 					<EditIcon
 						style={{ width: 15, height: 15 }}
 						onClick={() => setOpenModal(!openModal)}

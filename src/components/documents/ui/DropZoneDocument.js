@@ -125,7 +125,7 @@ export const DropZoneDocument = () => {
 		            <Paper style={{ padding: 30 }}>
 						<ThumbnailPreview
 						thumbnail={thumbnail}
-						remove={() => setShouldDisplayThumbnail(false)}
+						remove={() => setShouldDisplayThumbnail(true)}
                         name='Documento'
 						/>
 						<div></div>
