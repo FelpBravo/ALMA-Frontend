@@ -244,6 +244,7 @@ export const startThumbnailLoading = (fileId) => {
 
 		} catch (error) {
 			console.log(error);
+			dispatch(documentsClear())
 		}
 
 	}
@@ -295,11 +296,11 @@ export const startDocumentByIdLoading = (fileId) => {
 	}
 };   
 
-const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, tags = [] }) => {
+const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [] }) => {
 	return {
 		type: types.docsDocumentByIdLoaded,
 		payload: {
-			aspectGroup, fileId, folderId, tags, path
+			aspectGroup, fileId, folderId, tags, path, name
 		}
 	}
 };
@@ -329,6 +330,7 @@ export const startDocumentByIdVisibility = (id) => {
 		} catch (error) {
 			Swal.close();
 			console.log(error);
+			dispatch(documentsClear())
 		}
 
 	}
@@ -381,7 +383,6 @@ export const getpathFolderName = (folderName) => {
 			path = path+folder.name + '/'
 		})
 		path = path + folderName 
-		console.log(path);
 		dispatch(savepathFolderName(path))
 	}
 }

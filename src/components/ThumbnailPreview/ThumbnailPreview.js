@@ -12,9 +12,11 @@ const ThumbnailPreview = ({ thumbnail, name, preview, remove}) => {
   return (
     <ThumbnailPreviewWrapper>
       <ThumbnailPreviewIconsHolder>
+        {remove &&
         <ThumbnailPreviewIcon onClick={() => remove()}>
           <Delete style={{ color: "#ffffff" }} />
         </ThumbnailPreviewIcon>
+        }
       </ThumbnailPreviewIconsHolder>
       <ThumbnailPreviewImage src={thumbnail} />
       {name && (

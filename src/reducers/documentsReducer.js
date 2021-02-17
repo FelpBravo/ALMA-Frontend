@@ -9,6 +9,7 @@ const initialState = {
 	fileIdLoaded: '',
 	folderId: '',
 	path: '',
+	name:'',
 	pathFolderName: '',
 	folderName: '',
 	thumbnail: null,
@@ -59,6 +60,7 @@ export const documentsReducer = (state = initialState, action) => {
 				pathFolderName: '',
 				folderId: '',
 				folderName: '',
+				name:'',
 				thumbnail: null,
 				thumbnailGenerated: false,
 				tags: [],
@@ -153,6 +155,7 @@ export const documentsReducer = (state = initialState, action) => {
 				fileIdLoaded: '',
 				folderId: '',
 				path: '',
+				name:'',
 				pathFolderName: '',
 				folderName: '',
 				thumbnail: null,
@@ -172,7 +175,6 @@ export const documentsReducer = (state = initialState, action) => {
 			}
 
 		case types.docsClear:
-			console.log("Prueba");
 			return {
 				...state,
 				detailDocumentType: {
@@ -182,8 +184,9 @@ export const documentsReducer = (state = initialState, action) => {
 				folderId: '',
 				folderName: '',
 				path: '',
+				name:'',
 				pathFolderName: '',
-				thumbnail: '',
+				thumbnail: null,
 				acceptedFiles: [],
 				thumbnailGenerated: false,
 				//tags: [],
@@ -207,6 +210,7 @@ export const documentsReducer = (state = initialState, action) => {
 				fileIdLoaded: action.payload.fileId,
 				folderId: action.payload.folderId,
 				path: action.payload.path,
+				name: action.payload.name,
 				tagsSelected: [...action.payload.tags],
 			}
 

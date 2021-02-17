@@ -26,6 +26,7 @@ export const DropZoneDocument = () => {
 
 	const { thumbnail = null,
 		thumbnailGenerated = false,
+		name = '',
 		fileIdLoaded = '' ,} = useSelector(state => state.documents);
 
 
@@ -69,6 +70,7 @@ export const DropZoneDocument = () => {
 
 	return (
 		<div className="row">
+			<span onClick={()=>{console.log(name);}}>Prueba</span>
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<div className="row">
@@ -121,12 +123,11 @@ export const DropZoneDocument = () => {
 					)}
 				</Paper>
 				}
-					{thumbnail &&
+					{acceptedFiles.length === 0 && thumbnail && shouldDisplayThumbnail &&
 		            <Paper style={{ padding: 30 }}>
 						<ThumbnailPreview
 						thumbnail={thumbnail}
-						remove={() => setShouldDisplayThumbnail(true)}
-                        name='Documento'
+                        name={name.slice(0,50)+'...pdf'}
 						/>
 						<div></div>
 				</Paper>

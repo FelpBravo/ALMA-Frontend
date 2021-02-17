@@ -52,6 +52,7 @@ const EditUpload = () => {
 		fileIdLoaded = '',
 		folderName = '',
 		path = '',
+		name = '',
 		pathFolderName = '',
 		folderId = '',
 		versioningType = '',
@@ -192,7 +193,7 @@ const EditUpload = () => {
 	const Directory = () => {
 		if (directorio) {
 			return <>
-				<div style={{display:'flex'}}>
+				<div style={{display:'flex', height:38}}>
 					<h4 style={{marginTop:10}}>Directorio Nuevo</h4>
 				</div>
 
@@ -207,7 +208,7 @@ const EditUpload = () => {
 
 		}
 		else {
-			return <><div style={{display:'flex'}}>
+			return <><div style={{display:'flex', height:38}}>
 				<h4 style={{marginTop:10}}>Directorio Actual</h4>
 				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 70 }}>
 					<EditIcon
