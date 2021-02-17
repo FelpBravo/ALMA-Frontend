@@ -1,17 +1,22 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import IntlMessages from 'util/IntlMessages';
-import { startDropFileLoading, startThumbnailLoading } from 'actions/documents';
+import { startDocumentByIdVisibility, startDropFileLoading, startThumbnailLoading } from 'actions/documents';
 import { DocumentContext } from '../helpers/DocumentContext';
+import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
+import { Paper } from '@material-ui/core';
+import { openModalVisibility } from 'actions/search';
 
 export const DropZoneDocument = () => {
 
 	const dispatch = useDispatch();
 	const location = useLocation();
+
+	const [shouldDisplayThumbnail, setShouldDisplayThumbnail] = useState(true);
 
 	// Contexto provider
 	const { setFiles } = useContext(DocumentContext);
@@ -28,6 +33,8 @@ export const DropZoneDocument = () => {
 		noClick: true,
 		noKeyboard: true,
 	});
+    const {path} = acceptedFiles
+	console.log("soyyy", path)
 
 	useEffect(() => {
 
@@ -94,41 +101,25 @@ export const DropZoneDocument = () => {
 					&&
 					acceptedFiles.length > 0
 					&&
-					<div className="row">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-							<h4>
-								<IntlMessages id="document.documentsLoad" />
-							</h4>
-							<ul>
-								{
-									acceptedFiles.map((file) => {
-										return (
-											<li key={file.path}>
-												{file.path} - {file.size} bytes
-											</li>
-										)
-									})
-								}
-							</ul>
-						</div>
-					</div>
+		            <Paper style={{ padding: 30 }}>
+					{shouldDisplayThumbnail && thumbnail ? (
+						<ThumbnailPreview
+						thumbnail={thumbnail}
+						remove={() => setShouldDisplayThumbnail(false)}
+                        name={acceptedFiles.map((file) => {
+                                        return (
+                                        <>{file.path}</>
+                                          
+                                        )
+                                    })
+                                }
+
+						/>
+					) : (
+						<div></div>
+					)}
+				</Paper>
 				}
-
-				<div className="row">
-					<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-						{
-							thumbnail
-								?
-								<img
-									alt="Not available"
-									className=""
-									src={thumbnail} />
-								:
-								<div></div>
-						}
-					</div>
-				</div>
-
 			</div>
 		</div>
 	)
