@@ -69,7 +69,6 @@ const SideBarContent = () => {
 
 	useEffect(() => {
 		if (authorities) {
-			console.log(authorities);
 
 			const ROLE_FOLDER_VIEW = authorities.find(rol => rol === 'ROLE_FOLDER_VIEW')
 		

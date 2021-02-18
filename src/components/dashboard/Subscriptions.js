@@ -9,7 +9,6 @@ export const Subscriptions = () => {
 	const isMounted = useRef(true);
 
 	const { audits } = useSelector(state => state.audit);
-	console.log(audits);
 	const subscribed_document = audits.subscribed_document
 
 	const [documents, setDocuments] = useState([]);

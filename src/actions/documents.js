@@ -263,7 +263,7 @@ export const documentsClear = () => {
 	}
 };
 
-export const startDocumentByIdLoading = (fileId) => {
+export const startDocumentByIdLoading =  (fileId) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
@@ -280,7 +280,6 @@ export const startDocumentByIdLoading = (fileId) => {
 			Swal.showLoading();
 
 			const resp = await getDocumentById(authUser, fileId);
-			console.log(resp);
 
 			Swal.close();
 
@@ -373,6 +372,18 @@ export const saveVersioningType = (type) => {
 		payload: type,
 	}
 };
+export const clearFolderIdOrigin = (folderId) => {
+	return async (dispatch) => {
+		dispatch(saveclearFolderIdOrigin(folderId))
+	}
+}
+
+export const saveclearFolderIdOrigin = (folderId) =>{
+	return {
+		type: types.clearFolderIdOrigin,
+		payload: folderId
+	}
+}
 
 export const getpathFolderName = (folderName) => {
 	return async (dispatch, getState) => {
@@ -415,6 +426,7 @@ export const clearVersioningComments = () => {
 };
 
 export const startEditDocumentLoading = (
+	folderId,
 	files,
 	fileId,
 	versioningType,
@@ -449,7 +461,7 @@ export const startEditDocumentLoading = (
 
 			}
 
-			await editForm(authUser, fileId, aspectGroup, tags);
+			await editForm(authUser,folderId, fileId, aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 

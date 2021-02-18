@@ -36,8 +36,6 @@ const DataTableReports = () => {
 	},[])
 
 	const handleChangePage = (event, page) => {
-		console.log(date);
-		console.log(date.startDate,date.endDate);
 		dispatch(startReportsLoading(authUser,date.startDate,date.endDate,page));
 
 		setPage(page);

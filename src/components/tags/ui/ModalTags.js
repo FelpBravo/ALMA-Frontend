@@ -107,7 +107,6 @@ const ModalTags = () => {
   }
 
   const handleOnChangeColor = ({ hex }) => {
-    console.log("Color: "+ hex);
     setColor(hex);
 
   }

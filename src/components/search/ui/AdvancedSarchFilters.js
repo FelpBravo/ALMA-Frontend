@@ -14,7 +14,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
 
-		//console.log(name, value);
+
 		dispatch(searchSetValueFilter(name, value));
 
 	}

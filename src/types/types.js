@@ -16,6 +16,7 @@ export const types = {
 	foldersSelected: 'Folders Selected',
 	foldersRemoveAll: 'Folders Remove All',
 	pathFolderName:'Folders Name Path',
+	clearFolderIdOrigin:'Folders Clear folderId',
 
 	auditDataLoaded: 'Audit Data Loaded',
 	auditRemoveAll: 'Audit Remove All',

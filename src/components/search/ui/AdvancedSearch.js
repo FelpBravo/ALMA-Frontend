@@ -63,7 +63,6 @@ export const AdvancedSearch = () => {
 	}
 
 	const handleAdvanceSearch = () => {
-		//console.log(filters);
 
 		const exists = filters.filter(filter => filter.value);
 
@@ -85,9 +84,7 @@ export const AdvancedSearch = () => {
 	}
 
 	const handleAdvanceSearchClear = () => {
-		console.log(filters);
 		dispatch(searchClearAllFilters());
-		console.log(filters);
 	}
 
 	const handlePrintFields = () => {

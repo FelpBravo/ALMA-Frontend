@@ -166,7 +166,6 @@ const Tags = () => {
 														tagslist.length > 0
 														&&
 														tagslist.map((item) => {
-															console.log(item)
 															return<TableRow hover key={item.id}>
 														<TableCell
 															style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
