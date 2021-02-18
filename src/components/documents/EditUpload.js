@@ -30,6 +30,7 @@ import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -198,6 +199,7 @@ const EditUpload = () => {
 
 				<p>{pathFolderName}
 					<BackspaceSharpIcon
+					    color="primary"
 						onClick={clearPath}
 						style={{ marginLeft: 20 }}
 					/>
@@ -206,9 +208,9 @@ const EditUpload = () => {
 
 		}
 		else {
-			return <><div style={{ display: 'flex', height: 38 }}>
-				<h4 style={{ marginTop: 10 }}>Directorio Actual</h4>
-				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 20 }}>
+			return <><div style={{display:'flex', height:38}}>
+				<h4 style={{marginTop:10}}>Directorio Actual</h4>
+				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 70 }}>
 					<EditIcon
 						style={{ width: 15, height: 15 }}
 						onClick={() => setOpenModal(!openModal)}
@@ -282,7 +284,7 @@ const EditUpload = () => {
 							>
 								<div className={classes.buttons}>
 									<Button
-										style={{ border: "none", boxShadow: "none", backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+										style={{ border: "none", boxShadow: "none", backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600 }}
 										type="button"
 										variant="contained"
 										onClick={handleClear}
@@ -291,7 +293,7 @@ const EditUpload = () => {
 									</Button>
 
 									<Button
-										style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+										style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 600 }}
 										disabled={
 											detailDocumentType.length === 0 ||
 											documentId.length === 0 ||
@@ -313,7 +315,7 @@ const EditUpload = () => {
 										color="primary"
 										onClick={handleSaveForm}
 									>
-										<IntlMessages id="document.loadDocuments.load" />
+										<IntlMessages id="document.loadDocuments.edit" />
 									</Button>
 								</div>
 							</Grid>

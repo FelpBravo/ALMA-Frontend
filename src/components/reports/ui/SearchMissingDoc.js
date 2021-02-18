@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DateSearchReports = () => {
+const SearchMissingDoc = () => {
 
 	const classes = useStyles()
 	const dispatch = useDispatch()
@@ -57,48 +57,65 @@ const DateSearchReports = () => {
 
 	return (
              <div>
-							<div className="jr-card-header d-flex align-items-center">
-								<h3 className="mb-0">
-									<IntlMessages id="reports.bulk.load" />
-								</h3>
-							</div>
-							<Grid item xs={12}>
+			    <div className="jr-card-header d-flex align-items-center">
+					<h3 className="mb-0">
+						<IntlMessages id="reports.missing.documents"/>
+					</h3>
+				</div>
 
-								<Grid container>
-									<Grid item xs={3}>
-										<TextField
-											label="Desde"
-											variant="outlined"
-											fullWidth
-											type="date"
-											//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
-											value={reportsDate.startDate || ''}
-											size="small"
-											InputLabelProps={{
+			    <Grid item xs={12}>
+
+					<Grid container spacing={3}>
+                        <Grid item xs={3}>
+                        <TextField
+								label="Nombre/Rut cliente"
+								variant="outlined"
+								fullWidth
+								//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
+								//value={reportsDate.startDate || ''}
+								size="small"
+								InputLabelProps={{
 												shrink: true,
 											}
 											}
-											onChange={event => setReportsDate({ startDate: event.target.value, endDate: reportsDate.endDate })}
-										/>
-									</Grid>
-									<Grid className="ml-3" item xs={3}>
-										<TextField
-											label="Hasta"
-											variant="outlined"
-											fullWidth
-											type="date"
-											value={reportsDate.endDate || ''}
-											size="small"
-											InputLabelProps={{
+								//onChange={event => setReportsDate({ startDate: event.target.value, endDate: reportsDate.endDate })}
+							/>
+
+                        </Grid>
+						<Grid item xs={3}>
+							<TextField
+								label="Desde"
+								variant="outlined"
+								fullWidth
+								type="date"
+								//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
+								value={reportsDate.startDate || ''}
+								size="small"
+								InputLabelProps={{
 												shrink: true,
 											}
 											}
-											onChange={event => setReportsDate({ startDate: reportsDate.startDate, endDate: event.target.value })}
-										/>
-									</Grid>
-									<br />
-									<span className="text-danger text-error">{messageError}</span>
-								</Grid>
+								onChange={event => setReportsDate({ startDate: event.target.value, endDate: reportsDate.endDate })}
+							/>
+						</Grid>
+						<Grid item xs={3}>
+							<TextField
+								label="Hasta"
+								variant="outlined"
+								fullWidth
+								type="date"
+								value={reportsDate.endDate || ''}
+								size="small"
+								InputLabelProps={{
+												shrink: true,
+											}
+											}
+								onChange={event => setReportsDate({ startDate: reportsDate.startDate, endDate: event.target.value })}
+							/>
+						</Grid>
+						<br />
+						<span className="text-danger text-error">{messageError}</span>
+						</Grid>
 
 								
 
@@ -106,6 +123,7 @@ const DateSearchReports = () => {
 									container
 									justify="flex-end"
 									alignItems="flex-end"
+                                    className="mt-3"
 								>
 									<div className={classes.buttons}>
 										<Button
@@ -145,4 +163,4 @@ const DateSearchReports = () => {
 	)
 }
 
-export default DateSearchReports;
+export default SearchMissingDoc;
