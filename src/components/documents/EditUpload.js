@@ -284,7 +284,7 @@ const EditUpload = () => {
 							>
 								<div className={classes.buttons}>
 									<Button
-										style={{ border: "none", boxShadow: "none", backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+										style={{ border: "none", boxShadow: "none", backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600 }}
 										type="button"
 										variant="contained"
 										onClick={handleClear}
@@ -293,7 +293,7 @@ const EditUpload = () => {
 									</Button>
 
 									<Button
-										style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+										style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 600 }}
 										disabled={
 											detailDocumentType.length === 0 ||
 											documentId.length === 0 ||
@@ -315,7 +315,7 @@ const EditUpload = () => {
 										color="primary"
 										onClick={handleSaveForm}
 									>
-										<IntlMessages id="document.loadDocuments.load" />
+										<IntlMessages id="document.loadDocuments.edit" />
 									</Button>
 								</div>
 							</Grid>

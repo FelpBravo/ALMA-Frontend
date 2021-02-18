@@ -603,6 +603,7 @@
 	"document.loadDocuments.typeDoc": "Tipo de documento",
 	"document.loadDocuments.folders": "Carpetas",
 	"document.loadDocuments.load": "Cargar",
+	"document.loadDocuments.edit": "Editar",
 	"document.selectDocument": "Seleccionar documentos",
 	"document.dropDocument": "Arrasta los documentos aquí ",
 	"document.dropDocuments": "o",
