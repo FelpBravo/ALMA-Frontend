@@ -25,6 +25,7 @@ export const types = {
 	uiAuditFinishLoader: 'UI Audit finish loading',
 
 	reportsDataLoaded: 'Reports Data Loaded',
+	missingDataLoaded: 'Reports Missing Loaded',
 	reportsRemoveAll:'Reports Remove All',
 
 	searchFieldsLoaded: 'Search Fields loaded',

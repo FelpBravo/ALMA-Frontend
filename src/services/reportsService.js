@@ -1,16 +1,25 @@
-import { axiosInstanceReports } from '../config/axios-instance';
+import { axiosInstance, axiosInstanceReports } from '../config/axios-instance';
 
 const getReports = (authUser, startDate, endDate, page, maxItems = 5) => {
-    console.log({page:page, maxItems:maxItems, startDate:startDate, endDate:endDate});
-    return axiosInstanceReports.post('/statistics', { page:page, maxItems:maxItems, startDate:startDate, endDate:endDate },{
+    return axiosInstanceReports.post('/statistics', { page, maxItems, startDate, endDate },{
         headers: { 'Content-Type': 'application/json' }
     }).catch((e)=>{
         console.log(e);
     })
-
-
 }
 
+const getMissing = (authUser,name , startDate, endDate, page, maxItems = 5) => {
+    return axiosInstance.post('/audits/missing-documents', { name,page, maxItems, startDate, endDate },{
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	}).catch((e)=>{
+        console.log(e);
+    })
+}
+
+
 export {
-    getReports
+    getReports,
+    getMissing
 }

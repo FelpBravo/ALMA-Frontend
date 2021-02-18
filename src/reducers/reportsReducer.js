@@ -2,15 +2,17 @@ import { types } from 'types/types';
 
 const initialState = {
 	reports: {
-		data:[]
+		data: []
 	},
 	missing: {
-		data:[]
+		data: []
 	},
-	date:{
+	missingName: '',
+	date: {
 		startDate: '',
-		endDate:''
-	}
+		endDate: ''
+	},
+
 }
 
 export const reportsReducer = (state = initialState, action) => {
@@ -22,11 +24,24 @@ export const reportsReducer = (state = initialState, action) => {
 				reports: action.payload.reports,
 				date: action.payload.date
 			}
+		case types.missingDataLoaded:
+			return {
+				...state,
+				missing: action.payload.missing,
+				date: action.payload.date,
+				missingName: action.payload.missingName
+			}
 		case types.reportsRemoveAll:
-				return {
-					reports: {},
-					missing: {}
-				}
+			return {
+				reports: {},
+				missing: {},
+				missingName: '',
+				date: {
+					startDate: '',
+					endDate: ''
+				},
+
+			}
 
 		default:
 			return state;

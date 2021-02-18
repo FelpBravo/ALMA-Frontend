@@ -21,7 +21,7 @@ const DataTableReports = () => {
 	const history = useHistory()
 	const dispatch = useDispatch()
 	
-	const { authUser } = useSelector(state => state.reports)
+	const { authUser } = useSelector(state => state.auth)
 	const { reports = {}, date = {} } = useSelector(state => state.reports)
 	const { data=[], totalItems= 0 } = reports
 
