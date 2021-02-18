@@ -1,7 +1,7 @@
 import React from 'react';
 import IntlMessages from 'util/IntlMessages';
-import { DataTableReports } from './DataTableReports';
 import { useSelector } from 'react-redux'
+import { DataTableMissing } from './DataTableMissing';
 
 
 export const TableSearchMissing = () => {
@@ -25,7 +25,7 @@ export const TableSearchMissing = () => {
 							</div>
 						</div>
 					
-					<DataTableReports/>
+					<DataTableMissing/>
 			
 					</div>
 				</div>

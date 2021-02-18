@@ -228,7 +228,9 @@ const Documents = () => {
 							>
 								<div className={classes.buttons}>
 									<Button
-									    style={{ border: "none", boxShadow: "none",backgroundColor:'#E1F0FF', color:'#3699FF', fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+									    style={{
+										backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+										boxShadow: "none", height: '45px', width: '120px'}}
 										type="button"
 										variant="contained"
 										onClick={handleClear}
@@ -237,7 +239,10 @@ const Documents = () => {
 									</Button>
 
 									<Button
-									style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 600 }}
+									    style={{
+										    fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+										    boxShadow: "none", height: '45px', width: '120px'
+							            }}
 										disabled={
 											detailDocumentType.length === 0 ||
 											documentId.length === 0 ||

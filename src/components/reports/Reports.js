@@ -103,8 +103,8 @@ const Reports = () => {
 									textColor="primary"
 									centered
 								>
-									<Tab label="Carga Masiva" {...a11yProps(0)} />
-									<Tab label="Documentos Faltantes" {...a11yProps(1)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500}} label="Carga Masiva" {...a11yProps(0)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500}}label="Documentos Faltantes" {...a11yProps(1)} />
 								</Tabs>
 								<TabPanel value={value} index={0}>
 									<SearchReports />

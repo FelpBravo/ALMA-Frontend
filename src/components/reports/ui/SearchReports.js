@@ -131,7 +131,7 @@ const SearchReports = () => {
 									color="primary"
 									onClick={handleSearchReports}
 								>
-									<IntlMessages id="Generar" />
+									<IntlMessages id="reports.search" />
 								</Button>
 							</div>
 
