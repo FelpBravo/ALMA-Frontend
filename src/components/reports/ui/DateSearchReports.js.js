@@ -57,87 +57,84 @@ const DateSearchReports = () => {
 
 	return (
              <div>
-							<div className="jr-card-header d-flex align-items-center">
-								<h3 className="mb-0">
-									<IntlMessages id="reports.bulk.load" />
-								</h3>
-							</div>
-							<Grid item xs={12}>
+				<div className="jr-card-header d-flex align-items-center">
+					<h3 className="mb-0">
+						<IntlMessages id="reports.bulk.load" />
+					</h3>
+				</div>
+				<Grid item xs={12}>
 
-								<Grid container>
-									<Grid item xs={3}>
-										<TextField
-											label="Desde"
-											variant="outlined"
-											fullWidth
-											type="date"
-											//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
-											value={reportsDate.startDate || ''}
-											size="small"
-											InputLabelProps={{
+					<Grid container>
+						<Grid item xs={3}>
+							<TextField
+								label="Desde"
+								variant="outlined"
+								fullWidth
+								type="date"
+								//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
+								value={reportsDate.startDate || ''}
+								size="small"
+								InputLabelProps={{
 												shrink: true,
 											}
 											}
-											onChange={event => setReportsDate({ startDate: event.target.value, endDate: reportsDate.endDate })}
-										/>
-									</Grid>
-									<Grid className="ml-3" item xs={3}>
-										<TextField
-											label="Hasta"
-											variant="outlined"
-											fullWidth
-											type="date"
-											value={reportsDate.endDate || ''}
-											size="small"
-											InputLabelProps={{
+								onChange={event => setReportsDate({ startDate: event.target.value, endDate: reportsDate.endDate })}
+							/>
+						</Grid>
+						<Grid className="ml-3" item xs={3}>
+							<TextField
+								label="Hasta"
+								variant="outlined"
+								fullWidth
+								type="date"
+								value={reportsDate.endDate || ''}
+								size="small"
+								InputLabelProps={{
 												shrink: true,
 											}
 											}
-											onChange={event => setReportsDate({ startDate: reportsDate.startDate, endDate: event.target.value })}
-										/>
-									</Grid>
-									<br />
-									<span className="text-danger text-error">{messageError}</span>
-								</Grid>
+								onChange={event => setReportsDate({ startDate: reportsDate.startDate, endDate: event.target.value })}
+							/>
+						</Grid>
+							<br />
+								<span className="text-danger text-error">{messageError}</span>
+					</Grid>
 
-								
-
-								<Grid
-									container
-									justify="flex-end"
-									alignItems="flex-end"
+						<Grid
+							container
+							justify="flex-end"
+							alignItems="flex-end"
+						>
+							<div className={classes.buttons}>
+								<Button
+									style={{
+										backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+										boxShadow: "none", height: '45px', width: '120px'}}
+										type="button"
+										variant="contained"
+										onClick={handleAdvanceSearchClear}
 								>
-									<div className={classes.buttons}>
-										<Button
-											style={{
-												backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
-												boxShadow: "none", height: '45px', width: '120px'
-											}}
-											type="button"
-											variant="contained"
-											onClick={handleAdvanceSearchClear}
-										>
-											<IntlMessages id="dashboard.advancedSearchClear" />
-										</Button>
+								<IntlMessages id="dashboard.advancedSearchClear" />
+								</Button>
 
-										<Button
-											style={{
+								<Button
+									style={{
 												fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
 												boxShadow: "none", height: '45px', width: '120px'
-											}}
-											disabled={disabledButton}
-											type="submit"
-											variant="contained"
-											color="primary"
-											onClick={handleSearchReports}
-										>
-											<IntlMessages id="Generar" />
-										</Button>
-									</div>
+									}}
+									disabled={disabledButton}
+									type="submit"
+									variant="contained"
+									color="primary"
+									onClick={handleSearchReports}
+								>
+									<IntlMessages id="Generar" />
+								</Button>
+							</div>
 
-								</Grid>
-							</Grid>
-						</div>
+						</Grid>
+					</Grid>
+				</div>
 
 
 					
