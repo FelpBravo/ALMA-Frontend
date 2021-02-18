@@ -27,7 +27,7 @@ export const DropZoneDocument = () => {
 	const { thumbnail = null,
 		thumbnailGenerated = false,
 		name = '',
-		fileIdLoaded = '' ,} = useSelector(state => state.documents);
+		fileIdLoaded = '', } = useSelector(state => state.documents);
 
 
 
@@ -36,7 +36,7 @@ export const DropZoneDocument = () => {
 		noClick: true,
 		noKeyboard: true,
 	});
-    const {path} = acceptedFiles
+	const { path } = acceptedFiles
 
 	useEffect(() => {
 
@@ -70,7 +70,6 @@ export const DropZoneDocument = () => {
 
 	return (
 		<div className="row">
-			<span onClick={()=>{console.log(name);}}>Prueba</span>
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<div className="row">
@@ -80,13 +79,13 @@ export const DropZoneDocument = () => {
 							<div {...getRootProps({})} className="drop-down">
 								<input {...getInputProps()} />
 								<img src={require("assets/images/upload.png")} alt="jambo" title="jambo" />
-							    <div>
+								<div>
 									<IntlMessages id="document.dropDocument" />
 								</div>
 								<div>
-								    <IntlMessages id="document.dropDocuments" />
+									<IntlMessages id="document.dropDocuments" />
 								</div>
-								
+
 								<button className="btn" type="button" onClick={open}>
 									<IntlMessages id="document.selectDocument" />
 								</button>
@@ -97,40 +96,40 @@ export const DropZoneDocument = () => {
 				</div>
 
 				{
-					
+
 					acceptedFiles
 					&&
 					fileIdLoaded
 					&&
 					acceptedFiles.length > 0
 					&&
-		            <Paper style={{ padding: 30 }}>
-					{shouldDisplayThumbnail && thumbnail ? (
-						<ThumbnailPreview
-						thumbnail={thumbnail}
-						remove={() => setShouldDisplayThumbnail(false)}
-                        name={acceptedFiles.map((file) => {
-                                        return (
-                                        <>{file.path}</>
-                                          
-                                        )
-                                    })
-                                }
+					<Paper style={{ padding: 30 }}>
+						{shouldDisplayThumbnail && thumbnail ? (
+							<ThumbnailPreview
+								thumbnail={thumbnail}
+								remove={() => setShouldDisplayThumbnail(false)}
+								name={acceptedFiles.map((file) => {
+									return (
+										<>{file.path}</>
 
-						/>
-					) : (
-						<div></div>
-					)}
-				</Paper>
+									)
+								})
+								}
+
+							/>
+						) : (
+							<div></div>
+						)}
+					</Paper>
 				}
-					{acceptedFiles.length === 0 && thumbnail && shouldDisplayThumbnail &&
-		            <Paper style={{ padding: 30 }}>
+				{acceptedFiles.length === 0 && thumbnail && shouldDisplayThumbnail &&
+					<Paper style={{ padding: 30 }}>
 						<ThumbnailPreview
-						thumbnail={thumbnail}
-                        name={name.slice(0,50)+'...pdf'}
+							thumbnail={thumbnail}
+							name={name.slice(0, 50) + '...pdf'}
 						/>
 						<div></div>
-				</Paper>
+					</Paper>
 				}
 			</div>
 		</div>

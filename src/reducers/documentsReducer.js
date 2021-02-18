@@ -8,6 +8,7 @@ const initialState = {
 	},
 	fileIdLoaded: '',
 	folderId: '',
+	folderIdOrigin:'',
 	path: '',
 	name:'',
 	pathFolderName: '',
@@ -59,6 +60,7 @@ export const documentsReducer = (state = initialState, action) => {
 				path: '',
 				pathFolderName: '',
 				folderId: '',
+				folderIdOrigin:'',
 				folderName: '',
 				name:'',
 				thumbnail: null,
@@ -154,6 +156,7 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
+				folderIdOrigin:'',
 				path: '',
 				name:'',
 				pathFolderName: '',
@@ -182,6 +185,7 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
+				folderIdOrigin:'',
 				folderName: '',
 				path: '',
 				name:'',
@@ -209,11 +213,16 @@ export const documentsReducer = (state = initialState, action) => {
 				detailDocumentType: { ...action.payload.aspectGroup },
 				fileIdLoaded: action.payload.fileId,
 				folderId: action.payload.folderId,
+				folderIdOrigin: action.payload.folderId,
 				path: action.payload.path,
 				name: action.payload.name,
 				tagsSelected: [...action.payload.tags],
 			}
-
+		case types.clearFolderIdOrigin:
+				return {
+					...state,
+					folderId: action.payload,
+				}
 		case types.docsDocumentByIdVisibility:
 			return {
 				...state,

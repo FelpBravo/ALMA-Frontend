@@ -9,7 +9,6 @@ export const MostViewedDocuments = () => {
 	const isMounted = useRef(true);
 
 	const { audits }  = useSelector(state => state.audit);
-	console.log(audits);
 	const view_document = audits.view_document
 	
 	const [documents, setDocuments] = useState([]);

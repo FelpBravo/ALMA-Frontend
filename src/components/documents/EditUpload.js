@@ -18,7 +18,8 @@ import {
 	startEditDocumentLoading,
 	startSaveFormLoading,
 	startThumbnailLoading,
-	startFoldersLoading
+	startFoldersLoading,
+	clearFolderIdOrigin
 } from 'actions/documents';
 import { Versioning } from './ui/Versioning';
 import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil';
@@ -52,7 +53,7 @@ const EditUpload = () => {
 		fileIdLoaded = '',
 		folderName = '',
 		path = '',
-		name = '',
+		folderIdOrigin = '',
 		pathFolderName = '',
 		folderId = '',
 		versioningType = '',
@@ -70,6 +71,8 @@ const EditUpload = () => {
 
 	const [directorio, setDirectorio] = useState(false)
 
+
+
 	useEffect(() => {
 
 		dispatch(documentsClear());
@@ -83,6 +86,8 @@ const EditUpload = () => {
 		dispatch(startThumbnailLoading(document));
 
 		dispatch(startFoldersLoading(authUser))
+
+	
 
 	}, [dispatch, document]);
 
@@ -139,21 +144,11 @@ const EditUpload = () => {
 
 			});
 
-			if (document.length === 0) {
-
-				dispatch(
-					startSaveFormLoading(
-						fileIdLoaded,
-						folderId,
-						{ id: documentId, aspectList: filters },
-						tags
-					)
-				);
-
-			} else {
+			if (document.length > 0) {
 
 				dispatch(
 					startEditDocumentLoading(
+						folderId,
 						files,
 						fileIdLoaded,
 						versioningType === VERSION_TYPE_MAJOR ? true : false,
@@ -179,7 +174,9 @@ const EditUpload = () => {
 
 	const clearPath = () => {
 		setDirectorio(false)
+		dispatch(clearFolderIdOrigin(folderIdOrigin))
 	}
+
 	useEffect(() => {
 		if (pathFolderName != path && pathFolderName) {
 			setDirectorio(true)
@@ -190,11 +187,13 @@ const EditUpload = () => {
 
 	}, [pathFolderName, path])
 
+	
+
 	const Directory = () => {
 		if (directorio) {
 			return <>
-				<div style={{display:'flex', height:38}}>
-					<h4 style={{marginTop:10}}>Directorio Nuevo</h4>
+				<div style={{ display: 'flex', height: 38 }}>
+					<h4 style={{ marginTop: 10 }}>Directorio Nuevo</h4>
 				</div>
 
 				<p>{pathFolderName}
@@ -207,8 +206,8 @@ const EditUpload = () => {
 
 		}
 		else {
-			return <><div style={{display:'flex', height:38}}>
-				<h4 style={{marginTop:10}}>Directorio Actual</h4>
+			return <><div style={{ display: 'flex', height: 38 }}>
+				<h4 style={{ marginTop: 10 }}>Directorio Actual</h4>
 				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 20 }}>
 					<EditIcon
 						style={{ width: 15, height: 15 }}
@@ -234,9 +233,6 @@ const EditUpload = () => {
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-							<span onClick={()=>{
-								console.log(folderId);
-							}}>Prueba</span>
 							<Directory />
 						</div>
 						<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
