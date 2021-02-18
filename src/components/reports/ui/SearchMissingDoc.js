@@ -25,32 +25,14 @@ const SearchMissingDoc = () => {
 	const [disabledButton, setDisabledButton] = useState(true);
 	const [messageError, setMessageError] = useState('');
 
-	useEffect(() => {
-		if (!reportsDate.endDate || !reportsDate.startDate) {
-			setDisabledButton(true);
-			setMessageError('');
-			return;
-		}
-		if (new Date(reportsDate.endDate).getTime() < new Date(reportsDate.startDate).getTime()) {
-			setDisabledButton(true);
-			setMessageError(`La fecha de inicio ${reportsDate.startDate} no puede ser mayor a la final ${reportsDate.endDate} `);
-			return
-		}
-		setDisabledButton(false);
-		setMessageError('');
-
-
-	}, [reportsDate])
-
 	const handleAdvanceSearchClear = () => {
-		setReportsDate({ startDate: '', endDate: '' })
+	
 		setDisabledButton(true)
 	}
 
 	const handleSearchReports = (e) => {
 		e.preventDefault();
-		dispatch(startReportsLoading(authUser, reportsDate.startDate, reportsDate.endDate, 1))
-		history.push(`/bulk`);
+		
 	}
 
 
@@ -89,7 +71,7 @@ const SearchMissingDoc = () => {
 								fullWidth
 								type="date"
 								//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
-								value={reportsDate.startDate || ''}
+								//value={reportsDate.startDate || ''}
 								size="small"
 								InputLabelProps={{
 												shrink: true,

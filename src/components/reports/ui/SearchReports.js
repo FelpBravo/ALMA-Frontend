@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DateSearchReports = () => {
+const SearchReports = () => {
 
 	const classes = useStyles()
 	const dispatch = useDispatch()
@@ -134,6 +134,7 @@ const DateSearchReports = () => {
 
 						</Grid>
 					</Grid>
+				 <TableSearchReports/>
 				</div>
 
 
@@ -142,4 +143,4 @@ const DateSearchReports = () => {
 	)
 }
 
-export default DateSearchReports;
+export default SearchReports;

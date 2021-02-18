@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import DateSearchReports from './ui/DateSearchReports.js';
+import SearchReports from './ui/SearchReports';
 import { TableSearchReports } from './ui/TableSearchReports';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -98,7 +98,7 @@ const Reports = () => {
 				</Tabs>
 				
 				<TabPanel value={value} index={0}>
-					<DateSearchReports/>
+					<SearchReports/>
 				</TabPanel>
 				<TabPanel value={value} index={1}>
 					<SearchMissingDoc/>
