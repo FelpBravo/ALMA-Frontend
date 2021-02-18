@@ -2,7 +2,7 @@ import { Button, Divider, Grid, makeStyles, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
-import { startReportsLoading} from 'actions/reports'
+import { clearReports, startReportsLoading} from 'actions/reports'
 import { useHistory } from 'react-router-dom';
 import { TableSearchReports } from './TableSearchReports';
 
@@ -25,13 +25,17 @@ const SearchMissingDoc = () => {
 	const [disabledButton, setDisabledButton] = useState(true);
 	const [messageError, setMessageError] = useState('');
 
-	const handleAdvanceSearchClear = () => {
+	dispatch(clearReports())
 	
+	const handleAdvanceSearchClear = () => {
+		setReportsDate({ startDate: '', endDate: '' })
+		dispatch(clearReports())
 		setDisabledButton(true)
 	}
 
 	const handleSearchReports = (e) => {
 		e.preventDefault();
+		history.push(`/reports`);
 		
 	}
 
@@ -77,7 +81,7 @@ const SearchMissingDoc = () => {
 												shrink: true,
 											}
 											}
-								onChange={event => setReportsDate({ startDate: event.target.value, endDate: reportsDate.endDate })}
+								//onChange={event => setReportsDate({ startDate: event.target.value, endDate: reportsDate.endDate })}
 							/>
 						</Grid>
 						<Grid item xs={3}>
@@ -92,7 +96,7 @@ const SearchMissingDoc = () => {
 												shrink: true,
 											}
 											}
-								onChange={event => setReportsDate({ startDate: reportsDate.startDate, endDate: event.target.value })}
+								//onChange={event => setReportsDate({ startDate: reportsDate.startDate, endDate: event.target.value })}
 							/>
 						</Grid>
 						<br />

@@ -74,7 +74,6 @@ const SearchReports = () => {
 								variant="outlined"
 								fullWidth
 								type="date"
-								//value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
 								value={reportsDate.startDate || ''}
 								size="small"
 								InputLabelProps={{
