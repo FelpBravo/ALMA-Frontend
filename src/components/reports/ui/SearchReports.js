@@ -25,8 +25,9 @@ const SearchReports = () => {
 	const [disabledButton, setDisabledButton] = useState(true);
 	const [messageError, setMessageError] = useState('');
 
-	dispatch(clearReports())
-
+	useEffect(()=>{
+		dispatch(clearReports())
+	},[])
 	useEffect(() => {
 		if (!reportsDate.endDate || !reportsDate.startDate) {
 			setDisabledButton(true);

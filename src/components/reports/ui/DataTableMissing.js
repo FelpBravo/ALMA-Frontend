@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { startReportsLoading } from 'actions/reports'
+import { startMissingLoading } from 'actions/reports'
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
 
@@ -21,9 +21,9 @@ const DataTableMissing = () => {
 	const history = useHistory()
 	const dispatch = useDispatch()
 	
-	const { authUser } = useSelector(state => state.reports)
-	const { reports = {}, date = {} } = useSelector(state => state.reports)
-	const { data=[], totalItems= 0 } = reports
+	const { authUser } = useSelector(state => state.auth)
+	const { missing = {}, date = {} , missingName= '' } = useSelector(state => state.reports)
+	const { data=[], totalItems= 0 } = missing
 
 
 	const [page, setPage] = useState(0)
@@ -36,7 +36,7 @@ const DataTableMissing = () => {
 	},[])
 
 	const handleChangePage = (event, page) => {
-		dispatch(startReportsLoading(authUser,date.startDate,date.endDate,page));
+		dispatch(startMissingLoading(authUser,missingName,date.startDate,date.endDate,page));
 
 		setPage(page);
 
@@ -62,26 +62,25 @@ const DataTableMissing = () => {
 								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="reports.table.missing4" />
 								</TableCell>
-                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="reports.table.missing5" />
 								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 							
-							{/*{	data.map(({jobId,startProcessing,endProcessing,sourceFile,processedRows,errorCount},index)=>{
+							{	data.map(({name,createdAt,createdByUser,path,missingDocuments},index)=>{
 								return <TableRow key={index}>
-									<TableCell>{jobId}</TableCell>
-									<TableCell>{new Date(startProcessing).toLocaleString()}</TableCell>
-									<TableCell>{new Date(endProcessing).toLocaleString()}</TableCell>
-									<TableCell>{sourceFile}</TableCell>
-									<TableCell>{processedRows}</TableCell>
-									<TableCell>{errorCount}</TableCell>
+									<TableCell>{name}</TableCell>
+									<TableCell>{new Date(createdAt).toLocaleString()}</TableCell>
+									<TableCell>{createdByUser}</TableCell>
+									<TableCell>{path}</TableCell>
+									<TableCell>{missingDocuments}</TableCell>
 								</TableRow>
 
 								})
 
-							}*/}
+							}
 						
 						</TableBody>
 					</Table>
