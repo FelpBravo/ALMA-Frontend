@@ -2,7 +2,7 @@ import { Button, Divider, Grid, makeStyles, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
-import { startReportsLoading} from 'actions/reports'
+import { startReportsLoading , clearReports} from 'actions/reports'
 import { useHistory } from 'react-router-dom';
 import { TableSearchReports } from './TableSearchReports';
 
@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const DateSearchReports = () => {
-
+const SearchReports = () => {
+	console.log("OEADS");
 	const classes = useStyles()
 	const dispatch = useDispatch()
 	const history = useHistory();
@@ -24,6 +24,8 @@ const DateSearchReports = () => {
 	const [reportsDate, setReportsDate] = useState('')
 	const [disabledButton, setDisabledButton] = useState(true);
 	const [messageError, setMessageError] = useState('');
+
+	dispatch(clearReports())
 
 	useEffect(() => {
 		if (!reportsDate.endDate || !reportsDate.startDate) {
@@ -44,13 +46,14 @@ const DateSearchReports = () => {
 
 	const handleAdvanceSearchClear = () => {
 		setReportsDate({ startDate: '', endDate: '' })
+		dispatch(clearReports())
 		setDisabledButton(true)
 	}
 
 	const handleSearchReports = (e) => {
 		e.preventDefault();
 		dispatch(startReportsLoading(authUser, reportsDate.startDate, reportsDate.endDate, 1))
-		history.push(`/bulk`);
+		history.push(`/reports`);
 	}
 
 
@@ -134,6 +137,7 @@ const DateSearchReports = () => {
 
 						</Grid>
 					</Grid>
+				
 				</div>
 
 
@@ -142,4 +146,4 @@ const DateSearchReports = () => {
 	)
 }
 
-export default DateSearchReports;
+export default SearchReports;

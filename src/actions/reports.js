@@ -41,8 +41,14 @@ export const reportsLoaded = (reports,startDate,endDate) => {
 	}
 };
 
-export const auditRemoveAll = () => {
+export const reportsRemoveAll = () => {
 	return {
 		type: types.reportsRemoveAll,
+	}
+};
+
+export const clearReports = () => {
+	return async (dispatch) => {
+		dispatch(reportsRemoveAll());
 	}
 };

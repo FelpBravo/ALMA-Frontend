@@ -4,6 +4,9 @@ const initialState = {
 	reports: {
 		data:[]
 	},
+	missing: {
+		data:[]
+	},
 	date:{
 		startDate: '',
 		endDate:''
@@ -21,7 +24,8 @@ export const reportsReducer = (state = initialState, action) => {
 			}
 		case types.reportsRemoveAll:
 				return {
-					reports: {}
+					reports: {},
+					missing: {}
 				}
 
 		default:

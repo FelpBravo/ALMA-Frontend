@@ -4,10 +4,10 @@ import { DataTableReports } from './DataTableReports';
 import { useSelector } from 'react-redux'
 
 
-export const TableSearchReports = () => {
+export const TableSearchMissing = () => {
 
-	const { reports = {} } = useSelector( state => state.reports)
-	const { data = [], totalItems = 0 } = reports;
+	const { missing = {} } = useSelector( state => state.reports)
+	const { data = [], totalItems = 0 } = missing;
 	if(data.length > 0){
 		return (
 			<div className="row">

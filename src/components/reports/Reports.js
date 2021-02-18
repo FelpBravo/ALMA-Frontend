@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import DateSearchReports from './ui/DateSearchReports.js';
+import SearchReports from './ui/SearchReports';
 import { TableSearchReports } from './ui/TableSearchReports';
+import { TableSearchMissing } from './ui/TableSearchMissing';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -15,52 +16,52 @@ import SearchMissingDoc from './ui/SearchMissingDoc.js';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
-  
+
 	return (
-	  <div
-		role="tabpanel"
-		hidden={value !== index}
-		id={`simple-tabpanel-${index}`}
-		aria-labelledby={`simple-tab-${index}`}
-		{...other}
-	  >
-		{value === index && (
-		  <Box p={3}>
-			<Typography>{children}</Typography>
-		  </Box>
-		)}
-	  </div>
+		<div
+			role="tabpanel"
+			hidden={value !== index}
+			id={`simple-tabpanel-${index}`}
+			aria-labelledby={`simple-tab-${index}`}
+			{...other}
+		>
+			{value === index && (
+				<Box p={3}>
+					<Typography>{children}</Typography>
+				</Box>
+			)}
+		</div>
 	);
-  }
-  
-  TabPanel.propTypes = {
+}
+
+TabPanel.propTypes = {
 	children: PropTypes.node,
 	index: PropTypes.any.isRequired,
 	value: PropTypes.any.isRequired,
-  };
-  
-  function a11yProps(index) {
+};
+
+function a11yProps(index) {
 	return {
-	  id: `simple-tab-${index}`,
-	  'aria-controls': `simple-tabpanel-${index}`,
+		id: `simple-tab-${index}`,
+		'aria-controls': `simple-tabpanel-${index}`,
 	};
-  }
+}
 
 const useStyles = makeStyles({
 	root: {
-	  flexGrow: 1,
+		flexGrow: 1,
 	},
-  });
-  
+});
+
 const Reports = () => {
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
 	const classes = useStyles();
-    const [value, setValue] = React.useState(0);
+	const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+	};
 
 	useEffect(() => {
 
@@ -70,47 +71,55 @@ const Reports = () => {
 
 	}, [dispatch, authUser]);
 
+	const Result = ()=>{
+		switch (value) {
+			case 0:
+			return <TableSearchReports/>
+			case 1:
+			return <TableSearchMissing/>
+			default:
+				return <></>
+		}
+	}
+
 	return (
 		<div className="row">
-		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-			<div className="jr-card">
+			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				<div className="jr-card">
+					<div className="row">
+						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-				<div className="row">
-					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+							<div className="jr-card-header d-flex align-items-center">
+								<h3 className="mb-0">
+									<IntlMessages id="reports.title" />
+								</h3>
+							</div>
+							<div className={classes.root}>
 
-						<div className="jr-card-header d-flex align-items-center">
-							<h3 className="mb-0">
-								<IntlMessages id="reports.title" />
-							</h3>
+								<Tabs
+									value={value}
+									onChange={handleChange}
+									indicatorColor="primary"
+									textColor="primary"
+									centered
+								>
+									<Tab label="Carga Masiva" {...a11yProps(0)} />
+									<Tab label="Documentos Faltantes" {...a11yProps(1)} />
+								</Tabs>
+								<TabPanel value={value} index={0}>
+									<SearchReports />
+								</TabPanel>
+								<TabPanel value={value} index={1}>
+									<SearchMissingDoc />
+								</TabPanel>
+							</div>
 						</div>
-			<div className={classes.root}>
-			
-				<Tabs
-					value={value}
-					onChange={handleChange}
-					indicatorColor="primary"
-					textColor="primary"
-					centered
-				>
-					<Tab label="Carga Masiva" {...a11yProps(0)}  />
-					<Tab label="Documentos Faltantes" {...a11yProps(1)} />
-					<Tab label="Item Three" {...a11yProps(2)} />
-				</Tabs>
+					</div>
+				</div>
+
+				<Result />
 				
-				<TabPanel value={value} index={0}>
-					<DateSearchReports/>
-				</TabPanel>
-				<TabPanel value={value} index={1}>
-					<SearchMissingDoc/>
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					Item Three
-				</TabPanel>
 			</div>
-		</div>
-		</div>
-		</div>
-		</div>
 		</div>
 	)
 }
