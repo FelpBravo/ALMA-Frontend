@@ -28,11 +28,8 @@ import { SelectFolder } from './ui/SelectFolder';
 import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
-<<<<<<< HEAD
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
-=======
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
->>>>>>> 483980e8c4bb05c92e1b21283ab685d666b28eb8
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
