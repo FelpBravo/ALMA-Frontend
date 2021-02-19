@@ -14,6 +14,7 @@ import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
 import SearchMissingDoc from './ui/SearchMissingDoc.js';
 import SearchWithout from './ui/SearchWithout';
+import { TableSearchWithout } from './ui/TableSearchWithout';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -79,7 +80,7 @@ const Reports = () => {
 			case 1:
 			return <TableSearchMissing/>
 			case 2:
-			return <TableSearch/>
+			return <TableSearchWithout/>
 			default:
 				return <></>
 		}

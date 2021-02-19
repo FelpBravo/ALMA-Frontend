@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Searchwithout = () => {
+const SearchWithout = () => {
 
 	const classes = useStyles()
 	const dispatch = useDispatch()
