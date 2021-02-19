@@ -2,7 +2,7 @@ import { Button, Divider, Grid, makeStyles, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearReports, startMissingLoading } from 'actions/reports'
+import { clearReports, startWithoutLoading } from 'actions/reports'
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,9 +20,8 @@ const SearchWithout = () => {
 	const history = useHistory();
 	const { authUser } = useSelector(state => state.auth)
 
-	const [missingDate, setMissingDate] = useState('')
-	const [missingName, setMissingName] = useState('')
-	const [disabledButton, setDisabledButton] = useState(true);
+	const [withoutName, setWithoutName] = useState('')
+	const [disabledButton, setDisabledButton] = useState(false);
 	const [messageError, setMessageError] = useState('');
 
 	
@@ -30,7 +29,7 @@ const SearchWithout = () => {
 		dispatch(clearReports())
 	},[])
 
-	useEffect(() => {
+/* 	useEffect(() => {
 		if (!missingDate.endDate || !missingDate.startDate) {
 			setDisabledButton(true);
 			setMessageError('');
@@ -45,19 +44,18 @@ const SearchWithout = () => {
 		setMessageError('');
 
 
-	}, [missingDate])
+	}, [missingDate]) */
 
 	const handleAdvanceSearchClear = () => {
-		setMissingDate({ startDate: '', endDate: '' })
-		setMissingName('')
+		setWithoutName('')
 		dispatch(clearReports())
 		setDisabledButton(true)
 	}
 
 	const handleSearchReports = (e) => {
 		e.preventDefault();
-		dispatch(startMissingLoading(authUser, missingName, missingDate.startDate, missingDate.endDate, 1))
-		//history.push(`/reports`);
+		dispatch(startWithoutLoading(authUser, withoutName, 1))
+		
 
 	}
 
@@ -79,13 +77,13 @@ const SearchWithout = () => {
 							label="Nombre"
 							variant="outlined"
 							fullWidth
-                            value=''
+                            value={ withoutName || ''}
 							size="small"
 							InputLabelProps={{
 								shrink: true,
 							}
 							}
-							//onChange={event => setMissingName(event.target.value)}
+							onChange={event => setWithoutName(event.target.value)}
 						/>
 
 					</Grid>		

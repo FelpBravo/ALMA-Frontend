@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { startMissingLoading } from 'actions/reports'
+import { startWithoutLoading } from 'actions/reports'
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
 
@@ -22,8 +22,8 @@ const DataTableWithout = () => {
 	const dispatch = useDispatch()
 	
 	const { authUser } = useSelector(state => state.auth)
-	const { missing = {}, date = {} , missingName= '' } = useSelector(state => state.reports)
-	const { data=[], totalItems= 0 } = missing
+	const { without = {} , withoutName= '' } = useSelector(state => state.reports)
+	const { data=[], totalItems= 0 } = without
 
 
 	const [page, setPage] = useState(0)
@@ -36,7 +36,7 @@ const DataTableWithout = () => {
 	},[])
 
 	const handleChangePage = (event, page) => {
-		dispatch(startMissingLoading(authUser,missingName,date.startDate,date.endDate,page));
+		dispatch(startWithoutLoading(authUser,withoutName,page));
 
 		setPage(page);
 
@@ -66,14 +66,14 @@ const DataTableWithout = () => {
 						</TableHead>
 						<TableBody>
 							
-							{	data.map(({name,createdAt,createdByUser,path,missingDocuments},index)=>{
-								return <TableRow key={index}>
+							{	data.map(({name,createdAt,createdByUser,path},index)=>{
+								return (
+								<TableRow key={index}>
 									<TableCell>{name}</TableCell>
 									<TableCell>{new Date(createdAt).toLocaleString()}</TableCell>
 									<TableCell>{createdByUser}</TableCell>
 									<TableCell>{path}</TableCell>
-									<TableCell>{missingDocuments}</TableCell>
-								</TableRow>
+								</TableRow>)
 
 								})
 
