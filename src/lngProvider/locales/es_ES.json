@@ -650,7 +650,9 @@
 	"reports.table.missing2": "Fecha de creación",
 	"reports.table.missing3": "Creador",
 	"reports.table.missing4": "Ruta",
-	"reports.table.missing5": "Documentos pendientes"
+	"reports.table.missing5": "Documentos pendientes",
+	"reports.table.missing6": "Nombre"
+
 	
 
 }

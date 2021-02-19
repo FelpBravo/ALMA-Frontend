@@ -13,6 +13,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
 import SearchMissingDoc from './ui/SearchMissingDoc.js';
+import SearchWithout from './ui/SearchWithout';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -77,6 +78,8 @@ const Reports = () => {
 			return <TableSearchReports/>
 			case 1:
 			return <TableSearchMissing/>
+			case 2:
+			return <TableSearch/>
 			default:
 				return <></>
 		}
@@ -105,12 +108,16 @@ const Reports = () => {
 								>
 									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500}} label="Carga Masiva" {...a11yProps(0)} />
 									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500}}label="Documentos Faltantes" {...a11yProps(1)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500}}label="Documentos sin contenido " {...a11yProps(2)} />
 								</Tabs>
 								<TabPanel value={value} index={0}>
 									<SearchReports />
 								</TabPanel>
 								<TabPanel value={value} index={1}>
 									<SearchMissingDoc />
+								</TabPanel>
+								<TabPanel value={value} index={2}>
+									<SearchWithout/>
 								</TabPanel>
 							</div>
 						</div>
