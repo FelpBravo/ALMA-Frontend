@@ -26,6 +26,7 @@ export const types = {
 
 	reportsDataLoaded: 'Reports Data Loaded',
 	missingDataLoaded: 'Reports Missing Loaded',
+	withoutDataLoaded:'Reports Without Loaded',
 	reportsRemoveAll:'Reports Remove All',
 
 	searchFieldsLoaded: 'Search Fields loaded',

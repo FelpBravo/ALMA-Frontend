@@ -40,6 +40,7 @@ const Tags = () => {
 
 	const { tagslist = [], } = useSelector(state => state.tags);
 
+	console.log(authorities);
 	useEffect(() => {
 
 		if (tagslist.length === 0) {

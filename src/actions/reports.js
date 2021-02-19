@@ -1,4 +1,4 @@
-import { getReports, getMissing } from 'services/reportsService';
+import { getReports, getMissing , getWithout } from 'services/reportsService';
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
  
@@ -54,6 +54,32 @@ export const startMissingLoading = (authUser,missingName, startDate, endDate, pa
 	}
 };
 
+
+export const startWithoutLoading = (authUser,withoutName, page) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Loading...',
+				text: 'Please wait...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+			const resp = await getWithout(authUser,withoutName,page, 10)
+			console.log(resp);
+			dispatch(withoutLoaded(resp.data,withoutName));
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
 export const reportsLoaded = (reports,startDate,endDate) => {
 	return {
 		type: types.reportsDataLoaded,
@@ -77,6 +103,15 @@ export const missingLoaded = (missing,missingName,startDate,endDate) => {
 				endDate:endDate
 			},
 			missingName:missingName
+		},
+	}
+};
+export const withoutLoaded = (without,withoutName) => {
+	return {
+		type: types.withoutDataLoaded,
+		payload: {
+			without: without,
+			withoutName:withoutName
 		},
 	}
 };
