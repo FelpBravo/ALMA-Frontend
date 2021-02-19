@@ -22,7 +22,7 @@ const SearchMissingDoc = () => {
 
 	const [missingDate, setMissingDate] = useState('')
 	const [missingName, setMissingName] = useState('')
-	const [disabledButton, setDisabledButton] = useState(true);
+	const [disabledButton, setDisabledButton] = useState(false);
 	const [messageError, setMessageError] = useState('');
 
 	
@@ -30,7 +30,7 @@ const SearchMissingDoc = () => {
 		dispatch(clearReports())
 	},[])
 
-	useEffect(() => {
+	/* useEffect(() => {
 		if (!missingDate.endDate || !missingDate.startDate) {
 			setDisabledButton(true);
 			setMessageError('');
@@ -45,7 +45,7 @@ const SearchMissingDoc = () => {
 		setMessageError('');
 
 
-	}, [missingDate])
+	}, [missingDate]) */
 
 	const handleAdvanceSearchClear = () => {
 		setMissingDate({ startDate: '', endDate: '' })
