@@ -8,8 +8,8 @@ export const startReportsLoading = (authUser, startDate, endDate, page) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -34,8 +34,8 @@ export const startMissingLoading = (authUser,missingName, startDate, endDate, pa
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
@@ -60,8 +60,8 @@ export const startWithoutLoading = (authUser,withoutName, page) => {
 		try {
 
 			Swal.fire({
-				title: 'Loading...',
-				text: 'Please wait...',
+				title: 'Cargando...',
+				text: 'Por favor espere...',
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
