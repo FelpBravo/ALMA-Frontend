@@ -7,8 +7,8 @@ import { DataTableWithout } from './DataTableWithout';
 
 export const TableSearchWithout = () => {
 
-	const { reports = {} } = useSelector( state => state.reports)
-	const { data = [], totalItems = 0 } = reports;
+	const { without = {} } = useSelector( state => state.reports)
+	const { data = [], totalItems = 0 } = without;
 	if(data.length > 0){
 		return (
 			<div className="row">

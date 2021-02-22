@@ -42,7 +42,6 @@ export const startMissingLoading = (authUser,missingName, startDate, endDate, pa
 
 			Swal.showLoading();
 			const resp = await getMissing(authUser,missingName,startDate,endDate,page, 10)
-			console.log(resp);
 			dispatch(missingLoaded(resp.data,missingName,startDate,endDate));
 
 		} catch (error) {
@@ -69,7 +68,6 @@ export const startWithoutLoading = (authUser,withoutName, page) => {
 
 			Swal.showLoading();
 			const resp = await getWithout(authUser,withoutName,page, 10)
-			console.log(resp);
 			dispatch(withoutLoaded(resp.data,withoutName));
 
 		} catch (error) {
