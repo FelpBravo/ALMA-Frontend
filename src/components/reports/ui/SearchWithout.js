@@ -49,7 +49,7 @@ const SearchWithout = () => {
 	const handleAdvanceSearchClear = () => {
 		setWithoutName('')
 		dispatch(clearReports())
-		setDisabledButton(true)
+		// setDisabledButton(true)
 	}
 
 	const handleSearchReports = (e) => {

@@ -51,7 +51,7 @@ const SearchMissingDoc = () => {
 		setMissingDate({ startDate: '', endDate: '' })
 		setMissingName('')
 		dispatch(clearReports())
-		setDisabledButton(true)
+		//setDisabledButton(true)
 	}
 
 	const handleSearchReports = (e) => {
