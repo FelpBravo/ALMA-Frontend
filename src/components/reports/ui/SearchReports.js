@@ -98,9 +98,9 @@ const SearchReports = () => {
 											}
 								onChange={event => setReportsDate({ startDate: reportsDate.startDate, endDate: event.target.value })}
 							/>
-						</Grid>
 							<br />
 								<span className="text-danger text-error">{messageError}</span>
+						</Grid>
 					</Grid>
 
 						<Grid
