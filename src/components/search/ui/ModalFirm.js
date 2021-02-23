@@ -14,11 +14,7 @@ import { LockOpenOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    overflow: 'hidden',
-    padding: theme.spacing(0, 2),
-  },
-  paper: {
+    height: 1000,  
     maxWidth: 500,
     margin: `${theme.spacing(1)}px auto`,
     padding: theme.spacing(1),
@@ -84,6 +80,54 @@ const ModalFirm = () => {
     }
 
   }
+  const FirmSimple = () => {
+    if (docs.fileId) {
+      return (
+        <div className={classes.root}>
+            <h4>Documento firmando por : </h4>
+
+            <Button
+            //onClick={}
+            variant="contained"
+            color="primary"
+            fullWidth
+            >
+            Firmar documento
+            </Button>
+
+            <TextField
+                size="small"
+                type="password"
+                label={<IntlMessages id="appModule.password" />}
+                fullWidth
+                //onChange={(event) => setPassword(event.target.value)}
+                //defaultValue={password}
+                margin="normal"
+                variant="outlined"
+                className="mt-1 my-sm-3"
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <LockOpenOutlined color="primary" />
+                        </InputAdornment>
+                    ),
+                }}
+            />
+            <Button
+            //onClick={}
+            variant="contained"
+            color="primary"
+            >
+            Firmar
+            </Button>
+
+        </div>
+      )
+    }
+    else {
+      return (<></>)
+    }
+  }
   
   return (
 
@@ -98,56 +142,19 @@ const ModalFirm = () => {
 
         <DialogTitle >
           <div style={{ fontFamily: "Poppins", }}>
-            <IntlMessages id="Firma Simple" />
+            <IntlMessages id="firm.modal.title" />
           </div>
         </DialogTitle>
 
         <DialogContent>
         <Grid container spacing={2}>
             <Grid item xs={4}>
-                <h4>Documento firmando por : </h4>
-
-                <Button
-                //onClick={}
-                variant="contained"
-                color="primary"
-                fullWidth
-                >
-                Firmar documento
-                </Button>
-                
-                <TextField
-								size="small"
-								type="password"
-								label={<IntlMessages id="appModule.password" />}
-							    fullWidth
-								//onChange={(event) => setPassword(event.target.value)}
-								//defaultValue={password}
-								margin="normal"
-								variant="outlined"
-								className="mt-1 my-sm-3"
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<LockOpenOutlined color="primary" />
-										</InputAdornment>
-									),
-								}}
-							/>
-                <Button
-                //onClick={}
-                variant="contained"
-                color="primary"
-               
-                >
-                Firmar
-                </Button>
+              <FirmSimple />
             </Grid>
             <Grid item xs={8}>
               <PDFcomponent />
             </Grid>
           </Grid>
-       
         </DialogContent>
 
         <DialogActions>
