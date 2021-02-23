@@ -200,3 +200,15 @@ export const closeModalVisibility = () => {
 		type: types.visibilityCloseModal,
 	}
 };
+
+export const openModalFirm = () => {
+	return {
+		type: types.firmOpenModal,
+	}
+};
+
+export const closeModalFirm = () => {
+	return {
+		type: types.firmCloseModal,
+	}
+};

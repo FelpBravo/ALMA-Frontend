@@ -117,6 +117,18 @@ export const searchReducer = (state = initialState, action) => {
 					...state,
 					openModal: false,
 				}	
+			
+			case types.firmOpenModal:
+				return {
+					...state,
+					openModal2: true,
+				}
+	
+			case types.firmCloseModal:
+				return {
+					...state,
+					openModal2: false,
+				}	
 
 		default:
 			return state;

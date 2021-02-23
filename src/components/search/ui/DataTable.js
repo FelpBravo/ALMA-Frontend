@@ -14,7 +14,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import { downloadDocument } from 'services/filesService';
-import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility } from 'actions/search';
+import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility, openModalFirm } from 'actions/search';
 import { GENERAL_ERROR } from 'constants/constUtil';
 import { MoreVert } from '@material-ui/icons';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
@@ -28,7 +28,9 @@ import ModalVisibility from './ModalVisivility';
 import { startDocumentByIdVisibility } from 'actions/documents';
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
-
+import ColorizeOutlinedIcon from '@material-ui/icons/ColorizeOutlined';
+import ModalFirm from './ModalFirm';
+import FingerprintOutlinedIcon from '@material-ui/icons/FingerprintOutlined';
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -94,6 +96,11 @@ const DataTable = () => {
 
 	const handleVisibility=(id, name) =>{
     	dispatch(openModalVisibility());
+		dispatch(startDocumentByIdVisibility(id, name));
+	};
+
+	const handleFirm=(id, name) =>{
+    	dispatch(openModalFirm());
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
@@ -271,6 +278,14 @@ const DataTable = () => {
 													/>
 													}
 												/>*/}
+												<TableActionButton
+													materialIcon={
+													<FingerprintOutlinedIcon
+														className={classes.iconos}
+														onClick={() => handleFirm(id, name)}
+													/>
+													}
+													/>
 												<MoreVert
 													className={classes.iconos}
 													onClick={() => console.log("test")}
@@ -306,6 +321,7 @@ const DataTable = () => {
 								</Grid>
 				</TableContainer>
 				<ModalVisibility/>
+				<ModalFirm/>
 
 			</div>
 		</div>

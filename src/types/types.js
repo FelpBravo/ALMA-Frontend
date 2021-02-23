@@ -40,6 +40,8 @@ export const types = {
 	searchSubscribeDocumentFinish: 'Search subscribe document finish',
 	visibilityOpenModal: 'Visibility Open Modal',
 	visibilityCloseModal: 'Visibility Close Modal',
+	firmOpenModal: 'Firm Open Modal',
+	firmCloseModal: 'Firm Close Modal',
 
 	docsDocumentsTypeLoaded: 'Documents Type documents loaded',
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',
