@@ -210,7 +210,6 @@ export const documentsReducer = (state = initialState, action) => {
 			}
 
 		case types.docsDocumentByIdLoaded:
-			console.log(action.payload);
 			return {
 				...state,
 				detailDocumentType: { ...action.payload.aspectGroup },

@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SearchReports = () => {
-	console.log("OEADS");
 	const classes = useStyles()
 	const dispatch = useDispatch()
 	const history = useHistory();

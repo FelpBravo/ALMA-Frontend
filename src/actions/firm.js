@@ -1,4 +1,5 @@
 import { createFirm, getFirm } from 'services/firmService';
+import { startDocumentByIdLoading, startDocumentByIdVisibility} from 'actions/documents'
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
  
@@ -17,7 +18,7 @@ export const startSaveFirmLoading = (authUser,password,fileid) => {
 			Swal.showLoading();
 			const resp = await createFirm(authUser,password,fileid)
 
-			dispatch(startFirmLoading(authUser,fileid));
+			dispatch(startDocumentByIdVisibility(fileid));
 
 		} catch (error) {
 			console.log(error);
@@ -64,7 +65,6 @@ export const clearFirm = () => {
 //////
 
 export const firmLoaded = (firm) => {
-    console.log(firm);
 	return {
 		type: types.firmDataLoaded,
 		payload:firm.signatures,

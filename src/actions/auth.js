@@ -28,12 +28,13 @@ export const startUserSignInLogin = (userName, password) => {
 };
 
 export const userSignInSuccess = (authUser) => {
-	const { authorities } = jwt_decode(authUser)
+	const { authorities, user } = jwt_decode(authUser)
 	return {
 		type: types.login,
 		payload: {
 			authUser : authUser,
-			authorities: authorities
+			authorities: authorities,
+			userId:user.userId
 		}
 		
 	}

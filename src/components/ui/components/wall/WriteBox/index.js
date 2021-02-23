@@ -71,7 +71,6 @@ const WriteBox = (props) => {
 
         <div className="jr-clearfix">
           {isOpen === true ? <div className="d-flex flex-row">
-              {console.log(fileList)}
               <ul className="list-inline mb-3 mr-2">
                 {fileList.map((file, index) =>
                   <li className="mb-1 mr-0 list-inline-item align-top" key={index}>

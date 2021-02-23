@@ -296,8 +296,6 @@ export const startDocumentByIdLoading =  (fileId) => {
 };   
 
 const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [], signatures = []}) => {
-	console.log("object");
-	console.log(signatures);
 	return {
 		type: types.docsDocumentByIdLoaded,
 		payload: {

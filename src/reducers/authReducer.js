@@ -15,6 +15,7 @@ const INIT_STATE = {
 	initURL: '',
 	authUser: localStorage.getItem('token'),
 	authorities: listAuthorities,
+	userId:''
 	
 };
 
@@ -24,7 +25,8 @@ const authReducer = (state = INIT_STATE, action) => {
 			return {
 				...state,
 				authUser: action.payload.authUser,
-				authorities:action.payload.authorities
+				authorities:action.payload.authorities,
+				userId: action.payload.userId
 			}
 
 		case types.logout:

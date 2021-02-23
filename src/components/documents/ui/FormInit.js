@@ -54,7 +54,6 @@ export const FormInit = () => {
 		}
 
 	}
-	console.log(documentsType);
 	return (
 		<div className="row">
 

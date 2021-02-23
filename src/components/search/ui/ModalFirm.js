@@ -4,22 +4,18 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFirm} from 'actions/search';
+import { closeModalFirm } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, InputAdornment, makeStyles, Paper, TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { downloadDocument } from 'services/filesService';
 import { LockOpenOutlined } from '@material-ui/icons';
-import { startFirmLoading } from 'actions/firm'
+import { startFirmLoading, startSaveFirmLoading } from 'actions/firm'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    overflow: 'hidden',
-    padding: theme.spacing(0, 2),
-  },
-  paper: {
+    height: 1000,
     maxWidth: 500,
     margin: `${theme.spacing(1)}px auto`,
     padding: theme.spacing(1),
@@ -31,16 +27,19 @@ const ModalFirm = () => {
 
   const dispatch = useDispatch();
 
-  const { authUser } = useSelector(state => state.auth);
+  const { authUser, userId = ''} = useSelector(state => state.auth);
 
   const { openModal2 } = useSelector(state => state.searchs);
 
   const { docs } = useSelector(state => state.documents);
-  const {signatures = []} = docs
+
+  const { signatures = [] } = docs
 
   const [pdf, setPDF] = useState('')
 
-  const [activo,setActivo] = useState(false)
+  const [activo, setActivo] = useState(false)
+
+  const [valido, setValido] = useState(true)
 
   const handleClose = () => {
     setActivo(false)
@@ -60,55 +59,82 @@ const ModalFirm = () => {
 
   useEffect(() => {
     getPDF()
+    findFirm()
   }, [docs])
 
-
-  const FirmBox = () =>{
-    console.log(activo);
-    if(!activo)
-    {
-      return (<Button
-        onClick={() => setActivo(true)}
-        variant="contained"
-        color="primary"
-        fullWidth
-        >
-        Firmar documento
-        </Button>)
+  const findFirm = () => {
+    if (docs.signatures) {
+      const busqueda = docs.signatures.find(signa => signa.userId === userId)
+      if (busqueda) {
+        setValido(false)
+      }
+      else {
+        setValido(true)
+      }
     }
-    else
-    {
-      return (<div style={{display:'flex'}}>
     
-      <TextField
-								size="small"
-								type="password"
-								label={<IntlMessages id="appModule.password" />}
-							    fullWidth
-								//onChange={(event) => setPassword(event.target.value)}
-								//defaultValue={password}
-								margin="normal"
-								variant="outlined"
-								className="mt-1 my-sm-3"
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<LockOpenOutlined color="primary" />
-										</InputAdornment>
-									),
-								}}
-							/>
-                <Button
-                onClick={handleFirm}
-                variant="contained"
-                color="primary"
-                style={{height:40,marginTop:15,marginLeft:15}}
-               
-                >
-                Firmar
-                </Button>
-      </div>)
+  }
+
+  const FirmBox = () => {
+    const [password, setPassword] = useState('')
+
+    const handleFirm = (e) => {
+      e.preventDefault();
+      dispatch(startSaveFirmLoading(authUser, password, docs.fileId))
+      setValido(false)
+
     }
+    if (valido) {
+      if (!activo) {
+        return (<Button
+          onClick={() => setActivo(true)}
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Firmar documento
+        </Button>)
+      }
+      else {
+        return (<div style={{ display: 'flex' }}>
+          <form onSubmit={handleFirm}>
+            <TextField
+              size="small"
+              type="password"
+              label={<IntlMessages id="appModule.password" />}
+              fullWidth
+              onChangeCapture={(event) => setPassword(event.target.value)}
+              defaultValue={password}
+              margin="normal"
+              variant="outlined"
+              className="mt-1 my-sm-3"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOpenOutlined color="primary" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              onClick={handleFirm}
+              variant="contained"
+              type="submit"
+              color="primary"
+              style={{ height: 40, marginTop: 15, marginLeft: 15 }}
+
+            >
+              Firmar
+                  </Button>
+          </form>
+
+        </div>)
+      }
+    }
+    else {
+      return <h4>Documento ya se encuentra firmado</h4>
+    }
+
   }
 
   const PDFcomponent = () => {
@@ -139,12 +165,8 @@ const ModalFirm = () => {
 
   }
 
-  const handleFirm = ()=>{
-    dispatch(startFirmLoading(authUser,docs.fileId))
-    setActivo(false)
 
-  }
-  
+
   return (
 
     <div>
@@ -155,29 +177,32 @@ const ModalFirm = () => {
         fullWidth={true}
         maxWidth={true}
       >
-
         <DialogTitle >
           <div style={{ fontFamily: "Poppins", }}>
-            <IntlMessages id="Firma Simple" />
+            <IntlMessages id="firm.modal.title" />
           </div>
         </DialogTitle>
 
         <DialogContent>
-        <Grid container spacing={2}>
+          <Grid container spacing={2}>
             <Grid item xs={4}>
-                <h4>Documento firmando por : </h4>
+              <div className={classes.root}>
+                <h4 onClick={()=>{
+                  console.log(authUser);
+                  console.log(userId);
+                }}>Documento firmando por : </h4>
                 {signatures &&
-                signatures.map((data,index)=>{
+                  signatures.map((data, index) => {
                     return <p key={index}>{data.userFullName}</p>
                   })
                 }
-              <FirmBox></FirmBox>
+                <FirmBox></FirmBox>
+              </div>
             </Grid>
             <Grid item xs={8}>
               <PDFcomponent />
             </Grid>
           </Grid>
-       
         </DialogContent>
 
         <DialogActions>

@@ -50,7 +50,6 @@ const UserInfo = () => {
 		handleRequestClose();
 		dispatch(startUserSingOut());
 	}
-	console.log(user.lastName);
 
 	return (
 		<div className="user-profile d-flex flex-row align-items-center">
