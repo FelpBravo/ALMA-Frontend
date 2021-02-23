@@ -295,11 +295,13 @@ export const startDocumentByIdLoading =  (fileId) => {
 	}
 };   
 
-const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [] }) => {
+const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [], signatures = []}) => {
+	console.log("object");
+	console.log(signatures);
 	return {
 		type: types.docsDocumentByIdLoaded,
 		payload: {
-			aspectGroup, fileId, folderId, tags, path, name
+			aspectGroup, fileId, folderId, tags, path, name, signatures
 		}
 	}
 };

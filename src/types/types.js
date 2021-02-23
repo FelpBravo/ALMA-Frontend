@@ -29,6 +29,8 @@ export const types = {
 	withoutDataLoaded:'Reports Without Loaded',
 	reportsRemoveAll:'Reports Remove All',
 
+	firmDataLoaded:'Firm Data Loaded',
+
 	searchFieldsLoaded: 'Search Fields loaded',
 	searchLoaded: 'Search Loaded',
 	searchDocumentDeleted: 'Search Deleted document',

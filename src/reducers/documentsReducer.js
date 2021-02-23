@@ -9,6 +9,7 @@ const initialState = {
 	fileIdLoaded: '',
 	folderId: '',
 	folderIdOrigin:'',
+	signatures:[],
 	path: '',
 	name:'',
 	pathFolderName: '',
@@ -66,6 +67,7 @@ export const documentsReducer = (state = initialState, action) => {
 				thumbnail: null,
 				thumbnailGenerated: false,
 				tags: [],
+				signatures:[],
 				versioningType: '',
 				versioningComments: '',
 				folders: [],
@@ -208,6 +210,7 @@ export const documentsReducer = (state = initialState, action) => {
 			}
 
 		case types.docsDocumentByIdLoaded:
+			console.log(action.payload);
 			return {
 				...state,
 				detailDocumentType: { ...action.payload.aspectGroup },
@@ -216,6 +219,7 @@ export const documentsReducer = (state = initialState, action) => {
 				folderIdOrigin: action.payload.folderId,
 				path: action.payload.path,
 				name: action.payload.name,
+				signatures: action.payload.signatures,
 				tagsSelected: [...action.payload.tags],
 			}
 		case types.clearFolderIdOrigin:

@@ -10,6 +10,7 @@ import { DialogTitle, InputAdornment, makeStyles, Paper, TextField } from '@mate
 import Grid from '@material-ui/core/Grid';
 import { downloadDocument } from 'services/filesService';
 import { LockOpenOutlined } from '@material-ui/icons';
+import { startFirmLoading } from 'actions/firm'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,10 +36,14 @@ const ModalFirm = () => {
   const { openModal2 } = useSelector(state => state.searchs);
 
   const { docs } = useSelector(state => state.documents);
+  const {signatures = []} = docs
 
   const [pdf, setPDF] = useState('')
 
+  const [activo,setActivo] = useState(false)
+
   const handleClose = () => {
+    setActivo(false)
     setPDF('')
     dispatch(closeModalFirm());
   }
@@ -56,6 +61,55 @@ const ModalFirm = () => {
   useEffect(() => {
     getPDF()
   }, [docs])
+
+
+  const FirmBox = () =>{
+    console.log(activo);
+    if(!activo)
+    {
+      return (<Button
+        onClick={() => setActivo(true)}
+        variant="contained"
+        color="primary"
+        fullWidth
+        >
+        Firmar documento
+        </Button>)
+    }
+    else
+    {
+      return (<div style={{display:'flex'}}>
+    
+      <TextField
+								size="small"
+								type="password"
+								label={<IntlMessages id="appModule.password" />}
+							    fullWidth
+								//onChange={(event) => setPassword(event.target.value)}
+								//defaultValue={password}
+								margin="normal"
+								variant="outlined"
+								className="mt-1 my-sm-3"
+								InputProps={{
+									startAdornment: (
+										<InputAdornment position="start">
+											<LockOpenOutlined color="primary" />
+										</InputAdornment>
+									),
+								}}
+							/>
+                <Button
+                onClick={handleFirm}
+                variant="contained"
+                color="primary"
+                style={{height:40,marginTop:15,marginLeft:15}}
+               
+                >
+                Firmar
+                </Button>
+      </div>)
+    }
+  }
 
   const PDFcomponent = () => {
     if (pdf != '') {
@@ -84,6 +138,12 @@ const ModalFirm = () => {
     }
 
   }
+
+  const handleFirm = ()=>{
+    dispatch(startFirmLoading(authUser,docs.fileId))
+    setActivo(false)
+
+  }
   
   return (
 
@@ -106,42 +166,12 @@ const ModalFirm = () => {
         <Grid container spacing={2}>
             <Grid item xs={4}>
                 <h4>Documento firmando por : </h4>
-
-                <Button
-                //onClick={}
-                variant="contained"
-                color="primary"
-                fullWidth
-                >
-                Firmar documento
-                </Button>
-                
-                <TextField
-								size="small"
-								type="password"
-								label={<IntlMessages id="appModule.password" />}
-							    fullWidth
-								//onChange={(event) => setPassword(event.target.value)}
-								//defaultValue={password}
-								margin="normal"
-								variant="outlined"
-								className="mt-1 my-sm-3"
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<LockOpenOutlined color="primary" />
-										</InputAdornment>
-									),
-								}}
-							/>
-                <Button
-                //onClick={}
-                variant="contained"
-                color="primary"
-               
-                >
-                Firmar
-                </Button>
+                {signatures &&
+                signatures.map((data,index)=>{
+                    return <p key={index}>{data.userFullName}</p>
+                  })
+                }
+              <FirmBox></FirmBox>
             </Grid>
             <Grid item xs={8}>
               <PDFcomponent />
