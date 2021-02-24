@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import { downloadDocument } from 'services/filesService';
 import { LockOpenOutlined } from '@material-ui/icons';
 import { startFirmLoading, startSaveFirmLoading } from 'actions/firm'
+import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -132,7 +134,7 @@ const ModalFirm = () => {
       }
     }
     else {
-      return <h4>Documento ya se encuentra firmado</h4>
+      return <span className="text-danger text-error">Documento ya se encuentra firmado</span>
     }
 
   }
@@ -187,16 +189,15 @@ const ModalFirm = () => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <div className={classes.root}>
-                <h4 onClick={()=>{
-                  console.log(authUser);
-                  console.log(userId);
-                }}>Documento firmando por : </h4>
+                <h4>Documento firmando por : </h4>
                 {signatures &&
                   signatures.map((data, index) => {
-                    return <p key={index}>{data.userFullName}</p>
+                    return <div key={index}>
+                        <CheckCircleOutlineOutlinedIcon color="primary" className='mr-3'/>
+                        {data.userFullName}</div>
                   })
                 }
-                <FirmBox></FirmBox>
+                <FirmBox className="mt-5"/>
               </div>
             </Grid>
             <Grid item xs={8}>
