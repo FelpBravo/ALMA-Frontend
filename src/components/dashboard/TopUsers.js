@@ -11,7 +11,7 @@ export const TopUsers = () => {
 
 	const View_Avatar = () => {
 		if (userImageList && userImageList.length > 0) {
-			return (<ul className="list-inline mb-0" style={{display:"flex", flexWrap:"wap"}}>
+			return (<ul className="list-inline mb-0" style={{display:"flex", flexWrap:"wrap"}}>
 				{userImageList.map((user, index) =>
 					<li className="list-inline-item mr-0" key={index} style={{ width:100,display:"flex",flexDirection:"column",alignItems:"center"}}>
 						<Avatar className="size-50" src='https://via.placeholder.com/150x150' />
