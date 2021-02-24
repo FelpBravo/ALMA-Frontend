@@ -89,6 +89,7 @@ const ModalFirm = () => {
     if (valido) {
       if (!activo) {
         return (<Button
+          className="mt-5"
           onClick={() => setActivo(true)}
           variant="contained"
           color="primary"
@@ -134,7 +135,7 @@ const ModalFirm = () => {
       }
     }
     else {
-      return <span className="text-danger text-error">Documento ya se encuentra firmado</span>
+      return <p className="text-danger text-error mt-3">Documento ya se encuentra firmado</p>
     }
 
   }
