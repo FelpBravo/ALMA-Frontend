@@ -11,15 +11,13 @@ import Grid from '@material-ui/core/Grid';
 import { downloadDocument } from 'services/filesService';
 import { LockOpenOutlined } from '@material-ui/icons';
 import { startSaveFirmLoading } from 'actions/firm'
-import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
-import CreateIcon from '@material-ui/icons/Create';
-import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: 1000,
-    maxWidth: 500,
+    maxWidth: 500,  
     margin: `${theme.spacing(1)}px auto`,
     padding: theme.spacing(1),
   },
@@ -30,7 +28,7 @@ const ModalFirm = () => {
 
   const dispatch = useDispatch();
 
-  const { authUser, userId = ''} = useSelector(state => state.auth);
+  const { authUser, userId = '' } = useSelector(state => state.auth);
 
   const { openModal2 } = useSelector(state => state.searchs);
 
@@ -75,7 +73,7 @@ const ModalFirm = () => {
         setValido(true)
       }
     }
-    
+
   }
 
   const FirmBox = () => {
@@ -90,8 +88,8 @@ const ModalFirm = () => {
     if (valido) {
       if (!activo) {
         return (<Button
-          className="mt-5"
           onClick={() => setActivo(true)}
+          className="mt-5"
           variant="contained"
           color="primary"
           fullWidth
@@ -194,13 +192,13 @@ const ModalFirm = () => {
                 <h4>Documento firmando por : </h4>
                 {signatures &&
                   signatures.map((data, index) => {
-                    return <div key={index} style={{ display:"flex", alignItems:"center"}}>
-                        <HowToRegIcon color="primary" className='mr-1'/>
-                        <div>{data.userFullName}</div>
-                        </div>
+                    return <div key={index} style={{ display: "flex", alignItems: "center" }}>
+                      <HowToRegIcon color="primary" className='mr-1' />
+                      <div>{data.userFullName}</div>
+                    </div>
                   })
                 }
-                <FirmBox></FirmBox>
+                <FirmBox className="mt-5" />
               </div>
             </Grid>
             <Grid item xs={8}>

@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { UPLOAD_DOCUMENTS } from 'constants/constUtil';
+import { SUBSCRIPTIONS } from 'constants/constUtil';
 import { useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 import OrderTable from './ui/OrderTable';
 
-export const UploadDocuments = () => {
+export const Subscriptions = () => {
 
 	const isMounted = useRef(true);
 
 	const { audits } = useSelector(state => state.audit);
-
-	const upload_documents = audits.upload_document
+	const subscribed_document = audits.subscribed_document
 
 	const [documents, setDocuments] = useState([]);
 
@@ -24,20 +23,17 @@ export const UploadDocuments = () => {
 
 	useEffect(() => {
 
-		if (upload_documents && upload_documents.length > 0) {
+		if (subscribed_document && subscribed_document.length > 0) {
 
-
-					const list = upload_documents.map((
-						{ fileId, fileName, tags, activityDate ,userFirstName ,userLastName }
-					) => {
+					const list = subscribed_document.map(({ fileId, fileName, tags, folder, activityDate }) => {
 						return {
 							id: fileId,
 							name: fileName,
 							icon: 'far fa-file-pdf',
 							tags,
-							activity:'Subio',
-							userName: userFirstName + " "+userLastName,
-							date: new Date(activityDate).toLocaleString("es-ES",{weekday:"short", year: "numeric", month: "long", day: "numeric", hour:"numeric",minute:"numeric"}),
+							folder,
+							date: activityDate,
+							isSubscriptions: true,
 						};
 					});
 
@@ -45,17 +41,18 @@ export const UploadDocuments = () => {
 						setDocuments(list);
 					}
 
+			
 
 		}
 
-	}, [upload_documents]);
+	}, [subscribed_document]);
 
 	return (
 		<div className="jr-card">
 
 			<div className="jr-card-header d-flex align-items-center">
 				<h3 className="mb-0">
-					<IntlMessages id="dashboard.titleUploadDocuments" />
+					<IntlMessages id="dashboard.titleSubscriptionsDocs" />
 				</h3>
 				<div className="ml-auto">
 					<span className="custom-link-dash">
@@ -65,6 +62,7 @@ export const UploadDocuments = () => {
 			</div>
 
 			<OrderTable dataTable={documents} />
+
 		</div>
 	)
 }

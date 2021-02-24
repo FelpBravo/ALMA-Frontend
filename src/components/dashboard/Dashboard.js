@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startAuditsLoading } from 'actions/audit';
 import { uiAuditShowLoading } from 'actions/uiAudit';
 import { TotalSummary } from './TotalSummary';
+import { ActivityResume } from './ActivityResume';
+import { Subscriptions } from './Subscriptions';
 import { TopUsers } from './TopUsers';
 import { MostViewedDocuments } from './MostViewedDocuments';
 import { UploadDocuments } from './UploadDocuments';

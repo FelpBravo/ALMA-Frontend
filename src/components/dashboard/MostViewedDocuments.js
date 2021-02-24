@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { VIEWED_DOCUMENTS } from 'constants/constUtil';
 import { useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 import OrderTable from './ui/OrderTable';
