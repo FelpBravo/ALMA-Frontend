@@ -11,7 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import { downloadDocument } from 'services/filesService';
 import { LockOpenOutlined } from '@material-ui/icons';
 import { startSaveFirmLoading } from 'actions/firm'
-
+import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
+import CreateIcon from '@material-ui/icons/Create';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +90,7 @@ const ModalFirm = () => {
     if (valido) {
       if (!activo) {
         return (<Button
+          className="mt-5"
           onClick={() => setActivo(true)}
           variant="contained"
           color="primary"
@@ -132,7 +136,7 @@ const ModalFirm = () => {
       }
     }
     else {
-      return <h4>Documento ya se encuentra firmado</h4>
+      return <p className="text-danger text-error mt-3">Documento ya se encuentra firmado</p>
     }
 
   }
@@ -190,7 +194,10 @@ const ModalFirm = () => {
                 <h4>Documento firmando por : </h4>
                 {signatures &&
                   signatures.map((data, index) => {
-                    return <p key={index}>{data.userFullName}</p>
+                    return <div key={index} style={{ display:"flex", alignItems:"center"}}>
+                        <HowToRegIcon color="primary" className='mr-1'/>
+                        <div>{data.userFullName}</div>
+                        </div>
                   })
                 }
                 <FirmBox></FirmBox>
