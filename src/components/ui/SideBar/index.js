@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,11 +12,30 @@ const SideBar = () => {
 	const dispatch = useDispatch();
 	const { drawerType, width, navigationStyle } = useSelector(({ settings }) => settings);
 	const { navCollapsed } = useSelector(({ common }) => common);
+	const [ activo, setActivo ] = useState(false)
+	const [ fullWidth, setFullWith] = useState(false)
+	const [ respWidth, setRespWith] = useState(false)
 
-	/* useEffect(() => {
+	console.log("object");
+	console.log(fullWidth);
+/* 
+	 useEffect(() => {
+		 console.log(width);
+	if(!activo){
+		setActivo(true)
 		window.addEventListener('resize', () => {
 			dispatch(updateWindowWidth(window.innerWidth))
-		});
+		}); 
+	}
+	 if(width > 1200)
+	 {
+		setFullWith(true)
+		window.addEventListener('resize', () => {
+			dispatch(updateWindowWidth(window.innerWidth))
+		}); 
+
+	 }
+	 	
 	}, [dispatch]); */
 
 	const onToggleCollapsedNav = (e) => {
@@ -47,7 +66,7 @@ const SideBar = () => {
 			>
 
 				<div
-					className="user-profile d-flex flex-row align-items-center"
+					className="user-profile d-flex flex-row align-items-center" 
 				>
 
 					<Link

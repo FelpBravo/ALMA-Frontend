@@ -11,11 +11,11 @@ export const TopUsers = () => {
 
 	const View_Avatar = () => {
 		if (userImageList && userImageList.length > 0) {
-			return (<ul className="list-inline mb-0">
+			return (<ul className="list-inline mb-0" style={{display:"flex", flexWrap:"wap"}}>
 				{userImageList.map((user, index) =>
-					<li className="list-inline-item mr-0" key={index}>
+					<li className="list-inline-item mr-0" key={index} style={{ width:100,display:"flex",flexDirection:"column",alignItems:"center"}}>
 						<Avatar className="size-50" src='https://via.placeholder.com/150x150' />
-						<p className="custom-top-users">{user.userFirstName}</p>
+						<p className="custom-top-users">{user.userFirstName.length < 12 ? user.userFirstName : user.userFirstName.slice(0,12)+'...'}</p>
 					</li>
 				)}
 			</ul>)
