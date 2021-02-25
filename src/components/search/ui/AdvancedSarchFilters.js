@@ -4,6 +4,8 @@ import { DATE, NUMERIC } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { searchSetValueFilter } from 'actions/search';
+import { DateRangePicker } from 'rsuite';
+
 
 
 
@@ -22,22 +24,9 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 	switch (type) {
 		case DATE:
 			return (
-				<TextField
-					key={name}
-					label={label}
-					name={name}
-					variant="outlined"
-					fullWidth
-					type="date"
-					value={value ? value : '2017-05-24'}
-					size="small"
-					InputLabelProps={{
-						shrink: true,
-					}}
-					style={{ color: '#3699FF',	
-					}}
-					onChange={handleOnChange}
+				<DateRangePicker
 				/>
+				
 			);
 
 		case NUMERIC:
