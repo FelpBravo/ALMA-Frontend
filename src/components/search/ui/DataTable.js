@@ -209,13 +209,12 @@ const DataTable = () => {
 										tabIndex={-1}
 										key={id}
 									>
-										<TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}}>
 											<Link
 											onClick={() => handleDownload(id, name)} 
 											component="button"
-											style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
-											<i className="far fa-file-pdf custom-link-dash"></i>{` `}
-											<span className="custom-link-dash">{name}</span></Link>
+											style={{ textAlign: "left"}}
+											><i className="far fa-file-pdf custom-link-dash"></i>{` `} {name}</Link>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0,10)}</TableCell>
