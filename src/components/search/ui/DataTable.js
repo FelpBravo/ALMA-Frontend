@@ -241,15 +241,6 @@ const DataTable = () => {
 													/>
 													}
 												/>}
-                                            { ROLE_FILE_DOWNLOAD &&
-												<TableActionButton
-													materialIcon={
-													<SaveAltOutlinedIcon
-														className={classes.iconos}
-														onClick={() => handleDownload(id, name)}
-													/>
-													}
-												/>}
 											{ ROLE_FILE_UPDATE &&
 												<TableActionButton
 													materialIcon={
