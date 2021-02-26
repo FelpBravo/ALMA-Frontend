@@ -4,7 +4,6 @@ import { DATE, NUMERIC } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { searchSetValueFilter } from 'actions/search';
-import { DateRangePicker } from 'rsuite';
 
 
 

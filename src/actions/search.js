@@ -1,8 +1,9 @@
-import { deleteDocument, subscribeDocument } from 'services/filesService';
+import { deleteDocument, subscribeDocument,downloadDocument } from 'services/filesService';
 import { getSearchFields, search } from 'services/searchService';
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
 import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
+import FileSaver from 'file-saver';
 
 export const startSearchFieldsLoading = (authUser) => {
 	return async (dispatch) => {
@@ -16,13 +17,6 @@ export const startSearchFieldsLoading = (authUser) => {
 			console.log(error);
 		}
 
-	}
-};
-
-export const searchFieldsLoaded = (fields) => {
-	return {
-		type: types.searchFieldsLoaded,
-		payload: fields,
 	}
 };
 
@@ -52,12 +46,6 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 	}
 };
 
-export const searchLoaded = (documents) => {
-	return {
-		type: types.searchLoaded,
-		payload: documents,
-	}
-};
 
 export const startDeleteDocument = (id) => {
 	return async (dispatch, getState) => {
@@ -94,45 +82,41 @@ export const startDeleteDocument = (id) => {
 	}
 };
 
-const deletedDocumentFinish = (id) => {
-	return {
-		type: types.searchDocumentDeleted,
-		payload: id
-	}
-};
+export const startDownloadDocument = (id,name) => {
+	return async (getState) => {
 
-export const searchSetText = (text) => {
-	return {
-		type: types.searchSetText,
-		payload: text
-	}
-};
+		const { authUser } = getState().auth;
+		
+		const { documents } = getState().searchs;
+	
+		try {
 
-export const searchRemoveText = () => {
-	return {
-		type: types.searchRemoveText,
-	}
-};
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
 
-export const searchRemoveAll = () => {
-	return {
-		type: types.searchRemoveAll,
-	}
-};
+			Swal.showLoading();
 
-export const searchSetValueFilter = (name, value) => {
-	return {
-		type: types.searchSetValueFilter,
-		payload: {
-			name,
-			value,
+			const { data } = await downloadDocument(authUser, id);
+
+			Swal.close();
+
+			FileSaver.saveAs(data, name);
+
+		} catch (error) {
+
+			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
+
 		}
-	}
-};
-
-export const searchClearAllFilters = () => {
-	return {
-		type: types.searchClearAllFilters,
 	}
 };
 
@@ -175,6 +159,62 @@ export const startSubscribeDocument = (id) => {
 
 		}
 
+	}
+};
+
+export const searchLoaded = (documents) => {
+	return {
+		type: types.searchLoaded,
+		payload: documents,
+	}
+};
+
+export const searchFieldsLoaded = (fields) => {
+	return {
+		type: types.searchFieldsLoaded,
+		payload: fields,
+	}
+};
+
+const deletedDocumentFinish = (id) => {
+	return {
+		type: types.searchDocumentDeleted,
+		payload: id
+	}
+};
+
+export const searchSetText = (text) => {
+	return {
+		type: types.searchSetText,
+		payload: text
+	}
+};
+
+export const searchRemoveText = () => {
+	return {
+		type: types.searchRemoveText,
+	}
+};
+
+export const searchRemoveAll = () => {
+	return {
+		type: types.searchRemoveAll,
+	}
+};
+
+export const searchSetValueFilter = (name, value) => {
+	return {
+		type: types.searchSetValueFilter,
+		payload: {
+			name,
+			value,
+		}
+	}
+};
+
+export const searchClearAllFilters = () => {
+	return {
+		type: types.searchClearAllFilters,
 	}
 };
 

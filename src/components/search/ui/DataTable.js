@@ -1,4 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility, openModalFirm, openModalVersioning, startDownloadDocument } from 'actions/search';
+import { startDocumentByIdVisibility } from 'actions/documents';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -6,33 +10,24 @@ import TableRow from '@material-ui/core/TableRow';
 import TableContainer from '@material-ui/core/TableContainer';
 import queryString from 'query-string';
 import Swal from 'sweetalert2';
-import { useDispatch, useSelector } from 'react-redux';
-import FileSaver from 'file-saver';
 import Paper from '@material-ui/core/Paper';
-import { useHistory, useLocation } from 'react-router-dom';
-
-import { columnsDocuments } from 'helpers/columnsDocuments';
-import { DataTableHead } from './DataTableHead';
-import { downloadDocument } from 'services/filesService';
-import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility, openModalFirm, openModalVersioning } from 'actions/search';
-import { GENERAL_ERROR } from 'constants/constUtil';
+import FingerprintOutlinedIcon from '@material-ui/icons/FingerprintOutlined';
+import Link from '@material-ui/core/Link';
 import { MoreVert } from '@material-ui/icons';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import PlaylistAddCheckOutlinedIcon from '@material-ui/icons/PlaylistAddCheckOutlined';
 import { makeStyles } from '@material-ui/core';
-import TableActionButton from './TableActionButton';
-import ModalVisibility from './ModalVisivility';
-import { startDocumentByIdVisibility } from 'actions/documents';
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
-import ColorizeOutlinedIcon from '@material-ui/icons/ColorizeOutlined';
+import { columnsDocuments } from 'helpers/columnsDocuments';
+import { DataTableHead } from './DataTableHead';
+import TableActionButton from './TableActionButton';
+import ModalVisibility from './ModalVisivility';
 import ModalFirm from './ModalFirm';
-import FingerprintOutlinedIcon from '@material-ui/icons/FingerprintOutlined';
-import Link from '@material-ui/core/Link';
 import ModalVersioning from './ModalVersioning';
+
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -88,6 +83,14 @@ const DataTable = () => {
 
 	const { folderId } = queryString.parse(location.search);
 
+	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
+
+	const ROLE_FILE_UPDATE = authorities.find(rol=> rol === 'ROLE_FILE_UPDATE') 
+
+	const ROLE_FILE_DELETE = authorities.find(rol=> rol === 'ROLE_FILE_DELETE') 
+
+	const ROLE_FILE_PREVIEW = authorities.find(rol=> rol === 'ROLE_FILE_PREVIEW') 
+
 	useEffect(() => {
 
 		return () => {
@@ -125,38 +128,24 @@ const DataTable = () => {
 	};
 
 	const handleDownload = async (id, name) => {
-		try {
+		
+		if(ROLE_FILE_DOWNLOAD){const resp = await Swal.fire({
+			title: 'Descargar',
+			text: "¿Está seguro que quiere descargar el documento?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
+		if (resp.value) {
+			dispatch(startDownloadDocument(id,name))
+		}}
 
-			Swal.fire({
-				title: 'Cargando...',
-				text: 'Por favor espere...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
-
-			Swal.showLoading();
-
-			const { data } = await downloadDocument(authUser, id);
-
-			Swal.close();
-
-			FileSaver.saveAs(data, name);
-
-		} catch (error) {
-
-			Swal.close();
-
-			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
-
-			Swal.fire({
-				title: 'Error', text: message, icon: 'error', heightAuto: false
-			});
-
-		}
 	}
 
 	const handleEdit = (id) => {
 		history.push(`/edit/?document=${id}`);
+		
 	}
 
 	const handleDelete = async (id) => {
@@ -177,13 +166,7 @@ const DataTable = () => {
 		dispatch(startSubscribeDocument(id));
 	}
 	
-	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
-
-	const ROLE_FILE_UPDATE = authorities.find(rol=> rol === 'ROLE_FILE_UPDATE') 
-
-	const ROLE_FILE_DELETE = authorities.find(rol=> rol === 'ROLE_FILE_DELETE') 
-
-	const ROLE_FILE_PREVIEW = authorities.find(rol=> rol === 'ROLE_FILE_PREVIEW') 
+	
 
 
 	return (
