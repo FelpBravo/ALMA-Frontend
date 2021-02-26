@@ -44,6 +44,8 @@ export const types = {
 	visibilityCloseModal: 'Visibility Close Modal',
 	firmOpenModal: 'Firm Open Modal',
 	firmCloseModal: 'Firm Close Modal',
+	versioningOpenModal: 'Versioning Open Modal',
+	versioningCloseModal: 'Versioning Close Modal',
 
 	docsDocumentsTypeLoaded: 'Documents Type documents loaded',
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',

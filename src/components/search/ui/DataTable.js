@@ -14,7 +14,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import { downloadDocument } from 'services/filesService';
-import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility, openModalFirm } from 'actions/search';
+import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility, openModalFirm, openModalVersioning } from 'actions/search';
 import { GENERAL_ERROR } from 'constants/constUtil';
 import { MoreVert } from '@material-ui/icons';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
@@ -32,6 +32,7 @@ import ColorizeOutlinedIcon from '@material-ui/icons/ColorizeOutlined';
 import ModalFirm from './ModalFirm';
 import FingerprintOutlinedIcon from '@material-ui/icons/FingerprintOutlined';
 import Link from '@material-ui/core/Link';
+import ModalVersioning from './ModalVersioning';
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -103,6 +104,10 @@ const DataTable = () => {
 	const handleFirm=(id, name) =>{
     	dispatch(openModalFirm());
 		dispatch(startDocumentByIdVisibility(id, name));
+	};
+
+	const handleVersioning=(id, name) =>{
+    	dispatch(openModalVersioning());
 	};
 
 	const handleChangePage = (event, page) => {
@@ -236,6 +241,7 @@ const DataTable = () => {
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
 											<Link
+											onClick={() => handleVersioning(id, name)}
 											component="button"
 											variant="body2"
 											>{version}</Link>
@@ -331,7 +337,7 @@ const DataTable = () => {
 				</TableContainer>
 				<ModalVisibility/>
 				<ModalFirm/>
-
+                <ModalVersioning/>
 			</div>
 		</div>
 	

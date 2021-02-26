@@ -207,3 +207,15 @@ export const closeModalFirm = () => {
 		type: types.firmCloseModal,
 	}
 };
+
+export const openModalVersioning= () => {
+	return {
+		type: types.versioningOpenModal,
+	}
+};
+
+export const closeModalVersioning = () => {
+	return {
+		type: types.versioningCloseModal,
+	}
+};
