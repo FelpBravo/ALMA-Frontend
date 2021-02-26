@@ -29,7 +29,7 @@ const SignIn = () => {
 			<div className="app-login-main-content">
 				<div className="app-logo-content d-flex align-items-center justify-content-center">
 					<div className="logo-lg" to="/" title="Jambo">
-						<img src={require("assets/images/logo.apiux1.png")} alt="jambo" title="jambo" />
+						<img src={require("assets/images/apiux1.png")} alt="jambo" title="jambo" />
 					</div>
 				</div>
 
