@@ -24,7 +24,21 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 	switch (type) {
 		case DATE:
 			return (
-				<DateRangePicker
+				<TextField
+					key={name}
+					label={label}
+					name={name}
+					variant="outlined"
+					fullWidth
+					type="date"
+					value={value ? value : '2017-05-24'}
+					size="small"
+					InputLabelProps={{
+						shrink: true,
+					}}
+					style={{ color: '#3699FF',	
+					}}
+					onChange={handleOnChange}
 				/>
 				
 			);

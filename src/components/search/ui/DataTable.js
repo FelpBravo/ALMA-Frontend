@@ -31,6 +31,7 @@ import Grid from '@material-ui/core/Grid';
 import ColorizeOutlinedIcon from '@material-ui/icons/ColorizeOutlined';
 import ModalFirm from './ModalFirm';
 import FingerprintOutlinedIcon from '@material-ui/icons/FingerprintOutlined';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -208,9 +209,13 @@ const DataTable = () => {
 										tabIndex={-1}
 										key={id}
 									>
-										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
+										<TableCell>
+											<Link
+											onClick={() => handleDownload(id, name)} 
+											component="button"
+											style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
 											<i className="far fa-file-pdf custom-link-dash"></i>{` `}
-											<span className="custom-link-dash">{name}</span>
+											<span className="custom-link-dash">{name}</span></Link>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0,10)}</TableCell>
@@ -230,7 +235,12 @@ const DataTable = () => {
 												})
 											}
 										</TableCell>
-										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{version}</TableCell>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
+											<Link
+											component="button"
+											variant="body2"
+											>{version}</Link>
+										</TableCell>
 										<TableCell></TableCell>
 										<TableCell>
 											<div className={classes.iconsHolder}>
