@@ -1,7 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { startDeleteDocument, startSearchLoading, startSubscribeDocument, openModalVisibility, openModalFirm, openModalVersioning, startDownloadDocument } from 'actions/search';
+import { 
+	startDeleteDocument, 
+	startSearchLoading, 
+	startSubscribeDocument, 
+	openModalVisibility, 
+	openModalFirm, 
+	openModalVersioning, 
+	startDownloadDocument,
+	startVersioningLoading 
+} from 'actions/search';
 import { startDocumentByIdVisibility } from 'actions/documents';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -109,8 +118,9 @@ const DataTable = () => {
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
-	const handleVersioning=(id, name) =>{
+	const handleVersioning=(id) =>{
     	dispatch(openModalVersioning());
+		dispatch(startVersioningLoading(authUser,1, id));
 	};
 
 	const handleChangePage = (event, page) => {

@@ -1,9 +1,27 @@
 import { deleteDocument, subscribeDocument,downloadDocument } from 'services/filesService';
 import { getSearchFields, search } from 'services/searchService';
+import { getVersioning } from 'services/versioningService'
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
 import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
 import FileSaver from 'file-saver';
+
+export const startVersioningLoading = (authUser,page, fileId) => {
+	return async (dispatch,getState) => {
+
+		const { documentId } = getState().searchs;
+		try {
+			
+			const id = documentId?  documentId : fileId
+			const resp = await getVersioning(authUser,page, 10, id);
+			dispatch(versioningLoaded(resp.data,id));
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
 
 export const startSearchFieldsLoading = (authUser) => {
 	return async (dispatch) => {
@@ -159,6 +177,21 @@ export const startSubscribeDocument = (id) => {
 
 		}
 
+	}
+};
+export const versioningLoaded = (versioning,id) => {
+	return {
+		type: types.versioningLoaded,
+		payload: {
+			versioning,
+			id
+		}
+	}
+};
+
+export const versioningRemove = () => {
+	return {
+		type: types.versioningRemove,
 	}
 };
 

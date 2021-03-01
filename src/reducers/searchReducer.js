@@ -1,4 +1,3 @@
-import data from 'components/ui/components/ToDoCard/data';
 import { types } from 'types/types';
 
 const initialState = {
@@ -6,6 +5,10 @@ const initialState = {
 	documents: {
 		data: [],
 	},
+	versioning: {
+		data: []
+	},
+	documentId: '',
 	textSearch: '',
 	openAdvanceSearch: false,
 	openModal: false,
@@ -14,6 +17,12 @@ const initialState = {
 export const searchReducer = (state = initialState, action) => {
 
 	switch (action.type) {
+		case types.versioningLoaded:
+			return {
+				...state,
+				versioning: action.payload.versioning,
+				documentId: action.payload.id
+			}
 		case types.searchFieldsLoaded:
 			return {
 				...state,
@@ -26,7 +35,7 @@ export const searchReducer = (state = initialState, action) => {
 				documents: action.payload,
 			}
 
-	case types.searchDocumentDeleted:
+		case types.searchDocumentDeleted:
 			return {
 				...state,
 				documents: action.payload,
@@ -55,6 +64,18 @@ export const searchReducer = (state = initialState, action) => {
 				fields: {},
 				documents: {},
 				textSearch: '',
+				versioning: {
+					data: []
+				},
+				documentId: '',
+			}
+		case types.versioningRemove:
+			return {
+				...state,
+				versioning: {
+					data: []
+				},
+				documentId: '',
 			}
 
 		case types.searchSetValueFilter:
@@ -106,41 +127,41 @@ export const searchReducer = (state = initialState, action) => {
 				}
 			}
 
-			case types.visibilityOpenModal:
-				return {
-					...state,
-					openModal: true,
-				}
-	
-			case types.visibilityCloseModal:
-				return {
-					...state,
-					openModal: false,
-				}	
-			
-			case types.firmOpenModal:
-				return {
-					...state,
-					openModal2: true,
-				}
-	
-			case types.firmCloseModal:
-				return {
-					...state,
-					openModal2: false,
-				}
-				
-			case types.versioningOpenModal:
-				return {
-					...state,
-					openModal3: true,
-					}
-		
-			case types.versioningCloseModal:
-				return {
-					...state,
-					openModal3: false,
-					}		
+		case types.visibilityOpenModal:
+			return {
+				...state,
+				openModal: true,
+			}
+
+		case types.visibilityCloseModal:
+			return {
+				...state,
+				openModal: false,
+			}
+
+		case types.firmOpenModal:
+			return {
+				...state,
+				openModal2: true,
+			}
+
+		case types.firmCloseModal:
+			return {
+				...state,
+				openModal2: false,
+			}
+
+		case types.versioningOpenModal:
+			return {
+				...state,
+				openModal3: true,
+			}
+
+		case types.versioningCloseModal:
+			return {
+				...state,
+				openModal3: false,
+			}
 
 		default:
 			return state;

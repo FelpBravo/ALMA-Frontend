@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalVersioning } from 'actions/search';
+import { closeModalVersioning, versioningRemove  } from 'actions/search';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, InputAdornment, makeStyles, Paper, TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -36,6 +36,7 @@ const ModalVersioning= () => {
 
 
   const handleClose = () => {
+    dispatch(versioningRemove())
     dispatch(closeModalVersioning());
   }
 

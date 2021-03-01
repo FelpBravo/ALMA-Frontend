@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux'
 
 export const TableVersioning= () => {
 
-	const { reports = {} } = useSelector( state => state.reports)
-	const { data = [], totalItems = 0 } = reports;
+	const { versioning = {} } = useSelector( state => state.searchs)
+	const { data = [], totalItems = 0 } = versioning;
 	if(data.length > 0){
 		return (
 			<div className="row">
