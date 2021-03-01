@@ -57,12 +57,9 @@ const ModalVersioning= () => {
           </div>
         </DialogTitle>
 
-        <DialogContent>
+        <DialogContent >
           <Grid container spacing={2}>
-            <Grid item xs={4}>
-             <p>Nombre documento</p>
-            </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
              <TableVersioning/>
             </Grid>
           </Grid>

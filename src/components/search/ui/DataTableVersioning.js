@@ -60,16 +60,20 @@ const DataTableVersioning = () => {
 								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="versioning.table.column4" />
 								</TableCell>
+								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+									<IntlMessages id="versioning.table.column5" />
+								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 
-							{data.map(({ name, modifiedAt, modifiedByUser, version }, index) => {
+							{data.map(({ name, modifiedAt, modifiedByUser, version, comment }, index) => {
 								return <TableRow key={index}>
 									<TableCell>{name}</TableCell>
 									<TableCell>{new Date(modifiedAt).toLocaleString()}</TableCell>
 									<TableCell>{modifiedByUser}</TableCell>
 									<TableCell>{version}</TableCell>
+									<TableCell>{comment}</TableCell>
 								</TableRow>
 
 							})

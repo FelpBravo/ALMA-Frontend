@@ -642,6 +642,7 @@
 	"versioning.table.column2": "Fecha de modificación",
 	"versioning.table.column3": "Responsable",
 	"versioning.table.column4": "Versión",
+	"versioning.table.column5": "Comentario",
 	"reports.title": "Reportes",
 	"reports.search": "Generar",
 	"reports.bulk.load": "Carga masiva",
