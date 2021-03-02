@@ -13,6 +13,7 @@ export const TEXT = 'TEXT';
 export const DATE = 'DATE';
 export const NUMERIC = 'NUMERIC';
 export const LIST = 'LIST';
+export const DATERANGE = 'DATERANGE';
 
 // KEY UPLOAD DOC
 export const KEY_DOC = '9d5f20ac-335b-4c64-b0b4-934cd795ba1a';

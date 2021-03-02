@@ -143,6 +143,10 @@ export const AdvancedSearch = () => {
 
 						{filters.length > 0 && handlePrintFields()}
 
+					<h4 className="mb-4">
+						<IntlMessages id="dashboard.advancedSearchDate" />
+					</h4>	
+
 						<Divider className="mt-3" />
 
 						<Grid

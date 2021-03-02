@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { DATE, NUMERIC } from 'constants/constUtil';
+import { DATE, NUMERIC,DATERANGE } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { searchSetValueFilter } from 'actions/search';
+import { DateRange } from './DateRange';
 
 
 
@@ -54,6 +55,17 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 					size="small"
 					onChange={handleOnChange}
 				/>
+			);
+			case DATERANGE:
+			return (
+				<DateRange
+					key={name}
+					label={label}
+					name={name}
+					type={type}
+					
+				/>
+				
 			);
 
 		default:
