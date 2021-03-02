@@ -15,9 +15,13 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
-
+		console.log(value);
 
 		dispatch(searchSetValueFilter(name, value));
+
+	}
+	const handleOnChangeDate = (even) => {
+		console.log(even);
 
 	}
 
@@ -61,8 +65,8 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 				<DateRange
 					key={name}
 					label={label}
-					name={name}
-					type={type}
+					namecomponent={name}
+					//OnChange={handleOnChangeDate}
 					
 				/>
 				
