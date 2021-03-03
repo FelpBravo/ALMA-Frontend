@@ -19,18 +19,19 @@ const useStyles = makeStyles((theme) => ({
 
 	},
 	containerText: {
-		marginTop: -12,
+		marginTop: -14,
 		marginBottom: 5
 	},
 	containerInput:{
 		display:'flex',
-		marginTop:-10,
+		marginTop:-7,
 		paddingLeft:15,
 		paddingRight:15
 	},
 	label:{
 		marginLeft:15,
-		marginRight:15 
+		marginRight:15, 
+        fontSize:12,
 	},
 	text: {
 		fontSize: '0.75em',
@@ -79,9 +80,6 @@ export const DateRange = (props) => {
 				<span className={classes.text}>Modificado en</span>
 			</div>
 			<div className={classes.containerInput}>
-		<p onClick={()=>{
-			console.log(date);
-		}}>Prueba</p>
 			<TextField
 						//key={name}
 						//label={label}
