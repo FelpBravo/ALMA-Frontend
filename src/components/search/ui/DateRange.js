@@ -51,24 +51,25 @@ const useStyles = makeStyles((theme) => ({
 
 export const DateRange = (props) => {
 	
-	const { namecomponent } = props
+	const { namecomponent , label} = props
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const [date, setDate] = useState({ start: '', end: '' })
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
-		console.log(name);
+		console.log(namecomponent);
 		if (name === 'startDate') {
 			setDate({ start: value, end: date.end })
 			if (date.end != '') {
-				dispatch(searchSetValueFilter(namecomponent,`'`+value+`','`+date.end+`'`));
+				dispatch(searchSetValueFilter(namecomponent,`'`+value+`' , '`+date.end+`'`));
+
 			}
 		}
 		else {
 			setDate({ start: date.start, end: value })
 			if (date.start != '') {
-				dispatch(searchSetValueFilter(namecomponent,`'`+date.start+`','`+value+`'`));
+				dispatch(searchSetValueFilter(namecomponent,`'`+date.start+`' , '`+value+`'`));
 			}
 
 		}
@@ -77,7 +78,7 @@ export const DateRange = (props) => {
 	return (
 		<div className={classes.root} >
 			<div className={classes.containerText} >
-				<span className={classes.text}>Modificado en</span>
+				<span className={classes.text}>{label}</span>
 			</div>
 			<div className={classes.containerInput}>
 			<TextField

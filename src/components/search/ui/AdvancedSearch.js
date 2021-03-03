@@ -7,6 +7,7 @@ import { getRows } from 'helpers/getRows';
 import { AdvancedSarchFilters } from './AdvancedSarchFilters';
 import { useHistory, useLocation } from 'react-router-dom';
 import { searchClearAllFilters, startSearchLoading } from 'actions/search';
+import { DATERANGE } from 'constants/constUtil';
 import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,8 @@ export const AdvancedSearch = () => {
 
 	const [iconAdvancedSearch, setIconAdvancedSearch] = useState('zmdi-chevron-down');
 	const [openAdvancedSearch, setOpenAdvancedSearch] = useState(false);
+
+	let DateRange = []
 
 	useEffect(() => {
 
@@ -103,14 +106,22 @@ export const AdvancedSearch = () => {
 								i === 0 ? columns : i * columns + columns
 							)
 							.map((item) => {
-								return (
-									<div
-										key={item.name}
-										className="col-xl-3 col-lg-3 col-md-6 col-6 mb-3"
-									>
-										<AdvancedSarchFilters {...item} />
-									</div>
-								)
+
+								if (item.type != DATERANGE) {
+									return (
+										<div
+											key={item.name}
+											className="col-xl-3 col-lg-3 col-md-6 col-6 mb-3"
+										>
+											<AdvancedSarchFilters {...item} />
+										</div>
+									)
+								}
+								else {
+									DateRange.push(item)
+									return <></>
+								}
+
 							})
 					}
 				</div>
@@ -119,6 +130,33 @@ export const AdvancedSearch = () => {
 		});
 
 	}
+	const handlePrintFieldsDateRange = () => {
+		console.log(DateRange);
+
+		const columns = 2;
+		const rows = getRows(DateRange, columns);
+
+		return [...Array(rows)].map((row, i) => {
+
+			return (
+				<div className="row" key={i}>
+					{DateRange.map((item) => {
+						return (
+							<div
+								key={item.name}
+								className="col-xl-3 col-lg-3 col-md-6 col-6 mb-3"
+							>
+								<AdvancedSarchFilters {...item} />
+							</div>
+						)
+					})}
+				</div>
+			)
+		})
+
+	}
+
+
 
 	return (
 		<Grid item xs={12}>
@@ -133,20 +171,32 @@ export const AdvancedSearch = () => {
 			{
 				openAdvancedSearch
 				&&
-				<Grid item xs={12}>
-
-					<h4 className="mb-4">
-						<IntlMessages id="dashboard.advancedSearchTitle" />
-					</h4>
-
+				<>
 					<Grid item xs={12}>
 
-						{filters.length > 0 && handlePrintFields()}
+						<h4 className="mb-4">
+							<IntlMessages id="dashboard.advancedSearchTitle" />
+						</h4>
 
-					<h4 className="mb-4">
-						<IntlMessages id="dashboard.advancedSearchDate" />
-					</h4>	
+						<Grid item xs={12}>
+							{filters.length > 0 && handlePrintFields()}
+						</Grid>
 
+					</Grid>
+					{DateRange.length > 0 && 
+					<Grid item xs={12}>
+
+						<h4 className="mb-4">
+							<IntlMessages id="dashboard.advancedSearchDate" />
+						</h4>
+
+						<Grid item xs={12}>
+							{DateRange.length > 0 && handlePrintFieldsDateRange()}
+						</Grid>
+
+					</Grid>
+					}
+					<Grid item xs={12}>
 						<Divider className="mt-3" />
 
 						<Grid
@@ -156,8 +206,10 @@ export const AdvancedSearch = () => {
 						>
 							<div className={classes.buttons}>
 								<Button
-								    style={{ backgroundColor:'#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, 	border: "none",
-									boxShadow: "none", height:'45px',width: '120px'}}
+									style={{
+										backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+										boxShadow: "none", height: '45px', width: '120px'
+									}}
 									type="button"
 									variant="contained"
 									onClick={handleAdvanceSearchClear}
@@ -166,8 +218,10 @@ export const AdvancedSearch = () => {
 								</Button>
 
 								<Button
-								    style={{  fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
-									boxShadow: "none", height:'45px', width: '120px'}}
+									style={{
+										fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+										boxShadow: "none", height: '45px', width: '120px'
+									}}
 									type="submit"
 									variant="contained"
 									color="primary"
@@ -179,8 +233,8 @@ export const AdvancedSearch = () => {
 
 						</Grid>
 					</Grid>
+				</>
 
-				</Grid>
 			}
 
 		</Grid>
