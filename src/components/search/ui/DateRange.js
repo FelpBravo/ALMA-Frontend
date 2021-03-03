@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
 	label:{
 		marginLeft:15,
 		marginRight:15, 
-        fontSize:12,
+        fontSize:10,
+        marginTop:6,
+        fontWeight:600,
 	},
 	text: {
 		fontSize: '0.75em',

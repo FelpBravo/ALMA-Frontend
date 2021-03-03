@@ -131,7 +131,7 @@ export const AdvancedSearch = () => {
 
 	}
 	const handlePrintFieldsDateRange = () => {
-		console.log(DateRange);
+		
 
 		const columns = 2;
 		const rows = getRows(DateRange, columns);
@@ -140,11 +140,18 @@ export const AdvancedSearch = () => {
 
 			return (
 				<div className="row" key={i}>
-					{DateRange.map((item) => {
+					{
+					  DateRange
+							.slice(
+								i === 0 ? i : i * columns,
+								i === 0 ? columns : i * columns + columns
+							)
+							.map((item) => {
 						return (
 							<div
 								key={item.name}
-								className="col-xl-3 col-lg-3 col-md-6 col-6 mb-3"
+								className="col-xl-6 col-lg-6 col-md-12 col-12 mb-3"
+							
 							>
 								<AdvancedSarchFilters {...item} />
 							</div>
@@ -183,6 +190,7 @@ export const AdvancedSearch = () => {
 						</Grid>
 
 					</Grid>
+					
 					{DateRange.length > 0 && 
 					<Grid item xs={12}>
 
