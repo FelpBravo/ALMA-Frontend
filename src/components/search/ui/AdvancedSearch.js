@@ -91,23 +91,24 @@ export const AdvancedSearch = () => {
 	}
 
 	const handlePrintFields = () => {
+		
+		const Dato = filters.filter((item)=> item.type != DATERANGE)
+		DateRange = filters.filter((item)=> item.type === DATERANGE)
 
 		const columns = 4;
-		const rows = getRows(filters, columns);
+		const rows = getRows(Dato, columns);
 
 		return [...Array(rows)].map((row, i) => {
 
 			return (
 				<div className="row" key={i}>
 					{
-						filters
+						Dato
 							.slice(
 								i === 0 ? i : i * columns,
 								i === 0 ? columns : i * columns + columns
 							)
 							.map((item) => {
-
-								if (item.type != DATERANGE) {
 									return (
 										<div
 											key={item.name}
@@ -116,12 +117,6 @@ export const AdvancedSearch = () => {
 											<AdvancedSarchFilters {...item} />
 										</div>
 									)
-								}
-								else {
-									DateRange.push(item)
-									return <></>
-								}
-
 							})
 					}
 				</div>
@@ -131,6 +126,8 @@ export const AdvancedSearch = () => {
 
 	}
 	const handlePrintFieldsDateRange = () => {
+		
+
 		
 
 		const columns = 2;
