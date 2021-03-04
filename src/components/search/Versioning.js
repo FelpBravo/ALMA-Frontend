@@ -55,7 +55,7 @@ const Versioning = () => {
 				type="submit"
 				color="primary"
 				fullWidth
-				onClick={backGo}
+				onClick={handleBackGo}
 			>
 				Volver
 			</Button>
