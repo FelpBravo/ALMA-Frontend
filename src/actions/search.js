@@ -101,10 +101,10 @@ export const startDeleteDocument = (id) => {
 };
 
 export const startDownloadDocument = (id,name) => {
-	return async (getState) => {
+	return async (dispatch,getState) => {
 
 		const { authUser } = getState().auth;
-		
+
 		const { documents } = getState().searchs;
 	
 		try {

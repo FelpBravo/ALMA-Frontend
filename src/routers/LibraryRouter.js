@@ -41,11 +41,16 @@ const LibraryRouter = () => {
 
 					path="/reports"
 					component={asyncComponent(() => import('../components/reports/Reports'))}
-					/>
+				/>
 				<Route
 
 					path="/edit"
 					component={asyncComponent(() => import('../components/documents/EditUpload'))}
+				/>
+				<Route
+
+					path="/version"
+					component={asyncComponent(() => import('../components/search/Versioning'))}
 				/>
 				<Redirect to="/dashboard" />
 

@@ -120,8 +120,9 @@ const DataTable = () => {
 	};
 
 	const handleVersioning=(id) =>{
-    	dispatch(openModalVersioning());
-		dispatch(startVersioningLoading(authUser,1, id));
+   /*  	dispatch(openModalVersioning());
+		dispatch(startVersioningLoading(authUser,1, id)); */
+		history.push(`/version/?document=${id}`);
 	};
 
 	const handleChangePage = (event, page) => {
