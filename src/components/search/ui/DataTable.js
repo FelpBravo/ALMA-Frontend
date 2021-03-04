@@ -36,6 +36,7 @@ import TableActionButton from './TableActionButton';
 import ModalVisibility from './ModalVisivility';
 import ModalFirm from './ModalFirm';
 import ModalVersioning from './ModalVersioning';
+import ShareIcon from '@material-ui/icons/Share';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -285,10 +286,18 @@ const DataTable = () => {
 													/>
 													}
 													/>
-												<MoreVert
+													<TableActionButton
+													materialIcon={
+													<ShareIcon
+														className={classes.iconos}
+														//onClick={() => handleFirm(id, name)}
+													/>
+													}
+													/>
+												{/*<MoreVert
 													className={classes.iconos}
 													onClick={() => console.log("test")}
-												/>
+												/>*/}
 												</div>
 											</TableCell>
 
