@@ -9,24 +9,67 @@ import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { startVersioningLoading } from 'actions/search'
+import { openModalVisibility, startDownloadDocument, startVersioningLoading } from 'actions/search'
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
+import TableActionButton from './TableActionButton';
+import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import ShareIcon from '@material-ui/icons/Share';
+import { makeStyles } from '@material-ui/core';
+import { startDocumentByIdVisibility } from 'actions/documents';
+import Swal from 'sweetalert2';
+
+const useStyles = makeStyles((theme) => ({
+	table: {
+	  minWidth: 650,
+	},
+	margin: {
+	  margin: theme.spacing(1),
+	},
+	backdrop: {
+	  zIndex: theme.zIndex.drawer + 1,
+	  color: "#fff",
+	},
+	iconsHolder: {
+	  display: "flex",
+	  alignItems: "center",
+	},
+	iconos: {
+	  cursor: "pointer",
+	  color: "#2196f3",
+	  fontSize: '18px',
+	},
+	root: {
+	  overflowX: "auto",
+	  margin: "0 auto",
+	  fontFamily: "Poppins",
+	},
+	pagination: {
+		marginBottom:'10px',
+		marginTop:'10px',
+		width:'100%',
+	  },
+  }));
 
 
 
 const DataTableVersioning = () => {
 
+	const classes = useStyles();
+
 	const isMounted = useRef(true)
 	const history = useHistory()
 	const dispatch = useDispatch()
 
-	const { authUser } = useSelector(state => state.auth)
+	const { authUser, authorities  } = useSelector(state => state.auth);
 	const { versioning = {}, documentId = '' } = useSelector(state => state.searchs)
 	const { data = [], totalItems = 0 } = versioning
 
 
 	const [page, setPage] = useState(0)
+
+	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
 
 
 	useEffect(() => {
@@ -39,6 +82,27 @@ const DataTableVersioning = () => {
 		dispatch(startVersioningLoading(authUser, page, documentId));
 		setPage(page);
 	};
+
+	const handleVisibility=(id, name) =>{
+    	dispatch(openModalVisibility());
+		dispatch(startDocumentByIdVisibility(id, name));
+	};
+
+	const handleDownload = async (id, name) => {
+		
+		if(ROLE_FILE_DOWNLOAD){const resp = await Swal.fire({
+			title: 'Descargar',
+			text: "¿Está seguro que quiere descargar el documento?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
+		if (resp.value) {
+			dispatch(startDownloadDocument(id,name))
+		}}
+
+	}
 
 	return (
 		<div className="row">
@@ -63,17 +127,50 @@ const DataTableVersioning = () => {
 								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="versioning.table.column5" />
 								</TableCell>
+								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+									<IntlMessages id="Acciones" />
+								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 
-							{data.map(({ name, modifiedAt, modifiedByUser, version, comment }, index) => {
+							{data.map(({ name, modifiedAt, modifiedByUser, version, comment, id }, index) => {
 								return <TableRow key={index}>
 									<TableCell>{name}</TableCell>
 									<TableCell>{new Date(modifiedAt).toLocaleString()}</TableCell>
 									<TableCell>{modifiedByUser}</TableCell>
 									<TableCell>{version}</TableCell>
 									<TableCell>{comment}</TableCell>
+									<TableCell>
+											<div className={classes.iconsHolder}>
+											
+											   <TableActionButton
+													materialIcon={
+													<VisibilityOutlinedIcon
+														className={classes.iconos}
+														onClick={() => handleVisibility(id, name)}
+													/>
+													}
+												/>
+												<TableActionButton
+														materialIcon={
+														<SaveAltOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleDownload(id, name)}
+														/>
+														}
+													/>
+													<TableActionButton
+													materialIcon={
+													<ShareIcon
+														className={classes.iconos}
+														//onClick={() => handleFirm(id, name)}
+													/>
+													}
+													/>
+											
+												</div>
+											</TableCell>
 								</TableRow>
 
 							})

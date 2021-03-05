@@ -57,15 +57,15 @@ const Versioning = () => {
 					
 						<Grid container spacing={2} className="mt-3">
 
-							<Grid item xs={9}>
+							<Grid item xs={10}>
 							<h3 className="mb-0">
 						      <IntlMessages id="versioning.modal.title" />
 						    </h3>
 							</Grid>
 
-							<Grid item xs={3}>
+							<Grid item xs={2}>
 								<Button
-									style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, width:80, height:50 }}
+									style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, width:80, height:30 }}
 									variant="contained"
 									type="submit"
 									color="primary"
