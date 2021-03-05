@@ -82,7 +82,8 @@ const DataTableVersioning = () => {
 
 						</TableBody>
 					</Table>
-					<Grid className="mt-3 mb-3 mr-3"
+				</TableContainer>
+				<Grid className="mt-3 mb-3 mr-3"
 						container
 						justify="flex-end"
 						alignItems="flex-end"
@@ -96,7 +97,6 @@ const DataTableVersioning = () => {
 							total={totalItems}
 							onChange={handleChangePage} />
 					</Grid>
-				</TableContainer>
 
 			</div>
 		</div>

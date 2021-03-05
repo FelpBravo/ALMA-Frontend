@@ -312,7 +312,8 @@ const DataTable = () => {
 							})}
 						</TableBody>		
 					</Table>
-					<Grid className="mt-3 mb-3 mr-3"
+				</TableContainer>
+				<Grid className="mt-3 mb-3 mr-3"
 									container
 									justify="flex-end"
 									alignItems="flex-end"
@@ -326,7 +327,6 @@ const DataTable = () => {
 									total={totalItems} 
 									onChange={handleChangePage}/>
 								</Grid>
-				</TableContainer>
 				<ModalVisibility/>
 				<ModalFirm/>
                 <ModalVersioning/>
