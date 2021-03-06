@@ -4,7 +4,7 @@ import { Divider, Button, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import queryString from 'query-string';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation , useParams} from 'react-router-dom';
 import moment from 'moment';
 
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 const EditUpload = () => {
 
 	const classes = useStyles();
-
+	const { id } = useParams()
 	const [openModal, setOpenModal] = useState(false);
 	const { authUser } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
@@ -65,7 +65,7 @@ const EditUpload = () => {
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
 	// ID DOCUMENTO URL
-	const { document = '' } = queryString.parse(location.search);
+	const document = id;
 
 
 	const [files, setFiles] = useState(null);

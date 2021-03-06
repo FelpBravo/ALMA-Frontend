@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useParams, useRouteMatch} from 'react-router-dom';
 import { 
 	startDeleteDocument, 
 	startSearchLoading, 
@@ -37,7 +37,6 @@ import ModalVisibility from './ModalVisivility';
 import ModalFirm from './ModalFirm';
 import ModalVersioning from './ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
-import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -89,10 +88,25 @@ const DataTable = () => {
 	const { data = [], totalItems = 0 } = documents;
 	const { filters } = fields;
 
-	const [page, setPage] = useState(0);
+	
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 
+	const { id, page } = useParams()
+	const { path, url } = useRouteMatch();
+
+
+	let page_url = 1
+	if(page){
+		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,'') : 1
+	}
+
+	console.log(page_url)
+	console.log(page);
+
+
 	const { folderId } = queryString.parse(location.search);
+
+	const folderId2 = id? id : folderId
 
 	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
 
@@ -121,22 +135,21 @@ const DataTable = () => {
 	};
 
 	const handleVersioning=(id) =>{
-		history.push(`/version/?document=${id}`);
+		history.push(`/document/${id}/version`);
 	};
 
 	const handleChangePage = (event, page) => {
 		const existsFilters = filters.filter(filter => filter.value);
 
-		dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId, page));
+	//	dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
 
-		setPage(page);
+		/* setPage(page); */
+
+		history.push(`/directory/${id}/p${page}`);
 
 	};
 
-	const handleChangeRowsPerPage = (event) => {
-		setRowsPerPage(parseInt(event.target.value, 10));
-		setPage(0);
-	};
+	
 
 	const handleDownload = async (id, name) => {
 		
@@ -155,7 +168,7 @@ const DataTable = () => {
 	}
 
 	const handleEdit = (id) => {
-		history.push(`/edit/?document=${id}`);
+		history.push(`/document/${id}/edit`);
 		
 	}
 
@@ -234,12 +247,11 @@ const DataTable = () => {
 											}
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
-											{/*<Link
+											<Link
 											onClick={() => handleVersioning(id, name)}
 											component="button"
 											variant="body2"
-											>{version}</Link>*/}
-											{version}
+											>{version}</Link>
 										</TableCell>
 										<TableCell></TableCell>
 										<TableCell>
@@ -253,14 +265,6 @@ const DataTable = () => {
 													/>
 													}
 												/>}
-												<TableActionButton
-														materialIcon={
-														<SaveAltOutlinedIcon
-															className={classes.iconos}
-															onClick={() => handleDownload(id, name)}
-														/>
-														}
-													/>
 											{ ROLE_FILE_UPDATE &&
 												<TableActionButton
 													materialIcon={
@@ -270,7 +274,7 @@ const DataTable = () => {
 													/>
 													}
 												/>}
-                                           {/* { ROLE_FILE_DELETE &&
+                                            { ROLE_FILE_DELETE &&
 												<TableActionButton
 													materialIcon={
 													<DeleteOutlinedIcon
@@ -279,14 +283,14 @@ const DataTable = () => {
 													/>
 													}
 												/>}
-												<TableActionButton
+												{/*<TableActionButton
 													materialIcon={
 													<PlaylistAddCheckOutlinedIcon
 														className={classes.iconos}
 														onClick={() => handleSubscribe(id)}
 													/>
 													}
-												/>
+												/>*/}
 												<TableActionButton
 													materialIcon={
 													<FingerprintOutlinedIcon
@@ -294,15 +298,7 @@ const DataTable = () => {
 														onClick={() => handleFirm(id, name)}
 													/>
 													}
-													/>*/}
-													<TableActionButton
-														materialIcon={
-														<LoopOutlinedIcon
-															className={classes.iconos}
-															onClick={() => handleVersioning(id, name)}
-														/>
-														}
-														/>
+													/>
 													<TableActionButton
 													materialIcon={
 													<ShareIcon
@@ -330,8 +326,7 @@ const DataTable = () => {
 							})}
 						</TableBody>		
 					</Table>
-				</TableContainer>
-				<Grid className="mt-3 mb-3 mr-3"
+					<Grid className="mt-3 mb-3 mr-3"
 									container
 									justify="flex-end"
 									alignItems="flex-end"
@@ -343,8 +338,10 @@ const DataTable = () => {
 									color="primary" 
 									shape="rounded" 
 									total={totalItems} 
+									defaultPage={parseInt(page_url)}
 									onChange={handleChangePage}/>
 								</Grid>
+				</TableContainer>
 				<ModalVisibility/>
 				<ModalFirm/>
                 <ModalVersioning/>

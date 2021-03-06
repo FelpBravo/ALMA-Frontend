@@ -25,6 +25,12 @@ const LibraryRouter = () => {
 					path="/search"
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
+				<Route
+
+					path="/directory/:id/:page"
+					component={asyncComponent(() => import('../components/search/Search'))}
+				/>
+
 
 				<Route
 
@@ -44,12 +50,12 @@ const LibraryRouter = () => {
 				/>
 				<Route
 
-					path="/edit"
+					path="/document/:id/edit"
 					component={asyncComponent(() => import('../components/documents/EditUpload'))}
 				/>
 				<Route
 
-					path="/version"
+					path="/document/:id/version"
 					component={asyncComponent(() => import('../components/search/Versioning'))}
 				/>
 				<Redirect to="/dashboard" />
