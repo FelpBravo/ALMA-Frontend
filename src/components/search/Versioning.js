@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import queryString from 'query-string';
 import { useHistory, useLocation , useParams} from 'react-router-dom';
-import { Button} from '@material-ui/core';
+import { Button, Grid} from '@material-ui/core';
 import { startVersioningLoading ,versioningRemove} from 'actions/search';
 import { TableVersioning } from './ui/TableVersioning';
+import IntlMessages from 'util/IntlMessages';
 const useStyles = makeStyles({
 	root: {
 		flexGrow: 1,
@@ -49,19 +50,42 @@ const Versioning = () => {
 
 
 	return (
+	
 		<div className="row">
-			<Button
-				style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, width:20, height:20 }}
-				variant="contained"
-				type="submit"
-				color="primary"
-				fullWidth
-				onClick={handleBackGo}
-			>
-				Volver
-			</Button>
-			<TableVersioning/>
+			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				<div className="jr-card">
+					
+						<Grid container spacing={2} className="mt-3">
+
+							<Grid item xs={10}>
+							<h3 className="mb-0">
+						      <IntlMessages id="versioning.modal.title" />
+						    </h3>
+							</Grid>
+
+							<Grid item xs={2}>
+								<Button
+									style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, width:80, height:30 }}
+									variant="contained"
+									type="submit"
+									color="primary"
+									fullWidth
+									onClick={handleBackGo}
+								>
+									Volver
+								</Button>
+							</Grid>
+
+						</Grid>
+				 <TableVersioning/>
+				</div>
+			</div>
 		</div>
+		
+		
+			
+			
+		
 	)
 }
 

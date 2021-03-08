@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams, useRouteMatch} from 'react-router-dom';
+import { useDispatch, useSelector} from 'react-redux';
+import { useHistory, useLocation, useParams,useRouteMatch  } from 'react-router-dom';
 import { 
 	startDeleteDocument, 
 	startSearchLoading, 
@@ -37,6 +37,7 @@ import ModalVisibility from './ModalVisivility';
 import ModalFirm from './ModalFirm';
 import ModalVersioning from './ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
+import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 		width:'100%',
 	  },
   }));
+
 
 const DataTable = () => {
 
@@ -247,11 +249,12 @@ const DataTable = () => {
 											}
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>
-											<Link
+											{/*<Link
 											onClick={() => handleVersioning(id, name)}
 											component="button"
 											variant="body2"
-											>{version}</Link>
+											>{version}</Link>*/}
+											{version}
 										</TableCell>
 										<TableCell></TableCell>
 										<TableCell>
@@ -265,6 +268,14 @@ const DataTable = () => {
 													/>
 													}
 												/>}
+												<TableActionButton
+														materialIcon={
+														<SaveAltOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleDownload(id, name)}
+														/>
+														}
+													/>
 											{ ROLE_FILE_UPDATE &&
 												<TableActionButton
 													materialIcon={
@@ -274,7 +285,7 @@ const DataTable = () => {
 													/>
 													}
 												/>}
-                                            { ROLE_FILE_DELETE &&
+                                           {/* { ROLE_FILE_DELETE &&
 												<TableActionButton
 													materialIcon={
 													<DeleteOutlinedIcon
@@ -283,14 +294,14 @@ const DataTable = () => {
 													/>
 													}
 												/>}
-												{/*<TableActionButton
+												<TableActionButton
 													materialIcon={
 													<PlaylistAddCheckOutlinedIcon
 														className={classes.iconos}
 														onClick={() => handleSubscribe(id)}
 													/>
 													}
-												/>*/}
+												/>
 												<TableActionButton
 													materialIcon={
 													<FingerprintOutlinedIcon
@@ -298,7 +309,15 @@ const DataTable = () => {
 														onClick={() => handleFirm(id, name)}
 													/>
 													}
-													/>
+													/>*/}
+													<TableActionButton
+														materialIcon={
+														<LoopOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleVersioning(id, name)}
+														/>
+														}
+														/>
 													<TableActionButton
 													materialIcon={
 													<ShareIcon
@@ -326,7 +345,8 @@ const DataTable = () => {
 							})}
 						</TableBody>		
 					</Table>
-					<Grid className="mt-3 mb-3 mr-3"
+				</TableContainer>
+				<Grid className="mt-3 mb-3 mr-3"
 									container
 									justify="flex-end"
 									alignItems="flex-end"
@@ -338,10 +358,8 @@ const DataTable = () => {
 									color="primary" 
 									shape="rounded" 
 									total={totalItems} 
-									defaultPage={parseInt(page_url)}
 									onChange={handleChangePage}/>
 								</Grid>
-				</TableContainer>
 				<ModalVisibility/>
 				<ModalFirm/>
                 <ModalVersioning/>
