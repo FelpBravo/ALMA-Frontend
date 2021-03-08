@@ -7,14 +7,12 @@ import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
 import FileSaver from 'file-saver';
 
 export const startVersioningLoading = (authUser,page, fileId) => {
-	return async (dispatch,getState) => {
+	return async (dispatch) => {
 
-		const { documentId } = getState().searchs;
 		try {
 			
-			const id = documentId?  documentId : fileId
-			const resp = await getVersioning(authUser,page, 10, id);
-			dispatch(versioningLoaded(resp.data,id));
+			const resp = await getVersioning(authUser,page, 10, fileId);
+			dispatch(versioningLoaded(resp.data,fileId));
 
 		} catch (error) {
 			console.log(error);
@@ -39,8 +37,9 @@ export const startSearchFieldsLoading = (authUser) => {
 };
 
 export const startSearchLoading = (authUser, term, filters, folderId, page, maxItems) => {
+	
 	return async (dispatch) => {
-
+		dispatch(versioningRemove())
 		try {
 
 			Swal.fire({
@@ -190,6 +189,7 @@ export const versioningLoaded = (versioning,id) => {
 };
 
 export const versioningRemove = () => {
+	console.log("asdsdsSSSS");
 	return {
 		type: types.versioningRemove,
 	}

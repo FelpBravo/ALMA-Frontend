@@ -102,10 +102,6 @@ const DataTable = () => {
 		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,'') : 1
 	}
 
-	console.log(page_url)
-	console.log(page);
-
-
 	const { folderId } = queryString.parse(location.search);
 
 	const folderId2 = id? id : folderId
@@ -137,11 +133,12 @@ const DataTable = () => {
 	};
 
 	const handleVersioning=(id) =>{
+		console.log('ID',id);
 		history.push(`/document/${id}/version`);
 	};
 
 	const handleChangePage = (event, page) => {
-		const existsFilters = filters.filter(filter => filter.value);
+		//const existsFilters = filters.filter(filter => filter.value);
 
 	//	dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
 
@@ -154,7 +151,6 @@ const DataTable = () => {
 	
 
 	const handleDownload = async (id, name) => {
-		
 		if(ROLE_FILE_DOWNLOAD){const resp = await Swal.fire({
 			title: 'Descargar',
 			text: "¿Está seguro que quiere descargar el documento?",
@@ -272,7 +268,7 @@ const DataTable = () => {
 														materialIcon={
 														<SaveAltOutlinedIcon
 															className={classes.iconos}
-															onClick={() => handleDownload(id, name)}
+															onClick={() => handleDownload(id, name,version)}
 														/>
 														}
 													/>

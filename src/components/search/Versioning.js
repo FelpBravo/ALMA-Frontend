@@ -21,8 +21,8 @@ const Versioning = () => {
 	const location = useLocation();
 	const history = useHistory();
 
-	const document = id;
 
+		console.log('ID!',id);
 
 	useEffect(() => {
 
@@ -33,21 +33,19 @@ const Versioning = () => {
 	}, [dispatch, authUser]);
 
 	useEffect(() => {
-
-		if (document.length < 10) {
+		if (id.length < 10) {
 			return;
 		}
-		dispatch(startVersioningLoading(authUser,1, document))
+		dispatch(startVersioningLoading(authUser,1, id))
 
 
 
-	}, [dispatch, document]);
+	}, [dispatch, id]);
 
 	const handleBackGo = ()=>{
 		dispatch(versioningRemove())
 		history.goBack()
 	}
-
 
 	return (
 	

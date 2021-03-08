@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { detailDocumentSetValueField } from 'actions/documents';
 import { MultiLevelSelect } from './MultiLevelSelect';
 
-export const PrintField = ({ sectionId, name, label, type, value, propertyItemList }) => {
+export const PrintField = ({ sectionId, name, label, type, value, propertyItemList,mandatory }) => {
 
 	const dispatch = useDispatch();
 
@@ -30,6 +30,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					type="date"
 					value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
 					size="small"
+					required={mandatory}
 					InputLabelProps={{
 						shrink: true,
 					}
@@ -48,6 +49,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					variant="outlined"
 					fullWidth
 					size="small"
+					required={mandatory}
 					onChange={handleOnChange}
 				/>
 			);
@@ -58,6 +60,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				label={label}
 				type={type}
 				value={value}
+				required={mandatory}
 				propertyItemList={propertyItemList}
 			/>
 
@@ -69,6 +72,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					value={value ? value : ''}
 					variant="outlined"
 					fullWidth
+					required={mandatory}
 					size="small"
 					onChange={handleOnChange}
 				/>

@@ -22,7 +22,8 @@ export const MultiLevelSelect = (
 		label,
 		type,
 		value: valueProps = '',
-		propertyItemList = []
+		propertyItemList = [],
+		required
 	}
 ) => {
 
@@ -173,6 +174,7 @@ export const MultiLevelSelect = (
 				onClick={handleOpenModal}
 				value={value ? value : ''}
 				fullWidth
+				required={required}
 				size="small"
 			/>
 
