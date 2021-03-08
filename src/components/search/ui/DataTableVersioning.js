@@ -135,6 +135,7 @@ const DataTableVersioning = () => {
 						<TableBody>
 
 							{data.map(({ name, modifiedAt, modifiedByUser, version, comment, id }, index) => {
+								console.log("soy la",data)
 								return <TableRow key={index}>
 									<TableCell>{name}</TableCell>
 									<TableCell>{new Date(modifiedAt).toLocaleString()}</TableCell>
