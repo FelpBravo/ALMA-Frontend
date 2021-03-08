@@ -19,6 +19,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
 import { startDocumentByIdVisibility } from 'actions/documents';
 import Swal from 'sweetalert2';
+import CompareArrowsOutlinedIcon from '@material-ui/icons/CompareArrowsOutlined';
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -115,14 +116,14 @@ const DataTableVersioning = () => {
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="versioning.table.column1" />
 								</TableCell>
+								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+									<IntlMessages id="versioning.table.column4" />
+								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="versioning.table.column2" />
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="versioning.table.column3" />
-								</TableCell>
-								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="versioning.table.column4" />
 								</TableCell>
 								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="versioning.table.column5" />
@@ -137,9 +138,9 @@ const DataTableVersioning = () => {
 							{data.map(({ name, modifiedAt, modifiedByUser, version, comment, id }, index) => {
 								return <TableRow key={index}>
 									<TableCell>{name}</TableCell>
+									<TableCell>{version}</TableCell>
 									<TableCell>{new Date(modifiedAt).toLocaleString()}</TableCell>
 									<TableCell>{modifiedByUser}</TableCell>
-									<TableCell>{version}</TableCell>
 									<TableCell>{comment}</TableCell>
 									<TableCell>
 											<div className={classes.iconsHolder}>
@@ -162,7 +163,7 @@ const DataTableVersioning = () => {
 													/>
 													<TableActionButton
 													materialIcon={
-													<ShareIcon
+													<CompareArrowsOutlinedIcon
 														className={classes.iconos}
 														//onClick={() => handleFirm(id, name)}
 													/>

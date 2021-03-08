@@ -95,17 +95,16 @@ export const DateRange = (props) => {
 	}
 
 	return (
-		<div className={active? classes.root2:classes.root} >
-			<div className={classes.containerText} >
-				<span className={active? classes.textblue:classes.text}>{label}</span>
-			</div>
-			<div className={classes.containerInput}>
+		<Grid container spacing={2}>
+			
+			<Grid item xs={6}>
 			<TextField
 						//key={name}
-						//label={label}
+						label={label}
 						name='startDate'
 						fullWidth
 						type="date"
+						variant="outlined"
 						//value={value ? value : '2017-05-24'}
 						size="small"
 						InputLabelProps={{
@@ -118,10 +117,12 @@ export const DateRange = (props) => {
 						onFocus={()=>setActive(true)}
 						onBlur={()=>setActive(false)}
 					/>
-					<span className={classes.label}>Hasta</span>
+					</Grid>
+				    <Grid item xs={6}>
 					<TextField
 						//key={name}
-						//label={label}
+						label="hasta"
+						variant="outlined"
 						name='endDate'
 						fullWidth
 						type="date"
@@ -137,8 +138,8 @@ export const DateRange = (props) => {
 						onFocus={()=>setActive(true)}
 						onBlur={()=>setActive(false)}
 					/>
-			</div>
+			</Grid>
 			
-		</div>
+		</Grid>
 	)
 }

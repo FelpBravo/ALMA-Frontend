@@ -55,15 +55,15 @@ const Versioning = () => {
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 					
-						<Grid container spacing={2} className="mt-3">
+						<Grid container className="mt-2">
 
-							<Grid item xs={10}>
+							<Grid item xs={11}>
 							<h3 className="mb-0">
 						      <IntlMessages id="versioning.modal.title" />
 						    </h3>
 							</Grid>
 
-							<Grid item xs={2}>
+							<Grid item xs={1}>
 								<Button
 									style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, width:80, height:30 }}
 									variant="contained"
