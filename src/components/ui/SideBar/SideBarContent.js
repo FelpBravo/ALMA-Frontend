@@ -117,7 +117,7 @@ const SideBarContent = () => {
 
 		dispatch(searchRemoveText());
 
-		history.push(`/search?folderId=${folderId}`);
+		history.push(`/directory/${folderId}/p1`);
 
 	}
 
