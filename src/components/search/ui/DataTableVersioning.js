@@ -84,8 +84,8 @@ const DataTableVersioning = () => {
 	};
 
 	const handleVisibility=(id, name) =>{
-  /*   	dispatch(openModalVisibility());
-		dispatch(startDocumentByIdVisibility(id, name)); */
+    	dispatch(openModalVisibility());
+		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
 	const handleDownload = async (id, name) => {
@@ -99,7 +99,7 @@ const DataTableVersioning = () => {
 			heightAuto: false,
 		});
 		if (resp.value) {
-			/* dispatch(startDownloadDocument(id,name)) */
+			dispatch(startDownloadDocument(id,name))
 		}}
 
 	}
@@ -135,7 +135,6 @@ const DataTableVersioning = () => {
 						<TableBody>
 
 							{data.map(({ name, modifiedAt, modifiedByUser, version, comment, id }, index) => {
-								console.log("soy la",data)
 								return <TableRow key={index}>
 									<TableCell>{name}</TableCell>
 									<TableCell>{new Date(modifiedAt).toLocaleString()}</TableCell>
