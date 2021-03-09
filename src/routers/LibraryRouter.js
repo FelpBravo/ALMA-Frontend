@@ -22,7 +22,7 @@ const LibraryRouter = () => {
 
 				<Route
 
-					path="/search"
+					path="/search/:page"
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
 				<Route

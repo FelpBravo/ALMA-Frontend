@@ -28,14 +28,11 @@ const Search = () => {
 
 
 	
-
- 
 	useEffect(() => {
 
 		if (!id || !authUser) {
-			//return;
+			return;
 		}
-
 		dispatch(startSearchLoading(authUser, undefined, undefined, id,page_url));
 
 	}, [dispatch, id, authUser]); 
@@ -43,7 +40,7 @@ const Search = () => {
 	return (
 		<div>
 			<EditTextSearch />
-			<TableSearch />
+			 <TableSearch /> 
 		</div>
 	)
 }

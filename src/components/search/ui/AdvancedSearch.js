@@ -80,9 +80,7 @@ export const AdvancedSearch = () => {
 
 		dispatch(startSearchLoading(authUser, '', exists));
 
-		if (location.pathname !== '/search') {
-			history.push(`/search`);
-		}
+		history.push(`/search/p1`);
 
 	}
 

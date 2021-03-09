@@ -87,7 +87,7 @@ export const EditTextSearch = ({ }) => {
 		e.preventDefault();
 		dispatch(startSearchLoading(authUser, searchText));
 
-		history.push(`/search`);
+		history.push(`/search/p1`);
 	}
 
 	return (

@@ -98,13 +98,14 @@ const DataTable = () => {
 
 
 	let page_url = 1
+
 	if(page){
 		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,'') : 1
 	}
 
 	const { folderId } = queryString.parse(location.search);
 
-	const folderId2 = id? id : folderId
+	const folderId2 = id? id : folderId	
 
 	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
 
@@ -133,18 +134,24 @@ const DataTable = () => {
 	};
 
 	const handleVersioning=(id) =>{
-		console.log('ID',id);
 		history.push(`/document/${id}/version`);
 	};
 
+
+	console.log(path,url);
 	const handleChangePage = (event, page) => {
-		//const existsFilters = filters.filter(filter => filter.value);
 
-	//	dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
+		if(path === '/search/:page'){
+			const existsFilters = filters.filter(filter => filter.value);
 
-		/* setPage(page); */
-
-		history.push(`/directory/${id}/p${page}`);
+			dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
+		}
+		else
+		{
+			history.push(`/directory/${id}/p${page}`);
+		}
+		
+		
 
 	};
 
@@ -219,12 +226,8 @@ const DataTable = () => {
 										tabIndex={-1}
 										key={id}
 									>
-										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}}>
-											<Link
-											onClick={() => handleDownload(id, name)} 
-											component="button"
-											style={{ textAlign: "left"}}
-											><i className="far fa-file-pdf custom-link-dash"></i>{` `} {name}</Link>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400}}>
+											<span style={{color:"#2196f3"}}><i className="far fa-file-pdf custom-link-dash"></i>{` `} {name}</span>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0,10)}</TableCell>
@@ -268,7 +271,7 @@ const DataTable = () => {
 														materialIcon={
 														<SaveAltOutlinedIcon
 															className={classes.iconos}
-															onClick={() => handleDownload(id, name,version)}
+															onClick={() => handleDownload(id, name)}
 														/>
 														}
 													/>
