@@ -33,7 +33,7 @@ const Search = () => {
 	useEffect(() => {
 
 		if (!id || !authUser) {
-			//return;
+			return;
 		}
 
 		dispatch(startSearchLoading(authUser, undefined, undefined, id,page_url));
