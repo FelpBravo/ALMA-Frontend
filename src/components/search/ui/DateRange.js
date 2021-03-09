@@ -81,14 +81,13 @@ export const DateRange = (props) => {
 		if (name === 'startDate') {
 			setDate({ start: value, end: date.end })
 			if (date.end != '') {
-				dispatch(searchSetValueFilter(namecomponent,`'`+value+`' , '`+date.end+`'`));
-
+				dispatch(searchSetValueFilter(namecomponent,`['`+value+`' , '`+date.end+`']`));
 			}
 		}
 		else {
 			setDate({ start: date.start, end: value })
 			if (date.start != '') {
-				dispatch(searchSetValueFilter(namecomponent,`'`+date.start+`' , '`+value+`'`));
+				dispatch(searchSetValueFilter(namecomponent,`['`+date.start+`' , '`+value+`']`));
 			}
 
 		}
@@ -114,8 +113,6 @@ export const DateRange = (props) => {
 							color: '#3699FF',
 						}}
 						onChange={handleOnChange}
-						onFocus={()=>setActive(true)}
-						onBlur={()=>setActive(false)}
 					/>
 					</Grid>
 				    <Grid item xs={6}>
@@ -135,8 +132,6 @@ export const DateRange = (props) => {
 							color: '#3699FF',
 						}}
 						onChange={handleOnChange}
-						onFocus={()=>setActive(true)}
-						onBlur={()=>setActive(false)}
 					/>
 			</Grid>
 			

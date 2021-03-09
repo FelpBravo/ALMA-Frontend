@@ -9,6 +9,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { searchClearAllFilters, startSearchLoading } from 'actions/search';
 import { DATERANGE } from 'constants/constUtil';
 import Swal from 'sweetalert2';
+import TagsPrueba from './TagsPrueba.js'
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -38,6 +39,7 @@ export const AdvancedSearch = () => {
 	const [openAdvancedSearch, setOpenAdvancedSearch] = useState(false);
 
 	let DateRange = []
+	let tags = ['a','b']
 
 	useEffect(() => {
 
@@ -80,9 +82,7 @@ export const AdvancedSearch = () => {
 
 		dispatch(startSearchLoading(authUser, '', exists));
 
-		if (location.pathname !== '/search') {
-			history.push(`/search`);
-		}
+		history.push(`/search/p1`);
 
 	}
 
@@ -197,6 +197,19 @@ export const AdvancedSearch = () => {
 
 						<Grid item xs={12}>
 							{DateRange.length > 0 && handlePrintFieldsDateRange()}
+						</Grid>
+
+					</Grid>
+					}
+					{tags.length > 0 && 
+					<Grid item xs={12}>
+
+						<h4 className="mb-4">
+							<IntlMessages id="dashboard.advancedSearchTags" />
+						</h4>
+
+						<Grid item xs={12}>
+							<TagsPrueba></TagsPrueba>
 						</Grid>
 
 					</Grid>

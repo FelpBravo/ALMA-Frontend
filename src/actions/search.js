@@ -10,12 +10,23 @@ export const startVersioningLoading = (authUser,page, fileId) => {
 	return async (dispatch) => {
 
 		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
 			
 			const resp = await getVersioning(authUser,page, 10, fileId);
 			dispatch(versioningLoaded(resp.data,fileId));
 
 		} catch (error) {
 			console.log(error);
+		}finally {
+			Swal.close();
 		}
 
 	}
@@ -24,13 +35,23 @@ export const startVersioningLoading = (authUser,page, fileId) => {
 export const startSearchFieldsLoading = (authUser) => {
 	return async (dispatch) => {
 
-		try {
+		try {	
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
 
 			const resp = await getSearchFields(authUser);
 			dispatch(searchFieldsLoaded(resp.data));
 
 		} catch (error) {
 			console.log(error);
+		}finally {
+			Swal.close();
 		}
 
 	}
@@ -189,7 +210,6 @@ export const versioningLoaded = (versioning,id) => {
 };
 
 export const versioningRemove = () => {
-	console.log("asdsdsSSSS");
 	return {
 		type: types.versioningRemove,
 	}
