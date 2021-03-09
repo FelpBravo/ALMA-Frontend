@@ -313,6 +313,7 @@
 	"dashboard.advancedSearch": "Búsqueda Avanzada",
 	"dashboard.advancedSearchTitle": "Buscar por atributo",
 	"dashboard.advancedSearchDate": "Buscar por rangos de fechas",
+	"dashboard.advancedSearchTags": "Buscar por Etiquetas",
 	"dashboard.moreInfo": "Ver todo",
 	"dashboard.recentActivities": "Actividades recientes",
 	"dashboard.lastActivity": "Última actividad fue hace 2 días",

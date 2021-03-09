@@ -196,7 +196,7 @@ const DataTable = () => {
 	}
 	
 	
-
+	console.log("PAGE", page_url);
 
 	return (
 		<div className="row mt-3">
@@ -353,6 +353,7 @@ const DataTable = () => {
 								>
 									<Pagination 
 									style={{color: '#369bff'}}
+									defaultPage={parseInt(page_url)}
 									count={Math.ceil(totalItems/rowsPerPage)} 
 									color="primary" 
 									shape="rounded" 

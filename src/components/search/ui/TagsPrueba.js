@@ -23,7 +23,7 @@ const MenuProps = {
     },
 };
 
-export const SelectTags = () => {
+const TagsPrueba = () => {
 
     const dispatch = useDispatch();
 
@@ -95,22 +95,10 @@ export const SelectTags = () => {
 
     }
 
-    return (
-        <div className="row">
-            <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-
+    return (<>
                 <div className="row">
-                    <div className="col-xl-12 col-lg-12 col-md-12 col-12">
-                        <h4>{<IntlMessages id="document.tags.title" />}</h4>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-xl-4 col-lg-4 col-md-12 col-12">
+                    <div className="col-xl-3 col-lg-3 col-md-12 col-12">
                         <FormControl fullWidth>
-
-                            <InputLabel>Seleccionar etiquetas</InputLabel>
-
                             <Select
                                 id="demo-mutiple-checkbox"
                                 multiple
@@ -142,7 +130,7 @@ export const SelectTags = () => {
 
                     </div>
                 </div>
-                
+                <br></br>
                 {handleRenderTags()}
 
                 <div className="row">
@@ -151,7 +139,9 @@ export const SelectTags = () => {
                     </div>
                 </div>
 
-            </div>
-        </div>
+            </>
     )
 }
+
+export default TagsPrueba
+
