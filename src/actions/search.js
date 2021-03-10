@@ -255,6 +255,12 @@ export const searchRemoveAll = () => {
 	}
 };
 
+export const changeCleanFilter = () => {
+	return {
+		type: types.changeCleanFilter
+	}
+};
+
 export const searchSetValueFilter = (name, value) => {
 	return {
 		type: types.searchSetValueFilter,
