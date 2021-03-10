@@ -192,13 +192,21 @@ export const startDropFileLoading = (files) => {
 
 			Swal.showLoading();
 
-			const resp = await uploadDocument(authUser, files[0]);
+			const resp = await uploadDocument(authUser, files);
 
 			Swal.close();
 
 			// SAVE STORE ID LOADED
-			dispatch(saveFileIdLoaded(resp.data.id));
-			dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
+			// documentsType , thumbnailGenerated
+			//for
+			console.log('resp', resp)
+			resp.forEach( res => dispatch(saveFileIdLoaded(
+				{
+					documentsType: res.data.id,
+					thumbnailGenerated: res.data.thumbnailGenerated
+				})))
+			// dispatch(saveFileIdLoaded(resp.data.id));
+			// dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
 
 		} catch (error) {
 
@@ -217,10 +225,10 @@ export const startDropFileLoading = (files) => {
 	}
 };
 
-const saveFileIdLoaded = (fileId) => {
+const saveFileIdLoaded = (fileObject) => {
 	return {
-		type: types.docsSaveFileIdLoaded,
-		payload: fileId,
+		type: types.docsListSaveFileIdLoaded,
+		payload: fileObject,
 	}
 };
 

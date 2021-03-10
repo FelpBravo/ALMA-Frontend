@@ -106,4 +106,6 @@ export const types = {
 	tagsUpdateLoaded: 'Tags update loaded',
 	tagsRemoveAll: 'Tags Remove all',
 
+	docsListSaveFileIdLoaded: 'Documents List Save file ID loaded',
+
 }

@@ -25,18 +25,20 @@ const subscribeDocument = (authUser, id) => {
 	});
 };
 
-const uploadDocument = (authUser, file) => {
-
-	const data = new FormData();
-	data.append('file', file);
-
-	return axiosInstance.post(`/files/upload`, data, {
-		headers: {
-			Authorization: `Bearer ${authUser}`,
-			'Content-Type': 'multipart/form-data'
-		},
+const uploadDocument = (authUser, files) => {
+	const requestList = []
+	files.map(file => {
+		const data = new FormData();
+		data.append('file', file);
+	
+		requestList.push(axiosInstance.post(`/files/upload`, data, {
+			headers: {
+				Authorization: `Bearer ${authUser}`,
+				'Content-Type': 'multipart/form-data'
+			},
+		}));
 	});
-
+	return Promise.all(requestList)
 };
 
 const getThumbnail = (authUser, id) => {
