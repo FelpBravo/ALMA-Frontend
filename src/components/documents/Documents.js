@@ -167,7 +167,7 @@ const Documents = () => {
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
-
+				<form onSubmit={handleSaveForm}>
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 							<TitleCard message="document.loadDocuments" />
@@ -262,7 +262,7 @@ const Documents = () => {
 										type="submit"
 										variant="contained"
 										color="primary"
-										onClick={handleSaveForm}
+										//onClick={handleSaveForm}
 									>
 										<IntlMessages id="document.loadDocuments.load" />
 									</Button>
@@ -271,6 +271,7 @@ const Documents = () => {
 
 						</div>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>

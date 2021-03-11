@@ -31,7 +31,6 @@ export const DateRange = (props) => {
 		}
 	}
 	useEffect(()=>{
-		console.log("ASDDDD");
 		if(!cleanfilter){
 			setDate({ start: '', end: '' })
 		}

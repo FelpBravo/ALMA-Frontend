@@ -22,24 +22,24 @@ const LibraryRouter = () => {
 
 				<Route
 
-					path="/search/:page"
+					path={["/search/:page","/search"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
 				<Route
 
-					path="/directory/:id/:page"
+					path={["/directory/:id/:page","/directory/:id"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
-
-
 				<Route
 
+					path="/carpeta/:id"
+					component={asyncComponent(() => import('../components/folders/Foldersnew'))}
+				/>
+				<Route
 					path="/tags"
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
-
 				<Route
-
 					path="/folders"
 					component={asyncComponent(() => import('../components/folders/Folders'))}
 				/>
