@@ -39,6 +39,7 @@ export const types = {
 	searchRemoveAll: 'Search Remove All',
 	searchSetValueFilter: 'Search Set value filter',
 	searchClearAllFilters: 'Search Clear all filters',
+	changeCleanFilter: 'Change Clear Filter',
 	searchSubscribeDocumentFinish: 'Search subscribe document finish',
 	visibilityOpenModal: 'Visibility Open Modal',
 	visibilityCloseModal: 'Visibility Close Modal',

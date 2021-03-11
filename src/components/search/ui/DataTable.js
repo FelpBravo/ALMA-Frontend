@@ -196,8 +196,8 @@ const DataTable = () => {
 	}
 	
 	
-	console.log("PAGE", page_url);
 
+	
 	return (
 		<div className="row mt-3">
 

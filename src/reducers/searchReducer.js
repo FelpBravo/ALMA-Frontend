@@ -8,6 +8,7 @@ const initialState = {
 	versioning: {
 		data: []
 	},
+	cleanfilter:false,
 	documentId: '',
 	textSearch: '',
 	openAdvanceSearch: false,
@@ -39,6 +40,11 @@ export const searchReducer = (state = initialState, action) => {
 			return {
 				...state,
 				documents: action.payload,
+			}
+		case types.changeCleanFilter:
+			return {
+				...state,
+				cleanfilter: true,
 			}
 
 			{/*	case types.searchDocumentDeleted:
@@ -84,14 +90,13 @@ export const searchReducer = (state = initialState, action) => {
 				fields: {
 					...state.fields,
 					filters: state.fields.filters.map(filter => {
-
 						if (filter.name === action.payload.name) {
 							filter.value = action.payload.value;
 						}
-
 						return filter;
 					}),
-				}
+				},
+				cleanfilter:true
 			}
 
 		case types.searchClearAllFilters:
@@ -100,14 +105,13 @@ export const searchReducer = (state = initialState, action) => {
 				fields: {
 					...state.fields,
 					filters: state.fields.filters.map(filter => {
-
 						if (filter.value) {
 							delete filter.value;
 						}
-
 						return filter;
 					}),
-				}
+				},
+				cleanfilter:false
 			}
 
 		case types.searchSubscribeDocumentFinish:
