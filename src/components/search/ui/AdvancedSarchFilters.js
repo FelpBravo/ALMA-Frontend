@@ -30,7 +30,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 					variant="outlined"
 					fullWidth
 					type="date"
-					value={value ? value : '2017-05-24'}
+					value={value ? value : ''}
 					size="small"
 					InputLabelProps={{
 						shrink: true,

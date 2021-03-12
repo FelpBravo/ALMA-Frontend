@@ -33,7 +33,7 @@ import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import TableActionButton from './TableActionButton';
-import ModalVisibility from './ModalVisivility';
+import ModalVisibility from './ModalVisibility';
 import ModalFirm from './ModalFirm';
 import ModalVersioning from './ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
@@ -127,7 +127,7 @@ const DataTable = () => {
 	}, []);
 
 	const handleVisibility=(id, name) =>{
-    	dispatch(openModalVisibility());
+		history.push(`/document/${id}/${name}/visibility`);
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 

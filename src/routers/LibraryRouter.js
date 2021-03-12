@@ -58,6 +58,11 @@ const LibraryRouter = () => {
 					path="/document/:id/version"
 					component={asyncComponent(() => import('../components/search/Versioning'))}
 				/>
+				<Route
+
+				path="/document/:id/:name/visibility"
+				component={asyncComponent(() => import('../components/search/Visibility'))}
+				/>
 				<Redirect to="/dashboard" />
 
 			</Switch>

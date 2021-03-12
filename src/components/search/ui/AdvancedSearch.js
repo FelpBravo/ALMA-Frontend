@@ -215,7 +215,7 @@ export const AdvancedSearch = () => {
 					</Grid>
 					}
 					<Grid item xs={12}>
-						<Divider className="mt-3" />
+						{/*<Divider className="mt-3" />*/}
 
 						<Grid
 							container
