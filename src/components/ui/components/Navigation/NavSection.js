@@ -4,11 +4,13 @@ import { List } from '@material-ui/core';
 import IntlMessages from "../../../../util/IntlMessages";
 import NavMenuItem from "./NavMenuItem";
 import NavCollapse from "./NavCollapse";
+import Link from '@material-ui/core/Link';
+import { useHistory } from 'react-router-dom';
 
 const NavSection = props => {
 	const { name, icon, children = [], privileges } = props;
 	const isExpandable = children && children.length > 0;
-
+	const history = useHistory();
 	const MenuCollapse = (
 		<List component="div" className='nav-header'>
 			{/* Display an icon if any */}
@@ -21,6 +23,11 @@ const NavSection = props => {
 
 	const MenuItemChildren = isExpandable ? (
 		<List component="div" disablePadding>
+			{/* <Link onClick={()=>{
+				history.push(`/carpeta/pruebaaa/jasiuasdj/jaisi`);
+			}}  color="inherit">
+       			Prueba
+      		</Link> */}
 			{
 				children.map((item, index) => {
 					switch (item.type) {

@@ -98,10 +98,13 @@ const DataTable = () => {
 
 
 	let page_url = 1
-
+	console.log("A",page);
+	console.log('F',page_url);
 	if(page){
-		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,'') : 1
+		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,'') : 1
 	}
+	
+	console.log("b",page_url);
 
 	const { folderId } = queryString.parse(location.search);
 
@@ -118,7 +121,7 @@ const DataTable = () => {
 	useEffect(() => {
 
 		return () => {
-			isMounted.current = false;
+	 		isMounted.current = false;
 		}
 
 	}, []);
@@ -141,14 +144,21 @@ const DataTable = () => {
 	console.log(path,url);
 	const handleChangePage = (event, page) => {
 
-		if(path === '/search/:page'){
+		if(path === '/search/:page' || path === '/search'){
 			const existsFilters = filters.filter(filter => filter.value);
 
 			dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
 		}
 		else
 		{
-			history.push(`/directory/${id}/p${page}`);
+			if(page === 1 )
+			{
+				history.push(`/directory/${id}`);
+			}
+			else{
+				history.push(`/directory/${id}/p${page}`);
+			}
+			
 		}
 		
 		

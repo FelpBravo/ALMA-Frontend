@@ -17,9 +17,11 @@ const Search = () => {
 	const { folderId } = queryString.parse(location.search);
 	
 	let page_url = '1'
+
+
 	
 	if(page){
-		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,''): 1
+		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,''): 1
 	}
 	
 
