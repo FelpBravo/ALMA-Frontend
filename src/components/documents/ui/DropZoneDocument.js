@@ -9,7 +9,8 @@ import { startDocumentByIdVisibility, startDropFileLoading, startThumbnailLoadin
 import { DocumentContext } from '../helpers/DocumentContext';
 import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
 import { Paper } from '@material-ui/core';
-import { openModalVisibility } from 'actions/search';
+import get from 'lodash/get';
+import { ThumbnailItem } from './ThumbnailItem';
 
 export const DropZoneDocument = () => {
 
@@ -24,12 +25,12 @@ export const DropZoneDocument = () => {
 	// ID DOCUMENTO URL	
 	const { document = '' } = queryString.parse(location.search);
 
-	const { thumbnail = null,
-		thumbnailGenerated = false,
-		name = '',
-		fileIdLoaded = '', } = useSelector(state => state.documents);
+	// const { thumbnail = null,
+	// 	thumbnailGenerated = false,
+	// 	name = '',
+	// 	fileIdLoaded = '', } = useSelector(state => state.documents);
 
-
+	const documentsList = useSelector(state => state.documentsList)
 
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({
 		onDrop: (acceptedFiles) => dropFile(acceptedFiles),
@@ -38,19 +39,19 @@ export const DropZoneDocument = () => {
 	});
 	const { path } = acceptedFiles
 
-	useEffect(() => {
+	// useEffect(() => {
 
-		if (!thumbnailGenerated || fileIdLoaded.length === 0) {
-			return;
-		}
+	// 	if (!thumbnailGenerated || fileIdLoaded.length === 0) {
+	// 		return;
+	// 	}
 
-		setTimeout(() => {
+	// 	setTimeout(() => {
 
-			loadThumbnail();
+	// 		loadThumbnail();
 
-		}, 3000);
+	// 	}, 3000);
 
-	}, [fileIdLoaded, thumbnailGenerated]);
+	// }, [fileIdLoaded, thumbnailGenerated]);
 
 	const dropFile = (files) => {
 
@@ -62,12 +63,14 @@ export const DropZoneDocument = () => {
 
 	}
 
-	const loadThumbnail = () => {
+	// const loadThumbnail = () => {
 
-		dispatch(startThumbnailLoading(fileIdLoaded));
+	// 	dispatch(startThumbnailLoading(fileIdLoaded));
 
-	}
+	// }
 
+	console.log('documentsList',documentsList)
+	console.log('acceptedFiles', acceptedFiles)
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -94,8 +97,14 @@ export const DropZoneDocument = () => {
 
 					</div>
 				</div>
-
 				{
+					documentsList.map(({ fileIdLoaded, thumbnailGenerated, thumbnail }) =>
+						<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name="test"/>
+					)
+
+				}
+
+				{/* {
 
 					acceptedFiles
 					&&
@@ -130,7 +139,7 @@ export const DropZoneDocument = () => {
 						/>
 						<div></div>
 					</Paper>
-				}
+				} */}
 			</div>
 		</div>
 	)

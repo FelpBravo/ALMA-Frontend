@@ -202,7 +202,7 @@ export const startDropFileLoading = (files) => {
 			console.log('resp', resp)
 			resp.forEach( res => dispatch(saveFileIdLoaded(
 				{
-					documentsType: res.data.id,
+					fileIdLoaded: res.data.id,
 					thumbnailGenerated: res.data.thumbnailGenerated
 				})))
 			// dispatch(saveFileIdLoaded(resp.data.id));
@@ -248,7 +248,7 @@ export const startThumbnailLoading = (fileId) => {
 
 			const resp = await getThumbnail(authUser, fileId);
 
-			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`));
+			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`, fileId));
 
 		} catch (error) {
 			console.log(error);
@@ -258,10 +258,10 @@ export const startThumbnailLoading = (fileId) => {
 	}
 };
 
-const documentSaveThumbnail = (thumbnail) => {
+const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
-		type: types.docsSaveThumbnail,
-		payload: thumbnail
+		type: types.docsListSaveThumbnail,
+		payload: {thumbnail, fileId}
 	}
 };
 

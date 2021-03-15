@@ -1,5 +1,6 @@
 import { setFolders } from 'helpers/setFolders';
 import { types } from 'types/types';
+import update from 'lodash/update';
 
 const initialStructure = {
 	documentsType: [],
@@ -8,10 +9,10 @@ const initialStructure = {
 	},
 	fileIdLoaded: '',
 	folderId: '',
-	folderIdOrigin:'',
-	signatures:[],
+	folderIdOrigin: '',
+	signatures: [],
 	path: '',
-	name:'',
+	name: '',
 	pathFolderName: '',
 	folderName: '',
 	thumbnail: null,
@@ -42,9 +43,21 @@ export const documentsListReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case types.docsListSaveFileIdLoaded:
 			return [
-                ...state,
-				{ ...initialStructure,  ...action.payload }
-            ]
+				...state,
+				{ ...initialStructure, ...action.payload }
+			]
+
+		case types.docsListSaveThumbnailGenerated:
+			return [
+				...state,
+				{ thumbnailGenerated: action.payload }
+			]
+
+		case types.docsListSaveThumbnail:
+			const { fileId, thumbnail } = action.payload
+			const newState = state.map(item => fileId === item.fileIdLoaded ? { ...item, thumbnail } : item)
+
+			return [...newState]
 
 		default:
 			return state;

@@ -107,5 +107,7 @@ export const types = {
 	tagsRemoveAll: 'Tags Remove all',
 
 	docsListSaveFileIdLoaded: 'Documents List Save file ID loaded',
+	docsListSaveThumbnailGenerated: 'Documents List Save thumbnailGenerated',
+	docsListSaveThumbnail: 'Documents List Save thumbnail'
 
 }
