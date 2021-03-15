@@ -158,6 +158,29 @@ export const startDownloadDocument = (id,name) => {
 	}
 };
 
+export const startPreviewDocument = (authUser,id,name) => {
+	return async (dispatch) => {
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+			const { data } = await downloadDocument(authUser, id);
+			
+			dispatch(previewDocument(data))
+
+		} catch (error) {
+			console.log(error);
+		}finally {
+			Swal.close();
+		}
+	}
+};
+
 export const startSubscribeDocument = (id) => {
 	return async (dispatch, getState) => {
 
@@ -199,6 +222,14 @@ export const startSubscribeDocument = (id) => {
 
 	}
 };
+
+export const previewDocument = (data) => {
+	return {
+		type: types.previewLoaded,
+		payload:data
+	}
+};
+
 export const versioningLoaded = (versioning,id) => {
 	return {
 		type: types.versioningLoaded,

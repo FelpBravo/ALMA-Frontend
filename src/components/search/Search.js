@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { EditTextSearch } from './ui/EditTextSearch';
 import { TableSearch } from './ui/TableSearch';
 import { startSearchLoading } from '../../actions/search';

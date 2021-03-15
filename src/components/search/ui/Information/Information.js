@@ -13,6 +13,12 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { downloadDocument } from 'services/filesService';
 
+
+import Preview from './ui/Preview'
+import Metadata from './ui/Metadata'
+import Comments from './ui/Comments'
+import Attachments from './ui/Attachments'
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 	  flexGrow: 1,
@@ -60,7 +66,7 @@ function a11yProps(index) {
 }
 
 
-const Visibility = () => {
+const Information = () => {
 	const dispatch = useDispatch();
 	const { id, name } = useParams()
 	const { authUser } = useSelector(state => state.auth);
@@ -190,19 +196,19 @@ const Visibility = () => {
 									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}}label="Documentos adjuntos" {...a11yProps(2)} />
 								</Tabs>
 								<TabPanel value={value} index={0}>
-								<Metadatacomponent />
+									<Metadata/>
 								</TabPanel>
 								<TabPanel value={value} index={1}>
-									comentarios
+									<Comments/>
 								</TabPanel>
 								<TabPanel value={value} index={2}>
-									adjuntos
+									<Attachments/>
 								</TabPanel>
 							</div>
 							</Grid>
 
 							<Grid item xs={6}>
-							<PDFcomponent />
+								<Preview/>
 							</Grid>
 
 						</Grid>
@@ -217,4 +223,4 @@ const Visibility = () => {
 	)
 }
 
-export default Visibility;
+export default Information;

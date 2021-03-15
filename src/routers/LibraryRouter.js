@@ -56,12 +56,12 @@ const LibraryRouter = () => {
 				<Route
 
 					path="/document/:id/version"
-					component={asyncComponent(() => import('../components/search/Versioning'))}
+					component={asyncComponent(() => import('../components/search/ui/Versioning/Versioning'))}
 				/>
 				<Route
 
-				path="/document/:id/:name/visibility"
-				component={asyncComponent(() => import('../components/search/Visibility'))}
+				path="/document/:id/info"
+				component={asyncComponent(() => import('../components/search/ui/Information/Information'))}
 				/>
 				<Redirect to="/dashboard" />
 

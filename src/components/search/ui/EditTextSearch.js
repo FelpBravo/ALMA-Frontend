@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Button, InputBase, Grid, makeStyles, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 import IntlMessages from 'util/IntlMessages';
-import { searchSetText, startSearchLoading } from 'actions/search';
-import { AdvancedSearch } from './AdvancedSearch';
+import { searchSetText, startSearchLoading } from '../../../actions/search';
+import { AdvancedSearch } from './AdvancedSearch/AdvancedSearch';
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles(theme => ({

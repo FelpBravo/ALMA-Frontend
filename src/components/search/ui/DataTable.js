@@ -5,13 +5,10 @@ import {
 	startDeleteDocument, 
 	startSearchLoading, 
 	startSubscribeDocument, 
-	openModalVisibility, 
 	openModalFirm, 
-	openModalVersioning, 
 	startDownloadDocument,
-	startVersioningLoading 
-} from 'actions/search';
-import { startDocumentByIdVisibility } from 'actions/documents';
+} from '../../../actions/search';
+import { startDocumentByIdVisibility } from '../../../actions/documents';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,12 +17,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import queryString from 'query-string';
 import Swal from 'sweetalert2';
 import Paper from '@material-ui/core/Paper';
-import FingerprintOutlinedIcon from '@material-ui/icons/FingerprintOutlined';
-import Link from '@material-ui/core/Link';
-import { MoreVert } from '@material-ui/icons';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { makeStyles } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
@@ -33,9 +26,9 @@ import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import TableActionButton from './TableActionButton';
-import ModalVisibility from './ModalVisibility';
+import ModalVisibility from './Information/ui/ModalVisibility';
 import ModalFirm from './ModalFirm';
-import ModalVersioning from './ModalVersioning';
+import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
 
@@ -126,9 +119,9 @@ const DataTable = () => {
 
 	}, []);
 
-	const handleVisibility=(id, name) =>{
-		history.push(`/document/${id}/${name}/visibility`);
-		dispatch(startDocumentByIdVisibility(id, name));
+	const handleVisibility=(id) =>{
+		history.push(`/document/${id}/info`);
+		dispatch(startDocumentByIdVisibility(id));
 	};
 
 	const handleFirm=(id, name) =>{

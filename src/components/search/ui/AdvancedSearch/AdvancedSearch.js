@@ -6,7 +6,7 @@ import IntlMessages from 'util/IntlMessages';
 import { getRows } from 'helpers/getRows';
 import { AdvancedSarchFilters } from './AdvancedSarchFilters';
 import { useHistory, useLocation } from 'react-router-dom';
-import { searchClearAllFilters, startSearchLoading, changeCleanFilter } from 'actions/search';
+import { searchClearAllFilters, startSearchLoading, changeCleanFilter } from '../../../../actions/search';
 import { DATERANGE } from 'constants/constUtil';
 import Swal from 'sweetalert2';
 import TagsPrueba from './TagsPrueba.js'

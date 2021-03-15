@@ -6,7 +6,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useHistory } from 'react-router-dom';
 import MailIcon from '@material-ui/icons/FolderOutlined';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecordOutlined';
-
 import CustomScrollbars from 'util/CustomScrollbars';
 import Navigation from '../components/Navigation';
 import { SideBarContext } from './SideBarContext';
@@ -71,15 +70,15 @@ const SideBarContent = () => {
 		if (authorities) {
 
 			const ROLE_FOLDER_VIEW = authorities.find(rol => rol === 'ROLE_FOLDER_VIEW')
-		
-
-		if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
 
 
-			dispatch(startFoldersInitLoading(authUser));
+			if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
 
+
+				dispatch(startFoldersInitLoading(authUser));
+
+			}
 		}
-	}
 
 	}, [dispatch, initFolders, authUser]);
 

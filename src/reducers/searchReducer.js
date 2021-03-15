@@ -8,7 +8,8 @@ const initialState = {
 	versioning: {
 		data: []
 	},
-	cleanfilter:false,
+	preview: '',
+	cleanfilter: false,
 	documentId: '',
 	textSearch: '',
 	openAdvanceSearch: false,
@@ -29,7 +30,11 @@ export const searchReducer = (state = initialState, action) => {
 				...state,
 				fields: action.payload,
 			}
-
+		case types.previewLoaded:
+			return {
+				...state,
+				preview: action.payload,
+			}
 		case types.searchLoaded:
 			return {
 				...state,
@@ -74,6 +79,7 @@ export const searchReducer = (state = initialState, action) => {
 					data: []
 				},
 				documentId: '',
+				preview:''
 			}
 		case types.versioningRemove:
 			return {
@@ -96,7 +102,7 @@ export const searchReducer = (state = initialState, action) => {
 						return filter;
 					}),
 				},
-				cleanfilter:true
+				cleanfilter: true
 			}
 
 		case types.searchClearAllFilters:
@@ -111,7 +117,7 @@ export const searchReducer = (state = initialState, action) => {
 						return filter;
 					}),
 				},
-				cleanfilter:false
+				cleanfilter: false
 			}
 
 		case types.searchSubscribeDocumentFinish:

@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import queryString from 'query-string';
 import { useHistory, useLocation , useParams} from 'react-router-dom';
 import { Button, Grid} from '@material-ui/core';
-import { startVersioningLoading ,versioningRemove} from 'actions/search';
-import { TableVersioning } from './ui/TableVersioning';
+import { startVersioningLoading ,versioningRemove} from '../../../../actions/search';
+import { TableVersioning } from './ui/TableVersioning'; 
 import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
@@ -24,7 +24,6 @@ const Versioning = () => {
 	const history = useHistory();
 
 
-		console.log('ID!',id);
 
 	useEffect(() => {
 

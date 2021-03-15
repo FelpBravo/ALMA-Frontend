@@ -49,6 +49,7 @@ export const types = {
 	versioningCloseModal: 'Versioning Close Modal',
 	versioningLoaded:'Versioning Loaded',
 	versioningRemove:'Versioning Remove',
+	previewLoaded: "Preview Document Loaded",
 
 
 	docsDocumentsTypeLoaded: 'Documents Type documents loaded',
