@@ -34,7 +34,7 @@ export const startVersioningLoading = (authUser,page, fileId) => {
 
 export const startSearchFieldsLoading = (authUser) => {
 	return async (dispatch) => {
-
+		dispatch(searchRemoveAll())
 		try {	
 			Swal.fire({
 				title: 'Cargando...',
@@ -158,7 +158,7 @@ export const startDownloadDocument = (id,name) => {
 	}
 };
 
-export const startPreviewDocument = (authUser,id,name) => {
+export const startPreviewDocument = (authUser,id) => {
 	return async (dispatch) => {
 		try {
 			Swal.fire({
@@ -169,10 +169,10 @@ export const startPreviewDocument = (authUser,id,name) => {
 			});
 
 			Swal.showLoading();
-			const { data } = await downloadDocument(authUser, id);
+			await downloadDocument(authUser, id).then(({data})=>{
+				dispatch(previewDocument(data,data.type))
+			});
 			
-			dispatch(previewDocument(data))
-
 		} catch (error) {
 			console.log(error);
 		}finally {
@@ -223,10 +223,13 @@ export const startSubscribeDocument = (id) => {
 	}
 };
 
-export const previewDocument = (data) => {
+export const previewDocument = (file,type) => {
 	return {
 		type: types.previewLoaded,
-		payload:data
+		payload:{
+			file,
+			type
+		}
 	}
 };
 

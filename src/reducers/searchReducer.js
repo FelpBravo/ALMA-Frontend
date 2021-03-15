@@ -8,7 +8,10 @@ const initialState = {
 	versioning: {
 		data: []
 	},
-	preview: '',
+	previewDocument: {
+		file:'',
+		type:''
+	},
 	cleanfilter: false,
 	documentId: '',
 	textSearch: '',
@@ -33,7 +36,10 @@ export const searchReducer = (state = initialState, action) => {
 		case types.previewLoaded:
 			return {
 				...state,
-				preview: action.payload,
+				previewDocument: {
+					file:action.payload.file,
+					type:action.payload.type
+				}
 			}
 		case types.searchLoaded:
 			return {
@@ -79,11 +85,12 @@ export const searchReducer = (state = initialState, action) => {
 					data: []
 				},
 				documentId: '',
-				preview:''
+				previewDocument:{}
 			}
 		case types.versioningRemove:
 			return {
 				...state,
+				documents: {},
 				versioning: {
 					data: []
 				},

@@ -121,7 +121,7 @@ const DataTable = () => {
 
 	const handleVisibility=(id) =>{
 		history.push(`/document/${id}/info`);
-		dispatch(startDocumentByIdVisibility(id));
+		//dispatch(startDocumentByIdVisibility(id));
 	};
 
 	const handleFirm=(id, name) =>{
