@@ -79,6 +79,7 @@ const Information = () => {
 
 	const [value, setValue] = React.useState(0);
 
+	console.log(docs);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
@@ -92,6 +93,10 @@ const Information = () => {
 		}
 
 	}, [dispatch, authUser]);
+
+	useEffect(()=>{
+		dispatch(startDocumentByIdVisibility(id));
+	},[])
 	
     const getPDF = async () => {
 	    setPDF('')
@@ -208,7 +213,7 @@ const Information = () => {
 							</Grid>
 
 							<Grid item xs={6}>
-								<Preview/>
+								<Preview authUser={authUser} id={id} name={docs.name}/>
 							</Grid>
 
 						</Grid>
