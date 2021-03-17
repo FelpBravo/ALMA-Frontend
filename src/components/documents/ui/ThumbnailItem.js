@@ -28,10 +28,6 @@ export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, nam
         dispatch(startThumbnailLoading(fileIdLoaded));
     }
 
-    console.log('fileIdLoaded', fileIdLoaded)
-    console.log('thumbnailGenerated', thumbnailGenerated)
-    console.log('name', name)
-
     return (
         fileIdLoaded && (
                 <ThumbnailPreview

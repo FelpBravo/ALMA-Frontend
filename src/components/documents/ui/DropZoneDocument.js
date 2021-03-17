@@ -36,7 +36,6 @@ export const DropZoneDocument = () => {
 	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
 
 	const data = chunk(documentsList, nColumns)
-	console.log('data',data)
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({
 		onDrop: (acceptedFiles) => dropFile(acceptedFiles),
 		noClick: true,
@@ -55,8 +54,6 @@ export const DropZoneDocument = () => {
 	}
 
 	const getPreviewList = (nDocuments) => {
-		console.log('nDocuments', nDocuments)
-
 		switch (typeof (nDocuments) === "number") {
 			case nDocuments === 0:
 				return null;
