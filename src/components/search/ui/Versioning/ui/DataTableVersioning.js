@@ -9,15 +9,15 @@ import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { openModalVisibility, startDownloadDocument, startVersioningLoading } from 'actions/search'
+import { openModalVisibility, startDownloadDocument, startVersioningLoading } from '../../../../../actions/search'
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
-import TableActionButton from './TableActionButton';
+import TableActionButton from '../../../ui/TableActionButton';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
-import { startDocumentByIdVisibility } from 'actions/documents';
+import { startDocumentByIdVisibility } from '../../../../../actions/documents';
 import Swal from 'sweetalert2';
 import CompareArrowsOutlinedIcon from '@material-ui/icons/CompareArrowsOutlined';
 

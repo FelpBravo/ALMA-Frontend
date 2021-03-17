@@ -8,6 +8,11 @@ const initialState = {
 	versioning: {
 		data: []
 	},
+	previewDocument: {
+		file:'',
+		type:''
+	},
+	cleanfilter: false,
 	documentId: '',
 	textSearch: '',
 	openAdvanceSearch: false,
@@ -28,7 +33,14 @@ export const searchReducer = (state = initialState, action) => {
 				...state,
 				fields: action.payload,
 			}
-
+		case types.previewLoaded:
+			return {
+				...state,
+				previewDocument: {
+					file:action.payload.file,
+					type:action.payload.type
+				}
+			}
 		case types.searchLoaded:
 			return {
 				...state,
@@ -39,6 +51,11 @@ export const searchReducer = (state = initialState, action) => {
 			return {
 				...state,
 				documents: action.payload,
+			}
+		case types.changeCleanFilter:
+			return {
+				...state,
+				cleanfilter: true,
 			}
 
 			{/*	case types.searchDocumentDeleted:
@@ -68,10 +85,12 @@ export const searchReducer = (state = initialState, action) => {
 					data: []
 				},
 				documentId: '',
+				previewDocument:{}
 			}
 		case types.versioningRemove:
 			return {
 				...state,
+				documents: {},
 				versioning: {
 					data: []
 				},
@@ -84,14 +103,13 @@ export const searchReducer = (state = initialState, action) => {
 				fields: {
 					...state.fields,
 					filters: state.fields.filters.map(filter => {
-
 						if (filter.name === action.payload.name) {
 							filter.value = action.payload.value;
 						}
-
 						return filter;
 					}),
-				}
+				},
+				cleanfilter: true
 			}
 
 		case types.searchClearAllFilters:
@@ -100,14 +118,13 @@ export const searchReducer = (state = initialState, action) => {
 				fields: {
 					...state.fields,
 					filters: state.fields.filters.map(filter => {
-
 						if (filter.value) {
 							delete filter.value;
 						}
-
 						return filter;
 					}),
-				}
+				},
+				cleanfilter: false
 			}
 
 		case types.searchSubscribeDocumentFinish:

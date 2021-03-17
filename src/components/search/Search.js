@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { EditTextSearch } from './ui/EditTextSearch';
 import { TableSearch } from './ui/TableSearch';
 import { startSearchLoading } from '../../actions/search';
@@ -17,9 +16,11 @@ const Search = () => {
 	const { folderId } = queryString.parse(location.search);
 	
 	let page_url = '1'
+
+
 	
 	if(page){
-		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,''): 1
+		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,''): 1
 	}
 	
 
@@ -28,14 +29,11 @@ const Search = () => {
 
 
 	
-
- 
 	useEffect(() => {
 
 		if (!id || !authUser) {
-			//return;
+			return;
 		}
-
 		dispatch(startSearchLoading(authUser, undefined, undefined, id,page_url));
 
 	}, [dispatch, id, authUser]); 
@@ -43,7 +41,7 @@ const Search = () => {
 	return (
 		<div>
 			<EditTextSearch />
-			<TableSearch />
+			 <TableSearch /> 
 		</div>
 	)
 }

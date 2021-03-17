@@ -10,12 +10,23 @@ export const startVersioningLoading = (authUser,page, fileId) => {
 	return async (dispatch) => {
 
 		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
 			
 			const resp = await getVersioning(authUser,page, 10, fileId);
 			dispatch(versioningLoaded(resp.data,fileId));
 
 		} catch (error) {
 			console.log(error);
+		}finally {
+			Swal.close();
 		}
 
 	}
@@ -23,14 +34,24 @@ export const startVersioningLoading = (authUser,page, fileId) => {
 
 export const startSearchFieldsLoading = (authUser) => {
 	return async (dispatch) => {
+		dispatch(searchRemoveAll())
+		try {	
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
 
-		try {
+			Swal.showLoading();
 
 			const resp = await getSearchFields(authUser);
 			dispatch(searchFieldsLoaded(resp.data));
 
 		} catch (error) {
 			console.log(error);
+		}finally {
+			Swal.close();
 		}
 
 	}
@@ -137,6 +158,29 @@ export const startDownloadDocument = (id,name) => {
 	}
 };
 
+export const startPreviewDocument = (authUser,id) => {
+	return async (dispatch) => {
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+			await downloadDocument(authUser, id).then(({data})=>{
+				dispatch(previewDocument(data,data.type))
+			});
+			
+		} catch (error) {
+			console.log(error);
+		}finally {
+			Swal.close();
+		}
+	}
+};
+
 export const startSubscribeDocument = (id) => {
 	return async (dispatch, getState) => {
 
@@ -178,6 +222,17 @@ export const startSubscribeDocument = (id) => {
 
 	}
 };
+
+export const previewDocument = (file,type) => {
+	return {
+		type: types.previewLoaded,
+		payload:{
+			file,
+			type
+		}
+	}
+};
+
 export const versioningLoaded = (versioning,id) => {
 	return {
 		type: types.versioningLoaded,
@@ -189,7 +244,6 @@ export const versioningLoaded = (versioning,id) => {
 };
 
 export const versioningRemove = () => {
-	console.log("asdsdsSSSS");
 	return {
 		type: types.versioningRemove,
 	}
@@ -232,6 +286,12 @@ export const searchRemoveText = () => {
 export const searchRemoveAll = () => {
 	return {
 		type: types.searchRemoveAll,
+	}
+};
+
+export const changeCleanFilter = () => {
+	return {
+		type: types.changeCleanFilter
 	}
 };
 

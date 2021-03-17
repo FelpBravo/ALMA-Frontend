@@ -66,6 +66,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 
 		default:
 			return (
+				<>
 				<TextField
 					name={name}
 					label={label}
@@ -75,8 +76,11 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					required={mandatory}
 					size="small"
 					onChange={handleOnChange}
+					helperText={mandatory? "Campo Requerido": " "}
 				/>
+				</>
 			);
+		
 
 	}
 }

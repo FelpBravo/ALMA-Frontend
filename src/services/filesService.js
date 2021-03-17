@@ -83,11 +83,10 @@ const editDocumentVersion = (authUser, file, fileId, versioningType, versioningC
 
 	const data = new FormData();
 	data.append('file', file);
-	data.append('fileId', fileId);
 	data.append('majorVersion', versioningType);
 	data.append('comment', versioningComments);
 
-	return axiosInstance.put(`/files/new-version`, data, {
+	return axiosInstance.put(`/files/${fileId}/version`, data, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 			'Content-Type': 'multipart/form-data'

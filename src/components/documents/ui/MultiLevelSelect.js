@@ -165,6 +165,7 @@ export const MultiLevelSelect = (
 		);
 	}
 
+
 	return (
 		<>
 			<TextField
@@ -176,6 +177,7 @@ export const MultiLevelSelect = (
 				fullWidth
 				required={required}
 				size="small"
+				helperText={required? "Campo Requerido" : " "}
 			/>
 
 			<Dialog

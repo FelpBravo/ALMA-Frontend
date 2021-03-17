@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DATE, NUMERIC,DATERANGE } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
-import { searchSetValueFilter } from 'actions/search';
+import { searchSetValueFilter } from '../../../../actions/search';
 import { DateRange } from './DateRange';
 
 
@@ -30,7 +30,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 					variant="outlined"
 					fullWidth
 					type="date"
-					value={value ? value : '2017-05-24'}
+					value={value ? value : ''}
 					size="small"
 					InputLabelProps={{
 						shrink: true,

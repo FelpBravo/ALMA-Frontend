@@ -5,13 +5,10 @@ import {
 	startDeleteDocument, 
 	startSearchLoading, 
 	startSubscribeDocument, 
-	openModalVisibility, 
 	openModalFirm, 
-	openModalVersioning, 
 	startDownloadDocument,
-	startVersioningLoading 
-} from 'actions/search';
-import { startDocumentByIdVisibility } from 'actions/documents';
+} from '../../../actions/search';
+import { startDocumentByIdVisibility } from '../../../actions/documents';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,12 +17,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import queryString from 'query-string';
 import Swal from 'sweetalert2';
 import Paper from '@material-ui/core/Paper';
-import FingerprintOutlinedIcon from '@material-ui/icons/FingerprintOutlined';
-import Link from '@material-ui/core/Link';
-import { MoreVert } from '@material-ui/icons';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { makeStyles } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
@@ -33,9 +26,9 @@ import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import TableActionButton from './TableActionButton';
-import ModalVisibility from './ModalVisivility';
+import ModalVisibility from './Information/ui/ModalVisibility';
 import ModalFirm from './ModalFirm';
-import ModalVersioning from './ModalVersioning';
+import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
 
@@ -98,13 +91,17 @@ const DataTable = () => {
 
 
 	let page_url = 1
+	console.log("A",page);
+	console.log('F',page_url);
 	if(page){
-		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,'') : 1
+		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,'') : 1
 	}
+	
+	console.log("b",page_url);
 
 	const { folderId } = queryString.parse(location.search);
 
-	const folderId2 = id? id : folderId
+	const folderId2 = id? id : folderId	
 
 	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
 
@@ -117,14 +114,14 @@ const DataTable = () => {
 	useEffect(() => {
 
 		return () => {
-			isMounted.current = false;
+	 		isMounted.current = false;
 		}
 
 	}, []);
 
-	const handleVisibility=(id, name) =>{
-    	dispatch(openModalVisibility());
-		dispatch(startDocumentByIdVisibility(id, name));
+	const handleVisibility=(id) =>{
+		history.push(`/document/${id}/info`);
+		//dispatch(startDocumentByIdVisibility(id));
 	};
 
 	const handleFirm=(id, name) =>{
@@ -133,18 +130,31 @@ const DataTable = () => {
 	};
 
 	const handleVersioning=(id) =>{
-		console.log('ID',id);
 		history.push(`/document/${id}/version`);
 	};
 
+
+	console.log(path,url);
 	const handleChangePage = (event, page) => {
-		//const existsFilters = filters.filter(filter => filter.value);
 
-	//	dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
+		if(path === '/search/:page' || path === '/search'){
+			const existsFilters = filters.filter(filter => filter.value);
 
-		/* setPage(page); */
-
-		history.push(`/directory/${id}/p${page}`);
+			dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
+		}
+		else
+		{
+			if(page === 1 )
+			{
+				history.push(`/directory/${id}`);
+			}
+			else{
+				history.push(`/directory/${id}/p${page}`);
+			}
+			
+		}
+		
+		
 
 	};
 
@@ -190,7 +200,7 @@ const DataTable = () => {
 	
 	
 
-
+	
 	return (
 		<div className="row mt-3">
 
@@ -219,12 +229,8 @@ const DataTable = () => {
 										tabIndex={-1}
 										key={id}
 									>
-										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}}>
-											<Link
-											onClick={() => handleDownload(id, name)} 
-											component="button"
-											style={{ textAlign: "left"}}
-											><i className="far fa-file-pdf custom-link-dash"></i>{` `} {name}</Link>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400}}>
+											<span style={{color:"#2196f3"}}><i className="far fa-file-pdf custom-link-dash"></i>{` `} {name}</span>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0,10)}</TableCell>
@@ -268,7 +274,7 @@ const DataTable = () => {
 														materialIcon={
 														<SaveAltOutlinedIcon
 															className={classes.iconos}
-															onClick={() => handleDownload(id, name,version)}
+															onClick={() => handleDownload(id, name)}
 														/>
 														}
 													/>
@@ -350,6 +356,7 @@ const DataTable = () => {
 								>
 									<Pagination 
 									style={{color: '#369bff'}}
+									defaultPage={parseInt(page_url)}
 									count={Math.ceil(totalItems/rowsPerPage)} 
 									color="primary" 
 									shape="rounded" 

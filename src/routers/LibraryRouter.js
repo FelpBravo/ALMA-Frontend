@@ -22,24 +22,24 @@ const LibraryRouter = () => {
 
 				<Route
 
-					path="/search"
+					path={["/search/:page","/search"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
 				<Route
 
-					path="/directory/:id/:page"
+					path={["/directory/:id/:page","/directory/:id"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
-
-
 				<Route
 
+					path="/carpeta/:id"
+					component={asyncComponent(() => import('../components/folders/Foldersnew'))}
+				/>
+				<Route
 					path="/tags"
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
-
 				<Route
-
 					path="/folders"
 					component={asyncComponent(() => import('../components/folders/Folders'))}
 				/>
@@ -56,7 +56,12 @@ const LibraryRouter = () => {
 				<Route
 
 					path="/document/:id/version"
-					component={asyncComponent(() => import('../components/search/Versioning'))}
+					component={asyncComponent(() => import('../components/search/ui/Versioning/Versioning'))}
+				/>
+				<Route
+
+				path="/document/:id/info"
+				component={asyncComponent(() => import('../components/search/ui/Information/Information'))}
 				/>
 				<Redirect to="/dashboard" />
 
