@@ -33,7 +33,7 @@ export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, nam
     console.log('name', name)
 
     return (
-        fileIdLoaded && shouldDisplayThumbnail && thumbnail && (
+        fileIdLoaded && (
                 <ThumbnailPreview
                     thumbnail={thumbnail}
                     remove={() => setShouldDisplayThumbnail(false)}

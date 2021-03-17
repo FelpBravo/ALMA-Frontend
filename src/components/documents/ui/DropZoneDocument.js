@@ -74,9 +74,9 @@ export const DropZoneDocument = () => {
 			data.map(row =>
 				<Grid item container alignItems="center" md={12} spacing={1} style={{ marginTop: 10 }}>
 					{
-						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail }) =>
+						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
 							<Grid item md container justify="center">
-								<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name="test" />
+								<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name={name} />
 							</Grid>)
 					}
 				</Grid>)

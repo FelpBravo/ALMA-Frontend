@@ -75,7 +75,7 @@ const Documents = () => {
 	const handleSaveForm = async () => {
 		const resp = await Swal.fire({
 			title: 'Carga de documento',
-			text: "¿Está seguro de cargar este archivo?",
+			text: "¿Estás seguro de realizar la carga de archivos?",
 			icon: "question",
 			showCancelButton: true,
 			focusConfirm: true,
