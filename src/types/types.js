@@ -108,4 +108,8 @@ export const types = {
 	tagsUpdateLoaded: 'Tags update loaded',
 	tagsRemoveAll: 'Tags Remove all',
 
+
+	addBreadcrumbs: 'Add BreadCrumbs',
+	createBreadcrumbs: 'Create BreadCrumbs'
+
 }

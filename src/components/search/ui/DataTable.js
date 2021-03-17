@@ -31,7 +31,7 @@ import ModalFirm from './ModalFirm';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
-
+import { addBreadcrumbs} from 'actions/breadcrumbs'
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -91,13 +91,10 @@ const DataTable = () => {
 
 
 	let page_url = 1
-	console.log("A",page);
-	console.log('F',page_url);
 	if(page){
 		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,'') : 1
 	}
 	
-	console.log("b",page_url);
 
 	const { folderId } = queryString.parse(location.search);
 
@@ -129,12 +126,12 @@ const DataTable = () => {
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
-	const handleVersioning=(id) =>{
+	const handleVersioning=(id, name) =>{
+		dispatch(addBreadcrumbs(name,`/document/${id}`))
 		history.push(`/document/${id}/version`);
+
 	};
 
-
-	console.log(path,url);
 	const handleChangePage = (event, page) => {
 
 		if(path === '/search/:page' || path === '/search'){

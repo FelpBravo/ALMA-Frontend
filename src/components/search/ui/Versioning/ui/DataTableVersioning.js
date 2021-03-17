@@ -15,6 +15,15 @@ import Grid from '@material-ui/core/Grid';
 import TableActionButton from '../../../ui/TableActionButton';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
+import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
+import BrightnessHighOutlinedIcon from '@material-ui/icons/BrightnessHighOutlined';
+import BrightnessLowOutlinedIcon from '@material-ui/icons/BrightnessLowOutlined';
+import Brightness7RoundedIcon from '@material-ui/icons/Brightness7Rounded';
+import BeenhereRoundedIcon from '@material-ui/icons/BeenhereRounded';
+import BeenhereOutlinedIcon from '@material-ui/icons/BeenhereOutlined';
+
 import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
 import { startDocumentByIdVisibility } from '../../../../../actions/documents';
@@ -23,35 +32,35 @@ import CompareArrowsOutlinedIcon from '@material-ui/icons/CompareArrowsOutlined'
 
 const useStyles = makeStyles((theme) => ({
 	table: {
-	  minWidth: 650,
+		minWidth: 650,
 	},
 	margin: {
-	  margin: theme.spacing(1),
+		margin: theme.spacing(1),
 	},
 	backdrop: {
-	  zIndex: theme.zIndex.drawer + 1,
-	  color: "#fff",
+		zIndex: theme.zIndex.drawer + 1,
+		color: "#fff",
 	},
 	iconsHolder: {
-	  display: "flex",
-	  alignItems: "center",
+		display: "flex",
+		alignItems: "center",
 	},
 	iconos: {
-	  cursor: "pointer",
-	  color: "#2196f3",
-	  fontSize: '18px',
+		cursor: "pointer",
+		color: "#2196f3",
+		fontSize: '18px',
 	},
 	root: {
-	  overflowX: "auto",
-	  margin: "0 auto",
-	  fontFamily: "Poppins",
+		overflowX: "auto",
+		margin: "0 auto",
+		fontFamily: "Poppins",
 	},
 	pagination: {
-		marginBottom:'10px',
-		marginTop:'10px',
-		width:'100%',
-	  },
-  }));
+		marginBottom: '10px',
+		marginTop: '10px',
+		width: '100%',
+	},
+}));
 
 
 
@@ -63,14 +72,14 @@ const DataTableVersioning = () => {
 	const history = useHistory()
 	const dispatch = useDispatch()
 
-	const { authUser, authorities  } = useSelector(state => state.auth);
+	const { authUser, authorities } = useSelector(state => state.auth);
 	const { versioning = {}, documentId = '' } = useSelector(state => state.searchs)
 	const { data = [], totalItems = 0 } = versioning
 
 
 	const [page, setPage] = useState(0)
 
-	const ROLE_FILE_DOWNLOAD = authorities.find(rol=> rol === 'ROLE_FILE_DOWNLOAD')
+	const ROLE_FILE_DOWNLOAD = authorities.find(rol => rol === 'ROLE_FILE_DOWNLOAD')
 
 
 	useEffect(() => {
@@ -84,24 +93,26 @@ const DataTableVersioning = () => {
 		setPage(page);
 	};
 
-	const handleVisibility=(id, name) =>{
-    	dispatch(openModalVisibility());
+	const handleVisibility = (id, name) => {
+		dispatch(openModalVisibility());
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
 	const handleDownload = async (id, name) => {
-		
-		if(ROLE_FILE_DOWNLOAD){const resp = await Swal.fire({
-			title: 'Descargar',
-			text: "¿Está seguro que quiere descargar el documento?",
-			icon: "question",
-			showCancelButton: true,
-			focusConfirm: true,
-			heightAuto: false,
-		});
-		if (resp.value) {
-			dispatch(startDownloadDocument(id,name))
-		}}
+
+		if (ROLE_FILE_DOWNLOAD) {
+			const resp = await Swal.fire({
+				title: 'Descargar',
+				text: "¿Está seguro que quiere descargar el documento?",
+				icon: "question",
+				showCancelButton: true,
+				focusConfirm: true,
+				heightAuto: false,
+			});
+			if (resp.value) {
+				dispatch(startDownloadDocument(id, name))
+			}
+		}
 
 	}
 
@@ -142,36 +153,44 @@ const DataTableVersioning = () => {
 									<TableCell>{new Date(modifiedAt).toLocaleString()}</TableCell>
 									<TableCell>{modifiedByUser}</TableCell>
 									<TableCell>{comment}</TableCell>
-									<TableCell>
-											<div className={classes.iconsHolder}>
-											
-											   <TableActionButton
-													materialIcon={
+									<TableCell style={{ textAlign: 'center' }}>
+										<div className={classes.iconsHolder}>
+
+											<TableActionButton
+												materialIcon={
 													<VisibilityOutlinedIcon
 														className={classes.iconos}
 														onClick={() => handleVisibility(id, name)}
 													/>
-													}
-												/>
-												<TableActionButton
-														materialIcon={
-														<SaveAltOutlinedIcon
-															className={classes.iconos}
-															onClick={() => handleDownload(id, name)}
-														/>
-														}
-													/>
-													<TableActionButton
-													materialIcon={
-													<CompareArrowsOutlinedIcon
+												}
+											/>
+											<TableActionButton
+												materialIcon={
+													<SaveAltOutlinedIcon
 														className={classes.iconos}
-														//onClick={() => handleFirm(id, name)}
+														onClick={() => handleDownload(id, name)}
 													/>
-													}
+												}
+											/>
+											<TableActionButton
+												materialIcon={
+													<BeenhereOutlinedIcon
+														className={classes.iconos}
+													//onClick={() => handleFirm(id, name)}
 													/>
-											
-												</div>
-											</TableCell>
+												}
+											/>
+											<TableActionButton
+												materialIcon={
+													<BeenhereRoundedIcon
+														className={classes.iconos}
+													//onClick={() => handleFirm(id, name)}
+													/>
+												}
+											/>
+
+										</div>
+									</TableCell>
 								</TableRow>
 
 							})
@@ -182,19 +201,19 @@ const DataTableVersioning = () => {
 					</Table>
 				</TableContainer>
 				<Grid className="mt-3 mb-3 mr-3"
-						container
-						justify="flex-end"
-						alignItems="flex-end"
+					container
+					justify="flex-end"
+					alignItems="flex-end"
 
-					>
-						<Pagination
-							style={{ color: '#369bff' }}
-							count={Math.ceil(totalItems / 10)}
-							color="primary"
-							shape="rounded"
-							total={totalItems}
-							onChange={handleChangePage} />
-					</Grid>
+				>
+					<Pagination
+						style={{ color: '#369bff' }}
+						count={Math.ceil(totalItems / 10)}
+						color="primary"
+						shape="rounded"
+						total={totalItems}
+						onChange={handleChangePage} />
+				</Grid>
 
 			</div>
 		</div>
