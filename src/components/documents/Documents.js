@@ -49,6 +49,7 @@ const Documents = () => {
 		versioningComments = '',
 		tagsSelected = [],
 	} = useSelector(state => state.documents);
+	const documentsList = useSelector(state => state.documentsList)
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
@@ -126,10 +127,10 @@ const Documents = () => {
 			});
 
 			if (document.length === 0) {
-
+				const filesId = documentsList.map( ({fileIdLoaded}) => fileIdLoaded)
 				dispatch(
 					startSaveFormLoading(
-						fileIdLoaded,
+						filesId,
 						folderId,
 						{ id: documentId, aspectList: filters },
 						tags
@@ -243,21 +244,11 @@ const Documents = () => {
 										    fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
 										    boxShadow: "none", height: '45px', width: '120px'
 							            }}
-										disabled={
+										disabled={documentsList.length === 0 ||
 											detailDocumentType.length === 0 ||
 											documentId.length === 0 ||
 											aspectList.length === 0 ||
-											fileIdLoaded.length === 0 ||
-											folderId.length === 0 ||
-											(document.length > 0
-												&&
-												files && files.length > 0
-												&&
-												(
-													versioningType.length === 0 ||
-													versioningComments.length === 0
-												)
-											)
+											folderId.length === 0
 										}
 										type="submit"
 										variant="contained"
