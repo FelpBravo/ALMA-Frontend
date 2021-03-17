@@ -24,6 +24,7 @@ import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil
 import { DocumentContext } from './helpers/DocumentContext';
 import { SelectTags } from './ui/SelectTags';
 import { SelectFolder } from './ui/SelectFolder';
+import DocumentLoaded from 'components/ui/components/DocumentLoaded';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -217,6 +218,7 @@ const Documents = () => {
 					}
 
 					<SelectTags />
+					<DocumentLoaded />
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">

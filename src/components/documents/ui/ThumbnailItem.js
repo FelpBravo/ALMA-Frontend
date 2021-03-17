@@ -10,6 +10,7 @@ import { DocumentContext } from '../helpers/DocumentContext';
 import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
 import { Paper } from '@material-ui/core';
 import get from 'lodash/get';
+import InputLabel from '@material-ui/core/InputLabel';
 
 export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) => {
 
