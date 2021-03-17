@@ -199,11 +199,13 @@ export const startDropFileLoading = (files) => {
 			// SAVE STORE ID LOADED
 			// documentsType , thumbnailGenerated
 			//for
-			console.log('resp', resp)
-			resp.forEach( res => dispatch(saveFileIdLoaded(
+			resp.data.forEach( res => dispatch(saveFileIdLoaded(
 				{
-					fileIdLoaded: res.data.id,
-					thumbnailGenerated: res.data.thumbnailGenerated
+					fileIdLoaded: res.fileId,
+					// thumbnailGenerated: res.thumbnailGenerated,
+					thumbnailGenerated: true,
+
+					name: res.name,
 				})))
 			// dispatch(saveFileIdLoaded(resp.data.id));
 			// dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));

@@ -33,16 +33,12 @@ export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, nam
     console.log('name', name)
 
     return (
-        fileIdLoaded
-        &&
-        <Paper style={{ padding: 30 }}>
-            {shouldDisplayThumbnail && thumbnail && (
+        fileIdLoaded && shouldDisplayThumbnail && thumbnail && (
                 <ThumbnailPreview
                     thumbnail={thumbnail}
                     remove={() => setShouldDisplayThumbnail(false)}
                     name={name}
                 />
-            )}
-        </Paper>
+            )
     )
 }

@@ -26,20 +26,19 @@ const subscribeDocument = (authUser, id) => {
 };
 
 const uploadDocument = (authUser, files) => {
-	const requestList = []
-	files.map(file => {
-		const data = new FormData();
-		data.append('file', file);
-	
-		requestList.push(axiosInstance.post(`/files/upload`, data, {
-			headers: {
-				Authorization: `Bearer ${authUser}`,
-				'Content-Type': 'multipart/form-data'
-			},
-		}));
+
+	const data = new FormData();
+	files.forEach(function(file, i) {
+		data.append('files', file);
 	});
-	return Promise.all(requestList)
-};
+
+	return axiosInstance.post(`/files/upload`, data, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+			'Content-Type': 'multipart/form-data'
+		},
+	});
+}
 
 const getThumbnail = (authUser, id) => {
 
@@ -62,9 +61,9 @@ const saveForm = (authUser, fileId, folderId, aspectGroup, tags = []) => {
 
 };
 
-const editForm = (authUser, folderId,fileId, aspectGroup, tags = []) => {
+const editForm = (authUser, folderId, fileId, aspectGroup, tags = []) => {
 
-	return axiosInstance.post(`/files/fullDocument`, { folderId,fileId, aspectGroup, tags }, {
+	return axiosInstance.post(`/files/fullDocument`, { folderId, fileId, aspectGroup, tags }, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},

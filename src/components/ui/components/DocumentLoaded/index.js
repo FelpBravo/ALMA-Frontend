@@ -30,12 +30,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function DocumentLoaded(props) {
+export default function DocumentLoaded({ name ,...props}) {
     const classes = useStyles(props);
     return <Grid style={{width:'100%'}} container alignItems="center" justify="center" className={classes.root}>
         <Grid item xs container alignItems="center">
             <DescriptionOutlinedIcon className={classes.text} />
-            <h5 className={classes.text}>ALMA-01.00.00.00-001-A-PDF</h5>
+            <h5 className={classes.text}>{name}</h5>
         </Grid>          
         <Grid item xs container justify="flex-end">
             <Box className={classes.btn} type="button">
