@@ -1,8 +1,12 @@
 import React from 'react';
 
 const Attachments = () =>{
-return(<h1>Attachments</h1>)
 
+
+return(
+    <div> poner tabla </div>
+
+)
 }
 
 export default Attachments
