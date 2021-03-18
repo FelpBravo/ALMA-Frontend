@@ -1,18 +1,19 @@
 import styled from "styled-components";
 
 export const ThumbnailPreviewWrapper = styled.div`
-  border-radius: 16px;
+  border-radius: 8px;
   background: #e1effe;
-  padding: 15px;
+  padding: 20px 50px;
   position: relative;
-  min-height: 200px;
-  max-width: 225px;
+  height: 220px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ThumbnailPreviewImage = styled.img`
-  display: block;
-  margin: 20px 0px 0px 32px;
-  width: 65%;
+  height: 135px;
 `;
 
 export const ThumbnailPreviewNameWrapper = styled.div`
@@ -21,10 +22,14 @@ export const ThumbnailPreviewNameWrapper = styled.div`
   left: 0;
   right: 0;
   width: 100%;
+  height: 40px;
   background: #3599fe;
-  opacity: 0.8;
   border-radius: 0px 0px 8px 8px;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 12px;
 `;
 
 export const ThumbnailPreviewName = styled.span`
@@ -35,7 +40,11 @@ export const ThumbnailPreviewName = styled.span`
  `;
 
 export const ThumbnailPreviewIconsHolder = styled.div`
-float: right
+  float: right;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
 `;
 
 export const ThumbnailPreviewIcon = styled.div`
@@ -46,4 +55,8 @@ export const ThumbnailPreviewIcon = styled.div`
   margin: 0px;
   cursor: pointer;
   background: #3599fe;
-`;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  `;

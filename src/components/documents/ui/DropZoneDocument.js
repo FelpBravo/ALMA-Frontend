@@ -69,10 +69,10 @@ export const DropZoneDocument = () => {
 	const previewListWithThumbnail = () => (<Grid container>
 		{
 			data.map(row =>
-				<Grid item container alignItems="center" md={12} spacing={1} style={{ marginTop: 10 }}>
+				<Grid item container alignItems="center" md={12} spacing={5} style={{ marginTop: 10 }}>
 					{
 						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
-							<Grid item md container justify="center">
+							<Grid item md={3} container justify="center">
 								<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name={name} />
 							</Grid>)
 					}
@@ -80,10 +80,10 @@ export const DropZoneDocument = () => {
 		}
 	</Grid>)
 
-	const previewListWithoutThumbnail = () => (<Grid container>
+	const previewListWithoutThumbnail = () => (<Grid container spacing={1}>
 		{
 			data.map(row =>
-				<Grid item container md={12} spacing={1} style={{ marginTop: 10 }}>
+				<Grid item container md={12} spacing={1}>
 					{row.map(({name}) =>
 						<Grid item md={12 / nColumns}>
 							<DocumentLoaded name={name}/>
@@ -126,7 +126,7 @@ export const DropZoneDocument = () => {
 					)
 
 				} */}
-
+				{ nDocuments > 0 && <h4 style={{marginTop:20}}>{<IntlMessages id="document.documentsLoad" />}</h4>}
 				{getPreviewList(nDocuments)}
 
 				{/* {
