@@ -8,18 +8,23 @@ import Skeleton from '@material-ui/lab/Skeleton';
 // Styled
 
 
-const ThumbnailPreview = ({ thumbnail, name, preview, remove}) => {
-  
+const ThumbnailPreview = ({ thumbnail, name, preview, remove }) => {
+
   return (
     <ThumbnailPreviewWrapper>
       <ThumbnailPreviewIconsHolder>
         {remove &&
-        <ThumbnailPreviewIcon onClick={() => remove()}>
-          <Delete style={{ color: "#ffffff" }} />
-        </ThumbnailPreviewIcon>
+          <ThumbnailPreviewIcon onClick={() => remove()}>
+            <Visibility style={{ color: "#ffffff", fontSize: '22px' }} />
+          </ThumbnailPreviewIcon>
+        }
+        {remove &&
+          <ThumbnailPreviewIcon onClick={() => remove()}>
+            <Delete style={{ color: "#ffffff", fontSize: '22px' }} />
+          </ThumbnailPreviewIcon>
         }
       </ThumbnailPreviewIconsHolder>
-      {!thumbnail ? <ThumbnailPreviewImage src={thumbnail} /> :<Skeleton style={{width: '100px', height: '100px'}} /> }
+      {thumbnail ? <ThumbnailPreviewImage src={thumbnail} /> : <Skeleton style={{ width: '100%', height: '225px' }} />}
       {name && (
         <ThumbnailPreviewNameWrapper>
           <ThumbnailPreviewName>{name}</ThumbnailPreviewName>
