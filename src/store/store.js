@@ -16,6 +16,7 @@ import { adminFoldersReducer } from 'reducers/adminFoldersReducer';
 import { tagsReducer } from 'reducers/tagsReducer';
 import { reportsReducer } from 'reducers/reportsReducer'
 import { firmReducer } from 'reducers/firmReducer'
+import { informationReducer } from 'reducers/informationReducer'
 
 export const history = createBrowserHistory();
 
@@ -37,7 +38,8 @@ const rootReducer = (history) => combineReducers({
 	adminFolders: adminFoldersReducer,
 	tags: tagsReducer,
 	reports:reportsReducer, 
-	firm:firmReducer
+	firm:firmReducer,
+	info:informationReducer
 });
 
 export const store = createStore(

@@ -108,4 +108,8 @@ export const types = {
 	tagsUpdateLoaded: 'Tags update loaded',
 	tagsRemoveAll: 'Tags Remove all',
 
+	attachmentsDataLoaded:'Attachments Data Loaded',
+	commentsDataLoaded: 'Comments Data Loaded',
+	informationRemoveAll: 'Information Remove All',
+
 }
