@@ -31,7 +31,7 @@ export const DropZoneDocument = () => {
 	// 	name = '',
 	// 	fileIdLoaded = '', } = useSelector(state => state.documents);
 
-	const documentsList = useSelector(state => state.documentsList)
+	const documentsList = useSelector(state => state.documents.filesLoaded)
 	const nDocuments = documentsList?.length;
 	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
 

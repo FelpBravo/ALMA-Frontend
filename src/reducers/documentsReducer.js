@@ -151,7 +151,7 @@ export const documentsReducer = (state = initialState, action) => {
 		case types.docsSaveFileIdLoaded:
 			return {
 				...state,
-				filesLoaded: [...state.fileIdLoaded, {...fileLoadedStructure, ...action.payload}],
+				filesLoaded: [...state.filesLoaded, {...fileLoadedStructure, ...action.payload}],
 			}
 
 		case types.docsSaveThumbnailGenerated:

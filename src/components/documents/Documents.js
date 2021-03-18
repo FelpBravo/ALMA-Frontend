@@ -49,7 +49,7 @@ const Documents = () => {
 		versioningComments = '',
 		tagsSelected = [],
 	} = useSelector(state => state.documents);
-	const documentsList = useSelector(state => state.documentsList)
+	const documentsList = useSelector(state => state.documents.filesLoaded)
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
