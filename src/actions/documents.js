@@ -192,13 +192,23 @@ export const startDropFileLoading = (files) => {
 
 			Swal.showLoading();
 
-			const resp = await uploadDocument(authUser, files[0]);
+			const resp = await uploadDocument(authUser, files);
 
 			Swal.close();
 
 			// SAVE STORE ID LOADED
-			dispatch(saveFileIdLoaded(resp.data.id));
-			dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
+			// documentsType , thumbnailGenerated
+			//for
+			resp.data.forEach( res => dispatch(saveFileIdLoaded(
+				{
+					fileIdLoaded: res.fileId,
+					// thumbnailGenerated: res.thumbnailGenerated,
+					thumbnailGenerated: true,
+
+					name: res.name,
+				})))
+			// dispatch(saveFileIdLoaded(resp.data.id));
+			// dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
 
 		} catch (error) {
 
@@ -217,10 +227,10 @@ export const startDropFileLoading = (files) => {
 	}
 };
 
-const saveFileIdLoaded = (fileId) => {
+const saveFileIdLoaded = (fileObject) => {
 	return {
-		type: types.docsSaveFileIdLoaded,
-		payload: fileId,
+		type: types.docsListSaveFileIdLoaded,
+		payload: fileObject,
 	}
 };
 
@@ -240,7 +250,7 @@ export const startThumbnailLoading = (fileId) => {
 
 			const resp = await getThumbnail(authUser, fileId);
 
-			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`));
+			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`, fileId));
 
 		} catch (error) {
 			console.log(error);
@@ -250,10 +260,10 @@ export const startThumbnailLoading = (fileId) => {
 	}
 };
 
-const documentSaveThumbnail = (thumbnail) => {
+const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
-		type: types.docsSaveThumbnail,
-		payload: thumbnail
+		type: types.docsListSaveThumbnail,
+		payload: {thumbnail, fileId}
 	}
 };
 

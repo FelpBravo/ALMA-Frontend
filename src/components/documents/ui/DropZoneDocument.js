@@ -8,14 +8,16 @@ import IntlMessages from 'util/IntlMessages';
 import { startDocumentByIdVisibility, startDropFileLoading, startThumbnailLoading } from 'actions/documents';
 import { DocumentContext } from '../helpers/DocumentContext';
 import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
-import { Paper } from '@material-ui/core';
-import { openModalVisibility } from 'actions/search';
+import { Grid } from '@material-ui/core';
+import get from 'lodash/get';
+import { ThumbnailItem } from './ThumbnailItem';
+import DocumentLoaded from 'components/ui/components/DocumentLoaded';
+import { chunk } from 'lodash-es';
 
 export const DropZoneDocument = () => {
 
 	const dispatch = useDispatch();
 	const location = useLocation();
-
 	const [shouldDisplayThumbnail, setShouldDisplayThumbnail] = useState(true);
 
 	// Contexto provider
@@ -24,33 +26,22 @@ export const DropZoneDocument = () => {
 	// ID DOCUMENTO URL	
 	const { document = '' } = queryString.parse(location.search);
 
-	const { thumbnail = null,
-		thumbnailGenerated = false,
-		name = '',
-		fileIdLoaded = '', } = useSelector(state => state.documents);
+	// const { thumbnail = null,
+	// 	thumbnailGenerated = false,
+	// 	name = '',
+	// 	fileIdLoaded = '', } = useSelector(state => state.documents);
 
+	const documentsList = useSelector(state => state.documentsList)
+	const nDocuments = documentsList?.length;
+	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
 
-
+	const data = chunk(documentsList, nColumns)
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({
 		onDrop: (acceptedFiles) => dropFile(acceptedFiles),
 		noClick: true,
 		noKeyboard: true,
 	});
 	const { path } = acceptedFiles
-
-	useEffect(() => {
-
-		if (!thumbnailGenerated || fileIdLoaded.length === 0) {
-			return;
-		}
-
-		setTimeout(() => {
-
-			loadThumbnail();
-
-		}, 3000);
-
-	}, [fileIdLoaded, thumbnailGenerated]);
 
 	const dropFile = (files) => {
 
@@ -62,11 +53,46 @@ export const DropZoneDocument = () => {
 
 	}
 
-	const loadThumbnail = () => {
+	const getPreviewList = (nDocuments) => {
+		switch (typeof (nDocuments) === "number") {
+			case nDocuments === 0:
+				return null;
 
-		dispatch(startThumbnailLoading(fileIdLoaded));
+			case nDocuments < 5:
+				return previewListWithThumbnail();
 
+			case nDocuments > 4:
+				return previewListWithoutThumbnail();
+		}
 	}
+
+	const previewListWithThumbnail = () => (<Grid container>
+		{
+			data.map(row =>
+				<Grid item container alignItems="center" md={12} spacing={1} style={{ marginTop: 10 }}>
+					{
+						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
+							<Grid item md container justify="center">
+								<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name={name} />
+							</Grid>)
+					}
+				</Grid>)
+		}
+	</Grid>)
+
+	const previewListWithoutThumbnail = () => (<Grid container>
+		{
+			data.map(row =>
+				<Grid item container md={12} spacing={1} style={{ marginTop: 10 }}>
+					{row.map(({name}) =>
+						<Grid item md={12 / nColumns}>
+							<DocumentLoaded name={name}/>
+						</Grid>)}
+				</Grid>)
+		}
+	</Grid>)
+
+
 
 	return (
 		<div className="row">
@@ -94,8 +120,16 @@ export const DropZoneDocument = () => {
 
 					</div>
 				</div>
+				{/* {
+					documentsList.map(({ fileIdLoaded, thumbnailGenerated, thumbnail }) =>
+						<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name="test"/>
+					)
 
-				{
+				} */}
+
+				{getPreviewList(nDocuments)}
+
+				{/* {
 
 					acceptedFiles
 					&&
@@ -130,7 +164,7 @@ export const DropZoneDocument = () => {
 						/>
 						<div></div>
 					</Paper>
-				}
+				} */}
 			</div>
 		</div>
 	)
