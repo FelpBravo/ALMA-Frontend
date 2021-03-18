@@ -73,7 +73,8 @@ const Documents = () => {
 
 	}, [dispatch, document]);
 
-	const handleSaveForm = async () => {
+	const handleSaveForm = async (evt) => {
+		evt.preventDefault();
 		const resp = await Swal.fire({
 			title: 'Carga de documento',
 			text: "¿Estás seguro de realizar la carga de archivos?",
@@ -82,7 +83,7 @@ const Documents = () => {
 			focusConfirm: true,
 			heightAuto: false,
 		});
-
+		console.log('resp.value', resp.value)
 		if (resp.value) {
 
 			let filters = [];
