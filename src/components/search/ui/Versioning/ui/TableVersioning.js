@@ -25,7 +25,7 @@ export const TableVersioning= () => {
 	}
 	else
 	{
-		return <></>
+		return <><h3>Cargando...</h3></>
 	}
 	
 }
