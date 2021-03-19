@@ -101,6 +101,12 @@ export const documentsReducer = (state = initialState, action) => {
 				...state,
 				filesLoaded,
 			}
+		
+		case types.docsRemoveFile:
+			return {
+				...state,
+				filesLoaded: action.payload,
+			}
 
 		case types.docsSetValueField:
 			return {
@@ -193,6 +199,7 @@ export const documentsReducer = (state = initialState, action) => {
 		case types.docsClear:
 			return {
 				...state,
+				...initialState,
 				detailDocumentType: {
 					aspectList: [],
 				},

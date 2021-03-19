@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function DocumentLoaded({ name, ...props }) {
+export default function DocumentLoaded({ name, onRemoveFile, setDataDialogPreview,...props }) {
     const classes = useStyles(props);
     return <Grid  className={classes.root} wrap="nowrap" container alignItems="center" justify="space-between">
             <div className={clsx(classes.itemContainer, classes.ellipsis)}>
@@ -47,10 +47,10 @@ export default function DocumentLoaded({ name, ...props }) {
                 <h5 className={classes.text}>{name}</h5>
             </div>
             <div className={classes.itemContainer}>
-                <Box className={classes.btn} type="button">
+                <Box onClick={setDataDialogPreview} className={classes.btn} type="button">
                     <VisibilityOutlinedIcon className={classes.iconRight} />
                 </Box>
-                <Box className={classes.btn} type="button">
+                <Box onClick={onRemoveFile} className={classes.btn} type="button">
                     <DeleteOutlineOutlinedIcon className={classes.iconRight} />
                 </Box>
             </div>

@@ -8,21 +8,19 @@ import IntlMessages from 'util/IntlMessages';
 import { startDocumentByIdVisibility, startDropFileLoading, startThumbnailLoading } from 'actions/documents';
 import { DocumentContext } from '../helpers/DocumentContext';
 import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
-import { Paper } from '@material-ui/core';
-import get from 'lodash/get';
-import InputLabel from '@material-ui/core/InputLabel';
 
-export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) => {
+export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, name, onRemoveFile, setDataDialogPreview }) => {
 
-    const [shouldDisplayThumbnail, setShouldDisplayThumbnail] = useState(true);
     const dispatch = useDispatch();
+    const currentFile = useSelector(state => state.documents.filesLoaded.find( item => item.fileIdLoaded === fileIdLoaded))
+
     useEffect(() => {
 
-        if (fileIdLoaded && thumbnailGenerated ) {
+        if (fileIdLoaded && thumbnailGenerated && !thumbnail) {
             loadThumbnail();
         }
 
-    }, [fileIdLoaded, thumbnailGenerated]);
+    }, [fileIdLoaded, thumbnailGenerated, thumbnail]);
 
     const loadThumbnail = () => {
         dispatch(startThumbnailLoading(fileIdLoaded));
@@ -30,11 +28,12 @@ export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, nam
 
     return (
         fileIdLoaded && (
-                <ThumbnailPreview
-                    thumbnail={thumbnail}
-                    remove={() => setShouldDisplayThumbnail(false)}
-                    name={name}
-                />
-            )
+            <ThumbnailPreview
+                thumbnail={currentFile?.thumbnail}
+                remove={onRemoveFile ? () => onRemoveFile() : null}
+                preview={setDataDialogPreview ? () => setDataDialogPreview() : null}
+                name={name}
+            />
+        )
     )
 }

@@ -12,13 +12,16 @@ import { Grid } from '@material-ui/core';
 import get from 'lodash/get';
 import { ThumbnailItem } from './ThumbnailItem';
 import DocumentLoaded from 'components/ui/components/DocumentLoaded';
-import { chunk } from 'lodash-es';
+import { chunk, remove } from 'lodash-es';
+import { documentRemoveFile } from '../../../actions/documents';
+import DialogPreview from './DialogPreview';
 
 export const DropZoneDocument = () => {
 
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const [shouldDisplayThumbnail, setShouldDisplayThumbnail] = useState(true);
+	const [dataDialogPreview, setDataDialogPreview] = useState(null);
 
 	// Contexto provider
 	const { setFiles } = useContext(DocumentContext);
@@ -67,8 +70,13 @@ export const DropZoneDocument = () => {
 	}
 
 	const onRemoveFile = fileId => {
-		documentsList.find( ({fileIdLoaded})  => fileIdLoaded === fileId)
+		remove( documentsList, item  => fileId === item.fileIdLoaded);
+		dispatch(documentRemoveFile(documentsList));
 	}
+
+	const onCloseDialogPreview = () => {
+		setDataDialogPreview(null);
+	};
 
 	const previewListWithThumbnail = () => (<Grid container>
 		{
@@ -77,7 +85,13 @@ export const DropZoneDocument = () => {
 					{
 						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
 							<Grid item md={3} container justify="center">
-								<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name={name} />
+								<ThumbnailItem 
+									fileIdLoaded={fileIdLoaded} 
+									thumbnailGenerated={thumbnailGenerated} 
+									thumbnail={thumbnail} 
+									name={name}
+									setDataDialogPreview={ () => setDataDialogPreview({fileIdLoaded, thumbnailGenerated, thumbnail, name})}
+									onRemoveFile={() => onRemoveFile(fileIdLoaded)} />
 							</Grid>)
 					}
 				</Grid>)
@@ -88,9 +102,12 @@ export const DropZoneDocument = () => {
 		{
 			data.map(row =>
 				<Grid item container md={12} spacing={1}>
-					{row.map(({name}) =>
+					{row.map(({fileIdLoaded, thumbnailGenerated, thumbnail, name}) =>
 						<Grid item md={12 / nColumns}>
-							<DocumentLoaded name={name}/>
+							<DocumentLoaded 
+								name={name} 
+								setDataDialogPreview={ () => setDataDialogPreview({fileIdLoaded, thumbnailGenerated, thumbnail, name})}
+								onRemoveFile={() => onRemoveFile(fileIdLoaded)} />
 						</Grid>)}
 				</Grid>)
 		}
@@ -98,7 +115,7 @@ export const DropZoneDocument = () => {
 
 
 
-	return (
+	return (<>
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
@@ -171,5 +188,7 @@ export const DropZoneDocument = () => {
 				} */}
 			</div>
 		</div>
+		<DialogPreview data={dataDialogPreview} handleClose={onCloseDialogPreview} />
+				</>
 	)
 }

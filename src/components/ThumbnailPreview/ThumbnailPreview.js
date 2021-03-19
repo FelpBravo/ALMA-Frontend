@@ -13,8 +13,8 @@ const ThumbnailPreview = ({ thumbnail, name, preview, remove }) => {
   return (
     <ThumbnailPreviewWrapper>
       <ThumbnailPreviewIconsHolder>
-        {remove &&
-          <ThumbnailPreviewIcon onClick={() => remove()}>
+        {preview &&
+          <ThumbnailPreviewIcon onClick={() => preview()}>
             <Visibility style={{ color: "#ffffff", fontSize: '22px' }} />
           </ThumbnailPreviewIcon>
         }
