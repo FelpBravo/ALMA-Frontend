@@ -51,11 +51,10 @@ const Comments = (props) => {
     }
 
     const [text,setText] = useState('')
-    
+
 
         return (
             <div>
-            <form onSubmit={handleSubmit}>
                 <p onClick={() => {
                     console.log(comments);
                 }}>Prueba</p>
@@ -69,23 +68,20 @@ const Comments = (props) => {
                         />
                     </Grid>
                     <Grid item xs={1} className="mt-3 ml-1">
-                        <IconButton type="submit" style={{ background: "#3699FF", width: 15, height: 15 }}>
+                        <IconButton style={{ background: "#3699FF", width: 15, height: 15 }} onClick={handleSubmit}>
                             <NearMeOutlinedIcon style={{ color: "white", fontSize: 15 }} />
                         </IconButton>
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+                    <input accept="image/*" className={classes.input} id="icon-button-file" type="file"  />
                     <label htmlFor="icon-button-file">
                         <IconButton color="primary" aria-label="upload picture" component="span">
                             <AttachFileOutlinedIcon fontSize="small" />
                         </IconButton>
                     </label>
-                    <p style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13 }}	>
-                        <IntlMessages id="comment.attachment.title" />
-                    </p>
+                    <p style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13 }}><IntlMessages id="comment.attachment.title" /></p>
                 </Grid>
-                </form>
             </div>
         )
     }
