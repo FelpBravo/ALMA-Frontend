@@ -39,8 +39,8 @@ const rootReducer = (history) => combineReducers({
 	adminFolders: adminFoldersReducer,
 	tags: tagsReducer,
 	reports:reportsReducer, 
-	firm:firmReducer,'
-	crumbs:breadcrumbsReducer'
+	firm:firmReducer,
+	crumbs:breadcrumbsReducer
 });
 
 export const store = createStore(
