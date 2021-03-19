@@ -56,6 +56,7 @@ export const types = {
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',
 	docsRemoveAll: 'Documents Remove all',
 	docsRemoveDetailDocumentType: 'Documents Remove detail document type',
+	docsRemoveFile: 'Documents Remove document',
 	docsSetValueField: 'Documents Set value field',
 	docsSaveFormFinish: 'Documents Save form finish',
 	docsSaveFolderId: 'Documents Save folder ID',
@@ -107,9 +108,5 @@ export const types = {
 	tagsSaveLoaded: 'Tags save loaded',
 	tagsUpdateLoaded: 'Tags update loaded',
 	tagsRemoveAll: 'Tags Remove all',
-
-	docsListSaveFileIdLoaded: 'Documents List Save file ID loaded',
-	docsListSaveThumbnailGenerated: 'Documents List Save thumbnailGenerated',
-	docsListSaveThumbnail: 'Documents List Save thumbnail'
 
 }

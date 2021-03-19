@@ -176,6 +176,14 @@ export const documentSaveFolderName = (name) => {
 	}
 };
 
+export const documentRemoveFile = filesLoaded => {
+	return {
+		type: types.docsRemoveFile,
+		payload: filesLoaded,
+	}
+}
+
+
 export const startDropFileLoading = (files) => {
 	return async (dispatch, getState) => {
 
@@ -197,8 +205,6 @@ export const startDropFileLoading = (files) => {
 			Swal.close();
 
 			// SAVE STORE ID LOADED
-			// documentsType , thumbnailGenerated
-			//for
 			resp.data.forEach( res => dispatch(saveFileIdLoaded(
 				{
 					fileIdLoaded: res.fileId,
@@ -212,7 +218,7 @@ export const startDropFileLoading = (files) => {
 
 		} catch (error) {
 
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 
 			console.log(error);
 
@@ -229,7 +235,7 @@ export const startDropFileLoading = (files) => {
 
 const saveFileIdLoaded = (fileObject) => {
 	return {
-		type: types.docsListSaveFileIdLoaded,
+		type: types.docsSaveFileIdLoaded,
 		payload: fileObject,
 	}
 };
@@ -254,7 +260,7 @@ export const startThumbnailLoading = (fileId) => {
 
 		} catch (error) {
 			console.log(error);
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 		}
 
 	}
@@ -262,7 +268,7 @@ export const startThumbnailLoading = (fileId) => {
 
 const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
-		type: types.docsListSaveThumbnail,
+		type: types.docsSaveThumbnail,
 		payload: {thumbnail, fileId}
 	}
 };
@@ -299,7 +305,7 @@ export const startDocumentByIdLoading =  (fileId) => {
 		} catch (error) {
 			Swal.close();
 			console.log(error);
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 		}
 
 	}
@@ -339,7 +345,7 @@ export const startDocumentByIdVisibility = (id) => {
 		} catch (error) {
 			Swal.close();
 			console.log(error);
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 		}
 
 	}

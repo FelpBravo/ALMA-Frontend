@@ -34,7 +34,14 @@ const initialState = {
 	},
 	loadingFolderModal: false,
 	docs: {},
+	filesLoaded: []
 }
+
+const fileLoadedStructure = {
+	fileIdLoaded: '',
+	thumbnail: null,
+	thumbnailGenerated: false,
+};
 
 export const documentsReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -87,9 +94,18 @@ export const documentsReducer = (state = initialState, action) => {
 			}
 
 		case types.docsSaveThumbnail:
+			const { fileId, thumbnail } = action.payload
+			const filesLoaded = state?.filesLoaded?.map(item => fileId === item.fileIdLoaded ? { ...item, thumbnail } : item)
+
 			return {
 				...state,
-				thumbnail: action.payload,
+				filesLoaded,
+			}
+		
+		case types.docsRemoveFile:
+			return {
+				...state,
+				filesLoaded: action.payload,
 			}
 
 		case types.docsSetValueField:
@@ -141,10 +157,11 @@ export const documentsReducer = (state = initialState, action) => {
 		case types.docsSaveFileIdLoaded:
 			return {
 				...state,
-				fileIdLoaded: action.payload,
+				filesLoaded: [...state.filesLoaded, {...fileLoadedStructure, ...action.payload}],
 			}
 
 		case types.docsSaveThumbnailGenerated:
+
 			return {
 				...state,
 				thumbnailGenerated: action.payload,
@@ -182,6 +199,7 @@ export const documentsReducer = (state = initialState, action) => {
 		case types.docsClear:
 			return {
 				...state,
+				...initialState,
 				detailDocumentType: {
 					aspectList: [],
 				},

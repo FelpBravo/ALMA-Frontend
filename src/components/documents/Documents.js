@@ -49,7 +49,7 @@ const Documents = () => {
 		versioningComments = '',
 		tagsSelected = [],
 	} = useSelector(state => state.documents);
-	const documentsList = useSelector(state => state.documentsList)
+	const documentsList = useSelector(state => state.documents.filesLoaded)
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
@@ -58,8 +58,11 @@ const Documents = () => {
 	
 
 	const [files, setFiles] = useState(null);
+	const handleClear = () => {
+		dispatch(documentsClear());
+	}
 
-	useEffect(() => {
+	useEffect(() => { // Cargar datos para editar
 
 		dispatch(documentsClear());
 
@@ -70,7 +73,7 @@ const Documents = () => {
 		dispatch(startDocumentByIdLoading(document));
 
 		dispatch(startThumbnailLoading(document));
-
+		return () => handleClear();
 	}, [dispatch, document]);
 
 	const handleSaveForm = async (evt) => {
@@ -83,7 +86,6 @@ const Documents = () => {
 			focusConfirm: true,
 			heightAuto: false,
 		});
-
 		if (resp.value) {
 
 			let filters = [];
@@ -161,9 +163,7 @@ const Documents = () => {
 
 	}
 
-	const handleClear = () => {
-		dispatch(documentsClear());
-	}
+
 
 	return (
 		<div className="row">
