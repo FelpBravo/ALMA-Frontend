@@ -229,7 +229,7 @@ export const startDropFileLoading = (files) => {
 
 const saveFileIdLoaded = (fileObject) => {
 	return {
-		type: types.docsListSaveFileIdLoaded,
+		type: types.docsSaveFileIdLoaded,
 		payload: fileObject,
 	}
 };
@@ -262,7 +262,7 @@ export const startThumbnailLoading = (fileId) => {
 
 const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
-		type: types.docsListSaveThumbnail,
+		type: types.docsSaveThumbnail,
 		payload: {thumbnail, fileId}
 	}
 };

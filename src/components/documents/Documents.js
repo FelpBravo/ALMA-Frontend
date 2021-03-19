@@ -49,7 +49,7 @@ const Documents = () => {
 		versioningComments = '',
 		tagsSelected = [],
 	} = useSelector(state => state.documents);
-	const documentsList = useSelector(state => state.documentsList)
+	const documentsList = useSelector(state => state.documents.filesLoaded)
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
@@ -83,7 +83,7 @@ const Documents = () => {
 			focusConfirm: true,
 			heightAuto: false,
 		});
-
+		console.log('resp.value', resp.value)
 		if (resp.value) {
 
 			let filters = [];
