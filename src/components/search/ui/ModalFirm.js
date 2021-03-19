@@ -36,32 +36,16 @@ const ModalFirm = () => {
 
   const { signatures = [] } = docs
 
-  const [pdf, setPDF] = useState('')
-
   const [activo, setActivo] = useState(false)
 
   const [valido, setValido] = useState(true)
 
   const handleClose = () => {
     setActivo(false)
-    setPDF('')
     dispatch(closeModalFirm());
   }
 
-  const getPDF = async () => {
-    setPDF('')
-    if (docs.fileId) {
-      const { data } = await downloadDocument(authUser, docs.fileId);
-      const file = new Blob([data], { type: 'application/pdf' });
-      setPDF(URL.createObjectURL(file))
-
-    }
-  }
-
-  useEffect(() => {
-    getPDF()
-    findFirm()
-  }, [docs])
+ 
 
   const findFirm = () => {
     if (docs.signatures) {
@@ -139,33 +123,6 @@ const ModalFirm = () => {
 
   }
 
-  const PDFcomponent = () => {
-    if (pdf != '') {
-      return (
-        <div style={{ width: '100%', height: '100%' }}>
-          <object
-            data={pdf}
-            type="application/pdf"
-            width="100%"
-            height="100%"
-          >
-            <iframe src={pdf} width="100%" height="100%">
-              <a href={pdf} id="enlaceDescargarPdf"
-                download={docs.name}
-              >Tu dispositivo no puede visualizar los PDF, da click aquí para descargarlo</a>
-            </iframe>
-
-          </object>
-        </div>
-
-
-      )
-    }
-    else {
-      return (<><p>Cargando...</p></>)
-    }
-
-  }
 
 
 
@@ -202,7 +159,7 @@ const ModalFirm = () => {
               </div>
             </Grid>
             <Grid item xs={8}>
-              <PDFcomponent />
+                
             </Grid>
           </Grid>
         </DialogContent>

@@ -26,7 +26,6 @@ import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import TableActionButton from './TableActionButton';
-import ModalVisibility from './Information/ui/ModalVisibility';
 import ModalFirm from './ModalFirm';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
@@ -91,13 +90,10 @@ const DataTable = () => {
 
 
 	let page_url = 1
-	console.log("A",page);
-	console.log('F',page_url);
 	if(page){
 		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,'') : 1
 	}
 	
-	console.log("b",page_url);
 
 	const { folderId } = queryString.parse(location.search);
 
@@ -121,7 +117,6 @@ const DataTable = () => {
 
 	const handleVisibility=(id) =>{
 		history.push(`/document/${id}/info`);
-		//dispatch(startDocumentByIdVisibility(id));
 	};
 
 	const handleFirm=(id, name) =>{
@@ -363,8 +358,7 @@ const DataTable = () => {
 									total={totalItems} 
 									onChange={handleChangePage}/>
 								</Grid>
-				<ModalVisibility/>
-				<ModalFirm/>
+				{/* <ModalFirm/> */}
                 <ModalVersioning/>
 			</div>
 		</div>
