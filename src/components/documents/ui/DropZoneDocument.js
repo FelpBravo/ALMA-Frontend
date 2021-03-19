@@ -66,6 +66,10 @@ export const DropZoneDocument = () => {
 		}
 	}
 
+	const onRemoveFile = fileId => {
+		documentsList.find( ({fileIdLoaded})  => fileIdLoaded === fileId)
+	}
+
 	const previewListWithThumbnail = () => (<Grid container>
 		{
 			data.map(row =>
