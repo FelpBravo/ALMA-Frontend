@@ -2,73 +2,33 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 
 const TableAttachments = (props) => {
+    const { id, name, createdAt, createdByUser, icon } = props
 
-	const {
-		id,
-		name,
-		image,
-		status,
-		icon,
-		tags,
-		folder,
-		large,
-		date,
-		activity,
-		userName,
-		isViewedDocuments = false,
-		owner,
-		isSubscriptions,
-	} = props.data;
-
-	let statusStyle = 'text-white bg-grey';
-
-	if (status) {
-		statusStyle = status.includes("Completed")
-			? "text-white bg-success"
-			: status.includes("On Hold") ? "bg-amber"
-				: status.includes("Delayed") ? "text-white bg-danger" : "text-white bg-grey";
-	}
 	return (
 		<tr tabIndex={-1} key={id}>
 			<td>
 				<div className="user-profile d-flex flex-row align-items-center">
-					{
-						image && <Avatar
-							alt={name}
-							src={image}
-							className="user-avatar user-avatar-custom"
-						/>
-					}
-
+					
 					<div className="user-detail">
 
 						<h5 className="user-name custom-color-table">
-							{
 							
-								userName && icon && <i className={icon}></i>
-							}
 							
-							{userName && ` ${userName} `}
-							
-							{
-								activity
-								&&
-								<span className="description-activity">{activity}</span>
-							}
-
+							<i className={icon}></i>
+						
 							{` ${name} `}
 						</h5>
 							<p className="user-description">
 								{`Subido por `}
-								<span className="owner-most-viewed-documents">{owner}</span>
-								{`, ${date}`}
+								<span className="owner-most-viewed-documents">{createdByUser}</span>
+								{`, ${createdAt}`}
 							</p>
 
 					</div>
 				</div>
 			</td>
 			{
-				folder &&
+				name &&
 				<td className="status-cell">
 					<span
 						style={
@@ -82,7 +42,7 @@ const TableAttachments = (props) => {
 						}
 						className="text-white x-2 jr-fs-sm ml-2 mb-0 rounded-xl order-sm-2"
 					>
-						{folder}
+						{name}
 					</span>
 				</td>
 			}

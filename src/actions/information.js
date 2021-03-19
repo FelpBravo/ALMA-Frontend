@@ -2,7 +2,7 @@ import { createAttachments, getAttachments, getTopic} from 'services/information
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
  
-export const startSaveCommentsLoading = (authUser,fileid) => {
+export const startSaveCommentsLoading = (authUser,fileId) => {
 	return async (dispatch) => {
 		try {
 			Swal.fire({
@@ -13,7 +13,7 @@ export const startSaveCommentsLoading = (authUser,fileid) => {
 			});
 			Swal.showLoading();
 
-			const resp = await getTopic(authUser,fileid)
+			const resp = await getTopic(authUser,fileId)
 
 			dispatch(commentsLoaded(resp.data))
 
@@ -26,7 +26,7 @@ export const startSaveCommentsLoading = (authUser,fileid) => {
 	}
 };
 
-export const startSaveAttachmentsLoading = (authUser,fileid) => {
+export const startSaveAttachmentsLoading = (authUser,fileId) => {
 	return async (dispatch) => {
 		try {
 			Swal.fire({
@@ -37,10 +37,11 @@ export const startSaveAttachmentsLoading = (authUser,fileid) => {
 			});
 			Swal.showLoading();
 
-			const resp = await getAttachments(authUser,fileid)
+			const resp = await getAttachments(authUser,fileId)
 
 			dispatch(attachmentsLoaded(resp.data))
-            
+            console.log("soy el adjunto",resp.data)
+
 		} catch (error) {
 			console.log(error);
 		} finally {
