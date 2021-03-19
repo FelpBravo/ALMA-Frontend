@@ -15,12 +15,14 @@ import DocumentLoaded from 'components/ui/components/DocumentLoaded';
 import { chunk, remove } from 'lodash-es';
 import { documentRemoveFile } from '../../../actions/documents';
 import DialogPreview from './DialogPreview';
+import Swal from 'sweetalert2';
+
+const MAX_FILES = 20;
 
 export const DropZoneDocument = () => {
 
 	const dispatch = useDispatch();
 	const location = useLocation();
-	const [shouldDisplayThumbnail, setShouldDisplayThumbnail] = useState(true);
 	const [dataDialogPreview, setDataDialogPreview] = useState(null);
 
 	// Contexto provider
@@ -46,10 +48,22 @@ export const DropZoneDocument = () => {
 	});
 	const { path } = acceptedFiles
 
-	const dropFile = (files) => {
+	const dropFile = async (files) => {
 
 		if (document.length === 0) {
-			dispatch(startDropFileLoading(files));
+			const diff = MAX_FILES - nDocuments - files.length
+			if(diff >= 0){
+				dispatch(startDropFileLoading(files));
+			}else{
+				const resp = await Swal.fire({
+					title: 'Error',
+					text: `Sólo puedes subir ${MAX_FILES} documentos a la carga.`,
+					icon: "error",
+					showCancelButton: false,
+					focusConfirm: true,
+					heightAuto: false,
+				});
+			}
 		} else {
 			setFiles(files);
 		}
@@ -70,7 +84,7 @@ export const DropZoneDocument = () => {
 	}
 
 	const onRemoveFile = fileId => {
-		remove( documentsList, item  => fileId === item.fileIdLoaded);
+		remove(documentsList, item => fileId === item.fileIdLoaded);
 		dispatch(documentRemoveFile(documentsList));
 	}
 
@@ -85,12 +99,12 @@ export const DropZoneDocument = () => {
 					{
 						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
 							<Grid item md={3} container justify="center">
-								<ThumbnailItem 
-									fileIdLoaded={fileIdLoaded} 
-									thumbnailGenerated={thumbnailGenerated} 
-									thumbnail={thumbnail} 
+								<ThumbnailItem
+									fileIdLoaded={fileIdLoaded}
+									thumbnailGenerated={thumbnailGenerated}
+									thumbnail={thumbnail}
 									name={name}
-									setDataDialogPreview={ () => setDataDialogPreview({fileIdLoaded, thumbnailGenerated, thumbnail, name})}
+									setDataDialogPreview={() => setDataDialogPreview({ fileIdLoaded, thumbnailGenerated, thumbnail, name })}
 									onRemoveFile={() => onRemoveFile(fileIdLoaded)} />
 							</Grid>)
 					}
@@ -102,11 +116,11 @@ export const DropZoneDocument = () => {
 		{
 			data.map(row =>
 				<Grid item container md={12} spacing={1}>
-					{row.map(({fileIdLoaded, thumbnailGenerated, thumbnail, name}) =>
+					{row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
 						<Grid item md={12 / nColumns}>
-							<DocumentLoaded 
-								name={name} 
-								setDataDialogPreview={ () => setDataDialogPreview({fileIdLoaded, thumbnailGenerated, thumbnail, name})}
+							<DocumentLoaded
+								name={name}
+								setDataDialogPreview={() => setDataDialogPreview({ fileIdLoaded, thumbnailGenerated, thumbnail, name })}
 								onRemoveFile={() => onRemoveFile(fileIdLoaded)} />
 						</Grid>)}
 				</Grid>)
@@ -118,36 +132,36 @@ export const DropZoneDocument = () => {
 	return (<>
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				{nDocuments < MAX_FILES &&
+					<div className="row">
+						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-				<div className="row">
-					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+							<section className="mt-4">
+								<div {...getRootProps({})} className="drop-down">
+									<input {...getInputProps()} />
+									<img src={require("assets/images/upload.png")} alt="jambo" title="jambo" />
+									<div>
+										<IntlMessages id="document.dropDocument" />
+									</div>
+									<div>
+										<IntlMessages id="document.dropDocuments" />
+									</div>
 
-						<section className="mt-4">
-							<div {...getRootProps({})} className="drop-down">
-								<input {...getInputProps()} />
-								<img src={require("assets/images/upload.png")} alt="jambo" title="jambo" />
-								<div>
-									<IntlMessages id="document.dropDocument" />
+									<button className="btn" type="button" onClick={open}>
+										<IntlMessages id="document.selectDocument" />
+									</button>
 								</div>
-								<div>
-									<IntlMessages id="document.dropDocuments" />
-								</div>
+							</section>
 
-								<button className="btn" type="button" onClick={open}>
-									<IntlMessages id="document.selectDocument" />
-								</button>
-							</div>
-						</section>
-
-					</div>
-				</div>
+						</div>
+					</div>}
 				{/* {
 					documentsList.map(({ fileIdLoaded, thumbnailGenerated, thumbnail }) =>
 						<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name="test"/>
 					)
 
 				} */}
-				{ nDocuments > 0 && <h4 style={{marginTop:20}}>{<IntlMessages id="document.documentsLoad" />}</h4>}
+				{nDocuments > 0 && <h4 style={{ marginTop: 20 }}>{<IntlMessages id="document.documentsLoad" />}</h4>}
 				{getPreviewList(nDocuments)}
 
 				{/* {
@@ -189,6 +203,6 @@ export const DropZoneDocument = () => {
 			</div>
 		</div>
 		<DialogPreview data={dataDialogPreview} handleClose={onCloseDialogPreview} />
-				</>
+	</>
 	)
 }

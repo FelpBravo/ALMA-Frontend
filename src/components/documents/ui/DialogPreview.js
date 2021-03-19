@@ -10,9 +10,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import { ThumbnailItem } from './ThumbnailItem';
 import Slide from '@material-ui/core/Slide';
+import IntlMessages from 'util/IntlMessages';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+    return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const styles = (theme) => ({
@@ -52,15 +53,15 @@ const DialogContent = withStyles((theme) => ({
 export default function DialogPreview({ data, handleClose }) {
 
     return (
-        <Dialog 
-        TransitionComponent={Transition}
-        keepMounted 
-        onClose={handleClose} aria-labelledby="customized-dialog-title" open={data}>
+        <Dialog
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose} aria-labelledby="customized-dialog-title" open={data}>
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                Previsualización
+                <IntlMessages id="document.modal.title" />
             </DialogTitle>
             <DialogContent dividers>
-           { data && <ThumbnailItem {...data} />}
+                {data && <ThumbnailItem {...data} />}
             </DialogContent>
         </Dialog>
     );
