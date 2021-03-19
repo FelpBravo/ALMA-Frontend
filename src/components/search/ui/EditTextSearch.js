@@ -133,7 +133,6 @@ export const EditTextSearch = ({ }) => {
 
 						</Grid>
 					</form>
-
 					<AdvancedSearch />
 				</div>
 			</div>
