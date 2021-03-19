@@ -40,7 +40,10 @@ const rootReducer = (history) => combineReducers({
 	tags: tagsReducer,
 	reports:reportsReducer, 
 	firm:firmReducer,
+<<<<<<< HEAD
 	crumbs:breadcrumbsReducer
+=======
+>>>>>>> origin/develop
 });
 
 export const store = createStore(
