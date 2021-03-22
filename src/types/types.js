@@ -56,6 +56,7 @@ export const types = {
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',
 	docsRemoveAll: 'Documents Remove all',
 	docsRemoveDetailDocumentType: 'Documents Remove detail document type',
+	docsRemoveFile: 'Documents Remove document',
 	docsSetValueField: 'Documents Set value field',
 	docsSaveFormFinish: 'Documents Save form finish',
 	docsSaveFolderId: 'Documents Save folder ID',
@@ -111,5 +112,8 @@ export const types = {
 	attachmentsDataLoaded:'Attachments Data Loaded',
 	commentsDataLoaded: 'Comments Data Loaded',
 	informationRemoveAll: 'Information Remove All',
+
+	addBreadcrumbs: 'Add BreadCrumbs',
+	createBreadcrumbs: 'Create BreadCrumbs'
 
 }

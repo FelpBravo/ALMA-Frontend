@@ -30,7 +30,7 @@ import ModalFirm from './ModalFirm';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
-
+import { addBreadcrumbs} from 'actions/breadcrumbs'
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -115,7 +115,8 @@ const DataTable = () => {
 
 	}, []);
 
-	const handleVisibility=(id) =>{
+	const handleVisibility=(id,name) =>{
+		dispatch(addBreadcrumbs(name,`/document/${id}/info`))
 		history.push(`/document/${id}/info`);
 	};
 
@@ -124,12 +125,12 @@ const DataTable = () => {
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
-	const handleVersioning=(id) =>{
+	const handleVersioning=(id, name) =>{
+		dispatch(addBreadcrumbs(name,`/document/${id}/version`))
 		history.push(`/document/${id}/version`);
+
 	};
 
-
-	console.log(path,url);
 	const handleChangePage = (event, page) => {
 
 		if(path === '/search/:page' || path === '/search'){

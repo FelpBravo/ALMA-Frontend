@@ -176,6 +176,14 @@ export const documentSaveFolderName = (name) => {
 	}
 };
 
+export const documentRemoveFile = filesLoaded => {
+	return {
+		type: types.docsRemoveFile,
+		payload: filesLoaded,
+	}
+}
+
+
 export const startDropFileLoading = (files) => {
 	return async (dispatch, getState) => {
 
@@ -192,17 +200,25 @@ export const startDropFileLoading = (files) => {
 
 			Swal.showLoading();
 
-			const resp = await uploadDocument(authUser, files[0]);
+			const resp = await uploadDocument(authUser, files);
 
 			Swal.close();
 
 			// SAVE STORE ID LOADED
-			dispatch(saveFileIdLoaded(resp.data.id));
-			dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
+			resp.data.forEach( res => dispatch(saveFileIdLoaded(
+				{
+					fileIdLoaded: res.fileId,
+					// thumbnailGenerated: res.thumbnailGenerated,
+					thumbnailGenerated: true,
+
+					name: res.name,
+				})))
+			// dispatch(saveFileIdLoaded(resp.data.id));
+			// dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
 
 		} catch (error) {
 
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 
 			console.log(error);
 
@@ -217,10 +233,10 @@ export const startDropFileLoading = (files) => {
 	}
 };
 
-const saveFileIdLoaded = (fileId) => {
+const saveFileIdLoaded = (fileObject) => {
 	return {
 		type: types.docsSaveFileIdLoaded,
-		payload: fileId,
+		payload: fileObject,
 	}
 };
 
@@ -240,20 +256,20 @@ export const startThumbnailLoading = (fileId) => {
 
 			const resp = await getThumbnail(authUser, fileId);
 
-			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`));
+			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`, fileId));
 
 		} catch (error) {
 			console.log(error);
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 		}
 
 	}
 };
 
-const documentSaveThumbnail = (thumbnail) => {
+const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
 		type: types.docsSaveThumbnail,
-		payload: thumbnail
+		payload: {thumbnail, fileId}
 	}
 };
 
@@ -289,7 +305,7 @@ export const startDocumentByIdLoading =  (fileId) => {
 		} catch (error) {
 			Swal.close();
 			console.log(error);
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 		}
 
 	}
@@ -329,7 +345,7 @@ export const startDocumentByIdVisibility = (id) => {
 		} catch (error) {
 			Swal.close();
 			console.log(error);
-			dispatch(documentsClear())
+			//dispatch(documentsClear())
 		}
 
 	}

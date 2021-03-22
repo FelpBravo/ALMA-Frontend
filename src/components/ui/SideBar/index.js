@@ -16,8 +16,7 @@ const SideBar = () => {
 	const [ fullWidth, setFullWith] = useState(false)
 	const [ respWidth, setRespWith] = useState(false)
 
-	console.log("object");
-	console.log(fullWidth);
+	
 /* 
 	 useEffect(() => {
 		 console.log(width);

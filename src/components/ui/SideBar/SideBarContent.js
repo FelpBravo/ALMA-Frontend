@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fixedFolders } from 'helpers/fixedFolder';
 import { searchRemoveText } from 'actions/search';
 import StyledTreeItem from '../StyledTreeItem';
+import { startBreadcrumbs } from 'actions/breadcrumbs'
 
 const useStyles = makeStyles({
 	root: {
@@ -90,6 +91,7 @@ const SideBarContent = () => {
 				nodeId={String(folder.id)}
 				labelText={folder.name}
 				labelIcon={folder.hashSubFolders ? MailIcon : FiberManualRecord}
+				onClick={()=>{dispatch(startBreadcrumbs(folder.name,`/directory/${folder.id}`))}}
 			>
 				{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
 			</StyledTreeItem>

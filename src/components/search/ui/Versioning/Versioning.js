@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import queryString from 'query-string';
-import { useHistory, useLocation , useParams} from 'react-router-dom';
-import { Button, Grid} from '@material-ui/core';
-import { startVersioningLoading ,versioningRemove} from '../../../../actions/search';
-import { TableVersioning } from './ui/TableVersioning'; 
+import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { Button, Grid } from '@material-ui/core';
+import { startVersioningLoading, versioningRemove } from '../../../../actions/search';
+import { TableVersioning } from './ui/TableVersioning';
 import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import BreadCrumbs from '../../../ui/Breadcrumbs'
+
 
 const useStyles = makeStyles({
 	root: {
@@ -19,6 +21,7 @@ const Versioning = () => {
 	const dispatch = useDispatch();
 	const { id } = useParams()
 	const { authUser } = useSelector(state => state.auth);
+	const { breadcrumbs = []} = useSelector(state => state.crumbs);
 	const classes = useStyles();
 	const location = useLocation();
 	const history = useHistory();
@@ -37,54 +40,54 @@ const Versioning = () => {
 		if (id.length < 10) {
 			return;
 		}
-		dispatch(startVersioningLoading(authUser,1, id))
+		dispatch(startVersioningLoading(authUser, 1, id))
 
 
 
 	}, [dispatch, id]);
 
-	const handleBackGo = ()=>{
+	const handleBackGo = () => {
 		dispatch(versioningRemove())
 		history.goBack()
 	}
 
+
 	return (
-	
+
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
-					
-						<Grid container className="mt-2">
 
-							<Grid item xs={11}>
+					<Grid container className="mt-2">
+
+						<Grid item xs={11}>
 							<h3 className="mb-0">
-						      <IntlMessages id="versioning.modal.title" />
-						    </h3>
-							</Grid>
-
-							
-
+								<IntlMessages id="versioning.modal.title" />
+							</h3>
 						</Grid>
-				<TableVersioning/>
-				<Grid container>
-					<KeyboardBackspaceIcon 
-					onClick={handleBackGo}
-					color='primary'/>
-					<p style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop:2}}	>
-					Volver
-					</p>
-			    </Grid>
+					</Grid>
+					<BreadCrumbs/>
+
+					<TableVersioning />
+					<Grid container>
+						<KeyboardBackspaceIcon
+							onClick={handleBackGo}
+							color='primary' />
+						<p style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop: 2 }}	>
+							Volver
+						</p>
+					</Grid>
 				</div>
-				
+
 			</div>
-			
-			
+
+
 		</div>
-		
-		
-			
-			
-		
+
+
+
+
+
 	)
 }
 
