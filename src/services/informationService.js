@@ -25,10 +25,11 @@ const getAttachments = (authUser,fileId) => {
     })
 }
 
-const createTopic = (authUser, file, fileId) => {
-
+const createTopic = (authUser, fileId, content, file) => {
+	console.log(fileId,content,file);
 	const data = new FormData();
-	data.append('file', file);
+	data.append('files', file);
+	data.append('content', content)
 
 	return axiosInstance.post(`/files/${fileId}/topic`, data, {
 		headers: {
@@ -36,11 +37,33 @@ const createTopic = (authUser, file, fileId) => {
 			'Content-Type': 'multipart/form-data'
 		},
 	});
+};
 
+const createReplies = (authUser, idComment, content, file) => {
+	const data = new FormData();
+	data.append('files', file);
+	data.append('content', content)
+
+	return axiosInstance.post(`/files/${idComment}/reply`, data, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+			'Content-Type': 'multipart/form-data'
+		},
+	});
 };
 
 const getTopic = (authUser,fileId) => {
     return axiosInstance.get(`/files/${fileId}/topic`,{
+        headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+    }).catch((e)=>{
+        console.log(e);
+    })
+}
+
+const getReplies = (authUser,idComment) => {
+    return axiosInstance.get(`/files/${idComment}/replies`,{
         headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -54,5 +77,7 @@ export {
     createAttachments,
     getAttachments,
 	createTopic,
-	getTopic
+	getTopic,
+	getReplies,
+	createReplies
 }
