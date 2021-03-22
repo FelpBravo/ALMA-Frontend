@@ -63,7 +63,7 @@ const saveForm = (authUser, fileId, folderId, aspectGroup, tags = []) => {
 
 const editForm = (authUser, folderId, fileId, aspectGroup, tags = []) => {
 
-	return axiosInstance.post(`/files/fullDocument`, { folderId, fileId, aspectGroup, tags }, {
+	return axiosInstance.put(`/files/fullDocument`, { folderId, fileId, aspectGroup, tags }, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},

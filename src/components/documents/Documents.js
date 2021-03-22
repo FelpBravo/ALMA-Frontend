@@ -55,7 +55,6 @@ const Documents = () => {
 
 	// ID DOCUMENTO URL
 	const { document = '' } = queryString.parse(location.search);
-	
 
 	const [files, setFiles] = useState(null);
 	const handleClear = () => {
@@ -200,7 +199,7 @@ const Documents = () => {
 					</div>
 
 					<DocumentContext.Provider value={{ setFiles }}>
-						<DropZoneDocument />
+						<DropZoneDocument document={document} setFiles={setFiles} />
 					</DocumentContext.Provider>
 
 					<div className="row">
