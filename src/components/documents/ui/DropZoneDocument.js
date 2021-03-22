@@ -17,20 +17,15 @@ import { documentRemoveFile } from '../../../actions/documents';
 import DialogPreview from './DialogPreview';
 import Swal from 'sweetalert2';
 
-const MAX_FILES = 20;
 
-export const DropZoneDocument = () => {
-
+export function DropZoneDocument( {document, setFiles} ){
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const [dataDialogPreview, setDataDialogPreview] = useState(null);
 
-	// Contexto provider
-	const { setFiles } = useContext(DocumentContext);
 
 	// ID DOCUMENTO URL	
-	const { document = '' } = queryString.parse(location.search);
-
+	const MAX_FILES = document.length === 0 ? 20 : 1;
 	// const { thumbnail = null,
 	// 	thumbnailGenerated = false,
 	// 	name = '',
@@ -46,26 +41,28 @@ export const DropZoneDocument = () => {
 		noClick: true,
 		noKeyboard: true,
 	});
-	const { path } = acceptedFiles
 
 	const dropFile = async (files) => {
-
-		if (document.length === 0) {
-			const diff = MAX_FILES - nDocuments - files.length
-			if(diff >= 0){
-				dispatch(startDropFileLoading(files));
-			}else{
-				const resp = await Swal.fire({
-					title: 'Error',
-					text: `Sólo puedes subir ${MAX_FILES} documentos a la carga.`,
-					icon: "error",
-					showCancelButton: false,
-					focusConfirm: true,
-					heightAuto: false,
-				});
-			}
+		const diff = MAX_FILES - nDocuments - files.length
+		if (diff < 0) {
+			const resp = await Swal.fire({
+				title: 'Error',
+				text: `Sólo puedes subir ${MAX_FILES} documentos a la carga.`,
+				icon: "error",
+				showCancelButton: false,
+				focusConfirm: true,
+				heightAuto: false,
+			});
 		} else {
-			setFiles(files);
+			if (document.length === 0) {
+
+				dispatch(startDropFileLoading(files));
+
+
+			} else {
+				console.log('else setFiles', files)
+				setFiles(files);
+			}
 		}
 
 	}

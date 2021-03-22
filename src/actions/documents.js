@@ -233,7 +233,7 @@ export const startDropFileLoading = (files) => {
 	}
 };
 
-const saveFileIdLoaded = (fileObject) => {
+export const saveFileIdLoaded = (fileObject) => {
 	return {
 		type: types.docsSaveFileIdLoaded,
 		payload: fileObject,
@@ -477,7 +477,7 @@ export const startEditDocumentLoading = (
 
 			}
 
-			await editForm(authUser,folderId, fileId, aspectGroup, tags);
+			await editForm(authUser,folderId, [fileId], aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 

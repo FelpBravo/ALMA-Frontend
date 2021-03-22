@@ -8,10 +8,10 @@ const initialState = {
 	},
 	fileIdLoaded: '',
 	folderId: '',
-	folderIdOrigin:'',
-	signatures:[],
+	folderIdOrigin: '',
+	signatures: [],
 	path: '',
-	name:'',
+	name: '',
 	pathFolderName: '',
 	folderName: '',
 	thumbnail: null,
@@ -68,13 +68,13 @@ export const documentsReducer = (state = initialState, action) => {
 				path: '',
 				pathFolderName: '',
 				folderId: '',
-				folderIdOrigin:'',
+				folderIdOrigin: '',
 				folderName: '',
-				name:'',
+				name: '',
 				thumbnail: null,
 				thumbnailGenerated: false,
 				tags: [],
-				signatures:[],
+				signatures: [],
 				versioningType: '',
 				versioningComments: '',
 				folders: [],
@@ -101,7 +101,7 @@ export const documentsReducer = (state = initialState, action) => {
 				...state,
 				filesLoaded,
 			}
-		
+
 		case types.docsRemoveFile:
 			return {
 				...state,
@@ -157,7 +157,7 @@ export const documentsReducer = (state = initialState, action) => {
 		case types.docsSaveFileIdLoaded:
 			return {
 				...state,
-				filesLoaded: [...state.filesLoaded, {...fileLoadedStructure, ...action.payload}],
+				filesLoaded: [...state.filesLoaded, { ...fileLoadedStructure, ...action.payload }],
 			}
 
 		case types.docsSaveThumbnailGenerated:
@@ -175,9 +175,9 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
-				folderIdOrigin:'',
+				folderIdOrigin: '',
 				path: '',
-				name:'',
+				name: '',
 				pathFolderName: '',
 				folderName: '',
 				thumbnail: null,
@@ -205,10 +205,10 @@ export const documentsReducer = (state = initialState, action) => {
 				},
 				fileIdLoaded: '',
 				folderId: '',
-				folderIdOrigin:'',
+				folderIdOrigin: '',
 				folderName: '',
 				path: '',
-				name:'',
+				name: '',
 				pathFolderName: '',
 				thumbnail: null,
 				acceptedFiles: [],
@@ -232,6 +232,7 @@ export const documentsReducer = (state = initialState, action) => {
 				...state,
 				detailDocumentType: { ...action.payload.aspectGroup },
 				fileIdLoaded: action.payload.fileId,
+				filesLoaded: [...state.fileIdLoaded, { ...fileLoadedStructure, name: action.payload.name ,fileIdLoaded: action.payload.fileId }],
 				folderId: action.payload.folderId,
 				folderIdOrigin: action.payload.folderId,
 				path: action.payload.path,
@@ -240,10 +241,10 @@ export const documentsReducer = (state = initialState, action) => {
 				tagsSelected: [...action.payload.tags],
 			}
 		case types.clearFolderIdOrigin:
-				return {
-					...state,
-					folderId: action.payload,
-				}
+			return {
+				...state,
+				folderId: action.payload,
+			}
 		case types.docsDocumentByIdVisibility:
 			return {
 				...state,
