@@ -25,10 +25,12 @@ const subscribeDocument = (authUser, id) => {
 	});
 };
 
-const uploadDocument = (authUser, file) => {
+const uploadDocument = (authUser, files) => {
 
 	const data = new FormData();
-	data.append('file', file);
+	files.forEach(function(file, i) {
+		data.append('files', file);
+	});
 
 	return axiosInstance.post(`/files/upload`, data, {
 		headers: {
@@ -36,8 +38,7 @@ const uploadDocument = (authUser, file) => {
 			'Content-Type': 'multipart/form-data'
 		},
 	});
-
-};
+}
 
 const getThumbnail = (authUser, id) => {
 
@@ -60,9 +61,9 @@ const saveForm = (authUser, fileId, folderId, aspectGroup, tags = []) => {
 
 };
 
-const editForm = (authUser, folderId,fileId, aspectGroup, tags = []) => {
+const editForm = (authUser, folderId, fileId, aspectGroup, tags = []) => {
 
-	return axiosInstance.post(`/files/fullDocument`, { folderId,fileId, aspectGroup, tags }, {
+	return axiosInstance.post(`/files/fullDocument`, { folderId, fileId, aspectGroup, tags }, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -82,11 +83,10 @@ const editDocumentVersion = (authUser, file, fileId, versioningType, versioningC
 
 	const data = new FormData();
 	data.append('file', file);
-	data.append('fileId', fileId);
 	data.append('majorVersion', versioningType);
 	data.append('comment', versioningComments);
 
-	return axiosInstance.put(`/files/new-version`, data, {
+	return axiosInstance.put(`/files/${fileId}/version`, data, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 			'Content-Type': 'multipart/form-data'

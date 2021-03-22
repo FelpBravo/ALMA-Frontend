@@ -49,6 +49,7 @@ const Documents = () => {
 		versioningComments = '',
 		tagsSelected = [],
 	} = useSelector(state => state.documents);
+	const documentsList = useSelector(state => state.documents.filesLoaded)
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
@@ -57,8 +58,11 @@ const Documents = () => {
 	
 
 	const [files, setFiles] = useState(null);
+	const handleClear = () => {
+		dispatch(documentsClear());
+	}
 
-	useEffect(() => {
+	useEffect(() => { // Cargar datos para editar
 
 		dispatch(documentsClear());
 
@@ -69,19 +73,19 @@ const Documents = () => {
 		dispatch(startDocumentByIdLoading(document));
 
 		dispatch(startThumbnailLoading(document));
-
+		return () => handleClear();
 	}, [dispatch, document]);
 
-	const handleSaveForm = async () => {
+	const handleSaveForm = async (evt) => {
+		evt.preventDefault();
 		const resp = await Swal.fire({
 			title: 'Carga de documento',
-			text: "¿Está seguro de cargar este archivo?",
+			text: "¿Estás seguro de realizar la carga de archivos?",
 			icon: "question",
 			showCancelButton: true,
 			focusConfirm: true,
 			heightAuto: false,
 		});
-
 		if (resp.value) {
 
 			let filters = [];
@@ -126,10 +130,10 @@ const Documents = () => {
 			});
 
 			if (document.length === 0) {
-
+				const filesId = documentsList.map( ({fileIdLoaded}) => fileIdLoaded)
 				dispatch(
 					startSaveFormLoading(
-						fileIdLoaded,
+						filesId,
 						folderId,
 						{ id: documentId, aspectList: filters },
 						tags
@@ -159,9 +163,7 @@ const Documents = () => {
 
 	}
 
-	const handleClear = () => {
-		dispatch(documentsClear());
-	}
+
 
 	return (
 		<div className="row">
@@ -243,21 +245,11 @@ const Documents = () => {
 										    fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
 										    boxShadow: "none", height: '45px', width: '120px'
 							            }}
-										disabled={
+										disabled={documentsList.length === 0 ||
 											detailDocumentType.length === 0 ||
 											documentId.length === 0 ||
 											aspectList.length === 0 ||
-											fileIdLoaded.length === 0 ||
-											folderId.length === 0 ||
-											(document.length > 0
-												&&
-												files && files.length > 0
-												&&
-												(
-													versioningType.length === 0 ||
-													versioningComments.length === 0
-												)
-											)
+											folderId.length === 0
 										}
 										type="submit"
 										variant="contained"

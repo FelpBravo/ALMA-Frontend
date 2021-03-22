@@ -2,8 +2,7 @@ import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useLocation , useParams} from 'react-router-dom';
-import { Button, Grid, Paper} from '@material-ui/core';
-import { startVersioningLoading ,versioningRemove} from 'actions/search';
+import { Grid, Paper} from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import { startDocumentByIdVisibility } from 'actions/documents';
 import Tabs from '@material-ui/core/Tabs';
@@ -11,7 +10,8 @@ import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { downloadDocument } from 'services/filesService';
+import BreadCrumbs from 'components/ui/Breadcrumbs'
+
 
 
 import Preview from './ui/Preview'
@@ -45,7 +45,7 @@ function TabPanel(props) {
 		>
 			{value === index && (
 				<Box p={1}>
-					<Typography>{children}</Typography>
+					<Typography component={'span'} >{children}</Typography>
 				</Box>
 			)}
 		</div>
@@ -103,6 +103,7 @@ const Information = () => {
 				<div className="jr-card">
 				<h3 className="mb-0">
 				<IntlMessages id="Informacion Documento" />
+				<BreadCrumbs/>
 				 </h3>
 						<Grid container className="mt-2">
 							<Grid item xs={6}>
@@ -140,7 +141,7 @@ const Information = () => {
 		</div>
 		
 		
-			
+			 
 			
 		
 	)

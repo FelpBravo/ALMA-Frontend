@@ -24,7 +24,6 @@ export const SubDetailDocumentType = ({ id, name, label, customPropertyList = []
 								i === 0 ? columns : i * columns + columns
 							)
 							.map((item) => {
-								console.log(item);
 								return (
 									<div
 										key={item.name}
