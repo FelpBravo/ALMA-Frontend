@@ -1,11 +1,32 @@
 import { startSaveAttachmentsLoading } from 'actions/information';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TableAttachments from './TableAttachments';
+import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
+import { makeStyles } from '@material-ui/core';
+import Swal from 'sweetalert2';
+import { startDownloadDocument } from 'actions/search';
+import { Button} from '@material-ui/core';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+
+const useStyles = makeStyles((theme) => ({
+
+	iconos: {
+	  cursor: "pointer",
+	  color: "#2196f3",
+	  fontSize: '18px',
+	},
+    input: {
+        display: 'none',
+      },
+	
+  }));
+
 
 
 const Attachments = (props) =>{
 
+    const classes = useStyles();
     const {fileId, authUser} = props
     const dispatch = useDispatch();
     const { attachments = [] } = useSelector(state => state.info);
@@ -16,12 +37,42 @@ useEffect ( () =>{
 
     },[fileId])
 
+    const handleDownload = async (id, name) => {
+		
+        const resp = await Swal.fire({
+			title: 'Descargar',
+			text: "¿Está seguro que quiere descargar el documento?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
+		if (resp.value) {
+			dispatch(startDownloadDocument(id,name))
+		}
 
+	}
 
 return(
     <div className="table-responsive-material">
-    <table className="default-table table table-sm table-hover">
+    <div className="mt-2">
+    <input
+        accept="image/*"
+        className={classes.input}
+        id="contained-button-file"
+        multiple
+        type="file"
+      />
+      <label htmlFor="contained-button-file">
+        <Button variant="contained" color="primary" component="span"
+        startIcon={<CloudUploadIcon />}>
+          Cargar Archivo
+        
+        </Button>
+      </label>
+    </div>
 
+    <table className="default-table table table-sm table-hover mt-3">
         <tbody>
         {attachments.map((
 			{   
@@ -29,7 +80,7 @@ return(
 			name,
 			createdAt,
 			createdByUser,
-            icon
+           
 			}) => {
 	    return (
 
@@ -42,7 +93,7 @@ return(
 						<h5 className="user-name custom-color-table">
 							
 							
-							<i className={icon}></i>
+                        <DescriptionOutlinedIcon color="primary"/>
 						
 							{` ${name} `}
 						</h5>
@@ -56,7 +107,12 @@ return(
 				</div>
 			</td>
 				<td className="status-cell">
-					Descargar documento
+			
+						<SaveAltOutlinedIcon
+                            color="primary"
+							onClick={() => handleDownload(id, name)}
+						/>
+			
 				</td>
 			
 		</tr>

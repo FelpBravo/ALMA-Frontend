@@ -125,7 +125,7 @@ const Information = () => {
 									<Comments authUser={authUser} fileId={id}/>
 								</TabPanel>
 								<TabPanel value={value} index={2}>
-									<Attachments authUser={authUser} fileId={id}/>
+									<Attachments authUser={authUser} fileId={id} name={docs.name}/>
 								</TabPanel>
 							</div>
 							</Grid>
