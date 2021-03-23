@@ -86,8 +86,9 @@ const Attachments = (props) => {
         />
         <label htmlFor="contained-button-file">
           {!file &&
-            <Button variant="contained" color="default" component="span"
+            <Button variant="contained" component="span"
               startIcon={<SearchIcon />}
+              style={{background:"#E1F0FF", fontFamily:"Poppins", fontSize:12, color:'#3699FF'}}
             >
               Examinar
 

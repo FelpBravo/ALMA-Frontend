@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
     },
     coment: {
-        backgroundColor: '#EFF7FF',
+        backgroundColor: '#E1F0FF',
         color: '#494B74',
         padding: 12,
         borderRadius: 10,
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     newcomment: {
-        backgroundColor: '#EFF7FF',
+        backgroundColor: '#E1F0FF',
         color: '#494B74',
         padding: 12,
         borderRadius: 5,
@@ -96,9 +96,9 @@ const Comments = (props) => {
             <>
 
                 <div className={classes.coment}>
-                    <span style={{ fontSize: 14, color: "#3699FF" }}>{author}</span><span style={{ marginLeft: 5, fontSize: 12, color: "#A7A8BB", }} >{new Date(date).toLocaleString()}</span>
+                    <span style={{ fontSize: 15, color: "#3699FF", fontWeight:500}}>{author}</span><span style={{ marginLeft: 5, fontSize: 12, color: "#A7A8BB", }} >{new Date(date).toLocaleString()}</span>
                     <br />
-                    <span style={{ fontSize: 13 }}>{text}</span>
+                    <span style={{ fontSize: 14 }}>{text}</span>
                     <br />
                     {attachment && attachment.length > 0 && attachment.map(({ name, id }) => {
                         return (<span style={{ color: "#3699FF", fontSize: 11, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{name}</span>)
@@ -185,22 +185,24 @@ const Comments = (props) => {
                                 label={<IntlMessages id="comment.newcomment.title" />}
                                 variant="outlined"
                                 color="primary"
-                                style={{ background: '#FFF' }}
+                                style={{ background: '#FFF'}}
                                 fullWidth
+                                size="small"
                                 onChange={(event) => setText(event.target.value)}
+                                
                             />
                         </Grid>
-                        <Grid item xs={1} className="mt-3 ml-1">
-                            <IconButton style={{ background: "#3699FF", width: 30, height: 30, marginLeft: 15 }} onClick={handleSubmit}>
+                        <Grid item xs={1} >
+                            <IconButton style={{ background: "#3699FF", width: 35, height: 35, marginLeft: 15, marginTop:2}} onClick={handleSubmit}>
                                 <NearMeOutlinedIcon style={{ color: "white", fontSize: 22 }} />
                             </IconButton>
                         </Grid>
                     </Grid>
                     <Grid container>
-                        <label htmlFor={idComment}>
-                            <IconButton color="primary" aria-label="upload picture" component="span">
-                                <AttachFileOutlinedIcon fontSize="small" />
-                            </IconButton>
+                        <label htmlFor={idComment}>    
+                        
+                                <AttachFileOutlinedIcon fontSize="small" color="primary" />
+                      
                             <span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13, cursor: 'pointer' }}>{file ? '' : <IntlMessages id="comment.attachment.title" />}</span>
                             <input
                                 className={classes.input}
@@ -224,7 +226,7 @@ const Comments = (props) => {
     return (
         <div>
             <NewComment />
-            <Divider style={{ height: 4, background: "rgba(0, 0, 0, 0.12)" }} />
+            <Divider className="mt-1" style={{ height: 1, background: "rgba(0, 0, 0, 0.12)" }} />
             <div style={{ maxHeight: '650px', overflow: 'auto' }}>
                 {comments.length > 0 && comments.map(({ author, content, createdOn, id, totalReplies, attachments }) => {
                     return (
