@@ -136,7 +136,6 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 			Swal.showLoading();
 
 			const response = await saveForm(authUser, fileId, folderId, aspectGroup, tags);
-			console.log('response', response);
 			Swal.fire({
 				icon: 'success',
 				width: 600,
