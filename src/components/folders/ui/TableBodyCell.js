@@ -38,7 +38,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 			dispatch(startSubFoldersLoading(authUser, id, name));
 	
 	}
-
+    
 	const handleSelectAction = async (type) => {
 
 		switch (type) {
@@ -104,8 +104,10 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				scope="row"
 				className="folders-table-row"
 			>
+				
 				{name}
 			</TableCell>
+			
 			<TableCell
 				style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}
 				className="folders-table-row"
@@ -114,6 +116,11 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				{
 					state ? 'Activo' : 'Inactivo'
 				}
+			</TableCell>
+			<TableCell
+			style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}
+			>
+				{type.name}
 			</TableCell>
 			<TableCell>
 				<div className={classes.iconsHolder}>

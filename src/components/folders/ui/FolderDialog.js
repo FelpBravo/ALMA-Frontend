@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading } from 'actions/adminFolders';
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
@@ -123,7 +123,31 @@ const FolderDialog = () => {
 
 					<div className="row">
 
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+
+							<TextField
+								select
+								label="Tipo de espacio de trabajo"
+								variant="outlined"
+								fullWidth
+								size="small"
+								onChange={handleOnChange}
+							>
+							<MenuItem value="10">Ten</MenuItem>
+							<MenuItem value="20">Twenty</MenuItem>
+							</TextField>
+
+						</div>
+
+					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+						<span className="text-danger text-error">Debe seleccionar un tipo</span>
+					</div>
+
+					</div>
+
+					<div className="row mt-3">
+						
+					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 							<TextField
 								name="name"
@@ -132,39 +156,16 @@ const FolderDialog = () => {
 								label={fieldName}
 								type="text"
 								variant="outlined"
-								fullWidth
 								size="small"
+								fullWidth
 								onChange={handleOnChange}
 							/>
 
-						</div>
+							</div>
 
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 							<span className="text-danger text-error">{messageErrorName}</span>
 						</div>
-
-					</div>
-
-					<div className="row mt-3">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
-							<TextField
-								name="position"
-								value={position}
-								label={fieldPosition}
-								type="number"
-								variant="outlined"
-								fullWidth
-								size="small"
-								onChange={handleOnChange}
-							/>
-
-						</div>
-
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-							<span className="text-danger text-error">{messageErrorPosition}</span>
-						</div>
-
 					</div>
 
 					{
