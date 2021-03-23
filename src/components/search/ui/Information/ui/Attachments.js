@@ -1,5 +1,5 @@
-import { startSaveAttachmentsLoading } from 'actions/information';
-import React, { useEffect } from 'react';
+import { startSaveAttachmentsLoading, startUploadAttachments } from 'actions/information';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import { makeStyles } from '@material-ui/core';
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 	  fontSize: '18px',
 	},
     input: {
-        display: 'none',
+      
       },
 	
   }));
@@ -30,6 +30,7 @@ const Attachments = (props) =>{
     const {fileId, authUser} = props
     const dispatch = useDispatch();
     const { attachments = [] } = useSelector(state => state.info);
+    const [file, setFile] = useState()
     
 useEffect ( () =>{
      
@@ -52,6 +53,15 @@ useEffect ( () =>{
 		}
 
 	}
+    const handleChange = (event) => {
+        setFile(event.target.files[0])
+    }
+
+    const handleUploadAttach = async() => {
+        
+            dispatch(startUploadAttachments(authUser,fileId,file))
+     
+    }
 
 return(
     <div className="table-responsive-material">
@@ -62,10 +72,13 @@ return(
         id="contained-button-file"
         multiple
         type="file"
+        onChange={handleChange}
       />
       <label htmlFor="contained-button-file">
         <Button variant="contained" color="primary" component="span"
-        startIcon={<CloudUploadIcon />}>
+        startIcon={<CloudUploadIcon />}
+        onClick={handleUploadAttach}
+        >
           Cargar Archivo
         
         </Button>

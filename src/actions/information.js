@@ -155,33 +155,29 @@ export const informationRemoveAll = () => {
 };
 
 export const startUploadAttachments = (authUser, files, fileId) => {
-	return async (dispatch) => {
-
-		try {
-
-			Swal.fire({
-				title: 'Cargando...',
-				text: 'Por favor espere...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
-
-			Swal.showLoading();
-
-			const resp = await createAttachments(authUser, files[0], fileId);
-
-			Swal.close();
-
-			//dispatch((resp.data.id));
-			console.log(resp)
-		
-
-
-		} catch (error) {
-			console.log(error);
-		} finally {
-			Swal.close();
+		return async (dispatch) => {
+			try {
+				Swal.fire({
+					title: 'Cargando...',
+					text: 'Por favor espere...',
+					allowOutsideClick: false,
+					heightAuto: false,
+				});
+				Swal.showLoading();
+	
+				await createAttachments(authUser, fileId, files).then(async() => {
+					const resp = await getAttachments(authUser, fileId)
+					dispatch(attachmentsLoaded(resp.data))
+				})
+	
+	
+	
+	
+			} catch (error) {
+				console.log(error);
+			} finally {
+				Swal.close();
+			}
+	
 		}
-
-	}
-};
+	};
