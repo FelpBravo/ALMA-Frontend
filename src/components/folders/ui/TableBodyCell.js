@@ -34,9 +34,9 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	const { authUser } = useSelector(state => state.auth);
 
 	const handleOnClick = () => {
-		if (hashSubFolders) {
+		
 			dispatch(startSubFoldersLoading(authUser, id, name));
-		}
+	
 	}
 
 	const handleSelectAction = async (type) => {

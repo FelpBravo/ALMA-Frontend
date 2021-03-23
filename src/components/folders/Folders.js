@@ -60,6 +60,10 @@ const Folders = () => {
 
 	return (
 		<div className="row">
+			<p onClick={()=>{
+				console.log(folders);
+				console.log(currentFolders);
+			}}>Prueba</p>
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 
