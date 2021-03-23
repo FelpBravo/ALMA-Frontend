@@ -17,12 +17,6 @@ export const startFoldersInitLoading = (authUser) => {
 	}
 };
 
-export const foldersInitLoaded = (folders) => {
-	return {
-		type: types.foldersInitLoaded,
-		payload: folders,
-	}
-};
 
 export const startFoldersSetChildren = (folderId, authUser) => {
 	return async (dispatch) => {
@@ -37,6 +31,13 @@ export const startFoldersSetChildren = (folderId, authUser) => {
 			console.log(error);
 		}
 
+	}
+};
+
+export const foldersInitLoaded = (folders) => {
+	return {
+		type: types.foldersInitLoaded,
+		payload: folders,
 	}
 };
 

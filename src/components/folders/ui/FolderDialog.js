@@ -6,10 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading } from 'actions/adminFolders';
+import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
+import { identity } from 'lodash-es';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
@@ -20,24 +21,26 @@ const FolderDialog = () => {
 
 	const { authUser } = useSelector(state => state.auth);
 
-	const { openModal, folder, actionModal } = useSelector(state => state.adminFolders);
+	const { openModal, folder, actionModal, currentFolders, typeFolders = [] } = useSelector(state => state.adminFolders);
+
+	const { id } = currentFolders
 
 	const [formValues, setFormValues] = useState({});
 
-	const { name, position, state, parentId, parentName } = formValues;
+	const { name, type, state, parentId, parentName } = formValues;
 
-	const [messageErrorPosition, setMessageErrorPosition] = useState(null);
+	const [messageErrorTypes, setMessageErrorTypes] = useState(null);
 
 	const [messageErrorName, setMessageErrorName] = useState(null)
 
 	useEffect(() => {
-
 		setFormValues({ ...folder });
-
+		dispatch(startFoldersTypesLoading(authUser,id))
+		
 	}, [folder, setFormValues]);
 
 	useEffect(() => {
-
+		
 		if (!name || name.length < 3) {
 
 			setMessageErrorName('Este campo debe tener mínimo 3 letras');
@@ -52,17 +55,17 @@ const FolderDialog = () => {
 
 	useEffect(() => {
 
-		if (position <= 0) {
+		if (!type) {
 
-			setMessageErrorPosition('Este campo debe ser mayor a 0');
+			setMessageErrorTypes('Este debe seleccionar un tipo de carpeta');
 
 		} else {
 
-			setMessageErrorPosition(null);
+			setMessageErrorTypes(null);
 
 		}
 
-	}, [position, setMessageErrorPosition])
+	}, [type, setMessageErrorTypes])
 
 	const handleClose = () => {
 
@@ -81,23 +84,26 @@ const FolderDialog = () => {
 	}
 
 	const handleOnSave = () => {
+		console.log(formValues);
 
 		const data = {
 			...formValues,
-			position: parseInt(position),
+			type: type,
+			position:1,
 			state: String(formValues.state) === 'true',
 			company: 1
 		};
-
+		console.log(data);
 		if (actionModal === ACTION_CREATE) {
-
+			console.log(id);
+			dispatch(startUpdateFolderLoading(authUser,data,id))
 			dispatch(closeModalFolder());
-			dispatch(startCreateFolderLoading(authUser, data, parentId, parentName));
+			
 
 		} else {
 
 			dispatch(closeModalFolder());
-			dispatch(startEditFolderLoading(authUser, data, parentId, parentName));
+			//	dispatch(startEditFolderLoading(authUser, data, parentId, parentName));
 
 		}
 
@@ -105,6 +111,7 @@ const FolderDialog = () => {
 
 	return (
 		<div>
+			
 			<Dialog
 				open={openModal}
 				onClose={handleClose}
@@ -120,7 +127,9 @@ const FolderDialog = () => {
 				</DialogTitle>
 
 				<DialogContent dividers>
-
+				<p onClick={()=>{
+				console.log(formValues);
+			}}>Prueba</p>
 					<div className="row">
 
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -131,16 +140,19 @@ const FolderDialog = () => {
 								variant="outlined"
 								fullWidth
 								size="small"
+								name="type"
 								onChange={handleOnChange}
 							>
-							<MenuItem value="10">Ten</MenuItem>
-							<MenuItem value="20">Twenty</MenuItem>
+							{typeFolders && typeFolders.map((type)=>{
+								return <MenuItem value={type}>{type.name}</MenuItem>
+							})	
+							}
 							</TextField>
 
 						</div>
 
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-						<span className="text-danger text-error">Debe seleccionar un tipo</span>
+						<span className="text-danger text-error">{messageErrorTypes}</span>
 					</div>
 
 					</div>
@@ -220,7 +232,7 @@ const FolderDialog = () => {
 					</Button>
 
 					<Button
-						disabled={(!name || name.length < 3) || position <= 0}
+						disabled={(!name || name.length < 3) || type <= 0}
 						onClick={handleOnSave}
 						variant="contained"
 						color="primary"

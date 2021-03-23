@@ -18,7 +18,8 @@ const initialState = {
 		parentName: '',
 		position: 0,
 		state: true,
-	}
+	},
+	typeFolders: []
 };
 
 export const adminFoldersReducer = (state = initialState, action) => {
@@ -28,7 +29,11 @@ export const adminFoldersReducer = (state = initialState, action) => {
 				...state,
 				folders: action.payload,
 			}
-
+		case types.adminfoldersTypesLoaded:
+			return {
+				...state,
+				typeFolders: action.payload,
+			}
 		case types.adminFoldersSaveCurrentFolders:
 			return {
 				...state,
@@ -148,8 +153,10 @@ export const adminFoldersReducer = (state = initialState, action) => {
 					parentName: '',
 					position: 0,
 					state: true,
-				}
+				},
+				typeFolders: []
 			}
+		
 
 		case types.adminFoldersDeleteFolderLoaded:
 			return {
