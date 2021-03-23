@@ -50,7 +50,8 @@ export const types = {
 	versioningLoaded:'Versioning Loaded',
 	versioningRemove:'Versioning Remove',
 	previewLoaded: "Preview Document Loaded",
-
+	
+	savedSearchesAddSearch: "Add new saved search", 
 
 	docsDocumentsTypeLoaded: 'Documents Type documents loaded',
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',

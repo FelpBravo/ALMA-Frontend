@@ -1,4 +1,4 @@
-import { deleteDocument, subscribeDocument,downloadDocument } from 'services/filesService';
+import { deleteDocument, subscribeDocument, downloadDocument } from 'services/filesService';
 import { getSearchFields, search, saveSearch } from 'services/searchService';
 import { getVersioning } from 'services/versioningService'
 import { types } from 'types/types';
@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
 import FileSaver from 'file-saver';
 
-export const startVersioningLoading = (authUser,page, fileId) => {
+export const startVersioningLoading = (authUser, page, fileId) => {
 	return async (dispatch) => {
 
 		try {
@@ -19,13 +19,13 @@ export const startVersioningLoading = (authUser,page, fileId) => {
 
 			Swal.showLoading();
 
-			
-			const resp = await getVersioning(authUser,page, 10, fileId);
-			dispatch(versioningLoaded(resp.data,fileId));
+
+			const resp = await getVersioning(authUser, page, 10, fileId);
+			dispatch(versioningLoaded(resp.data, fileId));
 
 		} catch (error) {
 			console.log(error);
-		}finally {
+		} finally {
 			Swal.close();
 		}
 
@@ -35,7 +35,7 @@ export const startVersioningLoading = (authUser,page, fileId) => {
 export const startSearchFieldsLoading = (authUser) => {
 	return async (dispatch) => {
 		dispatch(searchRemoveAll())
-		try {	
+		try {
 			Swal.fire({
 				title: 'Cargando...',
 				text: 'Por favor espere...',
@@ -50,7 +50,7 @@ export const startSearchFieldsLoading = (authUser) => {
 
 		} catch (error) {
 			console.log(error);
-		}finally {
+		} finally {
 			Swal.close();
 		}
 
@@ -58,7 +58,7 @@ export const startSearchFieldsLoading = (authUser) => {
 };
 
 export const startSearchLoading = (authUser, term, filters, folderId, page, maxItems) => {
-	
+
 	return async (dispatch) => {
 		dispatch(versioningRemove())
 		try {
@@ -71,7 +71,7 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 			});
 
 			Swal.showLoading();
-			const resp = await search(authUser, term, filters, folderId, page? page:1, maxItems);
+			const resp = await search(authUser, term, filters, folderId, page ? page : 1, maxItems);
 
 			dispatch(searchLoaded(resp.data));
 
@@ -85,7 +85,7 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 };
 
 export const startSaveSearchLoading = (authUser, filters) => {
-	
+
 	return async (dispatch) => {
 		try {
 
@@ -93,7 +93,7 @@ export const startSaveSearchLoading = (authUser, filters) => {
 				title: 'Asigna un nombre de búsqueda avanzada',
 				input: 'text',
 				inputAttributes: {
-				  autocapitalize: 'off'
+					autocapitalize: 'off'
 				},
 				showCancelButton: true,
 				confirmButtonText: 'Guardar',
@@ -101,26 +101,17 @@ export const startSaveSearchLoading = (authUser, filters) => {
 				showLoaderOnConfirm: true,
 				preConfirm: (name) => {
 					return saveSearch(authUser, name, filters).then(response => response)
-					  .catch(error => {
-						Swal.showValidationMessage(
-						  `Solicitud fallida: ${error}`
-						)
-					  })
-					
+						.catch(error => {
+							Swal.showValidationMessage(
+								`Solicitud fallida: ${error}`
+							)
+						})
 				},
 				allowOutsideClick: () => !Swal.isLoading()
-			  }).then(({data}) => {
-				  console.log("data",data)
-				//dispatch(searchLoaded(resp.data));
-			  })
-			
-			//const resp = await saveSearch(authUser, name, filters);
-			//console.log('esp.data', resp.data)
-			// dispatch(searchLoaded(resp.data));
-
+			}).then(result => dispatch(savedSearchAdd(result?.value?.data)))
 		} catch (error) {
 			console.log(error);
-		} 
+		}
 
 	}
 };
@@ -129,9 +120,9 @@ export const startDeleteDocument = (id) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
-		
+
 		const { documents } = getState().searchs;
-	
+
 		try {
 			Swal.fire({
 				title: 'Eliminando...',
@@ -160,13 +151,13 @@ export const startDeleteDocument = (id) => {
 	}
 };
 
-export const startDownloadDocument = (id,name) => {
-	return async (dispatch,getState) => {
+export const startDownloadDocument = (id, name) => {
+	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
 
 		const { documents } = getState().searchs;
-	
+
 		try {
 
 			Swal.fire({
@@ -198,7 +189,7 @@ export const startDownloadDocument = (id,name) => {
 	}
 };
 
-export const startPreviewDocument = (authUser,id) => {
+export const startPreviewDocument = (authUser, id) => {
 	return async (dispatch) => {
 		try {
 			Swal.fire({
@@ -209,13 +200,13 @@ export const startPreviewDocument = (authUser,id) => {
 			});
 
 			Swal.showLoading();
-			await downloadDocument(authUser, id).then(({data})=>{
-				dispatch(previewDocument(data,data.type))
+			await downloadDocument(authUser, id).then(({ data }) => {
+				dispatch(previewDocument(data, data.type))
 			});
-			
+
 		} catch (error) {
 			console.log(error);
-		}finally {
+		} finally {
 			Swal.close();
 		}
 	}
@@ -263,17 +254,17 @@ export const startSubscribeDocument = (id) => {
 	}
 };
 
-export const previewDocument = (file,type) => {
+export const previewDocument = (file, type) => {
 	return {
 		type: types.previewLoaded,
-		payload:{
+		payload: {
 			file,
 			type
 		}
 	}
 };
 
-export const versioningLoaded = (versioning,id) => {
+export const versioningLoaded = (versioning, id) => {
 	return {
 		type: types.versioningLoaded,
 		payload: {
@@ -293,6 +284,13 @@ export const searchLoaded = (documents) => {
 	return {
 		type: types.searchLoaded,
 		payload: documents,
+	}
+};
+
+export const savedSearchAdd = search => {
+	return {
+		type: types.savedSearchesAddSearch,
+		payload: search,
 	}
 };
 
@@ -381,7 +379,7 @@ export const closeModalFirm = () => {
 	}
 };
 
-export const openModalVersioning= () => {
+export const openModalVersioning = () => {
 	return {
 		type: types.versioningOpenModal,
 	}
