@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
-import { startSaveCommentsLoading, saveComments, getCommentsReply ,saveReplies} from 'actions/information'
+import { startSaveCommentsLoading, saveComments, getCommentsReply, saveReplies } from 'actions/information'
 import { startDownloadDocument } from 'actions/search'
 import ClearIcon from '@material-ui/icons/Clear';
 import Divider from '@material-ui/core/Divider';
@@ -45,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
             textDecoration: 'underline'
         }
     },
-    newcomment:{
-            backgroundColor: '#EFF7FF',
-            color: '#494B74',
-            padding: 12,
-            borderRadius: 5,
-            height: 'auto',
-            marginTop: 10
+    newcomment: {
+        backgroundColor: '#EFF7FF',
+        color: '#494B74',
+        padding: 12,
+        borderRadius: 5,
+        height: 'auto',
+        marginTop: 10
     }
 }));
 
@@ -80,35 +80,35 @@ const Comments = (props) => {
         const [active, setActive] = useState(false);
         const [replies, setReplies] = useState([])
 
-        
+
         const loadingReplies = async () => {
             const reply = await getCommentsReply(authUser, idComment)
             setReplies(reply)
         }
 
-        const handleDownload = (fileId, name) =>{
-            dispatch(startDownloadDocument(fileId,name))
-            
+        const handleDownload = (fileId, name) => {
+            dispatch(startDownloadDocument(fileId, name))
+
         }
 
 
         return (
             <>
-            
-            <div className={classes.coment}>
-                <span style={{ fontSize: 14, color: "#3699FF" }}>{author}</span><span style={{ marginLeft: 5, fontSize: 12, color: "#A7A8BB", }} >{new Date(date).toLocaleString()}</span>
-                <br/>
-                <span style={{ fontSize: 13 }}>{text}</span>
-                <br/>
-                {attachment && attachment.length > 0 && attachment.map(({ name,id }) => {
-                    return (<span style={{ color: "#3699FF", fontSize: 11, cursor:'pointer' }} onClick={() =>handleDownload(id,name)}>{name}</span>)
-                })
 
-                }
-                <Grid container >
-                    <span style={{}} className={classes.buttoncomment} onClick={() => setActive(!active)} ><MessageOutlinedIcon style={{ fontSize: 20, marginRight: 5 }} /><IntlMessages id="comment.button.comment" /></span>
-                    <span className={classes.totalcomments} onClick={loadingReplies} >{countcomments === 0 ? '' : <>{countcomments + ' '}<IntlMessages id="comment.button.totalcomments" /></>}</span>
-                </Grid>
+                <div className={classes.coment}>
+                    <span style={{ fontSize: 14, color: "#3699FF" }}>{author}</span><span style={{ marginLeft: 5, fontSize: 12, color: "#A7A8BB", }} >{new Date(date).toLocaleString()}</span>
+                    <br />
+                    <span style={{ fontSize: 13 }}>{text}</span>
+                    <br />
+                    {attachment && attachment.length > 0 && attachment.map(({ name, id }) => {
+                        return (<span style={{ color: "#3699FF", fontSize: 11, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{name}</span>)
+                    })
+
+                    }
+                    <Grid container >
+                        <span style={{}} className={classes.buttoncomment} onClick={() => setActive(!active)} ><MessageOutlinedIcon style={{ fontSize: 20, marginRight: 5 }} /><IntlMessages id="comment.button.comment" /></span>
+                        <span className={classes.totalcomments} onClick={loadingReplies} >{countcomments === 0 ? '' : <>{countcomments + ' '}<IntlMessages id="comment.button.totalcomments" /></>}</span>
+                    </Grid>
                 </div>
                 <div style={{ marginLeft: 50 }}>
                     {replies && replies.length > 0 && replies.map(({ author, content, createdOn, id, totalReplies, attachments }) => {
@@ -131,11 +131,11 @@ const Comments = (props) => {
                 {active &&
                     <NewComment idComment={idComment} />
                 }
-                
-              
 
 
-            
+
+
+
             </>)
 
     }
@@ -148,20 +148,19 @@ const Comments = (props) => {
         const [text, setText] = useState('')
         const [file, setFile] = useState()
         const [name, setName] = useState()
-        
 
-        const handleSubmit = async() => {
-            if(idComment){
-                dispatch(saveReplies(authUser,fileId ,idComment,text,file))
+
+        const handleSubmit = async () => {
+            if (idComment) {
+                dispatch(saveReplies(authUser, fileId, idComment, text, file))
             }
-            else
-            {
+            else {
                 dispatch(saveComments(authUser, fileId, text, file))
             }
             setName()
-                setFile()
-                setText('')
-            
+            setFile()
+            setText('')
+
         }
 
         const handleChange = (event) => {
@@ -204,7 +203,6 @@ const Comments = (props) => {
                             </IconButton>
                             <span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13, cursor: 'pointer' }}>{file ? '' : <IntlMessages id="comment.attachment.title" />}</span>
                             <input
-                                accept="image/*"
                                 className={classes.input}
                                 id={idComment}
                                 type="file"

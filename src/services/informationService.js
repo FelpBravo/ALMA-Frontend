@@ -4,7 +4,7 @@ import { axiosInstance } from '../config/axios-instance';
 const createAttachments = (authUser, file, fileId) => {
 
 	const data = new FormData();
-	data.append('file', file);
+	data.append('files', file);
 
 	return axiosInstance.post(`/files/${fileId}/attachment`, data, {
 		headers: {

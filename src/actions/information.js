@@ -154,7 +154,7 @@ export const informationRemoveAll = () => {
 	}
 };
 
-export const startUploadAttachments = (authUser, files, fileId) => {
+export const startUploadAttachments = (authUser, fileId, files) => {
 		return async (dispatch) => {
 			try {
 				Swal.fire({
@@ -165,7 +165,7 @@ export const startUploadAttachments = (authUser, files, fileId) => {
 				});
 				Swal.showLoading();
 	
-				await createAttachments(authUser, fileId, files).then(async() => {
+				await createAttachments(authUser, files, fileId).then(async() => {
 					const resp = await getAttachments(authUser, fileId)
 					dispatch(attachmentsLoaded(resp.data))
 				})
