@@ -586,7 +586,7 @@
 	"sidebar.modern": "Moderno",
 	"sidebar.home": "Panel de inicio",
 	"sidebar.tags.home": "Etiquetas",
-	"sidebar.tags.folders": "Carpetas",
+	"sidebar.tags.folders": "Administración",
 	"sidebar.tags.report": "Reportes",
 	"sidebar.loadDocuments": "Carga documentos",
 	"company.name": "APIUX",
@@ -661,7 +661,11 @@
 	"reports.table.missing3": "Creador",
 	"reports.table.missing4": "Ruta",
 	"reports.table.missing5": "Documentos pendientes",
-	"reports.table.missing6": "Nombre"
+	"reports.table.missing6": "Nombre",
+	"comment.newcomment.title": "Escribe tu nuevo comentario",
+	"comment.attachment.title": "Adjuntar documento",
+	"comment.button.comment": "Comentar",
+	"comment.button.totalcomments": "Comentarios"
 
 	
 

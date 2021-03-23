@@ -16,6 +16,7 @@ import { adminFoldersReducer } from 'reducers/adminFoldersReducer';
 import { tagsReducer } from 'reducers/tagsReducer';
 import { reportsReducer } from 'reducers/reportsReducer'
 import { firmReducer } from 'reducers/firmReducer'
+import { informationReducer } from 'reducers/informationReducer'
 import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
 
 
@@ -40,7 +41,8 @@ const rootReducer = (history) => combineReducers({
 	tags: tagsReducer,
 	reports:reportsReducer, 
 	firm:firmReducer,
-	crumbs:breadcrumbsReducer
+	info:informationReducer,
+	crumbs:breadcrumbsReducer,
 });
 
 export const store = createStore(
