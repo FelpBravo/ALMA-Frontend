@@ -84,28 +84,43 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 	}
 };
 
-export const startSaveSearchLoading = (authUser, name, filters) => {
+export const startSaveSearchLoading = (authUser, filters) => {
 	
 	return async (dispatch) => {
 		try {
 
 			Swal.fire({
-				title: 'Cargando...',
-				text: 'Por favor espere...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
-
-			Swal.showLoading();
-			const resp = await saveSearch(authUser, name, filters);
-			console.log('esp.data', resp.data)
+				title: 'Asigna un nombre de búsqueda avanzada',
+				input: 'text',
+				inputAttributes: {
+				  autocapitalize: 'off'
+				},
+				showCancelButton: true,
+				confirmButtonText: 'Guardar',
+				cancelButtonText: 'Cancelar',
+				showLoaderOnConfirm: true,
+				preConfirm: (name) => {
+					return saveSearch(authUser, name, filters).then(response => response)
+					  .catch(error => {
+						Swal.showValidationMessage(
+						  `Solicitud fallida: ${error}`
+						)
+					  })
+					
+				},
+				allowOutsideClick: () => !Swal.isLoading()
+			  }).then(({data}) => {
+				  console.log("data",data)
+				//dispatch(searchLoaded(resp.data));
+			  })
+			
+			//const resp = await saveSearch(authUser, name, filters);
+			//console.log('esp.data', resp.data)
 			// dispatch(searchLoaded(resp.data));
 
 		} catch (error) {
 			console.log(error);
-		} finally {
-			Swal.close();
-		}
+		} 
 
 	}
 };
