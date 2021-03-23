@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	
   }));
 
-export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges }) => {
+export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges, type }) => {
 
 	const dispatch = useDispatch();
 	
@@ -98,7 +98,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	return (
 		<TableRow hover>
 			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
+				style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height:50 }}
 				onClick={handleOnClick}
 				component="th"
 				scope="row"
@@ -107,14 +107,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				{name}
 			</TableCell>
 			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
-				className="folders-table-row"
-				onClick={handleOnClick}
-			>
-				{position}
-			</TableCell>
-			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
+				style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}
 				className="folders-table-row"
 				onClick={handleOnClick}
 			>

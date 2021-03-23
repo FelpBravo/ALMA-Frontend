@@ -91,6 +91,7 @@ const Folders = () => {
 									<Grid item xs={10}>
 
 									<SimpleBreadcrumbs
+								    style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400}}
 									items={historyFolders}
 									currentItem={currentFolders.id}
 									handleClick={handleClickBreadcrumbs}
