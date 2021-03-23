@@ -6,7 +6,7 @@ import IntlMessages from 'util/IntlMessages';
 import { getRows } from 'helpers/getRows';
 import { AdvancedSarchFilters } from './AdvancedSarchFilters';
 import { useHistory, useLocation } from 'react-router-dom';
-import { searchClearAllFilters, startSearchLoading, changeCleanFilter } from '../../../../actions/search';
+import { searchClearAllFilters, startSearchLoading, changeCleanFilter, startSaveSearchLoading } from '../../../../actions/search';
 import { DATERANGE } from 'constants/constUtil';
 import Swal from 'sweetalert2';
 import TagsPrueba from './TagsPrueba.js'
@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
 			margin: theme.spacing(1),
 		},
 	},
+	pointer: {
+		cursor: 'pointer'
+	}
 }));
 
 export const AdvancedSearch = () => {
@@ -86,6 +89,28 @@ export const AdvancedSearch = () => {
 		history.push(`/search/p1`);
 
 	}
+
+	const handleSaveSearch = () => {
+
+		const exists = filters.filter(filter => filter.value);
+
+		if (exists.length === 0) {
+			return Swal.fire({
+				title: 'Error',
+				text: 'Debe seleccionar un filtro',
+				icon: 'error',
+				heightAuto: false,
+			});
+		}
+
+		const filtersData = exists.map( ({name, value}) => ({name, value}) )
+
+		dispatch(startSaveSearchLoading(authUser, 'test', filtersData));
+
+		//history.push(`/search/p1`);
+
+	}
+
 
 	const handleAdvanceSearchClear = () => {
 		dispatch(searchClearAllFilters());
@@ -165,8 +190,8 @@ export const AdvancedSearch = () => {
 
 	return (
 		<Grid container item xs={12}>
-			<Grid item container xs={12}>
-				<Grid item md container alignItems="center">
+			<Grid item container wrap="nowrap" xs={12}>
+				<Grid item md={2} wrap="nowrap" container alignItems="center">
 					<span className="text-advanced-search">
 						<IntlMessages id="dashboard.advancedSearch" />
 					</span>
@@ -175,8 +200,12 @@ export const AdvancedSearch = () => {
 						<i className={`zmdi ${iconAdvancedSearch}`} />
 					</IconButton>
 				</Grid>
-				<Grid item md container alignItems="center">
-
+				<Grid
+					className={classes.pointer}
+					item md={2} onClick={handleSaveSearch}
+					container
+					wrap="nowrap"
+					alignItems="center">
 					<SaveIcon />
 					<span className="text-advanced-search">
 						<IntlMessages id="dashboard.saveSearch" />

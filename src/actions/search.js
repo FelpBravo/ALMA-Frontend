@@ -1,5 +1,5 @@
 import { deleteDocument, subscribeDocument,downloadDocument } from 'services/filesService';
-import { getSearchFields, search } from 'services/searchService';
+import { getSearchFields, search, saveSearch } from 'services/searchService';
 import { getVersioning } from 'services/versioningService'
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
@@ -84,6 +84,31 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 	}
 };
 
+export const startSaveSearchLoading = (authUser, name, filters) => {
+	
+	return async (dispatch) => {
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+			const resp = await saveSearch(authUser, name, filters);
+			console.log('esp.data', resp.data)
+			// dispatch(searchLoaded(resp.data));
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
 
 export const startDeleteDocument = (id) => {
 	return async (dispatch, getState) => {
