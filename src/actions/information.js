@@ -47,7 +47,6 @@ export const startSaveAttachmentsLoading = (authUser, fileId) => {
 			const resp = await getAttachments(authUser, fileId)
 
 			dispatch(attachmentsLoaded(resp.data))
-			console.log("soy el adjunto", resp.data)
 
 		} catch (error) {
 			console.log(error);
