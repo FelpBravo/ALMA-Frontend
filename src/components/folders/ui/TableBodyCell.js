@@ -108,16 +108,6 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				
 				{name}
 			</TableCell>
-			
-			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}
-				className="folders-table-row"
-				onClick={handleOnClick}
-			>
-				{
-					state ? 'Activo' : 'Inactivo'
-				}
-			</TableCell>
 			<TableCell
 			style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}
 			>

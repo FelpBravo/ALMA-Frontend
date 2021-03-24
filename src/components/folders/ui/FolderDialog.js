@@ -107,28 +107,21 @@ const FolderDialog = () => {
 
 	return (
 		<div>
-			
 			<Dialog
 				open={openModal}
 				onClose={handleClose}
 				aria-labelledby="form-dialog-title"
 				fullWidth={true}
 			>
-				<DialogTitle id="form-dialog-title">
+				<DialogTitle>
 					{
 						actionModal === ACTION_CREATE
-							? <IntlMessages id="folders.modal.title.create" />
+							? <IntlMessages id="folders.modal.title.create" style={{fontSize:16, fontFamily: "Poppins"}}/>
 							: <IntlMessages id="folders.modal.title.edit" />
 					}
 				</DialogTitle>
 
-				<DialogContent dividers>
-				<p onClick={()=>{
-				console.log(folder);
-			}}>Prueba</p>
-					<div className="row">
-
-					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				<DialogContent>
 
 							<TextField
 								select
@@ -146,18 +139,16 @@ const FolderDialog = () => {
 							}
 							</TextField>
 
-						</div>
+					
 
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 						<span className="text-danger text-error">{messageErrorTypes}</span>
 					</div>
 
-					</div>
+				
 
-					<div className="row mt-3">
-						
-					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
+					<div className="mt-2">
+	
 							<TextField
 								name="name"
 								value={name}
@@ -170,54 +161,11 @@ const FolderDialog = () => {
 								onChange={handleOnChange}
 							/>
 
-							</div>
-
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 							<span className="text-danger text-error">{messageErrorName}</span>
 						</div>
 					</div>
-
-					{
-						actionModal !== ACTION_CREATE
-						&&
-						<div className="row mt-3">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-								<h4>{<IntlMessages id="folders.modal.field.state" />}</h4>
-							</div>
-						</div>
-					}
-
-					{
-						actionModal !== ACTION_CREATE
-						&&
-						<div className="row">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
-								<FormControl component="fieldset">
-									<RadioGroup
-										aria-label="gender"
-										name="state"
-										value={String(state)}
-										onChange={handleOnChange}
-									>
-										<FormControlLabel
-											value="true"
-											label="Activo"
-											control={<Radio color="primary" />}
-
-										/>
-										<FormControlLabel
-											value="false"
-											control={<Radio color="primary" />}
-											label="Inactivo"
-										/>
-									</RadioGroup>
-								</FormControl>
-
-							</div>
-						</div>
-					}
-
+					
 				</DialogContent>
 
 				<DialogActions>

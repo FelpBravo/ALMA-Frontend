@@ -37,10 +37,7 @@ export const DataTableFolders = ({ folders ,privileges}) => {
 									<IntlMessages id="folders.table.column1" />
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="folders.table.column3" />
-								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Tipo" />
+									<IntlMessages id="folders.table.column5" />
 								</TableCell>
 								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="folders.table.column2" />
