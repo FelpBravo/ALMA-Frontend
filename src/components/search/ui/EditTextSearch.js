@@ -6,9 +6,13 @@ import IntlMessages from 'util/IntlMessages';
 import { searchSetText, startSearchLoading } from '../../../actions/search';
 import { AdvancedSearch } from './AdvancedSearch/AdvancedSearch';
 import SearchIcon from '@material-ui/icons/Search';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import SearchesSavedList from '../SearchesSavedList';
 
 const useStyles = makeStyles(theme => ({
-    root: {
+	root: {
 		background: "#E1F0FF",
 		border: "none",
 		boxShadow: "none",
@@ -16,27 +20,27 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 		alignItems: "center",
 		padding: 6,
-	  },
-    input: {
-      color: '#3699FF',
-      fontSize: '14px',
-	  radius: '4px',
-	  fontWeight: 500,
-	  fontFamily: "Poppins, sans-serif !important ",
-
-      "&::placeholder": {
-		fontFamily: "Poppins, sans-serif !important ",
-        color: '#3699FF',
-		align: 'left',
+	},
+	input: {
+		color: '#3699FF',
+		fontSize: '14px',
+		radius: '4px',
 		fontWeight: 500,
-      }
-    },
-  }))
+		fontFamily: "Poppins, sans-serif !important ",
+
+		"&::placeholder": {
+			fontFamily: "Poppins, sans-serif !important ",
+			color: '#3699FF',
+			align: 'left',
+			fontWeight: 500,
+		}
+	},
+}))
 
 export const EditTextSearch = ({ }) => {
 
 	const classes = useStyles();
-	
+
 	const { authUser } = useSelector(state => state.auth);
 
 	const { textSearch = '', fields } = useSelector(state => state.searchs);
@@ -51,6 +55,16 @@ export const EditTextSearch = ({ }) => {
 
 	const [disabledButton, setDisabledButton] = useState(true);
 	const [messageError, setMessageError] = useState('');
+
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+	const onOpenPopover = (event) => {
+		setAnchorEl(event.currentTarget);
+	  };
+	
+	  const onClosePopover = () => {
+		setAnchorEl(null);
+	  };
 
 	useEffect(() => {
 
@@ -91,6 +105,7 @@ export const EditTextSearch = ({ }) => {
 
 	return (
 		<div className="row">
+			<SearchesSavedList onClose={onClosePopover} anchorEl={anchorEl} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 
@@ -103,24 +118,29 @@ export const EditTextSearch = ({ }) => {
 						<Grid container spacing={2}>
 
 							<Grid item xs={9}>
-							<Paper className={classes.root}>
-								<SearchIcon color="primary" />
-								<InputBase
-									className={classes.input}
-									value={searchText}
-									name="inputSearch"
-									//className="custom-text-field"
-									fullWidth
-									placeholder="Buscar por nombre de documento"
-									onChange={handleOnChange}
-								/>
+								<Paper className={classes.root}>
+									<SearchIcon color="primary" />
+									<InputBase
+										className={classes.input}
+										value={searchText}
+										name="inputSearch"
+										//className="custom-text-field"
+										fullWidth
+										placeholder="Buscar por nombre de documento"
+										onChange={handleOnChange}
+									/>
+									<Tooltip title="Ver búsquedas guardadas">
+										<IconButton onClick={onOpenPopover} size="small">
+											<ExpandMoreIcon color="primary" />
+										</IconButton>
+									</Tooltip>
 								</Paper>
 								<span className="text-danger text-error">{messageError}</span>
 							</Grid>
 
 							<Grid item xs={3}>
 								<Button
-								    style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
+									style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
 									disabled={disabledButton}
 									variant="contained"
 									type="submit"

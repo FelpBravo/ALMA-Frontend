@@ -1,5 +1,5 @@
 import { deleteDocument, subscribeDocument, downloadDocument } from 'services/filesService';
-import { getSearchFields, search, saveSearch } from 'services/searchService';
+import { getSearchFields, search, saveSearch, getSavedSearches } from 'services/searchService';
 import { getVersioning } from 'services/versioningService'
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
@@ -79,6 +79,20 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 			console.log(error);
 		} finally {
 			Swal.close();
+		}
+
+	}
+};
+
+export const savedSearches = (authUser) => {
+
+	return async (dispatch) => {
+		try {
+			const resp = await getSavedSearches(authUser);
+			dispatch(savedSearchesList(resp.data));
+
+		} catch (error) {
+			console.log(error);
 		}
 
 	}
@@ -284,6 +298,13 @@ export const searchLoaded = (documents) => {
 	return {
 		type: types.searchLoaded,
 		payload: documents,
+	}
+};
+
+export const savedSearchesList = (searches) => {
+	return {
+		type: types.savedSearchesList,
+		payload: searches,
 	}
 };
 

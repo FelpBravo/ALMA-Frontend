@@ -30,8 +30,19 @@ const saveSearch = (authUser, name, filters = [], ) => {
 	);
 }
 
+const getSavedSearches = (authUser) => {
+	return axiosInstance.get(`/searches/filters/saved`,
+		{
+			headers: {
+				Authorization: `Bearer ${authUser}`,
+			},
+		}
+	);
+}
+
 export {
 	getSearchFields,
 	search,
-	saveSearch
+	saveSearch,
+	getSavedSearches
 }

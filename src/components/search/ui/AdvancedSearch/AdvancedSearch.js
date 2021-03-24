@@ -94,14 +94,14 @@ export const AdvancedSearch = () => {
 
 		const exists = filters.filter(filter => filter.value);
 
-		// if (exists.length === 0) {
-		// 	return Swal.fire({
-		// 		title: 'Error',
-		// 		text: 'Debe seleccionar un filtro',
-		// 		icon: 'error',
-		// 		heightAuto: false,
-		// 	});
-		// }
+		if (exists.length === 0) {
+			return Swal.fire({
+				title: 'Error',
+				text: 'Debe seleccionar un filtro',
+				icon: 'error',
+				heightAuto: false,
+			});
+		}
 
 		const filtersData = exists.map( ({name, value}) => ({name, value}) )
 
