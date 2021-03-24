@@ -18,6 +18,7 @@ import { reportsReducer } from 'reducers/reportsReducer'
 import { firmReducer } from 'reducers/firmReducer'
 import { informationReducer } from 'reducers/informationReducer'
 import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
+import { savedSearchesReducer } from 'reducers/savedSearchesReducer'
 
 
 export const history = createBrowserHistory();
@@ -41,6 +42,7 @@ const rootReducer = (history) => combineReducers({
 	tags: tagsReducer,
 	reports:reportsReducer, 
 	firm:firmReducer,
+	savedSearches: savedSearchesReducer,
 	info:informationReducer,
 	crumbs:breadcrumbsReducer,
 });
