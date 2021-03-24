@@ -88,9 +88,9 @@ const Attachments = (props) => {
           {!file &&
             <Button variant="contained" component="span"
               startIcon={<SearchIcon />}
-              style={{background:"#E1F0FF", fontFamily:"Poppins", fontSize:12, color:'#3699FF'}}
+              style={{background:"#E1F0FF", fontFamily:"Poppins", fontSize:14, color:'#3699FF', width:200, padding: 6}}
             >
-              Examinar
+              Adjuntar
 
             </Button>
           }
@@ -105,7 +105,7 @@ const Attachments = (props) => {
           </Button>
         }
       </div>
-      <span style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, color: "#3699FF", marginTop: 13, marginLeft: 10 }}>{file ? <>{name}<ClearIcon fontSize="small" style={{ marginLeft: 5, cursor: 'pointer' }} onClick={handleClear} /></> : ''}</span>
+      <span style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, color: "#808080", marginTop: 15, marginLeft: 10 }}>{file ? <>{name}<ClearIcon fontSize="small" style={{ marginLeft: 5, cursor: 'pointer' }} onClick={handleClear} /></> : ''}</span>
 
       <div  style={{ maxHeight: '650px', overflow: 'auto' }}> 
       <table className="default-table table table-sm table-hover mt-3">
