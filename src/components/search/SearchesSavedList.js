@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useSelector, useDispatch } from 'react-redux'
 import { savedSearches } from 'actions/search';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,6 +26,8 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
     const dispatch = useDispatch();
 
     const open = Boolean(anchorEl);
+    const history = useHistory();
+
     const savedSearchesList = useSelector(state => state.savedSearches);
     const loading = savedSearchesList?.length === 0
     const { authUser } = useSelector(state => state.auth);
@@ -33,6 +36,10 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
         if (loading && open) dispatch(savedSearches(authUser))
     }, [loading, open])
 
+    const handleGetSavedSearch = id => {
+        history.push(`/search/p1/${id}`)
+    }
+    
     return (
         <Popover
             open={open}
@@ -66,7 +73,8 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
                     </List>
                     : <List component="nav" aria-label="secondary mailbox folders">
                         {
-                            savedSearchesList?.map(({ name, id }) => <ListItem button key={id}>
+                            savedSearchesList?.map(({ name, id }) => 
+                            <ListItem onClick={() => handleGetSavedSearch(id)} button key={id}>
                                 <ListItemText primary={name} />
                             </ListItem>)
                         }

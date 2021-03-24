@@ -6,7 +6,7 @@ import IntlMessages from 'util/IntlMessages';
 import { getRows } from 'helpers/getRows';
 import { AdvancedSarchFilters } from './AdvancedSarchFilters';
 import { useHistory, useLocation } from 'react-router-dom';
-import { searchClearAllFilters, startSearchLoading, changeCleanFilter, startSaveSearchLoading } from '../../../../actions/search';
+import { searchClearAllFilters, startSearchLoading, changeCleanFilter, startSaveSearchLoading, startSavedSearchById } from '../../../../actions/search';
 import { DATERANGE } from 'constants/constUtil';
 import Swal from 'sweetalert2';
 import TagsPrueba from './TagsPrueba.js'
@@ -19,11 +19,14 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	pointer: {
-		cursor: 'pointer'
-	}
+		cursor: 'pointer',
+		fontWeight: '600',
+		color: '#FFA800'
+	},
+
 }));
 
-export const AdvancedSearch = () => {
+export const AdvancedSearch = ({savedSearchId}) => {
 
 	const { authUser } = useSelector(state => state.auth);
 
@@ -40,7 +43,7 @@ export const AdvancedSearch = () => {
 	const { filters = [] } = fields;
 
 	const [iconAdvancedSearch, setIconAdvancedSearch] = useState('zmdi-chevron-down');
-	const [openAdvancedSearch, setOpenAdvancedSearch] = useState(false);
+	const [openAdvancedSearch, setOpenAdvancedSearch] = useState(savedSearchId);
 
 	let DateRange = []
 	let tags = ['a', 'b']
@@ -52,6 +55,13 @@ export const AdvancedSearch = () => {
 		}
 
 	}, []);
+
+	useEffect(() => {
+		if(savedSearchId){
+			console.log('sas')
+			dispatch(startSavedSearchById(authUser, savedSearchId))
+		}
+	}, [savedSearchId])
 
 	useEffect(() => {
 
@@ -201,13 +211,12 @@ export const AdvancedSearch = () => {
 					</IconButton>
 				</Grid>
 				<Grid
-					className={classes.pointer}
 					item md={2} onClick={handleSaveSearch}
 					container
 					wrap="nowrap"
 					alignItems="center">
-					<SaveIcon />
-					<span className="text-advanced-search">
+					<SaveIcon className={classes.pointer} />
+					<span className={classes.pointer}>
 						<IntlMessages id="dashboard.saveSearch" />
 					</span>
 				</Grid>

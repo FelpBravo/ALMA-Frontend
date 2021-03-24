@@ -19,12 +19,20 @@ const LibraryRouter = () => {
 					path="/documents"
 					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
+				
+				<Route
 
+					path={"/search/:any/:savedSearchId"}
+					component={asyncComponent(() => import('../components/search/Search'))}
+					/>
+					
 				<Route
 
 					path={["/search/:page","/search"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
+
+
 				<Route
 
 					path={["/directory/:id/:page","/directory/:id"]}

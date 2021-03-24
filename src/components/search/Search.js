@@ -11,13 +11,11 @@ const Search = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 
-	const { id, page } = useParams()
+	const { id, page, savedSearchId } = useParams()
 
 	const { folderId } = queryString.parse(location.search);
 	
 	let page_url = '1'
-
-
 	
 	if(page){
 		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,''): 1
@@ -40,7 +38,7 @@ const Search = () => {
 
 	return (
 		<div>
-			<EditTextSearch />
+			<EditTextSearch savedSearchId={savedSearchId} />
 			 <TableSearch /> 
 		</div>
 	)

@@ -1,5 +1,5 @@
 import { deleteDocument, subscribeDocument, downloadDocument } from 'services/filesService';
-import { getSearchFields, search, saveSearch, getSavedSearches } from 'services/searchService';
+import { getSearchFields, search, saveSearch, getSavedSearches, getSavedSearchById } from 'services/searchService';
 import { getVersioning } from 'services/versioningService'
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
@@ -93,6 +93,31 @@ export const savedSearches = (authUser) => {
 
 		} catch (error) {
 			console.log(error);
+		}
+
+	}
+};
+
+export const startSavedSearchById = (authUser, id) => {
+
+	return async (dispatch) => {
+		try {
+
+			Swal.fire({
+				title: 'Cargando datos guardados...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+			const resp = await getSavedSearchById(authUser, id);
+			dispatch(searchFieldsLoaded(resp.data));
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
 		}
 
 	}
