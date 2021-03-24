@@ -59,11 +59,7 @@ const Folders = () => {
 
 	return (
 		<div className="row">
-			<p onClick={()=>{
-				console.log(folders);
-				console.log(currentFolders);
-				console.log(folder);
-			}}>Prueba</p>
+
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 
@@ -95,7 +91,6 @@ const Folders = () => {
 									<Grid item xs={10}>
 
 									<SimpleBreadcrumbs
-								    style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400}}
 									items={historyFolders}
 									currentItem={currentFolders.id}
 									handleClick={handleClickBreadcrumbs}
@@ -103,9 +98,9 @@ const Folders = () => {
 									</Grid>
 
 									<Grid item xs={2}>
-									<Link component="button" variant="body2" onClick={handleNewFolder}>
+									<Link component="button" variant="body2" onClick={handleNewFolder}  style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 500}}>
 																		<AddIcon color='primary' />
-																			Crear nueva carpeta
+																			Crear nuevo directorio
 									</Link>
 									</Grid>
 								</Grid>

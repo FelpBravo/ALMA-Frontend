@@ -7,10 +7,12 @@ import {
 } from 'actions/adminFolders';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import Swal from 'sweetalert2';
-import AddIcon from '@material-ui/icons/Add';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import TableActionButton from 'components/search/ui/TableActionButton';
+import FolderSharedOutlinedIcon from '@material-ui/icons/FolderSharedOutlined';
+import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 
 const useStyles = makeStyles((theme) => ({
 	iconos: {
@@ -105,8 +107,16 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				scope="row"
 				className="folders-table-row"
 			>
-				
-				{name}
+			{type.name === 'workspace' &&
+			<SupervisedUserCircleIcon color="primary" fontSize="small"/>
+			} 
+			{type.name === 'forum' &&
+			<FolderSharedOutlinedIcon color="primary" fontSize="small"/>
+			}
+			{type.name === 'folder' &&
+			<FolderOutlinedIcon color="primary" fontSize="small"/>
+			}
+			{''} {''} {name}
 			</TableCell>
 			<TableCell
 			style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}
