@@ -67,7 +67,6 @@ export const columnsDocuments = [
 
 export const getDate = (date) => {
 	date = new Date(date);
-	console.log(date);
 	const year = date.getFullYear();
 	const month = getFormatDate(date.getMonth() + 1);
 	const day = getFormatDate(date.getDate());

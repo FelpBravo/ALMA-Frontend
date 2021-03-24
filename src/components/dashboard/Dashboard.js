@@ -36,8 +36,8 @@ const Dashboard = () => {
 				setUser(user);
 			}
 
-		} catch (err) {
-			console.log((err));
+		} catch (error) {
+			console.log((error));
 		}
 
 	}, [authUser, setUser]);

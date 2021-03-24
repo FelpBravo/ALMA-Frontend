@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges, type }) => {
-
 	const dispatch = useDispatch();
 	
 	const classes = useStyles();
@@ -39,9 +38,9 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	
 	}
     
-	const handleSelectAction = async (type) => {
+	const handleSelectAction = async (number) => {
 
-		switch (type) {
+		switch (number) {
 			case 1:
 
 				dispatch(openModalFolder());
@@ -51,6 +50,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 					parentId: id,
 					parentName: name,
 					position: 0,
+					type,
 					state: true,
 					icon: '',
 				}));
@@ -67,6 +67,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 					parentId,
 					position,
 					state,
+					type,
 					icon: '',
 				}));
 
@@ -127,17 +128,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 					{privileges &&
 					
 					privileges.map((rol) => {
-						if ('ROLE_FOLDER_CREATE' === rol) {
-							return <TableActionButton
-							materialIcon={
-							<AddIcon
-								className={classes.iconos}
-								onClick={() => handleSelectAction(1)}
-							/>
-							}
-						/>
-						}
-						else if ('ROLE_FOLDER_UPDATE' === rol) {
+						if ('ROLE_FOLDER_UPDATE' === rol) {
 							return <TableActionButton
 							materialIcon={
 							<BorderColorOutlinedIcon

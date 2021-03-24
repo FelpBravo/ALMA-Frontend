@@ -60,7 +60,6 @@ export function DropZoneDocument( {document, setFiles} ){
 
 
 			} else {
-				console.log('else setFiles', files)
 				setFiles(files);
 			}
 		}

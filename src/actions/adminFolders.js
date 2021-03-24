@@ -47,20 +47,17 @@ export const startUpdateFolderLoading = (authUser, data, folderId) => {
 			});
 
 			Swal.showLoading();
-			console.log(folderId);
 			if (folderId === 0) {
-				console.log("Entro");
 				await create(authUser, data).then(async () => {
 					const resp = await getFoldersAdmin(authUser);
-					dispatch(foldersLoaded(resp.data));
+					dispatch(updateFoldersCurrentLoaded(resp.data));
 				})
 
 			}
 			else {
-				console.log("Entro2");
 				await create(authUser, data).then(async () => {
 					const resp = await getFoldersAdminById(authUser, folderId);
-					dispatch(subFoldersLoaded(folderId, resp.data))
+					dispatch(updateFoldersCurrentLoaded(resp.data))
 				})
 			}
 
@@ -72,6 +69,13 @@ export const startUpdateFolderLoading = (authUser, data, folderId) => {
 			Swal.close();
 		}
 
+	}
+};
+
+export const updateFoldersCurrentLoaded = (folders) => {
+	return {
+		type: types.adminFoldersUpdateCurrentFolders,
+		payload: folders,
 	}
 };
 

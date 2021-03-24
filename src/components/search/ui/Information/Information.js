@@ -79,12 +79,10 @@ const Information = () => {
 
 	const [value, setValue] = React.useState(0);
 
-	console.log(docs);
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 
-		console.log('ID!',id);
 
 	useEffect(() => {
 

@@ -23,7 +23,6 @@ const Friends = ({friendList}) => {
               <div className="jr-user-fnd">
                 <img alt="..." src={user.image}/>
                 <div className="jr-user-fnd-content">
-                  {console.log("user.status", user.status)}
                   <span className="jr-badge"><Status isType={user.status}/></span>
                   <h6>{user.name}</h6>
                 </div>

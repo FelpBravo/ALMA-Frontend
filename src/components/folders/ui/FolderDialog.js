@@ -84,8 +84,6 @@ const FolderDialog = () => {
 	}
 
 	const handleOnSave = () => {
-		console.log(formValues);
-
 		const data = {
 			...formValues,
 			type: type,
@@ -93,9 +91,7 @@ const FolderDialog = () => {
 			state: String(formValues.state) === 'true',
 			company: 1
 		};
-		console.log(data);
 		if (actionModal === ACTION_CREATE) {
-			console.log(id);
 			dispatch(startUpdateFolderLoading(authUser,data,id))
 			dispatch(closeModalFolder());
 			
@@ -128,7 +124,7 @@ const FolderDialog = () => {
 
 				<DialogContent dividers>
 				<p onClick={()=>{
-				console.log(formValues);
+				console.log(folder);
 			}}>Prueba</p>
 					<div className="row">
 
@@ -143,8 +139,9 @@ const FolderDialog = () => {
 								name="type"
 								onChange={handleOnChange}
 							>
-							{typeFolders && typeFolders.map((type)=>{
-								return <MenuItem value={type}>{type.name}</MenuItem>
+							{typeFolders && typeFolders.map((data)=>{
+								console.log(data, type);
+								return <MenuItem value={data} selected={true}>{data.name}</MenuItem>
 							})	
 							}
 							</TextField>

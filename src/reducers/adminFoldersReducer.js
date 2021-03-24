@@ -14,6 +14,7 @@ const initialState = {
 	folder: {
 		id: 0,
 		name: '',
+		type:{},
 		parentId: 0,
 		parentName: '',
 		position: 0,
@@ -66,6 +67,16 @@ export const adminFoldersReducer = (state = initialState, action) => {
 
 				})),
 			}
+		case types.adminFoldersUpdateCurrentFolders:
+				return {
+					...state,
+					currentFolders: {
+						id: state.currentFolders.id,
+						name: state.currentFolders.name,
+						folders: [...action.payload],
+					},
+				}
+	
 
 		case types.adminFoldersUpdateListHistory:
 			return {
@@ -112,6 +123,7 @@ export const adminFoldersReducer = (state = initialState, action) => {
 					parentId: 0,
 					parentName: '',
 					position: 0,
+					type:{},
 					state: true,
 				}
 			}
@@ -153,6 +165,7 @@ export const adminFoldersReducer = (state = initialState, action) => {
 					parentName: '',
 					position: 0,
 					state: true,
+					type:{}
 				},
 				typeFolders: []
 			}
