@@ -126,18 +126,24 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 
 		try {
 
-			Swal.fire({
-				icon: 'success',
-				title: 'Documento cargado con exito',
-				showConfirmButton: false,
-				timer: 1500
-			})
+			// Swal.fire({
+			// 	icon: 'success',
+			// 	title: 'Documento cargado con exito',
+			// 	showConfirmButton: false,
+			// 	timer: 1500
+			// })
 
 			Swal.showLoading();
 
-			await saveForm(authUser, fileId, folderId, aspectGroup, tags);
-
-			Swal.close();
+			const response = await saveForm(authUser, fileId, folderId, aspectGroup, tags);
+			Swal.fire({
+				icon: 'success',
+				width: 600,
+				title: 'AlmaID Generado con éxito',
+				html: `<ul>${response.data.map( ({name, id}) => `<li> <b>${id}</b> <br/> ${name}</li>`).join("<br/>")}</ul>`,
+				showConfirmButton: true,
+			  })
+			// Swal.close();
 
 			dispatch(saveFormFinish());
 
@@ -233,7 +239,7 @@ export const startDropFileLoading = (files) => {
 	}
 };
 
-const saveFileIdLoaded = (fileObject) => {
+export const saveFileIdLoaded = (fileObject) => {
 	return {
 		type: types.docsSaveFileIdLoaded,
 		payload: fileObject,
@@ -477,7 +483,7 @@ export const startEditDocumentLoading = (
 
 			}
 
-			await editForm(authUser,folderId, fileId, aspectGroup, tags);
+			await editForm(authUser,folderId, [fileId], aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 

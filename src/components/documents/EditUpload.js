@@ -31,6 +31,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import { saveFileIdLoaded } from '../../actions/documents'
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -66,7 +67,7 @@ const EditUpload = () => {
 
 	// ID DOCUMENTO URL
 	const document = id;
-
+	
 
 	const [files, setFiles] = useState(null);
 
@@ -91,6 +92,18 @@ const EditUpload = () => {
 	
 
 	}, [dispatch, document]);
+
+	useEffect(() => {
+		console.log('files', files)
+		if(files){
+			dispatch(saveFileIdLoaded(
+				{
+					fileIdLoaded,
+					thumbnailGenerated: false,
+					name: files[0]?.name,
+				}))
+		}
+	}, [files])
 
 	const handleSaveForm = async () => {
 		const resp = await Swal.fire({
@@ -255,9 +268,7 @@ const EditUpload = () => {
 						</div>
 					</div>
 
-					<DocumentContext.Provider value={{ setFiles }}>
-						<DropZoneDocument />
-					</DocumentContext.Provider>
+						<DropZoneDocument document={document} setFiles={setFiles} />
 
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
@@ -304,16 +315,16 @@ const EditUpload = () => {
 											documentId.length === 0 ||
 											aspectList.length === 0 ||
 											fileIdLoaded.length === 0 ||
-											folderId.length === 0 ||
-											(document.length > 0
-												&&
-												files && files.length > 0
-												&&
-												(
-													versioningType.length === 0 ||
-													versioningComments.length === 0
-												)
-											)
+											folderId.length === 0 
+											// (document.length > 0
+											// 	&&
+											// 	files && files.length > 0
+											// 	// &&
+											// 	// (
+											// 	// 	versioningType.length === 0 ||
+											// 	// 	versioningComments.length === 0
+											// 	// )
+											// )
 										}
 										type="submit"
 										variant="contained"

@@ -18,16 +18,24 @@ axiosInstance.interceptors.response.use(
 	response => response
 	,
 	error => {
-
-		const { status } = error?.response;
-
-		if (status === UNAUTHORIZED || status === FORBIDDEN) {
+		try {
+			const { status } = error?.response;
+			if (status === UNAUTHORIZED || status === FORBIDDEN) {
 			
-			dispatch(startUserSingOut());
+				dispatch(startUserSingOut());
+	
+			}
+	
+			return Promise.reject(error);
 
+		} catch (e) {
+			
+			console.log("error",e);
 		}
 
-		return Promise.reject(error);
+		
+
+		
 
 	});
 

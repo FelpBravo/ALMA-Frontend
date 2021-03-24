@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useLocation , useParams} from 'react-router-dom';
-import { Button, Grid, Paper} from '@material-ui/core';
-import { startVersioningLoading ,versioningRemove} from 'actions/search';
+import { Grid, Paper} from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import { startDocumentByIdVisibility } from 'actions/documents';
 import Tabs from '@material-ui/core/Tabs';
@@ -11,7 +10,8 @@ import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { downloadDocument } from 'services/filesService';
+import BreadCrumbs from 'components/ui/Breadcrumbs'
+
 
 
 import Preview from './ui/Preview'
@@ -45,7 +45,7 @@ function TabPanel(props) {
 		>
 			{value === index && (
 				<Box p={1}>
-					<Typography>{children}</Typography>
+					<Typography component={'span'} >{children}</Typography>
 				</Box>
 			)}
 		</div>
@@ -75,16 +75,14 @@ const Information = () => {
 	const history = useHistory();
 	const { docs } = useSelector(state => state.documents);
 
-    const [pdf, setPDF] = React.useState('')
+  
 
-	const [value, setValue] = React.useState(0);
+	const [value, setValue] = useState(0);
 
-	console.log(docs);
+
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-
-		console.log('ID!',id);
 
 	useEffect(() => {
 
@@ -98,82 +96,6 @@ const Information = () => {
 		dispatch(startDocumentByIdVisibility(id));
 	},[])
 	
-    const getPDF = async () => {
-	    setPDF('')
-	    if (docs.fileId) {
-	      const { data } = await downloadDocument(authUser, docs.fileId);
-		  const file = new Blob([data], { type: 'application/pdf' });
-		  setPDF(URL.createObjectURL(file))
-	
-		}
-	  }
-	
-	  useEffect(() => {
-		getPDF()
-	  }, [docs])
-	
-    const PDFcomponent = () => {
-		if (pdf != '') {
-		  return (
-			<div style={{ width: '100%', height: '100%' }}>
-			  <object
-				data={pdf}
-				type="application/pdf"
-				width="100%"
-				height="80%"
-			  >
-				<iframe src={pdf} width="100%" height="80%">
-				  <a href={pdf} id="enlaceDescargarPdf"
-					download={docs.name}
-				  >Tu dispositivo no puede visualizar los PDF, da click aquí para descargarlo</a>
-				</iframe>
-	
-			  </object>
-			</div>
-	
-	
-		  )
-		}
-		else {
-		  return (<><p>Cargando...</p></>)
-		}
-	
-	  }
-	
-	const Metadatacomponent = () => {
-		if (docs.fileId) {
-		  return (
-			<div>
-			  <span className="badge badge-primary ">{docs.aspectGroup.name}</span>
-			  {docs.aspectGroup.aspectList.map((a) => {
-				return <div className={classes.root}>
-				  <Paper className={classes.paper}>
-				  <div style={{ fontSize:"16px", fontFamily:"Poppins", fontWeight: '500' }}className='mt-2'>{a.label}</div>
-					{a.customPropertyList.map((p) => {
-					  return <div className="container">
-						<div  style={{ padding: "9px 6px 9px 0px"}} className="row">
-						  <div style={{ fontSize:"13px", fontFamily:"Poppins", fontWeight: 'bold' }}>
-							{p.label}:
-					</div>
-						  <div style={{ fontSize:"13px", fontFamily:"Poppins"}} className='ml-1'>
-							{isNaN(Date.parse(p.value)) ? p.value : new Date(p.value).toLocaleDateString()}
-						  </div>
-						</div>
-					  </div>
-					})}
-				  </Paper>
-				</div>
-			  })}
-	
-			</div>
-		  )
-		}
-		else {
-		  return (<></>)
-		}
-	  }	  
-
-
 	return (
 	
 		<div className="row">
@@ -181,14 +103,11 @@ const Information = () => {
 				<div className="jr-card">
 				<h3 className="mb-0">
 				<IntlMessages id="Informacion Documento" />
+				<BreadCrumbs/>
 				 </h3>
-						
-						
 						<Grid container className="mt-2">
-
 							<Grid item xs={6}>
 							<div className={classes.root}>
-
 								<Tabs
 									value={value}
 									onChange={handleChange}
@@ -196,7 +115,7 @@ const Information = () => {
 									textColor="primary"
 									centered
 								>
-									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}} label="Metadata" {...a11yProps(0)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}} label="Información General" {...a11yProps(0)} />
 									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}}label="Comentarios" {...a11yProps(1)} />
 									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}}label="Documentos adjuntos" {...a11yProps(2)} />
 								</Tabs>
@@ -204,10 +123,10 @@ const Information = () => {
 									<Metadata/>
 								</TabPanel>
 								<TabPanel value={value} index={1}>
-									<Comments/>
+									<Comments authUser={authUser} fileId={id}/>
 								</TabPanel>
 								<TabPanel value={value} index={2}>
-									<Attachments/>
+									<Attachments authUser={authUser} fileId={id} name={docs.name}/>
 								</TabPanel>
 							</div>
 							</Grid>
@@ -222,7 +141,7 @@ const Information = () => {
 		</div>
 		
 		
-			
+			 
 			
 		
 	)
