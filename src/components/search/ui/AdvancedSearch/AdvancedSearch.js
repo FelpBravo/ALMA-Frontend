@@ -19,8 +19,11 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	pointer: {
-		cursor: 'pointer'
-	}
+		cursor: 'pointer',
+		fontWeight: '600',
+		color: '#FFA800'
+	},
+
 }));
 
 export const AdvancedSearch = () => {
@@ -201,13 +204,12 @@ export const AdvancedSearch = () => {
 					</IconButton>
 				</Grid>
 				<Grid
-					className={classes.pointer}
 					item md={2} onClick={handleSaveSearch}
 					container
 					wrap="nowrap"
 					alignItems="center">
-					<SaveIcon />
-					<span className="text-advanced-search">
+					<SaveIcon className={classes.pointer} />
+					<span className={classes.pointer}>
 						<IntlMessages id="dashboard.saveSearch" />
 					</span>
 				</Grid>
