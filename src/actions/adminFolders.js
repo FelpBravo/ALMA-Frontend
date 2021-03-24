@@ -34,7 +34,7 @@ export const startFoldersLoading = (authUser) => {
 	}
 };
 
-export const startUpdateFolderLoading = (authUser, data, folderId) => {
+export const startUpdateFolderLoading = (authUser, data, folderId,parentId) => {
 	return async (dispatch) => {
 
 		try {
@@ -50,14 +50,14 @@ export const startUpdateFolderLoading = (authUser, data, folderId) => {
 			if (folderId === 0) {
 				await create(authUser, data).then(async () => {
 					const resp = await getFoldersAdmin(authUser);
-					dispatch(updateFoldersCurrentLoaded(resp.data));
+					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
 				})
 
 			}
 			else {
 				await create(authUser, data).then(async () => {
 					const resp = await getFoldersAdminById(authUser, folderId);
-					dispatch(updateFoldersCurrentLoaded(resp.data))
+					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
 				})
 			}
 
@@ -72,10 +72,14 @@ export const startUpdateFolderLoading = (authUser, data, folderId) => {
 	}
 };
 
-export const updateFoldersCurrentLoaded = (folders) => {
+export const updateFoldersCurrentLoaded = (parentId,folders,start) => {
 	return {
 		type: types.adminFoldersUpdateCurrentFolders,
-		payload: folders,
+		payload: {
+			parentId,
+			folders,
+			start
+		}
 	}
 };
 

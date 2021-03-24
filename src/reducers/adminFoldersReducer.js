@@ -68,13 +68,23 @@ export const adminFoldersReducer = (state = initialState, action) => {
 				})),
 			}
 		case types.adminFoldersUpdateCurrentFolders:
+				
 				return {
 					...state,
 					currentFolders: {
 						id: state.currentFolders.id,
 						name: state.currentFolders.name,
-						folders: [...action.payload],
+						folders: [...action.payload.folders],
 					},
+					folders: !action.payload.start? state.folders.map((folder => {
+
+						const { parentId, folders } = action.payload;
+	
+						setFolders(parentId, folders, folder);
+	
+						return folder;
+	
+					})) : [...action.payload.folders]
 				}
 	
 

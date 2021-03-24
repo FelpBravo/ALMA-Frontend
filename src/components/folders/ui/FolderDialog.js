@@ -92,14 +92,13 @@ const FolderDialog = () => {
 			company: 1
 		};
 		if (actionModal === ACTION_CREATE) {
-			dispatch(startUpdateFolderLoading(authUser,data,id))
+			dispatch(startUpdateFolderLoading(authUser,data,id,parentId))
 			dispatch(closeModalFolder());
 			
 
 		} else {
-
+			dispatch(startEditFolderLoading(authUser, data, parentId, parentName));
 			dispatch(closeModalFolder());
-			//	dispatch(startEditFolderLoading(authUser, data, parentId, parentName));
 
 		}
 
@@ -122,7 +121,7 @@ const FolderDialog = () => {
 				</DialogTitle>
 
 				<DialogContent>
-
+				{actionModal === ACTION_CREATE &&
 							<TextField
 								select
 								label="Tipo de espacio de trabajo"
@@ -133,12 +132,11 @@ const FolderDialog = () => {
 								onChange={handleOnChange}
 							>
 							{typeFolders && typeFolders.map((data)=>{
-								console.log(data, type);
 								return <MenuItem value={data} selected={true}>{data.name}</MenuItem>
 							})	
 							}
 							</TextField>
-
+				}
 					
 
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -168,7 +166,7 @@ const FolderDialog = () => {
 					
 				</DialogContent>
 
-				<DialogActions>
+				<DialogActions style={{ margin:20 }}>
 					<Button
 						onClick={handleClose}
 						variant="contained"

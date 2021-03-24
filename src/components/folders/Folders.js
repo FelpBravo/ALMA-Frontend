@@ -17,10 +17,9 @@ const Folders = () => {
 
 	const dispatch = useDispatch();
 
-	const { folders = [], currentFolders, historyFolders = [] } = useSelector(state => state.adminFolders);
+	const { folders = [], currentFolders, historyFolders = [],folder } = useSelector(state => state.adminFolders);
 
 	const { authUser, authorities } = useSelector(state => state.auth);
-
 
 	useEffect(() => {
 
@@ -63,6 +62,7 @@ const Folders = () => {
 			<p onClick={()=>{
 				console.log(folders);
 				console.log(currentFolders);
+				console.log(folder);
 			}}>Prueba</p>
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
