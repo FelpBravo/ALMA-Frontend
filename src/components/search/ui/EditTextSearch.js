@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-export const EditTextSearch = ({ }) => {
+export const EditTextSearch = ({ savedSearchId }) => {
 
 	const classes = useStyles();
 
@@ -153,7 +153,7 @@ export const EditTextSearch = ({ }) => {
 
 						</Grid>
 					</form>
-					<AdvancedSearch />
+					<AdvancedSearch savedSearchId={savedSearchId} />
 				</div>
 			</div>
 		</div>

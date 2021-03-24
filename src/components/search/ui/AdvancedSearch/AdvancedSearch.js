@@ -6,7 +6,7 @@ import IntlMessages from 'util/IntlMessages';
 import { getRows } from 'helpers/getRows';
 import { AdvancedSarchFilters } from './AdvancedSarchFilters';
 import { useHistory, useLocation } from 'react-router-dom';
-import { searchClearAllFilters, startSearchLoading, changeCleanFilter, startSaveSearchLoading } from '../../../../actions/search';
+import { searchClearAllFilters, startSearchLoading, changeCleanFilter, startSaveSearchLoading, startSavedSearchById } from '../../../../actions/search';
 import { DATERANGE } from 'constants/constUtil';
 import Swal from 'sweetalert2';
 import TagsPrueba from './TagsPrueba.js'
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export const AdvancedSearch = () => {
+export const AdvancedSearch = ({savedSearchId}) => {
 
 	const { authUser } = useSelector(state => state.auth);
 
@@ -43,7 +43,7 @@ export const AdvancedSearch = () => {
 	const { filters = [] } = fields;
 
 	const [iconAdvancedSearch, setIconAdvancedSearch] = useState('zmdi-chevron-down');
-	const [openAdvancedSearch, setOpenAdvancedSearch] = useState(false);
+	const [openAdvancedSearch, setOpenAdvancedSearch] = useState(savedSearchId);
 
 	let DateRange = []
 	let tags = ['a', 'b']
@@ -55,6 +55,13 @@ export const AdvancedSearch = () => {
 		}
 
 	}, []);
+
+	useEffect(() => {
+		if(savedSearchId){
+			console.log('sas')
+			dispatch(startSavedSearchById(authUser, savedSearchId))
+		}
+	}, [savedSearchId])
 
 	useEffect(() => {
 
