@@ -99,7 +99,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	}
 
 	return (
-		<TableRow hover>
+		<TableRow hover >
 			<TableCell
 				style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height:50 }}
 				onClick={handleOnClick}
@@ -127,9 +127,10 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				<div className={classes.iconsHolder}>
 					{privileges &&
 					
-					privileges.map((rol) => {
+					privileges.map((rol, index) => {
 						if ('ROLE_FOLDER_UPDATE' === rol) {
 							return <TableActionButton
+							key={index}
 							materialIcon={
 							<BorderColorOutlinedIcon
 								className={classes.iconos}
@@ -140,6 +141,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 						}
 						else if ('ROLE_FOLDER_DELETE' === rol) {
 							return <TableActionButton
+							key={index}
 							materialIcon={
 							<DeleteOutlinedIcon
 								className={classes.iconos}

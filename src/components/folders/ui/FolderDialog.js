@@ -131,8 +131,8 @@ const FolderDialog = () => {
 								name="type"
 								onChange={handleOnChange}
 							>
-							{typeFolders && typeFolders.map((data)=>{
-								return <MenuItem value={data} selected={true}>{data.name}</MenuItem>
+							{typeFolders && typeFolders.map((data,index)=>{
+								return <MenuItem value={data} key={index}>{data.name}</MenuItem>
 							})	
 							}
 							</TextField>
