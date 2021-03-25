@@ -170,7 +170,8 @@ const FolderDialog = () => {
 					<Button
 						onClick={handleClose}
 						variant="contained"
-						color="primary">
+						style={{ backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", border: "none",boxShadow: "none" }}
+						>
 						<IntlMessages id="button.text.cancel" />
 					</Button>
 
