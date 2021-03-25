@@ -7,10 +7,12 @@ import {
 } from 'actions/adminFolders';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import Swal from 'sweetalert2';
-import AddIcon from '@material-ui/icons/Add';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import TableActionButton from 'components/search/ui/TableActionButton';
+import FolderSharedOutlinedIcon from '@material-ui/icons/FolderSharedOutlined';
+import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 
 const useStyles = makeStyles((theme) => ({
 	iconos: {
@@ -25,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	
   }));
 
-export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges }) => {
-
+export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges, type }) => {
 	const dispatch = useDispatch();
 	
 	const classes = useStyles();
@@ -34,14 +35,14 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	const { authUser } = useSelector(state => state.auth);
 
 	const handleOnClick = () => {
-		if (hashSubFolders) {
+		
 			dispatch(startSubFoldersLoading(authUser, id, name));
-		}
+	
 	}
+    
+	const handleSelectAction = async (number) => {
 
-	const handleSelectAction = async (type) => {
-
-		switch (type) {
+		switch (number) {
 			case 1:
 
 				dispatch(openModalFolder());
@@ -51,6 +52,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 					parentId: id,
 					parentName: name,
 					position: 0,
+					type,
 					state: true,
 					icon: '',
 				}));
@@ -67,6 +69,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 					parentId,
 					position,
 					state,
+					type,
 					icon: '',
 				}));
 
@@ -96,49 +99,38 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	}
 
 	return (
-		<TableRow hover>
+		<TableRow hover >
 			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
+				style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height:50 }}
 				onClick={handleOnClick}
 				component="th"
 				scope="row"
 				className="folders-table-row"
 			>
-				{name}
+			{type.name === 'workspace' &&
+			<SupervisedUserCircleIcon color="primary" fontSize="small"/>
+			} 
+			{type.name === 'forum' &&
+			<FolderSharedOutlinedIcon color="primary" fontSize="small"/>
+			}
+			{type.name === 'folder' &&
+			<FolderOutlinedIcon color="primary" fontSize="small"/>
+			}
+			{''} {''} {name}
 			</TableCell>
 			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
-				className="folders-table-row"
-				onClick={handleOnClick}
+			style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}
 			>
-				{position}
-			</TableCell>
-			<TableCell
-				style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
-				className="folders-table-row"
-				onClick={handleOnClick}
-			>
-				{
-					state ? 'Activo' : 'Inactivo'
-				}
+				{type.name}
 			</TableCell>
 			<TableCell>
 				<div className={classes.iconsHolder}>
 					{privileges &&
 					
-					privileges.map((rol) => {
-						if ('ROLE_FOLDER_CREATE' === rol) {
+					privileges.map((rol, index) => {
+						if ('ROLE_FOLDER_UPDATE' === rol) {
 							return <TableActionButton
-							materialIcon={
-							<AddIcon
-								className={classes.iconos}
-								onClick={() => handleSelectAction(1)}
-							/>
-							}
-						/>
-						}
-						else if ('ROLE_FOLDER_UPDATE' === rol) {
-							return <TableActionButton
+							key={index}
 							materialIcon={
 							<BorderColorOutlinedIcon
 								className={classes.iconos}
@@ -149,6 +141,7 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 						}
 						else if ('ROLE_FOLDER_DELETE' === rol) {
 							return <TableActionButton
+							key={index}
 							materialIcon={
 							<DeleteOutlinedIcon
 								className={classes.iconos}

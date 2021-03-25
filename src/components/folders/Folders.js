@@ -17,10 +17,9 @@ const Folders = () => {
 
 	const dispatch = useDispatch();
 
-	const { folders = [], currentFolders, historyFolders = [] } = useSelector(state => state.adminFolders);
+	const { folders = [], currentFolders, historyFolders = [],folder } = useSelector(state => state.adminFolders);
 
 	const { authUser, authorities } = useSelector(state => state.auth);
-
 
 	useEffect(() => {
 
@@ -60,6 +59,7 @@ const Folders = () => {
 
 	return (
 		<div className="row">
+
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 
@@ -98,9 +98,9 @@ const Folders = () => {
 									</Grid>
 
 									<Grid item xs={2}>
-									<Link component="button" variant="body2" onClick={handleNewFolder}>
+									<Link component="button" variant="body2" onClick={handleNewFolder}  style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 500}}>
 																		<AddIcon color='primary' />
-																			Crear nueva carpeta
+																			Crear nuevo directorio
 									</Link>
 									</Grid>
 								</Grid>

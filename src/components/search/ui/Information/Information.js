@@ -84,6 +84,7 @@ const Information = () => {
 		setValue(newValue);
 	};
 
+
 	useEffect(() => {
 
 		if (!authUser) {

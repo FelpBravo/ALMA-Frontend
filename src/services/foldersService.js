@@ -34,6 +34,14 @@ const getFoldersAdminById = (authUser, folderId) => {
 	});
 };
 
+const getTypesFolders = (authUser,id) => {
+	return axiosInstance.get(`/folders/admin/${id}/folderTypes`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
 const create = (authUser, data) => {
 	return axiosInstance.post('/folders/admin', data, {
 		headers: {
@@ -63,6 +71,7 @@ export {
 	getFoldersById,
 	getFoldersAdmin,
 	getFoldersAdminById,
+	getTypesFolders,
 	create,
 	edit,
 	remove,
