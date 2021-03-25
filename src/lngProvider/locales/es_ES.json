@@ -311,6 +311,8 @@
 	"dashboard.advancedSearchText": "Buscar",
 	"dashboard.advancedSearchClear": "Limpiar",
 	"dashboard.advancedSearch": "Búsqueda Avanzada",
+	"dashboard.saveSearch": "Guardar búsqueda",
+
 	"dashboard.advancedSearchTitle": "Buscar por atributo",
 	"dashboard.advancedSearchDate": "Buscar por rangos de fechas",
 	"dashboard.advancedSearchTags": "Buscar por Etiquetas",
@@ -662,7 +664,11 @@
 	"reports.table.missing3": "Creador",
 	"reports.table.missing4": "Ruta",
 	"reports.table.missing5": "Documentos pendientes",
-	"reports.table.missing6": "Nombre"
+	"reports.table.missing6": "Nombre",
+	"comment.newcomment.title": "Escribe tu nuevo comentario",
+	"comment.attachment.title": "Adjuntar documento",
+	"comment.button.comment": "Comentar",
+	"comment.button.totalcomments": "Comentarios"
 
 	
 

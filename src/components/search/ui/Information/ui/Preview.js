@@ -31,15 +31,15 @@ const Preview = (props) => {
 
   if (pdf != '') {
     return (
-    <div style={{ width: '100%', height: '600px' }}>
+    <div style={{ width: '100%', height: '900px' }}>
      { <object
       data={pdf}
       type={type}
       name='prueba'
       width="100%"
-      height="80%"
+      height="100%"
       >
-      <iframe src={pdf} width="100%" height="600px">
+      <iframe src={pdf} width="100%" height="800px">
         <a href={pdf} id="enlaceDescargarPdf"
         download={name}
         >Tu dispositivo no puede visualizar los PDF, da click aquí para descargarlo</a>

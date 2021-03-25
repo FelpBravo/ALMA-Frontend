@@ -50,7 +50,9 @@ export const types = {
 	versioningLoaded:'Versioning Loaded',
 	versioningRemove:'Versioning Remove',
 	previewLoaded: "Preview Document Loaded",
-
+	
+	savedSearchesAddSearch: "Add new saved search", 
+	savedSearchesList: "Saved searches All", 
 
 	docsDocumentsTypeLoaded: 'Documents Type documents loaded',
 	docsDetailDocumentTypeLoaded: 'Documents Detail document type loaded',
@@ -112,6 +114,9 @@ export const types = {
 	tagsUpdateLoaded: 'Tags update loaded',
 	tagsRemoveAll: 'Tags Remove all',
 
+	attachmentsDataLoaded:'Attachments Data Loaded',
+	commentsDataLoaded: 'Comments Data Loaded',
+	informationRemoveAll: 'Information Remove All',
 
 	addBreadcrumbs: 'Add BreadCrumbs',
 	createBreadcrumbs: 'Create BreadCrumbs'

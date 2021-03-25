@@ -26,12 +26,13 @@ import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import TableActionButton from './TableActionButton';
-import ModalVisibility from './Information/ui/ModalVisibility';
 import ModalFirm from './ModalFirm';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
-import { addBreadcrumbs} from 'actions/breadcrumbs'
+import { addBreadcrumbs } from 'actions/breadcrumbs'
+import { informationRemoveAll } from 'actions/information'
+
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -116,9 +117,10 @@ const DataTable = () => {
 
 	}, []);
 
-	const handleVisibility=(id) =>{
+	const handleVisibility=(id,name) =>{
+		dispatch(informationRemoveAll())
+		dispatch(addBreadcrumbs(name,`/document/${id}/info`))
 		history.push(`/document/${id}/info`);
-		//dispatch(startDocumentByIdVisibility(id));
 	};
 
 	const handleFirm=(id, name) =>{
@@ -127,7 +129,7 @@ const DataTable = () => {
 	};
 
 	const handleVersioning=(id, name) =>{
-		dispatch(addBreadcrumbs(name,`/document/${id}`))
+		dispatch(addBreadcrumbs(name,`/document/${id}/version`))
 		history.push(`/document/${id}/version`);
 
 	};
@@ -360,8 +362,7 @@ const DataTable = () => {
 									total={totalItems} 
 									onChange={handleChangePage}/>
 								</Grid>
-				<ModalVisibility/>
-				<ModalFirm/>
+				{/* <ModalFirm/> */}
                 <ModalVersioning/>
 			</div>
 		</div>
