@@ -8,6 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle } from '@material-ui/core';
 import Button from 'components/ui/Button'
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 
 const SharedDialog = ({ open, handleClose}) => {
@@ -36,7 +41,13 @@ const SharedDialog = ({ open, handleClose}) => {
       >
 
         <DialogTitle id="form-dialog-title">
-          <IntlMessages id="table.shared.dialog.title" />
+          <h3>
+            <IntlMessages id="table.shared.dialog.title" />
+          </h3>
+          <h6>
+            Legend of zelda.pdf
+          </h6>
+
         </DialogTitle>
 
         <DialogContent>
@@ -49,6 +60,20 @@ const SharedDialog = ({ open, handleClose}) => {
             variant="outlined"
             fullWidth
             size="small"
+            type={'password'}
+            InputProps={{
+              endAdornment:
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    // onClick={handleClickShowPassword}
+                    // onMouseDown={handleMouseDownPassword}
+                  >
+                    {true ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>}
+            }
+           
             // onChange={handleOnChange}
           />
 
