@@ -5,7 +5,7 @@ const initialState = {
 	folders: [],
 	historyFolders: [],
 	currentFolders: {
-		id: -1,
+		id: 0,
 		name: '',
 		folders: [],
 	},

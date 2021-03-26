@@ -13,6 +13,7 @@ import TableActionButton from 'components/search/ui/TableActionButton';
 import FolderSharedOutlinedIcon from '@material-ui/icons/FolderSharedOutlined';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import { startFoldersInitLoading } from 'actions/folders'
 
 const useStyles = makeStyles((theme) => ({
 	iconos: {
@@ -43,22 +44,6 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 	const handleSelectAction = async (number) => {
 
 		switch (number) {
-			case 1:
-
-				dispatch(openModalFolder());
-				dispatch(setActionModal(ACTION_CREATE));
-				dispatch(setFolder({
-					name: '',
-					parentId: id,
-					parentName: name,
-					position: 0,
-					type,
-					state: true,
-					icon: '',
-				}));
-
-				break;
-
 			case 2:
 
 				dispatch(openModalFolder());
@@ -72,11 +57,10 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 					type,
 					icon: '',
 				}));
-
+				dispatch(startFoldersInitLoading(authUser));
 				break;
 
 			case 3:
-
 				const resp = await Swal.fire({
 					title: 'Eliminar',
 					text: "¿Está seguro que quiere eliminar la carpeta?",
@@ -87,9 +71,11 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				});
 
 				if (resp.value) {
-					dispatch(startDeleteFolderLoading(authUser, id));
+					dispatch(startDeleteFolderLoading(authUser, id,parentId));
+					setTimeout(()=>{
+						dispatch(startFoldersInitLoading(authUser));
+					},300)
 				}
-
 				break;
 
 			default:

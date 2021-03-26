@@ -4,7 +4,7 @@ import { Button, Grid } from '@material-ui/core';
 
 import IntlMessages from 'util/IntlMessages';
 import {
-	openModalFolder, setActionModal, setFolder, startFoldersLoading, startSaveCurrentFolder
+	openModalFolder, setActionModal, setFolder, startFoldersLoading, startSaveCurrentFolder,startFoldersTypesLoading, adminFoldersremoveAll
 } from 'actions/adminFolders';
 import { DataTableFolders } from './ui/DataTableFolders';
 import SimpleBreadcrumbs from 'components/ui/SimpleBreadcrumbs';
@@ -22,19 +22,14 @@ const Folders = () => {
 	const { authUser, authorities } = useSelector(state => state.auth);
 
 	useEffect(() => {
-
-		if (folders.length === 0 && authUser) {
+			dispatch(adminFoldersremoveAll())
 			dispatch(startFoldersLoading(authUser));
-			
-		}
 
-	}, [dispatch, folders, authUser]);
+	}, []);
 
-	const handleClickBreadcrumbs = (e, { id, }) => {
-
+	const handleClickBreadcrumbs = (e, { id, name}) => {
 		e.preventDefault();
-
-		dispatch(startSaveCurrentFolder(id));
+		dispatch(startSaveCurrentFolder(authUser,id,name));
 
 	}
 
@@ -59,7 +54,6 @@ const Folders = () => {
 
 	return (
 		<div className="row">
-
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 
