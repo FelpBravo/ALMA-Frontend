@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
+import { startFoldersInitLoading } from 'actions/folders'
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
@@ -21,7 +22,7 @@ const FolderDialog = () => {
 
 	const { authUser } = useSelector(state => state.auth);
 
-	const { openModal, folder, actionModal, currentFolders, typeFolders = [] } = useSelector(state => state.adminFolders);
+	const { openModal, folder, actionModal, currentFolders, typeFolders = [] , historyFolders = []} = useSelector(state => state.adminFolders);
 
 	const { id } = currentFolders
 
@@ -32,6 +33,7 @@ const FolderDialog = () => {
 	const [messageErrorTypes, setMessageErrorTypes] = useState(null);
 
 	const [messageErrorName, setMessageErrorName] = useState(null)
+
 
 	useEffect(() => {
 		setFormValues({ ...folder });
@@ -101,6 +103,10 @@ const FolderDialog = () => {
 			dispatch(closeModalFolder());
 
 		}
+		setTimeout(()=>{
+			dispatch(startFoldersInitLoading(authUser));
+		},300)
+		
 
 	}
 

@@ -26,7 +26,6 @@ const getAttachments = (authUser,fileId) => {
 }
 
 const createTopic = (authUser, fileId, content, file) => {
-	console.log(fileId,content,file);
 	const data = new FormData();
 	data.append('files', file);
 	data.append('content', content)

@@ -58,7 +58,6 @@ export const AdvancedSearch = ({savedSearchId}) => {
 
 	useEffect(() => {
 		if(savedSearchId){
-			console.log('sas')
 			dispatch(startSavedSearchById(authUser, savedSearchId))
 		}
 	}, [savedSearchId])
