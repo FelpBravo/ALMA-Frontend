@@ -6,7 +6,7 @@ import { startPreviewDocument } from 'actions/search';
 const Preview = (props) => {
   const { authUser, id, name } = props
 
-  console.log(props);
+ 
   const dispatch = useDispatch();
   const { previewDocument } = useSelector(state => state.searchs);
   const { file , type } = previewDocument

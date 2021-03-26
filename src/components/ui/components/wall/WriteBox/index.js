@@ -31,7 +31,6 @@ const WriteBox = (props) => {
   };
 
   const handleAddPost = () => {
-    console.log("send image list", fileList)
     props.addPost(commentText, fileList);
     setCommentText('');
     setPreviewVisible('');

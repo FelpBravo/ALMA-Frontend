@@ -6,10 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading } from 'actions/adminFolders';
+import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
+import { identity } from 'lodash-es';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
@@ -20,24 +21,26 @@ const FolderDialog = () => {
 
 	const { authUser } = useSelector(state => state.auth);
 
-	const { openModal, folder, actionModal } = useSelector(state => state.adminFolders);
+	const { openModal, folder, actionModal, currentFolders, typeFolders = [] } = useSelector(state => state.adminFolders);
+
+	const { id } = currentFolders
 
 	const [formValues, setFormValues] = useState({});
 
-	const { name, position, state, parentId, parentName } = formValues;
+	const { name, type, state, parentId, parentName } = formValues;
 
-	const [messageErrorPosition, setMessageErrorPosition] = useState(null);
+	const [messageErrorTypes, setMessageErrorTypes] = useState(null);
 
 	const [messageErrorName, setMessageErrorName] = useState(null)
 
 	useEffect(() => {
-
 		setFormValues({ ...folder });
-
+		dispatch(startFoldersTypesLoading(authUser,id))
+		
 	}, [folder, setFormValues]);
 
 	useEffect(() => {
-
+		
 		if (!name || name.length < 3) {
 
 			setMessageErrorName('Este campo debe tener mínimo 3 letras');
@@ -52,17 +55,17 @@ const FolderDialog = () => {
 
 	useEffect(() => {
 
-		if (position <= 0) {
+		if (!type) {
 
-			setMessageErrorPosition('Este campo debe ser mayor a 0');
+			setMessageErrorTypes('Este debe seleccionar un tipo de carpeta');
 
 		} else {
 
-			setMessageErrorPosition(null);
+			setMessageErrorTypes(null);
 
 		}
 
-	}, [position, setMessageErrorPosition])
+	}, [type, setMessageErrorTypes])
 
 	const handleClose = () => {
 
@@ -81,23 +84,21 @@ const FolderDialog = () => {
 	}
 
 	const handleOnSave = () => {
-
 		const data = {
 			...formValues,
-			position: parseInt(position),
+			type: type,
+			position:1,
 			state: String(formValues.state) === 'true',
 			company: 1
 		};
-
 		if (actionModal === ACTION_CREATE) {
-
+			dispatch(startUpdateFolderLoading(authUser,data,id,parentId))
 			dispatch(closeModalFolder());
-			dispatch(startCreateFolderLoading(authUser, data, parentId, parentName));
+			
 
 		} else {
-
-			dispatch(closeModalFolder());
 			dispatch(startEditFolderLoading(authUser, data, parentId, parentName));
+			dispatch(closeModalFolder());
 
 		}
 
@@ -111,20 +112,41 @@ const FolderDialog = () => {
 				aria-labelledby="form-dialog-title"
 				fullWidth={true}
 			>
-				<DialogTitle id="form-dialog-title">
+				<DialogTitle>
 					{
 						actionModal === ACTION_CREATE
-							? <IntlMessages id="folders.modal.title.create" />
+							? <IntlMessages id="folders.modal.title.create" style={{fontSize:16, fontFamily: "Poppins"}}/>
 							: <IntlMessages id="folders.modal.title.edit" />
 					}
 				</DialogTitle>
 
-				<DialogContent dividers>
+				<DialogContent>
+				{actionModal === ACTION_CREATE &&
+							<TextField
+								select
+								label="Tipo de espacio de trabajo"
+								variant="outlined"
+								fullWidth
+								size="small"
+								name="type"
+								onChange={handleOnChange}
+							>
+							{typeFolders && typeFolders.map((data,index)=>{
+								return <MenuItem value={data} key={index}>{data.name}</MenuItem>
+							})	
+							}
+							</TextField>
+				}
+					
 
-					<div className="row">
+					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+						<span className="text-danger text-error">{messageErrorTypes}</span>
+					</div>
 
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				
 
+					<div className="mt-2">
+	
 							<TextField
 								name="name"
 								value={name}
@@ -132,94 +154,29 @@ const FolderDialog = () => {
 								label={fieldName}
 								type="text"
 								variant="outlined"
-								fullWidth
 								size="small"
+								fullWidth
 								onChange={handleOnChange}
 							/>
-
-						</div>
 
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 							<span className="text-danger text-error">{messageErrorName}</span>
 						</div>
-
 					</div>
-
-					<div className="row mt-3">
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
-							<TextField
-								name="position"
-								value={position}
-								label={fieldPosition}
-								type="number"
-								variant="outlined"
-								fullWidth
-								size="small"
-								onChange={handleOnChange}
-							/>
-
-						</div>
-
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-							<span className="text-danger text-error">{messageErrorPosition}</span>
-						</div>
-
-					</div>
-
-					{
-						actionModal !== ACTION_CREATE
-						&&
-						<div className="row mt-3">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-								<h4>{<IntlMessages id="folders.modal.field.state" />}</h4>
-							</div>
-						</div>
-					}
-
-					{
-						actionModal !== ACTION_CREATE
-						&&
-						<div className="row">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
-								<FormControl component="fieldset">
-									<RadioGroup
-										aria-label="gender"
-										name="state"
-										value={String(state)}
-										onChange={handleOnChange}
-									>
-										<FormControlLabel
-											value="true"
-											label="Activo"
-											control={<Radio color="primary" />}
-
-										/>
-										<FormControlLabel
-											value="false"
-											control={<Radio color="primary" />}
-											label="Inactivo"
-										/>
-									</RadioGroup>
-								</FormControl>
-
-							</div>
-						</div>
-					}
-
+					
 				</DialogContent>
 
-				<DialogActions>
+				<DialogActions style={{ margin:20 }}>
 					<Button
 						onClick={handleClose}
 						variant="contained"
-						color="primary">
+						style={{ backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", border: "none",boxShadow: "none" }}
+						>
 						<IntlMessages id="button.text.cancel" />
 					</Button>
 
 					<Button
-						disabled={(!name || name.length < 3) || position <= 0}
+						disabled={(!name || name.length < 3) || type <= 0}
 						onClick={handleOnSave}
 						variant="contained"
 						color="primary"

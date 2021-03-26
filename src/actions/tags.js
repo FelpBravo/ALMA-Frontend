@@ -77,7 +77,7 @@ export const startDeleteTagsLoading = (tagId) => {
 			dispatch(deleteTagsLoaded(newCurrentTags));
 
 		} catch (error) {
-			console.log('error',error)
+			console.log(error)
 			Swal.close();
 
 			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
@@ -150,8 +150,8 @@ export const startEditTagsLoading = (id, tag, hex) => {
 
 			Swal.showLoading();
 
-			await editTags(authUser, id, tag, hex).catch((err)=>{
-				console.log(err);
+			await editTags(authUser, id, tag, hex).catch((error)=>{
+				console.log(error);
 			});
 
 			dispatch(updateTagsLoaded(id, tag, hex));

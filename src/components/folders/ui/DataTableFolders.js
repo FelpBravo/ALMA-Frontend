@@ -10,19 +10,19 @@ import { TableBodyCell } from './TableBodyCell';
 
 import IntlMessages from 'util/IntlMessages';
 
-export const DataTableFolders = ({ folders ,privileges}) => {
-	let listRol =[];
-	privileges.map((rol)=>{
+export const DataTableFolders = ({ folders, privileges }) => {
+	let listRol = [];
+	privileges.map((rol) => {
 		switch (rol) {
 			case 'ROLE_FOLDER_UPDATE':
 				listRol.push(rol)
-			break;
+				break;
 			case 'ROLE_FOLDER_DELETE':
 				listRol.push(rol)
-			break;
+				break;
 			case 'ROLE_FOLDER_CREATE':
 				listRol.push(rol)
-			break;
+				break;
 		}
 	});
 	return (
@@ -33,14 +33,11 @@ export const DataTableFolders = ({ folders ,privileges}) => {
 					<Table size="small" aria-label="a dense table">
 						<TableHead>
 							<TableRow>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400  }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, width: "60%" }} >
 									<IntlMessages id="folders.table.column1" />
 								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff',fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="folders.table.column4" />
-								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="folders.table.column3" />
+									<IntlMessages id="folders.table.column5" />
 								</TableCell>
 								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="folders.table.column2" />
@@ -49,8 +46,8 @@ export const DataTableFolders = ({ folders ,privileges}) => {
 						</TableHead>
 						<TableBody>
 							{
-								
-								
+
+
 								folders.map((folder) => (
 									<TableBodyCell
 										privileges={listRol}
@@ -58,6 +55,20 @@ export const DataTableFolders = ({ folders ,privileges}) => {
 										{...folder}
 									/>
 								))
+							}
+							{folders.length === 0 &&
+
+								<TableRow hover>
+									<TableCell
+										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
+										component="th"
+										scope="row"
+										className="folders-table-row"
+									>
+
+										No se encontro ningun directorio 
+									</TableCell>
+								</TableRow>
 							}
 						</TableBody>
 					</Table>

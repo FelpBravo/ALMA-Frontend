@@ -33,7 +33,7 @@ export const fixedFolders = [
 			{
 				id: -4,
 				name: 'sidebar.tags.folders',
-				icon: 'folder',
+				icon: 'settings',
 				type: 'item',
 				link: '/folders',
 				auth: 'ROLE_FOLDER_MENU',

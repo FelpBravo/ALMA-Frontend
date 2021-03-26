@@ -6,13 +6,14 @@ import Link from '@material-ui/core/Link';
 
 const SimpleBreadcrumbs = ({ items = [], handleClick, currentItem }) => {
 	return (
-		<Breadcrumbs aria-label="breadcrumb">
+		<Breadcrumbs  separator="›" aria-label="breadcrumb">
 			{
 				items.map((item) => {
 					return (
 						currentItem === item.id
 							?
 							<Typography
+							    style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400}}
 								key={item.id}
 								color="textPrimary">
 								{item.name}

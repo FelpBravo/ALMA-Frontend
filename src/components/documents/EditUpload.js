@@ -94,7 +94,6 @@ const EditUpload = () => {
 	}, [dispatch, document]);
 
 	useEffect(() => {
-		console.log('files', files)
 		if(files){
 			dispatch(saveFileIdLoaded(
 				{

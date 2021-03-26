@@ -1,7 +1,7 @@
 import { GENERAL_ERROR, INIT_FOLDER } from 'constants/constUtil';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { removeFolder } from 'helpers/removeFolder';
-import { create, edit, getFoldersAdmin, getFoldersAdminById, remove } from 'services/foldersService';
+import { create, edit, getFoldersAdmin, getFoldersAdminById, remove, getTypesFolders } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -34,6 +34,55 @@ export const startFoldersLoading = (authUser) => {
 	}
 };
 
+export const startUpdateFolderLoading = (authUser, data, folderId,parentId) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+			if (folderId === 0) {
+				await create(authUser, data).then(async () => {
+					const resp = await getFoldersAdmin(authUser);
+					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+				})
+
+			}
+			else {
+				await create(authUser, data).then(async () => {
+					const resp = await getFoldersAdminById(authUser, folderId);
+					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+				})
+			}
+
+
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+export const updateFoldersCurrentLoaded = (parentId,folders,start) => {
+	return {
+		type: types.adminFoldersUpdateCurrentFolders,
+		payload: {
+			parentId,
+			folders,
+			start
+		}
+	}
+};
+
 export const foldersLoaded = (folders) => {
 	return {
 		type: types.adminFoldersLoaded,
@@ -62,7 +111,7 @@ export const startSubFoldersLoading = (authUser, folderId, name) => {
 
 				Swal.fire({
 					title: 'Cargando...',
-				    text: 'Por favor espere...',
+					text: 'Por favor espere...',
 					allowOutsideClick: false,
 					heightAuto: false,
 				});
@@ -349,3 +398,27 @@ export const deleteFolderLoaded = (folders, currentFolders) => {
 		}
 	}
 }
+
+export const startFoldersTypesLoading = (authUser, id) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getTypesFolders(authUser, id);
+
+			dispatch(foldersTypesLoaded(resp.data));
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+export const foldersTypesLoaded = (foldersTypes) => {
+	return {
+		type: types.adminfoldersTypesLoaded,
+		payload: foldersTypes,
+	}
+};
+

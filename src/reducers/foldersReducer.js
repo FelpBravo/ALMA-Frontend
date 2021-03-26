@@ -45,7 +45,6 @@ export const foldersReducer = (state = initialState, action) => {
 				...state,
 				folderId: action.payload,
 			}
-
 		case types.foldersRemoveAll:
 			return {
 				...state,
