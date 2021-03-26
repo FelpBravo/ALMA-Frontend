@@ -43,6 +43,7 @@ const SideBarContent = () => {
 	const [selected, setSelected] = useState([]);
 	const [expanded, setExpanded] = useState([]);
 	const [folders, setFolders] = useState([]);
+	const [loadingFolder, setLoadingFolder] = useState(true)
 
 	useEffect(() => {
 
@@ -73,15 +74,15 @@ const SideBarContent = () => {
 			const ROLE_FOLDER_VIEW = authorities.find(rol => rol === 'ROLE_FOLDER_VIEW')
 
 
-			if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
+			if (!loadingFolder && initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
 
 
-				dispatch(startFoldersInitLoading(authUser));
+				dispatch(startFoldersInitLoading(authUser, setLoadingFolder));
 
 			}
 		}
 
-	}, [dispatch, initFolders, authUser]);
+	}, [dispatch, initFolders, authUser, loadingFolder]);
 
 	const handleRenderMenu = (folders) => {
 

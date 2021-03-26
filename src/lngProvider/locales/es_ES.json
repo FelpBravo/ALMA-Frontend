@@ -303,6 +303,10 @@
 	"table.dataTable": "Tabla de datos",
 	"table.basicTable": "Tabla básica",
 	"table.application": "Tabla de aplicaciones",
+
+	"table.shared.dialog.title": "Compartir enlace",
+	"table.shared.dialog.field.password": "Contraseña",
+
 	"todo": "Que hacer",
 	"todo.addTask": "AGREGAR TAREA",
 	"todo.all": "Todas",
