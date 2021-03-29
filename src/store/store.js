@@ -19,6 +19,7 @@ import { firmReducer } from 'reducers/firmReducer'
 import { informationReducer } from 'reducers/informationReducer'
 import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
 import { savedSearchesReducer } from 'reducers/savedSearchesReducer'
+import { sharedDocumentReducer } from 'reducers/sharedDocumentReducer';
 
 
 export const history = createBrowserHistory();
@@ -45,6 +46,7 @@ const rootReducer = (history) => combineReducers({
 	savedSearches: savedSearchesReducer,
 	info:informationReducer,
 	crumbs:breadcrumbsReducer,
+	sharedDocument: sharedDocumentReducer,
 });
 
 export const store = createStore(

@@ -306,6 +306,7 @@
 
 	"table.shared.dialog.title": "Compartir documento",
 	"table.shared.dialog.field.password": "Contraseña",
+	"table.shared.dialog.tooltip.title": "Compartir",
 
 	"todo": "Que hacer",
 	"todo.addTask": "AGREGAR TAREA",

@@ -34,6 +34,7 @@ import { addBreadcrumbs } from 'actions/breadcrumbs'
 import { informationRemoveAll } from 'actions/information'
 import Tooltip from '@material-ui/core/Tooltip';
 import SharedDialog from './SharedDialog';
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -90,7 +91,7 @@ const DataTable = () => {
 
 	const { id, page } = useParams()
 	const { path, url } = useRouteMatch();
-	const [openSharedDialog, setOpenSharedDialog] = useState(true)
+	const [dataSharedDialog, setDataSharedDialog] = useState(null)
 
 	let page_url = 1
 	if(page){
@@ -203,7 +204,7 @@ const DataTable = () => {
 	
 	return (
 		<div className="row mt-3">
-		<SharedDialog handleClose={() => setOpenSharedDialog(false)} open={openSharedDialog} />
+		<SharedDialog handleClose={() => setDataSharedDialog(null)} data={dataSharedDialog} />
 		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 			<TableContainer component={Paper}>
@@ -323,10 +324,10 @@ const DataTable = () => {
 													
 													<TableActionButton
 													materialIcon={
-													<Tooltip title="Compartir">
+													<Tooltip title={ <IntlMessages id="table.shared.dialog.tooltip.title" />}>
 														<ShareIcon
 															className={classes.iconos}
-															onClick={() => setOpenSharedDialog(true)}
+															onClick={() => setDataSharedDialog({id, name})}
 														/>
 													</Tooltip>
 													}

@@ -119,6 +119,8 @@ export const types = {
 	informationRemoveAll: 'Information Remove All',
 
 	addBreadcrumbs: 'Add BreadCrumbs',
-	createBreadcrumbs: 'Create BreadCrumbs'
+	createBreadcrumbs: 'Create BreadCrumbs',
+
+	sharedDocumentSetValue: 'shared Document Set Value',
 
 }
