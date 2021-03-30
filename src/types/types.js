@@ -122,5 +122,5 @@ export const types = {
 	createBreadcrumbs: 'Create BreadCrumbs',
 
 	sharedDocumentSetValue: 'shared Document Set Value',
-
+	saveSharedFile: 'Save new shared file'
 }

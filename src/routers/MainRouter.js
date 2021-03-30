@@ -12,7 +12,7 @@ export const MainRouter = () => {
 			<Switch>
 				<Route
 					exact
-					path="/download"
+					path="/download/:documentId"
 					component={DownloadFilePage}
 				/>
 				<Route
