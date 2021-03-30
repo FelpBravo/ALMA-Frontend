@@ -194,6 +194,8 @@ export const startDropFileLoading = (files) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
+		const documentsList = getState().documents.filesLoaded
+
 
 		try {
 
@@ -205,20 +207,40 @@ export const startDropFileLoading = (files) => {
 			});
 
 			Swal.showLoading();
-
+			console.log(files);
+			console.log(documentsList);
+			const find = documentsList.find( doc => files.find(file => file.name === doc.name))
+			console.log(find);
 			const resp = await uploadDocument(authUser, files);
 
 			Swal.close();
 
 			// SAVE STORE ID LOADED
-			resp.data.forEach( res => dispatch(saveFileIdLoaded(
-				{
-					fileIdLoaded: res.fileId,
-					// thumbnailGenerated: res.thumbnailGenerated,
-					thumbnailGenerated: true,
-
-					name: res.name,
-				})))
+			let err2 = ''
+			resp.data.forEach((res) => {
+				console.log(res);
+				if (res.message) {
+					err2 = err2+"</br> "+ res.message
+				} else {
+					dispatch(saveFileIdLoaded(
+						{
+							fileIdLoaded: res.fileId,
+							// thumbnailGenerated: res.thumbnailGenerated,
+							thumbnailGenerated: true,
+			
+							name: res.name,
+						})
+			
+					)
+				}
+			}
+			)
+			
+			if(err2.length > 0){
+				Swal.fire({
+					title: "Error, The document is already exists", html: err2, icon: 'error', heightAuto: false
+				});
+			}
 			// dispatch(saveFileIdLoaded(resp.data.id));
 			// dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
 
