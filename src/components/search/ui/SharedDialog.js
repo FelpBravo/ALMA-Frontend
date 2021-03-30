@@ -64,6 +64,7 @@ const SharedDialog = ({ data, handleClose }) => {
 
           <Grid item md={12}>
             <TextField
+              autoFocus
               label="Fecha de vencimiento"
               name='startDate'
               fullWidth
@@ -81,7 +82,6 @@ const SharedDialog = ({ data, handleClose }) => {
           </Grid>
           <Grid item md={12}>
             <TextField
-              autoFocus
               name="password"
               label={fieldName}
               type="text"
