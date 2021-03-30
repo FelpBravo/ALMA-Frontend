@@ -48,8 +48,12 @@ const LibraryRouter = () => {
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
 				<Route
-					path="/folders"
+					path="/management/folders"
 					component={asyncComponent(() => import('../components/folders/Folders'))}
+				/>
+				<Route
+					path="/management/Usersandgroups"
+					component={asyncComponent(() => import('../components/folders/Management'))}
 				/>
 				<Route
 
