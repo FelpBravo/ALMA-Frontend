@@ -3,11 +3,13 @@ import { types } from 'types/types';
 const initialState = {
     documentId: "",
     token: "",
-    fields: {}
+    fields: {},
+    alive: null,
+    passwordNeeded: null,
 }
 
 export const sharedDocumentReducer = (state = initialState, action) => {
-
+    const { payload } = action
     switch (action.type) {
         case types.sharedDocumentSetValue:
             const { name, value } = action.payload
@@ -23,6 +25,12 @@ export const sharedDocumentReducer = (state = initialState, action) => {
                 ...state,
                 token,
                 documentId,
+            }
+        
+        case types.saveFileStatus:
+            return {
+                ...state,
+                ...payload,
             }
 
         default:

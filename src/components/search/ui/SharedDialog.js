@@ -55,14 +55,15 @@ const useStyles = makeStyles(theme => ({
 const SharedDialog = ({ data, handleClose }) => {
 
   const dispatch = useDispatch();
+  const { authUser } = useSelector(state => state.auth);
+
   const classes = useStyles();
   const open = data !== null
-  const { authUser } = useSelector(state => state.auth);
   const { fields, token, documentId } = useSelector(state => state.sharedDocument);
   const [loading, setLoading] = useState(false)
   const [messageErrorName, setMessageErrorName] = useState(null);
   const [checked, setChecked] = React.useState(true);
-
+  
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -83,7 +84,8 @@ const SharedDialog = ({ data, handleClose }) => {
     dispatch(startCreateSharedLink(authUser, data?.id, fields?.password, fields?.expirationDate));
   }
 
-
+  const URL = `${window.location.protocol}//${window.location.hostname}${window.location.port && `:${window.location.port}`}`
+  console.log("data", data)
   return (
     <Dialog
       open={open}
@@ -144,14 +146,14 @@ const SharedDialog = ({ data, handleClose }) => {
             </Grid>
           </Grid>
           {
-            documentId &&
+            documentId === data?.id &&
             token &&
             <Grid item container wrap="nowrap" md={12}>
               <Paper className={classes.rootPaper}>
                 <LinkIcon color="primary" className={classes.margin} />
                 <InputBase
                   className={classes.input}
-                  value="http://localhost:3000/download/l9UPwwQpNQ1617117668785"
+                  value={`${URL}/download/${token}`}
                   readOnly
                   fullWidth
                 />
