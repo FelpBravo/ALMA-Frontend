@@ -10,11 +10,7 @@ export const MainRouter = () => {
 	return (
 		<ConnectedRouter history={history}>
 			<Switch>
-				<Route
-					exact
-					path="/download/:documentId"
-					component={DownloadFilePage}
-				/>
+
 				<Route
 					path="/"
 					component={AppRouter}

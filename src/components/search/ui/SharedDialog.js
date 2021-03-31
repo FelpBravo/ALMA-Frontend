@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import LinkIcon from '@material-ui/icons/Link';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { AliceBlue } from 'helpers/themes/indigoTheme';
 
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 
@@ -20,11 +21,11 @@ const useStyles = makeStyles(theme => ({
   dialogActions: {
     padding: theme.spacing(1, 3)
   },
-  fileName: {
-    color: '#3699FF',
+  primaryColor: {
+    color: theme.palette.primary.main
   },
   input: {
-    color: '#3699FF',
+    color: theme.palette.primary.main,
     fontSize: '14px',
     radius: '4px',
     fontWeight: 500,
@@ -32,13 +33,13 @@ const useStyles = makeStyles(theme => ({
 
     "&::placeholder": {
       fontFamily: "Poppins, sans-serif !important ",
-      color: '#3699FF',
+      color: theme.palette.primary.main,
       align: 'left',
       fontWeight: 500,
     }
   },
   rootPaper: {
-    background: "#E1F0FF",
+    background: AliceBlue,
     border: "none",
     boxShadow: "none",
     padding: "2px 4px",
@@ -97,7 +98,7 @@ const SharedDialog = ({ data, handleClose }) => {
         <h2>
           <IntlMessages id="table.shared.dialog.title" />
         </h2>
-        <h5 className={classes.fileName}>{data?.name}</h5>
+        <h5 className={classes.primaryColor}>{data?.name}</h5>
       </DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
@@ -114,9 +115,7 @@ const SharedDialog = ({ data, handleClose }) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              style={{
-                color: '#3699FF',
-              }}
+              color="primary"
               onChange={handleOnChange}
             />
           </Grid>
@@ -126,9 +125,7 @@ const SharedDialog = ({ data, handleClose }) => {
                 checked={checked}
                 onChange={handleChange}
                 size="medium"
-                style={{
-                  color: '#3699FF',
-                }}
+                color="primary"
               />
             </Grid>
             <Grid item md={11}>

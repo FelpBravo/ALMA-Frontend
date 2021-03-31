@@ -315,6 +315,7 @@
 	"downloadFile.shared.dialog.button.send": "Enviar",
 	"downloadFile.shared.dialog.message.protected": "está protegido. Ingrese la contraseña para abrir el documento.",
 	"ownloadFile.shared.button.download": "Descargar",
+	"downloadFile.shared.dialog.title": "Contraseña",
 	
 	"todo": "Que hacer",
 	"todo.addTask": "AGREGAR TAREA",

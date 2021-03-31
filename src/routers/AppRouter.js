@@ -3,7 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import URLSearchParams from 'url-search-params';
 import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Redirect, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import 'assets/vendors/style';
@@ -15,6 +15,7 @@ import { PublicRouter } from 'routers/PublicRouter';
 import { AuthRouter } from 'routers/AuthRouter';
 import { PrivateRouter } from 'routers/PrivateRouter';
 import { applyTheme } from 'helpers/applyTheme';
+import DownloadFilePage from 'components/downloadFile';
 
 const App = (props) => {
 
@@ -66,6 +67,12 @@ const App = (props) => {
 					<RTL>
 						<div className='app-main'>
 							<Switch>
+
+								<Route
+									exact
+									path="/download/:documentId"
+									component={DownloadFilePage}
+								/>
 
 								<PublicRouter
 									path="/auth"

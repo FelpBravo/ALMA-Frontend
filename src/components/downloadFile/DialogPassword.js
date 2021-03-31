@@ -46,13 +46,13 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
         fullWidth={true}
     >
         <DialogTitle>
-            Contraseña
-          </DialogTitle>
+            <IntlMessages id="downloadFile.shared.dialog.title" />
+        </DialogTitle>
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item md={12}>
-                    <h5 style={{ textAlign: 'justify' }}><b>Legend of zelda.pdf</b>                 
-                    <IntlMessages id="downloadFile.shared.dialog.message.protected" />
+                    <h5 style={{ textAlign: 'justify' }}><b>Legend of zelda.pdf</b>
+                        <IntlMessages id="downloadFile.shared.dialog.message.protected" />
                     </h5>
                 </Grid>
                 <Grid item md={12} container wrap="nowrap">
@@ -81,7 +81,7 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
             >
                 {loading && <CircularProgress size={14} />}
                 <IntlMessages id="downloadFile.shared.dialog.button.send" />
-              </Button>
+            </Button>
         </DialogActions>
     </Dialog>
     )
