@@ -66,6 +66,7 @@ const SideBarContent = () => {
 		setExpanded(selectedIds);
 
 	}, [selectedIds, setExpanded]);
+	
 
 	useEffect(() => {
 		if (authorities) {
@@ -80,8 +81,11 @@ const SideBarContent = () => {
 
 			}
 		}
+		console.log("PRIEEEEEEEEEEEEEE");
 
-	}, [dispatch, initFolders, authUser]);
+	}, [dispatch]);
+
+	
 
 	const handleRenderMenu = (folders) => {
 

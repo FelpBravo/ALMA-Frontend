@@ -9,68 +9,61 @@ const LibraryRouter = () => {
 			<Switch>
 
 				<Route
-
 					path="/dashboard"
 					component={asyncComponent(() => import('../components/dashboard/Dashboard'))}
 				/>
 
 				<Route
-
 					path="/documents"
 					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
-				
-				<Route
 
+				<Route
 					path={"/search/:any/:savedSearchId"}
 					component={asyncComponent(() => import('../components/search/Search'))}
-					/>
-					
-				<Route
+				/>
 
-					path={["/search/:page","/search"]}
+				<Route
+					path={["/search/:page", "/search"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
 
-
 				<Route
-
-					path={["/directory/:id/:page","/directory/:id"]}
+					path={["/directory/:id/:page", "/directory/:id"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
-				<Route
 
-					path="/carpeta/:id"
-					component={asyncComponent(() => import('../components/folders/Foldersnew'))}
-				/>
 				<Route
 					path="/tags"
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
+
 				<Route
 					path="/folders"
 					component={asyncComponent(() => import('../components/folders/Folders'))}
 				/>
-				<Route
 
+				<Route
 					path="/reports"
 					component={asyncComponent(() => import('../components/reports/Reports'))}
 				/>
-				<Route
 
+				<Route
 					path="/document/:id/edit"
 					component={asyncComponent(() => import('../components/documents/EditUpload'))}
 				/>
-				<Route
 
+				<Route
 					path="/document/:id/version"
 					component={asyncComponent(() => import('../components/search/ui/Versioning/Versioning'))}
 				/>
+
 				<Route
 
-				path="/document/:id/info"
-				component={asyncComponent(() => import('../components/search/ui/Information/Information'))}
+					path="/document/:id/info"
+					component={asyncComponent(() => import('../components/search/ui/Information/Information'))}
 				/>
+
 				<Redirect to="/dashboard" />
 
 			</Switch>
