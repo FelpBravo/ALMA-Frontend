@@ -311,7 +311,8 @@
 	"dashboard.advancedSearchText": "Buscar",
 	"dashboard.advancedSearchClear": "Limpiar",
 	"dashboard.advancedSearch": "Búsqueda Avanzada",
-	"dashboard.saveSearch": "Guardar búsqueda",
+	"dashboard.listSearch": "Mis búsquedas guardadas",
+	"dashboard.saveSearch": "Guardar parámetros búsqueda",
 
 	"dashboard.advancedSearchTitle": "Buscar por atributo",
 	"dashboard.advancedSearchDate": "Buscar por rangos de fechas",

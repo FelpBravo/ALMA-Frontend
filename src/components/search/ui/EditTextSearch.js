@@ -6,10 +6,7 @@ import IntlMessages from 'util/IntlMessages';
 import { searchSetText, startSearchLoading } from '../../../actions/search';
 import { AdvancedSearch } from './AdvancedSearch/AdvancedSearch';
 import SearchIcon from '@material-ui/icons/Search';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import SearchesSavedList from '../SearchesSavedList';
+
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -56,16 +53,6 @@ export const EditTextSearch = ({ savedSearchId }) => {
 	const [disabledButton, setDisabledButton] = useState(true);
 	const [messageError, setMessageError] = useState('');
 
-	const [anchorEl, setAnchorEl] = React.useState(null);
-
-	const onOpenPopover = (event) => {
-		setAnchorEl(event.currentTarget);
-	  };
-	
-	  const onClosePopover = () => {
-		setAnchorEl(null);
-	  };
-
 	useEffect(() => {
 
 		if (!searchText) {
@@ -105,7 +92,6 @@ export const EditTextSearch = ({ savedSearchId }) => {
 
 	return (
 		<div className="row">
-			<SearchesSavedList onClose={onClosePopover} anchorEl={anchorEl} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 
@@ -129,11 +115,7 @@ export const EditTextSearch = ({ savedSearchId }) => {
 										placeholder="Buscar por nombre de documento"
 										onChange={handleOnChange}
 									/>
-									<Tooltip title="Ver búsquedas guardadas">
-										<IconButton onClick={onOpenPopover} size="small">
-											<ExpandMoreIcon color="primary" />
-										</IconButton>
-									</Tooltip>
+									
 								</Paper>
 								<span className="text-danger text-error">{messageError}</span>
 							</Grid>
