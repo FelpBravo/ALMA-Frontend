@@ -307,7 +307,15 @@
 	"table.shared.dialog.title": "Compartir documento",
 	"table.shared.dialog.field.password": "Contraseña",
 	"table.shared.dialog.tooltip.title": "Compartir",
+	"table.shared.dialog.field.expirationDate": "Fecha de vencimiento",
+	"table.shared.dialog.field.copyLink": "Copiar enlace",
+	"table.shared.dialog.field.createDocument": "Crear",
+	"table.shared.dialog.field.cancelDocument": "Cancelar",
 
+	"downloadFile.shared.dialog.button.send": "Enviar",
+	"downloadFile.shared.dialog.message.protected": "está protegido. Ingrese la contraseña para abrir el documento.",
+	"ownloadFile.shared.button.download": "Descargar",
+	
 	"todo": "Que hacer",
 	"todo.addTask": "AGREGAR TAREA",
 	"todo.all": "Todas",

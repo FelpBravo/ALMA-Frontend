@@ -7,6 +7,7 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { sharedDocumentSetValue, startDownloadFile, startVerifyFile } from 'actions/sharedDocument';
 import DialogPassword from './DialogPassword';
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -48,7 +49,9 @@ export default function DownloadFilePage() {
                             size="large"
                             disabled={!canDownload || !fields?.password}
                             onClick={handleDownload}
-                            color="secondary">Descargar</Button>
+                            color="secondary">
+                            <IntlMessages id="downloadFile.shared.button.download" />
+                        </Button>
                     </Grid>
                 </Grid>
             </Paper>

@@ -104,8 +104,8 @@ const SharedDialog = ({ data, handleClose }) => {
 
           <Grid item md={12}>
             <TextField
-              autoFocus
-              label="Fecha de vencimiento"
+              autoFocus  
+              label={<IntlMessages id="table.shared.dialog.field.expirationDate" />}
               name='expirationDate'
               fullWidth
               type="date"
@@ -158,7 +158,7 @@ const SharedDialog = ({ data, handleClose }) => {
                   fullWidth
                 />
               </Paper>
-              <Tooltip title="Copiar enlace">
+              <Tooltip title={<IntlMessages id="table.shared.dialog.field.copyLink" />}>
                 <IconButton aria-label="copy">
                   <FileCopyIcon color="primary" fontSize="inherit" />
                 </IconButton>
@@ -176,7 +176,7 @@ const SharedDialog = ({ data, handleClose }) => {
           variant="contained"
           color="secondary"
         >
-          Cancelar
+          <IntlMessages id="table.shared.dialog.field.cancelDocument" />
           </Button>
         <Button
           onClick={handleOnSave}
@@ -186,7 +186,7 @@ const SharedDialog = ({ data, handleClose }) => {
           disabled={loading || !fields?.expirationDate}
         >
           {loading && <CircularProgress size={14} />}
-          Crear
+          <IntlMessages id="table.shared.dialog.field.createDocument" />
           </Button>
       </DialogActions>
     </Dialog>

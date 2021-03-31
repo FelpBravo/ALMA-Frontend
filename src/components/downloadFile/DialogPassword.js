@@ -11,10 +11,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { CircularProgress, DialogTitle, Divider, } from '@material-ui/core';
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles(theme => ({
 
 }));
+
+const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 
 
 export default function DialogPassword({ canDownload, setCanDownload }) {
@@ -48,12 +51,14 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item md={12}>
-                    <h5 style={{ textAlign: 'justify' }}><b>Legend of zelda.pdf</b> está protegido. Ingrese la contraseña para abrir el documento.</h5>
+                    <h5 style={{ textAlign: 'justify' }}><b>Legend of zelda.pdf</b>                 
+                    <IntlMessages id="downloadFile.shared.dialog.message.protected" />
+                    </h5>
                 </Grid>
                 <Grid item md={12} container wrap="nowrap">
                     <TextField
                         name="password"
-                        label="Contraseña"
+                        label={fieldName}
                         type="text"
                         variant="outlined"
                         fullWidth
@@ -75,7 +80,7 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
                 disabled={!fields?.password || fields?.password === ""}
             >
                 {loading && <CircularProgress size={14} />}
-              Enviar
+                <IntlMessages id="downloadFile.shared.dialog.button.send" />
               </Button>
         </DialogActions>
     </Dialog>
