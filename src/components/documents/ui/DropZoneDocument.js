@@ -99,7 +99,7 @@ export function DropZoneDocument( {document, setFiles} ){
 					return(<Grid key={index} item container alignItems="center" md={12} spacing={5} style={{ marginTop: 10 }}>
 					{
 						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
-							<Grid item md={3} container justify="center">
+							<Grid item md={3} container justify="center" key={fileIdLoaded}>
 								<ThumbnailItem
 									key={fileIdLoaded}
 									fileIdLoaded={fileIdLoaded}
