@@ -670,7 +670,14 @@
 	"comment.newcomment.title": "Escribe tu nuevo comentario",
 	"comment.attachment.title": "Adjuntar documento",
 	"comment.button.comment": "Comentar",
-	"comment.button.totalcomments": "Comentarios"
+	"comment.button.totalcomments": "Comentarios",
+
+	"users.result": "Resultado usuarios",
+	"users.table.column1": "Usuario",
+	"users.table.column2": "Nombre trabajador",
+	"users.table.column3": "Correo electronico",
+	"users.table.column4": "Estado",
+	"users.table.column5": "Acciones"
 
 	
 

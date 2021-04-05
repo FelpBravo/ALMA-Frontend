@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 import SearchUsers from './ui/SearchUsers';
+import SearchGroup from './ui/SearchGroup';
+import { TableSearchUsers } from './ui/TableSearchUsers';
 
 
 function TabPanel(props) {
@@ -71,7 +73,7 @@ const Management = () => {
 	const Result = ()=>{
 		switch (value) {
 			case 0:
-			return <div>Tabla de usuarios</div>
+			return<TableSearchUsers/>
 			case 1:
 			return <div>Grupos</div>
 			default:
@@ -88,7 +90,7 @@ const Management = () => {
 
 							<div className="jr-card-header d-flex align-items-center">
 								<h3 className="mb-0">
-									<IntlMessages id="Usuario y Grupos" />
+									<IntlMessages id="sidebar.tags.usersandgroup" />
 								</h3>
 							</div>
 							<div className={classes.root}>
@@ -108,7 +110,7 @@ const Management = () => {
 									<SearchUsers/>
 								</TabPanel>
 								<TabPanel value={value} index={1}>
-									Busqueda grupos
+									<SearchGroup/>
 								</TabPanel>
 							</div>
 						</div>

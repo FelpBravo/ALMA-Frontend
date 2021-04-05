@@ -116,7 +116,7 @@ const SearchUsers = () => {
 									name="inputSearch"
 									//className="custom-text-field"
 									fullWidth
-									placeholder="Buscar por nombre de usuario"
+									placeholder="Buscar por grupo"
 									onChange={handleOnChange}
 								/>
 							</Paper>
@@ -134,16 +134,6 @@ const SearchUsers = () => {
 							>
 								<IntlMessages id="dashboard.searchTextButton" />
 							</Button>
-						</Grid>
-						<Grid xs={6} container justify="flex-end">			
-							<Link component="button"
-							 variant="body2" 
-							//onClick={() => handleSelectActionTags(1)}
-							style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, }}
-							>
-							    <AddIcon style={{fontSize:30, color:"#3699FF"}}/>
-							    Crear nuevo usuario
-							</Link>			
 						</Grid>
 
 					</Grid>
