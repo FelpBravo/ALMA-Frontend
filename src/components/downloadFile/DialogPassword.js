@@ -51,8 +51,8 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item md={12}>
-                    <h5 style={{ textAlign: 'justify' }}><b>Legend of zelda.pdf</b>
-                        <IntlMessages id="downloadFile.shared.dialog.message.protected" />
+                    <h5 style={{ textAlign: 'justify' }}><b>Legend of zelda.pdf </b>
+                         <IntlMessages id="downloadFile.shared.dialog.message.protected" />
                     </h5>
                 </Grid>
                 <Grid item md={12} container wrap="nowrap">

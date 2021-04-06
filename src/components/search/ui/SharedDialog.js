@@ -14,6 +14,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import LinkIcon from '@material-ui/icons/Link';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { AliceBlue } from 'helpers/themes/indigoTheme';
+import moment from 'moment';
 
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 
@@ -42,10 +43,9 @@ const useStyles = makeStyles(theme => ({
     background: AliceBlue,
     border: "none",
     boxShadow: "none",
-    padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    padding: 6,
+    padding: theme.spacing(1),
     width: '100%'
   },
   margin: {
@@ -64,7 +64,7 @@ const SharedDialog = ({ data, handleClose }) => {
   const [loading, setLoading] = useState(false)
   const [messageErrorName, setMessageErrorName] = useState(null);
   const [checked, setChecked] = React.useState(true);
-  
+  const [select, setSelect] = useState("true")
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -94,7 +94,7 @@ const SharedDialog = ({ data, handleClose }) => {
       aria-labelledby="form-dialog-title"
       fullWidth={true}
     >
-      <DialogTitle>
+      <DialogTitle disableTypography>
         <h2>
           <IntlMessages id="table.shared.dialog.title" />
         </h2>
@@ -112,6 +112,7 @@ const SharedDialog = ({ data, handleClose }) => {
               type="date"
               variant="outlined"
               size="small"
+              InputProps={{ inputProps: { min: moment().add(1, 'days').format('YYYY-MM-DD') } }}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -149,10 +150,13 @@ const SharedDialog = ({ data, handleClose }) => {
               <Paper className={classes.rootPaper}>
                 <LinkIcon color="primary" className={classes.margin} />
                 <InputBase
+                  inputProps={{ select: select }}             
                   className={classes.input}
-                  value={`${URL}/download/${token}`}
+                  value={`${URL}/download/${token}/`}
                   readOnly
                   fullWidth
+                  onClick={e =>  e?.target?.select()}
+                  autoFocus
                 />
               </Paper>
               <Tooltip title={<IntlMessages id="table.shared.dialog.field.copyLink" />}>
