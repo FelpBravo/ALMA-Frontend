@@ -13,7 +13,7 @@ export const ThumbnailPreviewWrapper = styled.div`
 `;
 
 export const ThumbnailPreviewImage = styled.img`
-  height: 135px;
+transform: scale(1.6);
 `;
 
 export const ThumbnailPreviewNameWrapper = styled.div`

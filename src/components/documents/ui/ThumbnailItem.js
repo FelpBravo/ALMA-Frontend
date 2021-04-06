@@ -14,13 +14,12 @@ export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, nam
     const dispatch = useDispatch();
     const currentFile = useSelector(state => state.documents.filesLoaded.find( item => item.fileIdLoaded === fileIdLoaded))
 
+    const docFiles = useSelector(state => state.documents.filesLoaded)
+
+    const prueba = useSelector(state => state.documents)
     useEffect(() => {
-
-        if (fileIdLoaded && thumbnailGenerated && !thumbnail) {
             loadThumbnail();
-        }
-
-    }, [fileIdLoaded, thumbnailGenerated, thumbnail]);
+    }, []);
 
     const loadThumbnail = () => {
         dispatch(startThumbnailLoading(fileIdLoaded));
@@ -28,12 +27,14 @@ export const ThumbnailItem = ({ fileIdLoaded, thumbnailGenerated, thumbnail, nam
 
     return (
         fileIdLoaded && (
+            <>
             <ThumbnailPreview
                 thumbnail={currentFile?.thumbnail}
                 remove={onRemoveFile ? () => onRemoveFile() : null}
                 preview={setDataDialogPreview ? () => setDataDialogPreview() : null}
                 name={name}
             />
+            </>
         )
     )
 }
