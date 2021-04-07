@@ -140,9 +140,9 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 				icon: 'success',
 				width: 600,
 				title: 'AlmaID Generado con éxito',
-				html: `<ul>${response.data.map( ({name, id}) => `<li> <b>${id}</b> <br/> ${name}</li>`).join("<br/>")}</ul>`,
+				html: `<ul>${response.data.map(({ name, id }) => `<li> <b>${id}</b> <br/> ${name}</li>`).join("<br/>")}</ul>`,
 				showConfirmButton: true,
-			  })
+			})
 			// Swal.close();
 
 			dispatch(saveFormFinish());
@@ -194,6 +194,8 @@ export const startDropFileLoading = (files) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
+		const documentsList = getState().documents.filesLoaded
+
 
 		try {
 
@@ -206,21 +208,61 @@ export const startDropFileLoading = (files) => {
 
 			Swal.showLoading();
 
-			const resp = await uploadDocument(authUser, files);
+			if (files.length > 0) {
+				let position = []
+				files.map((file, index) => {
+					documentsList.map((doc) => {
+						if (file.name === doc.name) {
+							position.push(index)
+						}
+					})
+				})
+				if (position.length > 0) {
+					position.reverse().map((index) => {
+						files.splice(index, 1)
+					})
 
-			Swal.close();
+				}
+			}
 
-			// SAVE STORE ID LOADED
-			resp.data.forEach( res => dispatch(saveFileIdLoaded(
-				{
-					fileIdLoaded: res.fileId,
-					// thumbnailGenerated: res.thumbnailGenerated,
-					thumbnailGenerated: true,
+			if (files.length > 0) {
 
-					name: res.name,
-				})))
-			// dispatch(saveFileIdLoaded(resp.data.id));
-			// dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
+
+				const resp = await uploadDocument(authUser, files);
+
+				Swal.close();
+
+				// SAVE STORE ID LOADED
+				let err2 = ''
+				resp.data.forEach((res) => {
+					if (res.message) {
+						err2 = err2 + "</br> " + res.message
+					} else {
+						dispatch(saveFileIdLoaded(
+							{
+								fileIdLoaded: res.fileId,
+								// thumbnailGenerated: res.thumbnailGenerated,
+								thumbnailGenerated: true,
+
+								name: res.name,
+							})
+
+						)
+					}
+				}
+				)
+
+				if (err2.length > 0) {
+					Swal.fire({
+						title: "Error, The document is already exists", html: err2, icon: 'error', heightAuto: false
+					});
+				}
+				// dispatch(saveFileIdLoaded(resp.data.id));
+				// dispatch(saveThumbnailGenerated(resp.data.thumbnailGenerated));
+			}
+			else {
+				Swal.close();
+			}
 
 		} catch (error) {
 
@@ -260,9 +302,21 @@ export const startThumbnailLoading = (fileId) => {
 
 		try {
 
-			const resp = await getThumbnail(authUser, fileId);
+			const loop = (count) => {
+				if (count < 10) {
+					setTimeout(async () => {
+						await getThumbnail(authUser, fileId).then((resp) => {
+							dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`, fileId));
+							count = 11
+						}).catch(() => {
+							count++
+						})
+						loop(count);
+					}, (count * 1000));
+				}
+			}
 
-			dispatch(documentSaveThumbnail(`data:;base64,${fileBase64(resp.data)}`, fileId));
+			loop(0);
 
 		} catch (error) {
 			console.log(error);
@@ -285,7 +339,7 @@ export const documentsClear = () => {
 	}
 };
 
-export const startDocumentByIdLoading =  (fileId) => {
+export const startDocumentByIdLoading = (fileId) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
@@ -315,9 +369,9 @@ export const startDocumentByIdLoading =  (fileId) => {
 		}
 
 	}
-};   
+};
 
-const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [], signatures = []}) => {
+const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [], signatures = [] }) => {
 	return {
 		type: types.docsDocumentByIdLoaded,
 		payload: {
@@ -400,7 +454,7 @@ export const clearFolderIdOrigin = (folderId) => {
 	}
 }
 
-export const saveclearFolderIdOrigin = (folderId) =>{
+export const saveclearFolderIdOrigin = (folderId) => {
 	return {
 		type: types.clearFolderIdOrigin,
 		payload: folderId
@@ -413,14 +467,14 @@ export const getpathFolderName = (folderName) => {
 		const pathselect = historyFoldersBreadcrumbs.filter(folder => folder.name != '#')
 		let path = '/'
 		pathselect.map((folder) => {
-			path = path+folder.name + '/'
+			path = path + folder.name + '/'
 		})
-		path = path + folderName 
+		path = path + folderName
 		dispatch(savepathFolderName(path))
 	}
 }
 
-export const savepathFolderName = (path) =>{
+export const savepathFolderName = (path) => {
 	return {
 		type: types.pathFolderName,
 		payload: path
@@ -483,7 +537,7 @@ export const startEditDocumentLoading = (
 
 			}
 
-			await editForm(authUser,folderId, [fileId], aspectGroup, tags);
+			await editForm(authUser, folderId, [fileId], aspectGroup, tags);
 
 			dispatch(saveFormFinish());
 
@@ -532,9 +586,9 @@ export const startSubFoldersLoading = (folder, authUser) => {
 			}
 
 		}
-		
 
-		
+
+
 
 	}
 }
@@ -553,7 +607,7 @@ export const addHistoryFoldersBreadcrumbs = (folder) => {
 }
 
 export const setCurrentFolderBreadcrumbs = (currentFolder) => {
-	
+
 	return {
 		type: types.docsSaveCurrentFolderBreadcrumbs,
 		payload: currentFolder,

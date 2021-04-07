@@ -11,6 +11,8 @@ import { DATERANGE } from 'constants/constUtil';
 import Swal from 'sweetalert2';
 import TagsPrueba from './TagsPrueba.js'
 import SaveIcon from '@material-ui/icons/Save';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import SearchesSavedList from 'components/search/SearchesSavedList';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	pointer: {
 		cursor: 'pointer',
-		fontWeight: '600',
+		fontWeight: '400',
 		color: '#FFA800'
 	},
 
@@ -48,6 +50,16 @@ export const AdvancedSearch = ({savedSearchId}) => {
 	let DateRange = []
 	let tags = ['a', 'b']
 
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
+	const onOpenPopover = (event) => {
+		setAnchorEl(event.currentTarget);
+	  };
+	
+	  const onClosePopover = () => {
+		setAnchorEl(null);
+	  };
+
 	useEffect(() => {
 
 		return () => {
@@ -58,7 +70,6 @@ export const AdvancedSearch = ({savedSearchId}) => {
 
 	useEffect(() => {
 		if(savedSearchId){
-			console.log('sas')
 			dispatch(startSavedSearchById(authUser, savedSearchId))
 		}
 	}, [savedSearchId])
@@ -199,26 +210,28 @@ export const AdvancedSearch = ({savedSearchId}) => {
 
 
 	return (
-		<Grid container item xs={12}>
-			<Grid item container wrap="nowrap" xs={12}>
-				<Grid item md={2} wrap="nowrap" container alignItems="center">
+		<Grid container item className="mt-3">
+			<SearchesSavedList onClose={onClosePopover} anchorEl={anchorEl} />
+			<Grid container>
+				<Grid item xs={3} container alignItems="center">
 					<span className="text-advanced-search">
 						<IntlMessages id="dashboard.advancedSearch" />
 					</span>
-
-					<IconButton onClick={handleOpenAdvanced} color='primary'>
-						<i className={`zmdi ${iconAdvancedSearch}`} />
+					<IconButton onClick={handleOpenAdvanced} size="small">
+					<ExpandMoreIcon color="primary" />
 					</IconButton>
 				</Grid>
 				<Grid
-					item md={2} onClick={handleSaveSearch}
+					item xs={3} 
+					//onClick={handleSaveSearch}
 					container
-					wrap="nowrap"
 					alignItems="center">
-					<SaveIcon className={classes.pointer} />
 					<span className={classes.pointer}>
-						<IntlMessages id="dashboard.saveSearch" />
+						<IntlMessages id="dashboard.listSearch" />
 					</span>
+					<IconButton onClick={onOpenPopover} size="small">
+						<ExpandMoreIcon  className={classes.pointer} />
+					</IconButton>
 				</Grid>
 			</Grid>
 
@@ -228,7 +241,7 @@ export const AdvancedSearch = ({savedSearchId}) => {
 				<>
 					<Grid item xs={12}>
 
-						<h4 className="mb-4">
+						<h4 className="mb-4 mt-3">
 							<IntlMessages id="dashboard.advancedSearchTitle" />
 						</h4>
 

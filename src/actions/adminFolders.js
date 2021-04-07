@@ -7,7 +7,6 @@ import { types } from 'types/types';
 
 export const startFoldersLoading = (authUser) => {
 	return async (dispatch) => {
-
 		try {
 
 			Swal.fire({
@@ -166,31 +165,34 @@ const saveCurrentFolders = (folderId, name, folders) => {
 	}
 };
 
-export const startSaveCurrentFolder = (folderId) => {
-	return (dispatch, getState) => {
+export const startSaveCurrentFolder = (authUser,folderId,name) => {
+	return async(dispatch, getState) => {
 
-		const { folders, historyFolders = [] } = getState().adminFolders;
+		const { historyFolders = [] } = getState().adminFolders;
 
 		if (folderId === 0) {
-
-			dispatch(saveCurrentFolders(0, INIT_FOLDER, folders));
+			const resp = await getFoldersAdmin(authUser);
+			dispatch(updateFoldersCurrentLoaded(folderId,resp.data))
+			dispatch(foldersLoaded(resp.data));
+			dispatch(saveCurrentFolders(folderId, name, resp.data));
 			dispatch(updateListHistory([{ id: 0, name: INIT_FOLDER }]));
 
 		} else {
 
-			const valueSearch = [];
-
-			getCurrentFolderById(folders, folderId, valueSearch);
+			const resp = await getFoldersAdminById(authUser, folderId);
+			dispatch(updateFoldersCurrentLoaded(folderId,resp.data))
 
 			const folderSelected = historyFolders.find(history => history.id === folderId);
-
 			const newHistoryFolders = [
 				...historyFolders.slice(0, historyFolders.indexOf(folderSelected) + 1)
 			];
 
 			dispatch(updateListHistory(newHistoryFolders));
+			dispatch(saveCurrentFolders(folderId, name, resp.data));
+			
 
-			dispatch(saveCurrentFolders(folderId, valueSearch[0].name, valueSearch[0].children));
+
+			
 
 		}
 
@@ -348,11 +350,10 @@ export const adminFoldersremoveAll = () => {
 	}
 };
 
-export const startDeleteFolderLoading = (authUser, folderId) => {
+export const startDeleteFolderLoading = (authUser, folderId,parentId) => {
 	return async (dispatch, getState) => {
 
 		const { folders, currentFolders } = getState().adminFolders;
-
 		try {
 
 			Swal.fire({
@@ -364,15 +365,22 @@ export const startDeleteFolderLoading = (authUser, folderId) => {
 
 			Swal.showLoading();
 
-			await remove(authUser, folderId);
+			await remove(authUser, folderId).then(async()=>{
+				if(parentId === 0 ){
+					const resp = await getFoldersAdmin(authUser, parentId);
+					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+				}
+				else
+				{
+					const resp = await getFoldersAdminById(authUser, parentId);
+					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+				}
+				
+			})
 
 			Swal.close();
 
-			const newCurrentFolders = currentFolders.folders.filter(folder => folder.id !== folderId);
-
-			const newFolders = removeFolder(folderId, folders);
-
-			dispatch(deleteFolderLoaded(newFolders, newCurrentFolders));
+			
 
 		} catch (error) {
 			Swal.close();

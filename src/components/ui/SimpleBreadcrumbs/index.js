@@ -10,7 +10,7 @@ const SimpleBreadcrumbs = ({ items = [], handleClick, currentItem }) => {
 			{
 				items.map((item) => {
 					return (
-						currentItem === item.id
+						currentItem === item.id || items.length === 1
 							?
 							<Typography
 							    style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400}}

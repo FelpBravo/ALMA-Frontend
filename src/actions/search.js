@@ -129,22 +129,30 @@ export const startSaveSearchLoading = (authUser, filters) => {
 		try {
 
 			Swal.fire({
-				title: 'Asigna un nombre de búsqueda avanzada',
+				title: 'Asigna un nombre a tu búsqueda avanzada',
 				input: 'text',
 				inputAttributes: {
 					autocapitalize: 'off'
 				},
 				showCancelButton: true,
-				confirmButtonText: 'Guardar',
 				cancelButtonText: 'Cancelar',
+				confirmButtonText: 'Guardar',
 				showLoaderOnConfirm: true,
 				preConfirm: (name) => {
-					return saveSearch(authUser, name, filters).then(response => response)
+					if(name.length > 3 && name.trim()){
+						return saveSearch(authUser, name, filters).then(response => response)
 						.catch(error => {
 							Swal.showValidationMessage(
 								`Solicitud fallida: ${error}`
 							)
 						})
+					}
+					else{
+						Swal.showValidationMessage(
+							'No puede estar el campo vacio'
+						)
+					}
+			
 				},
 				allowOutsideClick: () => !Swal.isLoading()
 			}).then(result => dispatch(savedSearchAdd(result?.value?.data)))

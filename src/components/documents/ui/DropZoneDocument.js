@@ -22,6 +22,7 @@ export function DropZoneDocument( {document, setFiles} ){
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const [dataDialogPreview, setDataDialogPreview] = useState(null);
+	const [count, setCount] = useState(0)
 
 
 	// ID DOCUMENTO URL	
@@ -43,6 +44,7 @@ export function DropZoneDocument( {document, setFiles} ){
 	});
 
 	const dropFile = async (files) => {
+		setCount(files.length)
 		const diff = MAX_FILES - nDocuments - files.length
 		if (diff < 0) {
 			const resp = await Swal.fire({
@@ -88,14 +90,18 @@ export function DropZoneDocument( {document, setFiles} ){
 		setDataDialogPreview(null);
 	};
 
-	const previewListWithThumbnail = () => (<Grid container>
-		{
-			data.map(row =>
-				<Grid item container alignItems="center" md={12} spacing={5} style={{ marginTop: 10 }}>
+	const previewListWithThumbnail = () => 
+	{
+	return(<Grid container>
+		{count > 0 &&
+			data.map((row, index)=>
+				{
+					return(<Grid key={index} item container alignItems="center" md={12} spacing={5} style={{ marginTop: 10 }}>
 					{
 						row.map(({ fileIdLoaded, thumbnailGenerated, thumbnail, name }) =>
-							<Grid item md={3} container justify="center">
+							<Grid item md={3} container justify="center" key={fileIdLoaded}>
 								<ThumbnailItem
+									key={fileIdLoaded}
 									fileIdLoaded={fileIdLoaded}
 									thumbnailGenerated={thumbnailGenerated}
 									thumbnail={thumbnail}
@@ -104,9 +110,10 @@ export function DropZoneDocument( {document, setFiles} ){
 									onRemoveFile={() => onRemoveFile(fileIdLoaded)} />
 							</Grid>)
 					}
-				</Grid>)
+				</Grid>)}
+				)
 		}
-	</Grid>)
+	</Grid>)}
 
 	const previewListWithoutThumbnail = () => (<Grid container spacing={1}>
 		{

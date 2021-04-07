@@ -194,6 +194,7 @@ export const documentsReducer = (state = initialState, action) => {
 				],
 				currentFolderBreadcrumbs: { id: 0, name: '#', folders: [...state.folders] },
 				tagsSelected: [],
+				filesLoaded: []
 			}
 
 		case types.docsClear:
