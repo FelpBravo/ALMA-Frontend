@@ -225,7 +225,8 @@ const ModalUsers = () => {
                         />
                         </ListItemIcon>
   
-                        <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                        <ListItemText id={labelId} primary={`Line item ${value + 1}`}
+                        style={{fontFamily: "Poppins, sans-serif", fontSize: '10px', fontWeight: 400,}} />
                       
                     </ListItem>
                     );
