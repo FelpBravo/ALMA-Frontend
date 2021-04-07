@@ -9,7 +9,7 @@ const getValue = value => {
 	if (typeof value === "string") {
 		let response = value?.replaceAll(`'`, `"`)
 		try {
-		return response = JSON.parse(response);
+			return response = JSON.parse(response);
 		} catch (e) {
 			console.log("error parse", e); // error in the above string (in this case, yes)!
 		}
@@ -22,10 +22,17 @@ export const DateRange = ({ value, ...props }) => {
 	const { namecomponent, label, clear } = props
 	const dispatch = useDispatch();
 	const { cleanfilter } = useSelector(state => state.searchs);
-	const [date, setDate] = useState({ start: '', end: '' })
-	const valueParse = getValue(value)
-	const fromValue = get(valueParse, "0", "")
-	const toValue = get(valueParse, "1", "")
+
+	const [date, setDate] = useState({ start: "", end: "" })
+
+	useEffect(() => {
+		const valueParse = getValue(value)
+		const startValue = get(valueParse, "0", "")
+		const endValue = get(valueParse, "1", "")
+		setDate({ start: startValue, end: endValue })
+		dispatch(changeCleanFilter())
+
+	}, [value])
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
@@ -44,6 +51,7 @@ export const DateRange = ({ value, ...props }) => {
 			dispatch(changeCleanFilter())
 		}
 	}
+
 	useEffect(() => {
 		if (!cleanfilter) {
 			setDate({ start: '', end: '' })
@@ -70,7 +78,6 @@ export const DateRange = ({ value, ...props }) => {
 						color: '#3699FF',
 					}}
 					onChange={handleOnChange}
-					value={fromValue}
 				/>
 			</Grid>
 			<Grid item xs={6}>
@@ -90,7 +97,6 @@ export const DateRange = ({ value, ...props }) => {
 						color: '#3699FF',
 					}}
 					onChange={handleOnChange}
-					value={toValue}
 				/>
 			</Grid>
 

@@ -19,8 +19,6 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 		dispatch(searchSetValueFilter(name, value));
 
 	}
-	console.log("name", name)
-	console.log("value", value)
 
 	switch (type) {
 		case DATE:
