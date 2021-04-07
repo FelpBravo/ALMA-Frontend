@@ -45,7 +45,7 @@ const ModalVersioning= () => {
 
     <div>
       <Dialog
-        open={openModal3}
+        open={Boolean(openModal3)}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullWidth={true}

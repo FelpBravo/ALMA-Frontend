@@ -48,7 +48,7 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
             //className={classes.root}
             anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'right-start',
+                horizontal: 'right',
             }}
             transformOrigin={{
                 vertical: 'top',
