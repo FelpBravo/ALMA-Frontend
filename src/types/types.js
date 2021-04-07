@@ -119,6 +119,9 @@ export const types = {
 	informationRemoveAll: 'Information Remove All',
 
 	addBreadcrumbs: 'Add BreadCrumbs',
-	createBreadcrumbs: 'Create BreadCrumbs'
+	createBreadcrumbs: 'Create BreadCrumbs',
+
+	usersOpenModal: 'Users Open Modal',
+	usersCloseModal: 'Users Close Modal'
 
 }

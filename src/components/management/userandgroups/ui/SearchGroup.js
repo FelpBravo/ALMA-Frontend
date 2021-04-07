@@ -3,7 +3,7 @@ import { Button, InputBase, Grid, makeStyles, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
-import { searchSetText, startSearchLoading } from '../../../actions/search';
+import { searchSetText, startSearchLoading } from 'actions/search';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
@@ -116,7 +116,7 @@ const SearchUsers = () => {
 									name="inputSearch"
 									//className="custom-text-field"
 									fullWidth
-									placeholder="Buscar por nombre de usuario"
+									placeholder="Buscar por grupo"
 									onChange={handleOnChange}
 								/>
 							</Paper>
@@ -134,16 +134,6 @@ const SearchUsers = () => {
 							>
 								<IntlMessages id="dashboard.searchTextButton" />
 							</Button>
-						</Grid>
-						<Grid xs={6} container justify="flex-end">			
-							<Link component="button"
-							 variant="body2" 
-							//onClick={() => handleSelectActionTags(1)}
-							style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, }}
-							>
-							    <AddIcon style={{fontSize:30, color:"#3699FF"}}/>
-							    Crear nuevo usuario
-							</Link>			
 						</Grid>
 
 					</Grid>

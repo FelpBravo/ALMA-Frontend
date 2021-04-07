@@ -12,10 +12,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startReportsLoading } from 'actions/reports'
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
+import TableActionButton from 'components/search/ui/TableActionButton';
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { makeStyles} from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 
+
+const useStyles = makeStyles((theme) => ({
+	
+	iconos: {
+		cursor: "pointer",
+		color: "#2196f3",
+		fontSize: '18px',
+	  },
+	  iconsHolder: {
+		display: "flex",
+		justifyContent: "center",
+	  },
+}));
 
 
 const DataTableUsers = () => {
+
+	const classes = useStyles();
 
 	const isMounted = useRef(true)
 	const history = useHistory()
@@ -27,6 +47,15 @@ const DataTableUsers = () => {
 
 
 	const [page, setPage] = useState(0)
+
+	const [state, setState] = React.useState({
+		checkedA: true,
+		checkedB: true,
+	  });
+	
+	  const handleChange = (event) => {
+		setState({ ...state, [event.target.name]: event.target.checked });
+	  };
 
 
 	useEffect(()=>{
@@ -59,7 +88,7 @@ const DataTableUsers = () => {
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="users.table.column3" />
 								</TableCell>
-								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
 									<IntlMessages id="users.table.column4" />
 								</TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
@@ -73,8 +102,36 @@ const DataTableUsers = () => {
 									<TableCell></TableCell>
 									<TableCell></TableCell>
 									<TableCell></TableCell>
-									<TableCell></TableCell>
-									<TableCell></TableCell>
+									<TableCell>
+										<Switch
+											checked={state.checkedB}
+											onChange={handleChange}
+											color="primary"
+											name="checkedB"
+											inputProps={{ 'aria-label': 'primary checkbox' }}
+										/>
+									</TableCell>
+									<TableCell>
+									<div className={classes.iconsHolder}>			
+										<TableActionButton
+											materialIcon={
+												<BorderColorOutlinedIcon
+													className={classes.iconos}
+													//onClick={() => handleSelectActionTags(2)}
+												/>
+											}
+										/>
+														
+										<TableActionButton
+											materialIcon={
+												<DeleteOutlinedIcon
+													className={classes.iconos}
+													//onClick={() => handleSelectActionTags(3)}
+												/>
+											}
+										/>		
+									</div>
+									</TableCell>
 									
 							
 						
