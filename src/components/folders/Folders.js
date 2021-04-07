@@ -25,7 +25,7 @@ const Folders = () => {
 			dispatch(adminFoldersremoveAll())
 			dispatch(startFoldersLoading(authUser));
 
-	}, []);
+	}, [dispatch]);
 
 	const handleClickBreadcrumbs = (e, { id, name}) => {
 		e.preventDefault();

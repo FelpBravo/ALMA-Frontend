@@ -81,7 +81,6 @@ const SideBarContent = () => {
 
 			}
 		}
-		console.log("PRIEEEEEEEEEEEEEE");
 
 	}, [dispatch]);
 
