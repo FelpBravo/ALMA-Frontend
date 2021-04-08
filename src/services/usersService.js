@@ -48,7 +48,7 @@ const editUsers = (authUser, id, firstName, lastName, email) => {
 	);
 };
 
-const editUsers = (authUser, id, status) => {
+const statusUsers = (authUser, id, status) => {
 	return axiosInstance.put(`/users/user/${id}/${status}`,
 		{
 			headers: {
@@ -69,4 +69,5 @@ export {
 	editUsers,
     infoUsers,
     validateUsers,
+    statusUsers,
 }

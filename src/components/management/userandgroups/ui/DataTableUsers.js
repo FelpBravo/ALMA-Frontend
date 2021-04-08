@@ -17,6 +17,8 @@ import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles} from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
+import { openModalEditUsers, startUsersInitLoading } from 'actions/adminUsers';
+import ModalEditUsers from './ModalEditUsers';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +47,15 @@ const DataTableUsers = () => {
 	const { reports = {}, date = {} } = useSelector(state => state.reports)
 	const { data=[], totalItems= 0 } = reports
 
+	const { userslist = [], } = useSelector(state => state.adminUsers);
+
+	useEffect(() => {
+
+		if (userslist.length === 0) {
+			dispatch(startUsersInitLoading(authUser));
+		}
+
+	}, [dispatch]);
 
 	const [page, setPage] = useState(0)
 
@@ -70,6 +81,10 @@ const DataTableUsers = () => {
 		setPage(page);
 
 	};
+
+	const handleEditUsers = () =>{
+		dispatch(openModalEditUsers());
+	}
 
 	return (
 		<div className="row">
@@ -98,10 +113,11 @@ const DataTableUsers = () => {
 						</TableHead>
 						<TableBody>
 							
-							
-									<TableCell></TableCell>
-									<TableCell></TableCell>
-									<TableCell></TableCell>
+						{	userslist.map(({id,firstName, lastName, email, enabled},index)=>{
+								return <TableRow key={index}>
+									<TableCell>{id}</TableCell>
+									<TableCell>{firstName}{``}{lastName}</TableCell>
+									<TableCell>{email}</TableCell>
 									<TableCell>
 										<Switch
 											checked={state.checkedB}
@@ -117,7 +133,7 @@ const DataTableUsers = () => {
 											materialIcon={
 												<BorderColorOutlinedIcon
 													className={classes.iconos}
-													//onClick={() => handleSelectActionTags(2)}
+													onClick={() => handleEditUsers()}
 												/>
 											}
 										/>
@@ -133,7 +149,11 @@ const DataTableUsers = () => {
 									</div>
 									</TableCell>
 									
-							
+									</TableRow>
+
+									})
+
+									}
 						
 						</TableBody>
 					</Table>
@@ -154,6 +174,7 @@ const DataTableUsers = () => {
 				</TableContainer>
 
 			</div>
+			<ModalEditUsers/>
 		</div>
 	)
 }

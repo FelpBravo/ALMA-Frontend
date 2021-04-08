@@ -674,8 +674,8 @@
 
 	"users.result": "Resultado usuarios",
 	"users.table.column1": "Usuario",
-	"users.table.column2": "Nombre trabajador",
-	"users.table.column3": "Correo electronico",
+	"users.table.column2": "Nombre completo",
+	"users.table.column3": "Correo electrónico",
 	"users.table.column4": "Estado",
 	"users.table.column5": "Acciones"
 
