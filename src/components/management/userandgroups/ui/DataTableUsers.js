@@ -17,7 +17,7 @@ import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles} from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import { openModalEditUsers, startUsersInitLoading } from 'actions/adminUsers';
+import { openModalEditUsers, startUsersInitLoading,editStatusUser } from 'actions/adminUsers';
 import ModalEditUsers from './ModalEditUsers';
 
 
@@ -44,28 +44,33 @@ const DataTableUsers = () => {
 	const dispatch = useDispatch()
 	
 	const { authUser } = useSelector(state => state.auth)
-	const { reports = {}, date = {} } = useSelector(state => state.reports)
-	const { data=[], totalItems= 0 } = reports
 
 	const { userslist = [], } = useSelector(state => state.adminUsers);
 
+	const [userdata,setUserdata] = useState([])
+
 	useEffect(() => {
 
-		if (userslist.length === 0) {
-			dispatch(startUsersInitLoading(authUser));
-		}
+		dispatch(startUsersInitLoading(authUser));
 
 	}, [dispatch]);
 
+	useEffect(()=>{
+		setUserdata(userslist)
+	},[userslist])
+
 	const [page, setPage] = useState(0)
 
-	const [state, setState] = React.useState({
-		checkedA: true,
-		checkedB: true,
-	  });
+
 	
-	  const handleChange = (event) => {
-		setState({ ...state, [event.target.name]: event.target.checked });
+	  const handleChange = ({target}) => {
+		  const { id , checked } = target
+		  	const findUser = userdata.find(user=> user.id === id)
+			findUser.enabled = checked
+			setUserdata([...userdata])
+			dispatch(editStatusUser(authUser,id,checked))
+
+
 	  };
 
 
@@ -76,10 +81,7 @@ const DataTableUsers = () => {
 	},[])
 
 	const handleChangePage = (event, page) => {
-		dispatch(startReportsLoading(authUser,date.startDate,date.endDate,page));
-
-		setPage(page);
-
+		
 	};
 
 	const handleEditUsers = () =>{
@@ -113,17 +115,17 @@ const DataTableUsers = () => {
 						</TableHead>
 						<TableBody>
 							
-						{	userslist.map(({id,firstName, lastName, email, enabled},index)=>{
+						{	userdata.map(({id,firstName, lastName, email, enabled},index)=>{
 								return <TableRow key={index}>
 									<TableCell>{id}</TableCell>
 									<TableCell>{firstName}{``}{lastName}</TableCell>
 									<TableCell>{email}</TableCell>
 									<TableCell>
 										<Switch
-											checked={state.checkedB}
+											checked={enabled}
 											onChange={handleChange}
 											color="primary"
-											name="checkedB"
+											id={id}
 											inputProps={{ 'aria-label': 'primary checkbox' }}
 										/>
 									</TableCell>
@@ -163,13 +165,13 @@ const DataTableUsers = () => {
 									alignItems="flex-end"
 
 								>
-									<Pagination 
+									{/* <Pagination 
 									style={{color: '#369bff'}}
 									count={Math.ceil(totalItems/10)} 
 									color="primary" 
 									shape="rounded" 
 									total={totalItems} 
-									onChange={handleChangePage}/>
+									onChange={handleChangePage}/> */}
 								</Grid>
 				</TableContainer>
 

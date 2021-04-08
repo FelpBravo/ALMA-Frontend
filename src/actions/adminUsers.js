@@ -1,12 +1,19 @@
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
-import { GENERAL_ERROR } from 'constants/constUtil';
-import { getUsers } from 'services/usersService';
+import { getUsers, statusUsers } from 'services/usersService';
 
 export const startUsersInitLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
 
 			const resp = await getUsers(authUser);
 
@@ -14,6 +21,41 @@ export const startUsersInitLoading = (authUser) => {
 
 		} catch (error) {
 			console.log(error);
+		}finally {
+			Swal.close();
+		}
+
+	}
+};
+export const editStatusUser = (authUser,idUser,status) => {
+	return async (dispatch) => {
+
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+				let newStatus;
+
+					if(status)
+					{
+						newStatus = 1
+					}else{
+						newStatus = 0
+					}
+
+			await statusUsers(authUser,idUser,newStatus).then(()=>{
+				startUsersInitLoading(authUser)
+			})
+
+		} catch (error) {
+			console.log(error);
+		}finally {
+			Swal.close();
 		}
 
 	}

@@ -48,8 +48,8 @@ const editUsers = (authUser, id, firstName, lastName, email) => {
 	);
 };
 
-const statusUsers = (authUser, id, status) => {
-	return axiosInstance.put(`/users/user/${id}/${status}`,
+const statusUsers = (authUser, idUser, status) => {
+	return axiosInstance.put(`/users/user/${idUser}/${status}`,
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,
