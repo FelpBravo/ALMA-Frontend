@@ -6,13 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
+import { closeModalFolder, startEditFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
 import { startFoldersInitLoading } from 'actions/folders'
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
-import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
-import { identity } from 'lodash-es';
-import { length } from '@amcharts/amcharts4/.internal/core/utils/Iterator';
+import { MenuItem } from '@material-ui/core';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />

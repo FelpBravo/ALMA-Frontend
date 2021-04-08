@@ -58,7 +58,7 @@ export default function DialogPreview({ data, handleClose }) {
             keepMounted
             onClose={handleClose} 
             aria-labelledby="customized-dialog-title" 
-            open={data || false}>
+            open={data || false}> 
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                 <IntlMessages id="document.modal.title" />
             </DialogTitle>
