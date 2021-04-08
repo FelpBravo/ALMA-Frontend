@@ -19,7 +19,7 @@ export const startFoldersLoading = (authUser) => {
 			Swal.showLoading();
 
 			const resp = await getFoldersAdmin(authUser);
-
+			
 			dispatch(foldersLoaded(resp.data));
 			dispatch(saveHistory(0, INIT_FOLDER));
 			dispatch(saveCurrentFolders(0, INIT_FOLDER, resp.data));

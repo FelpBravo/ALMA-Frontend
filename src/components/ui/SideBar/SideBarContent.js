@@ -74,7 +74,7 @@ const SideBarContent = () => {
 			const ROLE_FOLDER_VIEW = authorities.find(rol => rol === 'ROLE_FOLDER_VIEW')
 
 
-			if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
+			if (authUser && ROLE_FOLDER_VIEW) {
 
 
 				dispatch(startFoldersInitLoading(authUser));
