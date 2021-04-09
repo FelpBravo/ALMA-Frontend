@@ -677,7 +677,9 @@
 	"users.table.column2": "Nombre completo",
 	"users.table.column3": "Correo electrónico",
 	"users.table.column4": "Estado",
-	"users.table.column5": "Acciones"
+	"users.table.column5": "Acciones",
+	"users.title.creation": "Agregar nuevo usuario",
+	"users.title.edit": "Editar usuario"
 
 	
 

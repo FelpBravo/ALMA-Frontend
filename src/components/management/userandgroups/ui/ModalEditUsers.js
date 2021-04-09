@@ -20,12 +20,15 @@ const ModalEditUsers = () => {
 
   const { openModal1} = useSelector(state => state.adminUsers);
 
+  const { userslist = [], } = useSelector(state => state.adminUsers);
+
+  const {email, firstName, lastName }= userslist
+  
   const [value, setValue] = useState('');
 
   const [messageErrorName, setMessageErrorName] = useState(null);
 
-  const handleClose = () => {
-
+  const handleClose1 = () => {
     dispatch(closeModalEditUsers());
   }
 
@@ -34,14 +37,14 @@ const ModalEditUsers = () => {
     <div>
       <Dialog
         open={openModal1}
-        onClose={handleClose}
+        onClose={handleClose1}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
       >
 
         <DialogTitle id="form-dialog-title">
          
-            <IntlMessages id="Nuevo usuario" />
+            <IntlMessages id="users.title.creation" />
         
         </DialogTitle>
 
@@ -49,7 +52,7 @@ const ModalEditUsers = () => {
           <Grid container spacing={1}>
           <Grid item xs={6}>
               <TextField
-                  //value={value}
+                  value={firstName}
                   fullWidth
                   label="Nombres"
                   type="text"
@@ -60,7 +63,7 @@ const ModalEditUsers = () => {
           </Grid>  
           <Grid item xs={6}>
               <TextField
-                  //value={value}
+                  value={lastName}
                   fullWidth
                   label="Apellidos"
                   type="text"
@@ -72,7 +75,7 @@ const ModalEditUsers = () => {
           </Grid>
           <Grid item xs className="mt-3">
               <TextField
-                  //value={value}
+                  value={email}
                   label="Correo electrónico"
                   type="text"
                   variant="outlined"
@@ -87,11 +90,11 @@ const ModalEditUsers = () => {
         <DialogActions>
 
           <Button
-            onClick={handleClose}
+            onClick={handleClose1}
             variant="contained"
-            color="primary"
+            style={{ backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", border: "none",boxShadow: "none" }}
           >
-            Cancelar
+           <IntlMessages id="button.text.cancel" />
           </Button>
 
           <Button

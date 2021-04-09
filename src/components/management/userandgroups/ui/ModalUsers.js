@@ -96,7 +96,7 @@ const ModalUsers = () => {
 
 
   const handleClose = () => {
-
+    
     dispatch(closeModalUsers());
   }
 
@@ -151,6 +151,30 @@ const ModalUsers = () => {
                   fullWidth
                   //onChange={handleOnChange}
                 />
+          </Grid>
+          <Grid container spacing={1} className="mt-3" >
+          <Grid item xs={6}>
+              <TextField
+                  //value={value}
+                  fullWidth
+                  label="Empresa"
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                  //onChange={handleOnChange}
+              />  
+          </Grid>  
+          <Grid item xs={6}>
+              <TextField
+                  //value={value}
+                  fullWidth
+                  label="Departamento"
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                // onChange={handleOnChange}
+              />
+          </Grid>
           </Grid>
           <Grid item xs={6} className="mt-3">
               <TextField

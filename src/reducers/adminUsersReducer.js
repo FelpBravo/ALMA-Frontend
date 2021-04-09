@@ -32,7 +32,7 @@ export const adminUsersReducer = (state = initialState, action) => {
                 openModal1: true,
                 }
     
-        case types.userseditCloseModal:
+        case types.usersEditCloseModal:
             return {
                 ...state,
                 openModal1: false,
