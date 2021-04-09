@@ -123,5 +123,6 @@ export const types = {
 
 	sharedDocumentSetValue: 'shared Document Set Value',
 	saveSharedFile: 'Save new shared file',
-	saveFileStatus: "save file status data "
+	saveFileStatus: "save file status data",
+	sharedFieldClearErrors: "Clear fields errors",
 }

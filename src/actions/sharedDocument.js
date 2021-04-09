@@ -32,12 +32,17 @@ const saveFileStatus = (documentId, data) => {
 	}
 };
 
+export const clearErrors = () => {
+	return {
+		type: types.sharedFieldClearErrors,
+	}
+};
+
 export const startCreateSharedLink = (authUser, fileId, password, expirationDate) => {
 	return async (dispatch) => {
 
 		try {
 			const resp = await postSharedFile(authUser, fileId, password, expirationDate);
-			console.log("resp", resp)
 			dispatch(saveSharedFile(resp.data, fileId));
 		} catch (error) {
 			console.log(error);
@@ -50,21 +55,24 @@ export const startVerifyFile = (fileId) => {
 
 		try {
 			const resp = await getFileStatus(fileId);
-			dispatch(saveFileStatus(fileId,resp.data));
+			dispatch(saveFileStatus(fileId, resp.data));
 		} catch (error) {
 			console.log(error);
 		}
 	}
 };
 
-export const startDownloadFile = (fileId, password) => {
+export const startDownloadFile = (fileId, password, fileName, setCanDownload) => {
 	return async (dispatch) => {
 
 		try {
 			const resp = await postDownloadFile(fileId, password);
-			FileSaver.saveAs(resp.data, "example.pdf");
+			setCanDownload(true)
+			FileSaver.saveAs(resp.data, "file.png");
 
 		} catch (error) {
+			dispatch(saveFileStatus(fileId, { errors: { password: "Contraseña incorrecta" } })); //While backend return errors 
+
 			console.log(error);
 		}
 	}

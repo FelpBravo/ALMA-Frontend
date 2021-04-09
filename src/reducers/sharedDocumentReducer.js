@@ -6,6 +6,8 @@ const initialState = {
     fields: {},
     alive: null,
     passwordNeeded: null,
+    fileName: "",
+    errors: {}
 }
 
 export const sharedDocumentReducer = (state = initialState, action) => {
@@ -31,6 +33,12 @@ export const sharedDocumentReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...payload,
+            }
+
+        case types.sharedFieldClearErrors:
+            return {
+                ...state,
+                errors:{},
             }
 
         default:

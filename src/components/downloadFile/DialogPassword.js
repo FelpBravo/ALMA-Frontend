@@ -5,13 +5,14 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import AlmaLogo from 'assets/images/alma-logo.jpg';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { sharedDocumentSetValue, startVerifyFile } from 'actions/sharedDocument';
+import { clearErrors, sharedDocumentSetValue, startDownloadFile, startVerifyFile } from 'actions/sharedDocument';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { CircularProgress, DialogTitle, Divider, } from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
+import { isEmpty } from 'lodash-es';
 
 const useStyles = makeStyles(theme => ({
 
@@ -25,16 +26,21 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const classes = useStyles();
-    const { fields } = useSelector(state => state.sharedDocument);
-
+    const { fields, fileName, errors } = useSelector(state => state.sharedDocument);
+    const errorPassword = Boolean(errors?.password)
     useEffect(() => {
         dispatch(startVerifyFile(documentId));
     }, [documentId])
 
+    const handleDownload = () => {
+        dispatch(startDownloadFile(documentId, fields?.password, fileName, setCanDownload))
+    }
 
     const handleOnChange = ({ target }) => {
         const { name, value } = target;
-
+        if(!isEmpty(errors)){
+            dispatch(clearErrors())
+        }
         dispatch(sharedDocumentSetValue(name, value));
 
     }
@@ -51,7 +57,7 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item md={12}>
-                    <h5 style={{ textAlign: 'justify' }}><b>Legend of zelda.pdf </b>
+                    <h5 style={{ textAlign: 'justify' }}><strong>{fileName}</strong>
                          <IntlMessages id="downloadFile.shared.dialog.message.protected" />
                     </h5>
                 </Grid>
@@ -62,6 +68,8 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
                         type="text"
                         variant="outlined"
                         fullWidth
+                        error={errorPassword}
+                        helperText={errors?.password}
                         size="small"
                         type="password"
                         onChange={handleOnChange}
@@ -73,7 +81,7 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
 
         <DialogActions className={classes.dialogActions}>
             <Button
-                onClick={() => setCanDownload(true)}
+                onClick={handleDownload}
                 variant="contained"
                 color="primary"
                 autoFocus

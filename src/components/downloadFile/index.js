@@ -23,12 +23,12 @@ export default function DownloadFilePage() {
     const { documentId } = useParams();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
-    const { fields } = useSelector(state => state.sharedDocument);
+    const { fields, fileName } = useSelector(state => state.sharedDocument);
     const [canDownload, setCanDownload] = useState(false)
     const classes = useStyles()
 
     const handleDownload = () => {
-        dispatch(startDownloadFile(documentId, fields?.password))
+        dispatch(startDownloadFile(documentId, fields?.password, fileName))
     }
 
 
@@ -42,7 +42,7 @@ export default function DownloadFilePage() {
                         <img style={{ height: 250 }} src={AlmaLogo} alt="alma logo" />
                     </Grid>
                     <Grid item md>
-                        <h1>Legend of Zelda.pdf</h1>
+                        <h1>{fileName}</h1>
                     </Grid>
                     <Grid item md>
                         <Button
