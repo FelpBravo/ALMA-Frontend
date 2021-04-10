@@ -1,6 +1,5 @@
 import { types } from 'types/types';
 import { getFileStatus, postDownloadFile, postSharedFile } from 'services/sharedDocumentService';
-import FileSaver from 'file-saver';
 
 export const sharedDocumentSetValue = (name, value) => {
 	return {
@@ -62,18 +61,19 @@ export const startVerifyFile = (fileId) => {
 	}
 };
 
-export const startDownloadFile = (fileId, password, fileName, setCanDownload) => {
+export const startDownloadFile = (fileId, password, fileName, setFile, setLoading) => {
 	return async (dispatch) => {
 
 		try {
-			const resp = await postDownloadFile(fileId, password);
-			setCanDownload(true)
-			FileSaver.saveAs(resp.data, "file.png");
+			const {data} = await postDownloadFile(fileId, password);
+			setFile({data, fileName})
 
 		} catch (error) {
 			dispatch(saveFileStatus(fileId, { errors: { password: "Contraseña incorrecta" } })); //While backend return errors 
 
 			console.log(error);
+		} finally {
+			setLoading(false);
 		}
 	}
 };

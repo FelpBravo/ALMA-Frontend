@@ -65,6 +65,10 @@ const SharedDialog = ({ data, handleClose }) => {
   const [messageErrorName, setMessageErrorName] = useState(null);
   const [checked, setChecked] = React.useState(true);
   const [select, setSelect] = useState("true")
+
+  const URL = `${window.location.protocol}//${window.location.hostname}${window.location.port && `:${window.location.port}`}`
+  const SHARED_URL = `${URL}/download/${token}/`;
+
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -85,7 +89,6 @@ const SharedDialog = ({ data, handleClose }) => {
     dispatch(startCreateSharedLink(authUser, data?.id, fields?.password, fields?.expirationDate));
   }
 
-  const URL = `${window.location.protocol}//${window.location.hostname}${window.location.port && `:${window.location.port}`}`
   console.log("data", data)
   return (
     <Dialog
@@ -152,7 +155,7 @@ const SharedDialog = ({ data, handleClose }) => {
                 <InputBase
                   inputProps={{ select: select }}             
                   className={classes.input}
-                  value={`${URL}/download/${token}/`}
+                  value={SHARED_URL}
                   readOnly
                   fullWidth
                   onClick={e =>  e?.target?.select()}
@@ -161,7 +164,10 @@ const SharedDialog = ({ data, handleClose }) => {
               </Paper>
               <Tooltip title={<IntlMessages id="table.shared.dialog.field.copyLink" />}>
                 <IconButton aria-label="copy">
-                  <FileCopyIcon color="primary" fontSize="inherit" />
+                  <FileCopyIcon 
+                    color="primary"
+                    fontSize="inherit"
+                    onClick={() => navigator.clipboard.writeText(SHARED_URL)} />
                 </IconButton>
               </Tooltip>
             </Grid>

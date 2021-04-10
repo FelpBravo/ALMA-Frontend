@@ -14,4 +14,7 @@ export const getFileStatus = (fileId) =>
 
 export const postDownloadFile = (fileId, password) =>
     axiosInstance.post(`/files/shared/${fileId}`,
-        { password });
+        { password },
+        {
+            responseType: 'blob',
+        });

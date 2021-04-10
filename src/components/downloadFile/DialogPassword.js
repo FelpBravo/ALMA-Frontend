@@ -21,24 +21,26 @@ const useStyles = makeStyles(theme => ({
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 
 
-export default function DialogPassword({ canDownload, setCanDownload }) {
+export default function DialogPassword({ file, setFile }) {
     const { documentId } = useParams();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const classes = useStyles();
     const { fields, fileName, errors } = useSelector(state => state.sharedDocument);
     const errorPassword = Boolean(errors?.password)
+
     useEffect(() => {
         dispatch(startVerifyFile(documentId));
     }, [documentId])
 
     const handleDownload = () => {
-        dispatch(startDownloadFile(documentId, fields?.password, fileName, setCanDownload))
+        setLoading(true);
+        dispatch(startDownloadFile(documentId, fields?.password, fileName, setFile, setLoading))
     }
 
     const handleOnChange = ({ target }) => {
         const { name, value } = target;
-        if(!isEmpty(errors)){
+        if (!isEmpty(errors)) {
             dispatch(clearErrors())
         }
         dispatch(sharedDocumentSetValue(name, value));
@@ -46,7 +48,7 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
     }
 
     return (<Dialog
-        open={!canDownload}
+        open={!Boolean(file)}
         onClose={null}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
@@ -57,8 +59,8 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item md={12}>
-                    <h5 style={{ textAlign: 'justify' }}><strong>{fileName}</strong>
-                         <IntlMessages id="downloadFile.shared.dialog.message.protected" />
+                    <h5 style={{ textAlign: 'justify' }}><strong>{`${fileName} `}</strong>
+                        <IntlMessages id="downloadFile.shared.dialog.message.protected" />
                     </h5>
                 </Grid>
                 <Grid item md={12} container wrap="nowrap">
@@ -85,7 +87,7 @@ export default function DialogPassword({ canDownload, setCanDownload }) {
                 variant="contained"
                 color="primary"
                 autoFocus
-                disabled={!fields?.password || fields?.password === ""}
+                disabled={loading || (!fields?.password || fields?.password === "")}
             >
                 {loading && <CircularProgress size={14} />}
                 <IntlMessages id="downloadFile.shared.dialog.button.send" />
