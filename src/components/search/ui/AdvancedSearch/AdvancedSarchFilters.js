@@ -61,6 +61,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 					key={name}
 					label={label}
 					namecomponent={name}
+					value={value}
 				/>
 				
 			);

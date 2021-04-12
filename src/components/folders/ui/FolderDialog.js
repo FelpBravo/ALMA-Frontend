@@ -6,12 +6,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFolder, startEditFolderLoading, startCreateFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
+import { closeModalFolder, startEditFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
 import { startFoldersInitLoading } from 'actions/folders'
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
-import { FormControl, FormControlLabel, MenuItem, Radio, RadioGroup } from '@material-ui/core';
-import { identity } from 'lodash-es';
+import { MenuItem } from '@material-ui/core';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
@@ -37,7 +36,7 @@ const FolderDialog = () => {
 
 	useEffect(() => {
 		setFormValues({ ...folder });
-		dispatch(startFoldersTypesLoading(authUser,id))
+		dispatch(startFoldersTypesLoading(authUser,id <0? 0 : id))
 		
 	}, [folder, setFormValues]);
 
@@ -77,7 +76,6 @@ const FolderDialog = () => {
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
-
 		setFormValues({
 			...formValues,
 			[name]: value
@@ -93,6 +91,7 @@ const FolderDialog = () => {
 			state: String(formValues.state) === 'true',
 			company: 1
 		};
+			data.name = data.name.trim()
 		if (actionModal === ACTION_CREATE) {
 			dispatch(startUpdateFolderLoading(authUser,data,id,parentId))
 			dispatch(closeModalFolder());
@@ -182,7 +181,7 @@ const FolderDialog = () => {
 					</Button>
 
 					<Button
-						disabled={(!name || name.length < 3) || type <= 0}
+						disabled={(name && name.length > 3) && type ? false : true}
 						onClick={handleOnSave}
 						variant="contained"
 						color="primary"

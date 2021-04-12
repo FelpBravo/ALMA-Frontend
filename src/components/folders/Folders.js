@@ -25,7 +25,7 @@ const Folders = () => {
 			dispatch(adminFoldersremoveAll())
 			dispatch(startFoldersLoading(authUser));
 
-	}, []);
+	}, [dispatch]);
 
 	const handleClickBreadcrumbs = (e, { id, name}) => {
 		e.preventDefault();
@@ -41,7 +41,7 @@ const Folders = () => {
 
 		dispatch(setFolder({
 			name: '',
-			parentId: currentFolders.id,
+			parentId: currentFolders.id <0? 0 : currentFolders.id,
 			parentName: currentFolders.name,
 			position: 0,
 			state: true,
@@ -75,7 +75,7 @@ const Folders = () => {
 					</div>
 
 					{
-						folders.length > 0
+						folders.length >= 0
 						&&
 						<div className="row">
 							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -103,7 +103,7 @@ const Folders = () => {
 						</div>
 					}
 					{
-						folders.length > 0
+						folders.length >= 0
 						&&
 						<div className="row mt-3">
 							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
