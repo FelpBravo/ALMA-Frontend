@@ -18,8 +18,8 @@ const infoUsers = (authUser, id) => {
 	});
 };
 
-const validateUsers = (authUser, id) => {
-	return axiosInstance.get(`/users/user/validate/${id}`, {
+const validateUsers = (authUser, idUser) => {
+	return axiosInstance.get(`/users/user/validate/${idUser}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -37,9 +37,8 @@ const addUsers = (authUser, id, firstName, lastName, email, password) => {
 	);
 };
 
-const editUsers = (authUser, id, firstName, lastName, email) => {
-	return axiosInstance.put(`/users/user/${id}`,
-		{firstName, lastName, email },
+const editUsers = (authUser,idUser, data) => {
+	return axiosInstance.put(`/users/user/${idUser}`,data,
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,
@@ -49,7 +48,7 @@ const editUsers = (authUser, id, firstName, lastName, email) => {
 };
 
 const statusUsers = (authUser, idUser, status) => {
-	return axiosInstance.put(`/users/user/${idUser}/${status}`,
+	return axiosInstance.put(`/users/user/${idUser}/status`,{ enabled:status },
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,

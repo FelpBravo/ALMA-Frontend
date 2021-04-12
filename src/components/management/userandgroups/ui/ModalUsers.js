@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import { Card, CardHeader, DialogTitle, Divider, InputBase, Paper, Grid} from '@material-ui/core';
-import {closeModalUsers} from 'actions/adminUsers';
+import {closeModalUsers,validateUserNickname ,nicknameValidate} from 'actions/adminUsers';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -73,13 +73,17 @@ const ModalUsers = () => {
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal} = useSelector(state => state.adminUsers);
+  const { openModal ,validateNickname } = useSelector(state => state.adminUsers);
 
   const [value, setValue] = useState('');
 
-  const [messageErrorName, setMessageErrorName] = useState(null);
+  const [messageErrorUser, setMessageErrorUser] = useState(null);
 
   const [checked, setChecked] = React.useState([0]);
+
+  const [dataUser,setDataUser ] = useState({})
+
+
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -96,8 +100,37 @@ const ModalUsers = () => {
 
 
   const handleClose = () => {
-    
     dispatch(closeModalUsers());
+  }
+
+  const handleOnChange = ({target})=>{
+    const { name, value} = target
+    console.log(name,value)
+   
+    switch (name) {
+      case 'usuario':
+        if(value.length > 4){
+          dispatch(validateUserNickname(authUser,value))
+          console.log(validateNickname);
+          setMessageErrorUser()
+        }else{
+          dispatch(nicknameValidate(false))
+          setMessageErrorUser('Debe contener 5 caracteres como minimo.')
+        }
+      
+        break;
+    
+      default:
+
+        break;
+    }
+  }
+
+  const handleOnSave = () =>{
+      if(!validateNickname){
+        console.log('es valido')
+      }
+      console.log("EEEss");
   }
 
   return (
@@ -117,6 +150,7 @@ const ModalUsers = () => {
         </DialogTitle>
 
         <DialogContent>
+          <form onSubmit={handleOnSave}>
           <Grid container spacing={1}>
           <Grid item xs={6}>
               <TextField
@@ -126,6 +160,7 @@ const ModalUsers = () => {
                   type="text"
                   variant="outlined"
                   size="small"
+                  required
                   //onChange={handleOnChange}
               />  
           </Grid>  
@@ -137,20 +172,10 @@ const ModalUsers = () => {
                   type="text"
                   variant="outlined"
                   size="small"
+                  required
                 // onChange={handleOnChange}
               />
           </Grid>
-          </Grid>
-          <Grid item xs className="mt-3">
-              <TextField
-                  //value={value}
-                  label="Correo electrónico"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  //onChange={handleOnChange}
-                />
           </Grid>
           <Grid container spacing={1} className="mt-3" >
           <Grid item xs={6}>
@@ -161,6 +186,7 @@ const ModalUsers = () => {
                   type="text"
                   variant="outlined"
                   size="small"
+                  required
                   //onChange={handleOnChange}
               />  
           </Grid>  
@@ -172,21 +198,40 @@ const ModalUsers = () => {
                   type="text"
                   variant="outlined"
                   size="small"
+                  required
                 // onChange={handleOnChange}
               />
           </Grid>
           </Grid>
-          <Grid item xs={6} className="mt-3">
+          <Grid item xs className="mt-3">
               <TextField
                   //value={value}
+                  label="Correo electrónico"
+                  type="email"
+                  required
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  //onChange={handleOnChange}
+                />
+          </Grid>
+          <Grid item xs={6} className="mt-3">
+              <TextField
+                 // value={value}
                   fullWidth
                   label="Usuario"
+                  name='usuario'
+                  error={validateNickname || messageErrorUser? true : false}
                   type="text"
                   variant="outlined"
                   size="small"
-                  //onChange={handleOnChange}
+                  required
+                  onChange={handleOnChange}
+                  helperText={!validateNickname? (messageErrorUser? messageErrorUser : '' ): 'Usuario ya existe'}
               /> 
+             
           </Grid>
+          </form>
         <p className="mt-2">**La contraseña de generará automatícamente y llegara al correo indicado.</p>
         
         <h3>Grupos Asignados</h3>
@@ -257,7 +302,7 @@ const ModalUsers = () => {
                 })}
             </List>
             </Card>
-      
+         
         
         </DialogContent>
 
@@ -272,11 +317,11 @@ const ModalUsers = () => {
           </Button>
 
           <Button
-            //onClick={handleOnSave}
+            onClick={handleOnSave}
             variant="contained"
             color="primary"
             autoFocus
-            disabled={messageErrorName}
+           // disabled={messageErrorName}
           >
            Crear
           </Button>

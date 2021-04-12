@@ -17,7 +17,7 @@ import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles} from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import { openModalEditUsers, startUsersInitLoading,editStatusUser } from 'actions/adminUsers';
+import { startUsersInitLoading,editUserStatus } from 'actions/adminUsers';
 import ModalEditUsers from './ModalEditUsers';
 
 
@@ -49,6 +49,9 @@ const DataTableUsers = () => {
 
 	const [userdata,setUserdata] = useState([])
 
+	const [userEditData, setUserEditData ] = useState({})
+	const [editActive, setEditActive] = useState(false)
+
 	useEffect(() => {
 
 		dispatch(startUsersInitLoading(authUser));
@@ -68,7 +71,7 @@ const DataTableUsers = () => {
 		  	const findUser = userdata.find(user=> user.id === id)
 			findUser.enabled = checked
 			setUserdata([...userdata])
-			dispatch(editStatusUser(authUser,id,checked))
+			dispatch(editUserStatus(authUser,id,checked))
 
 
 	  };
@@ -84,8 +87,13 @@ const DataTableUsers = () => {
 		
 	};
 
-	const handleEditUsers = () =>{
-		dispatch(openModalEditUsers());
+	const handleEditUsers = (id,firstName,lastName,email) =>{
+		//const {id,firstName,enabled} = props
+		console.log("Prueba", id,firstName,lastName,email)
+		//dispatch(openModalEditUsers())
+		setUserEditData({ id,firstName,lastName,email })
+		setEditActive(true)
+
 	}
 
 	return (
@@ -135,7 +143,7 @@ const DataTableUsers = () => {
 											materialIcon={
 												<BorderColorOutlinedIcon
 													className={classes.iconos}
-													onClick={() => handleEditUsers()}
+													onClick={(event) => handleEditUsers(id,firstName,lastName,email)}
 												/>
 											}
 										/>
@@ -174,9 +182,8 @@ const DataTableUsers = () => {
 									onChange={handleChangePage}/> */}
 								</Grid>
 				</TableContainer>
-
+				<ModalEditUsers data={userEditData} close={()=> setEditActive(false)} open={editActive} />					
 			</div>
-			<ModalEditUsers/>
 		</div>
 	)
 }

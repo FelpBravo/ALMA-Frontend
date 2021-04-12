@@ -3,7 +3,7 @@ import { types } from 'types/types';
 const initialState = {
     openModal: false,
     userslist: [],
-    openModal1: false,
+    validateNickname: false,
    
 }
 
@@ -26,16 +26,10 @@ export const adminUsersReducer = (state = initialState, action) => {
                 ...state,
                 openModal: false,
             }
-        case types.usersEditOpenModal:
+        case types.usersValidateNickname:
             return {
                 ...state,
-                openModal1: true,
-                }
-    
-        case types.usersEditCloseModal:
-            return {
-                ...state,
-                openModal1: false,
+                validateNickname: action.payload
                 }
     
 

@@ -1,6 +1,11 @@
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
-import { getUsers, statusUsers } from 'services/usersService';
+import {
+	getUsers,
+	editUsers,
+	statusUsers,
+	validateUsers
+} from 'services/usersService';
 
 export const startUsersInitLoading = (authUser) => {
 	return async (dispatch) => {
@@ -21,15 +26,14 @@ export const startUsersInitLoading = (authUser) => {
 
 		} catch (error) {
 			console.log(error);
-		}finally {
+		} finally {
 			Swal.close();
 		}
 
 	}
 };
-export const editStatusUser = (authUser,idUser,status) => {
+export const editUserData = (authUser, idUser, data) => {
 	return async (dispatch) => {
-
 		try {
 			Swal.fire({
 				title: 'Cargando...',
@@ -37,27 +41,53 @@ export const editStatusUser = (authUser,idUser,status) => {
 				allowOutsideClick: false,
 				heightAuto: false,
 			});
-
 			Swal.showLoading();
-				let newStatus;
+			await editUsers(authUser, idUser, data).then(() => {
+				dispatch(startUsersInitLoading(authUser))
+			}).catch(() => {
+				dispatch(startUsersInitLoading(authUser))
+			})
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+	}
+};
 
-					if(status)
-					{
-						newStatus = 1
-					}else{
-						newStatus = 0
-					}
+export const editUserStatus = (authUser, idUser, status) => {
+	return async (dispatch) => {
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+			Swal.showLoading();
 
-			await statusUsers(authUser,idUser,newStatus).then(()=>{
-				startUsersInitLoading(authUser)
+			await statusUsers(authUser, idUser, status).then(() => {
+				dispatch(startUsersInitLoading(authUser))
+			}).catch(() => {
+				dispatch(startUsersInitLoading(authUser))
 			})
 
 		} catch (error) {
 			console.log(error);
-		}finally {
+		} finally {
 			Swal.close();
 		}
+	}
+};
 
+export const validateUserNickname = (authUser, idUser) => {
+	return async (dispatch) => {
+		try {
+			const resp = await validateUsers(authUser, idUser)
+			dispatch(nicknameValidate(resp.data.exists))
+		} catch (error) {
+			console.log(error);
+		}
 	}
 };
 
@@ -67,6 +97,13 @@ export const usersInitLoaded = (userslist) => {
 		payload: userslist,
 	}
 };
+
+export const nicknameValidate = (validate) => {
+	return {
+		type: types.usersValidateNickname,
+		payload: validate
+	}
+}
 
 export const openModalUsers = () => {
 	return {
@@ -80,14 +117,4 @@ export const closeModalUsers = () => {
 	}
 };
 
-export const openModalEditUsers = () => {
-	return {
-		type: types.usersEditOpenModal,
-	}
-};
 
-export const closeModalEditUsers = () => {
-	return {
-		type: types.usersEditCloseModal,
-	}
-};

@@ -123,8 +123,8 @@ export const types = {
 
 	usersOpenModal: 'Users Open Modal',
 	usersCloseModal: 'Users Close Modal',
-	usersEditOpenModal: 'Users Edit Open Modal',
-	usersEditCloseModal: 'Users Edit Close Modal',
-	usersInitLoaded: 'Users List'
+	usersInitLoaded: 'Users List',
+	usersValidateNickname: 'Users Validate Nickname'
+
 
 }
