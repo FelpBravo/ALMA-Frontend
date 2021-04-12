@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import SearchUsers from './ui/SearchUsers';
 import SearchGroup from './ui/SearchGroup';
 import { TableSearchUsers } from './ui/TableSearchUsers';
+import { TableSearchGroup } from './ui/TableSearchGroup';
 
 
 function TabPanel(props) {
@@ -75,7 +76,7 @@ const Management = () => {
 			case 0:
 			return<TableSearchUsers/>
 			case 1:
-			return <div>Grupos</div>
+			return<TableSearchGroup/>
 			default:
 				return <></>
 		}
