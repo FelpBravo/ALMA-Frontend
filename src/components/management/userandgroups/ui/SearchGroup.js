@@ -107,7 +107,7 @@ const SearchUsers = () => {
 				<form onSubmit={handleSearch}>
 					<Grid container spacing={2}>
 
-						<Grid item xs={4}>
+						<Grid item xs={6}>
 							<Paper className={classes.root}>
 								<SearchIcon color="primary" />
 								<InputBase

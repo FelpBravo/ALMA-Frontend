@@ -52,7 +52,7 @@ const SearchUsers = () => {
 		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				
 					<Grid container spacing={2}>
-						<Grid item xs={4}>
+						<Grid item xs={6}>
 							<Paper className={classes.root}>
 								<SearchIcon color="primary" />
 								<InputBase
@@ -81,7 +81,7 @@ const SearchUsers = () => {
 							</Button>
 						</Grid>
 					
-						<Grid xs={6} container justify="flex-end">			
+						<Grid xs={4} container justify="flex-end">			
 							<Link component="button"
 							 variant="body2" 
 							onClick={() => handleSelectNew()}

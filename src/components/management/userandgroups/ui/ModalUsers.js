@@ -15,13 +15,10 @@ import {closeModalUsers} from 'actions/adminUsers';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
-import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
 import SearchIcon from '@material-ui/icons/Search';
+import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -112,7 +109,7 @@ const ModalUsers = () => {
 
         <DialogTitle id="form-dialog-title">
          
-            <IntlMessages id="Nuevo usuario" />
+            <IntlMessages id="Agregar nuevo usuario" />
         
         </DialogTitle>
 
@@ -187,9 +184,11 @@ const ModalUsers = () => {
                   //onChange={handleOnChange}
               /> 
           </Grid>
-        <p className="mt-2">**La contraseña de generará automatícamente y llegara al correo indicado.</p>
+          <Alert severity="info" className="mt-3">
+            La contraseña de generará automatícamente y llegara al correo indicado.
+          </Alert>
         
-        <h3>Grupos Asignados</h3>
+        <h3 className="mt-3">Grupos Asignados</h3>
                 
           
             <Card>
