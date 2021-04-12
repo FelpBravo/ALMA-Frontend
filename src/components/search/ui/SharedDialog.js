@@ -89,7 +89,6 @@ const SharedDialog = ({ data, handleClose }) => {
     dispatch(startCreateSharedLink(authUser, data?.id, fields?.password, fields?.expirationDate));
   }
 
-  console.log("data", data)
   return (
     <Dialog
       open={open}
@@ -108,7 +107,7 @@ const SharedDialog = ({ data, handleClose }) => {
 
           <Grid item md={12}>
             <TextField
-              autoFocus  
+              autoFocus
               label={<IntlMessages id="table.shared.dialog.field.expirationDate" />}
               name='expirationDate'
               fullWidth
@@ -153,18 +152,18 @@ const SharedDialog = ({ data, handleClose }) => {
               <Paper className={classes.rootPaper}>
                 <LinkIcon color="primary" className={classes.margin} />
                 <InputBase
-                  inputProps={{ select: select }}             
+                  inputProps={{ select: select }}
                   className={classes.input}
                   value={SHARED_URL}
                   readOnly
                   fullWidth
-                  onClick={e =>  e?.target?.select()}
+                  onClick={e => e?.target?.select()}
                   autoFocus
                 />
               </Paper>
               <Tooltip title={<IntlMessages id="table.shared.dialog.field.copyLink" />}>
                 <IconButton aria-label="copy">
-                  <FileCopyIcon 
+                  <FileCopyIcon
                     color="primary"
                     fontSize="inherit"
                     onClick={() => navigator.clipboard.writeText(SHARED_URL)} />
@@ -184,7 +183,7 @@ const SharedDialog = ({ data, handleClose }) => {
           color="secondary"
         >
           <IntlMessages id="table.shared.dialog.field.cancelDocument" />
-          </Button>
+        </Button>
         <Button
           onClick={handleOnSave}
           variant="contained"
@@ -194,7 +193,7 @@ const SharedDialog = ({ data, handleClose }) => {
         >
           {loading && <CircularProgress size={14} />}
           <IntlMessages id="table.shared.dialog.field.createDocument" />
-          </Button>
+        </Button>
       </DialogActions>
     </Dialog>
   )
