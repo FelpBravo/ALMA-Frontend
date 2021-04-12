@@ -8,7 +8,7 @@ import IdleTimer from 'helpers/IdleTimer';
 import { useDispatch, useSelector } from 'react-redux';
 import { startUserSingOut } from 'actions/auth';
 
-const TIMEOUT = 60*6; // HardCode for test
+const TIMEOUT = 60*30; // HardCode for test
 
 export const MainRouter = () => {
 	const { authUser } = useSelector(state => state.auth);
