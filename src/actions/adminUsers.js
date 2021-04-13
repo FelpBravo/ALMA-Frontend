@@ -20,9 +20,8 @@ export const startUsersInitLoading = (authUser) => {
 
 			Swal.showLoading();
 
-			const resp = await getUsers(authUser);
-
-			dispatch(usersInitLoaded(resp.data));
+			const resp = await getUsers(authUser,1,10);
+			dispatch(usersInitLoaded(resp.data))
 
 		} catch (error) {
 			console.log(error);

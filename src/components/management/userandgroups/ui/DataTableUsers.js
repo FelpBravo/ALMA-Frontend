@@ -15,23 +15,23 @@ import Grid from '@material-ui/core/Grid';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import { startUsersInitLoading,editUserStatus } from 'actions/adminUsers';
+import { startUsersInitLoading, editUserStatus } from 'actions/adminUsers';
 import ModalEditUsers from './ModalEditUsers';
 
 
 const useStyles = makeStyles((theme) => ({
-	
+
 	iconos: {
 		cursor: "pointer",
 		color: "#2196f3",
 		fontSize: '18px',
-	  },
-	  iconsHolder: {
+	},
+	iconsHolder: {
 		display: "flex",
 		justifyContent: "center",
-	  },
+	},
 }));
 
 
@@ -42,59 +42,63 @@ const DataTableUsers = () => {
 	const isMounted = useRef(true)
 	const history = useHistory()
 	const dispatch = useDispatch()
-	
+
 	const { authUser } = useSelector(state => state.auth)
 
-	const { userslist = [], } = useSelector(state => state.adminUsers);
+	const { userslist = {}, } = useSelector(state => state.adminUsers);
 
-	const [userdata,setUserdata] = useState([])
+	const { data = [], totalItems, currentPage } = userslist
 
-	const [userEditData, setUserEditData ] = useState({})
+	const [userdata, setUserdata] = useState([])
+
+	const [userEditData, setUserEditData] = useState({})
 	const [editActive, setEditActive] = useState(false)
 
 	useEffect(() => {
 
 		dispatch(startUsersInitLoading(authUser));
 
-	}, [dispatch]);
+	}, [dispatch,authUser]);
 
-	useEffect(()=>{
-		setUserdata(userslist)
-	},[userslist])
+	useEffect(() => {
+		setUserdata(data)
+	}, [data])
 
 	const [page, setPage] = useState(0)
 
 
-	
-	  const handleChange = ({target}) => {
-		  const { id , checked } = target
-		  	const findUser = userdata.find(user=> user.id === id)
-			findUser.enabled = checked
-			setUserdata([...userdata])
-			dispatch(editUserStatus(authUser,id,checked))
+
+	const handleChange = ({ target }) => {
+		const { id, checked } = target
+		const findUser = userdata.find(user => user.id === id)
+		findUser.enabled = checked
+		setUserdata([...userdata])
+		dispatch(editUserStatus(authUser, id, checked))
 
 
-	  };
-
-
-	useEffect(()=>{
-		return ()=>{
-			isMounted.current = false
-		}
-	},[])
-
-	const handleChangePage = (event, page) => {
-		
 	};
 
-	const handleEditUsers = (id,firstName,lastName,email) =>{
-		//const {id,firstName,enabled} = props
-		console.log("Prueba", id,firstName,lastName,email)
-		//dispatch(openModalEditUsers())
-		setUserEditData({ id,firstName,lastName,email })
-		setEditActive(true)
 
+	useEffect(() => {
+		return () => {
+			isMounted.current = false
+		}
+	}, [])
+
+	const handleChangePage = (event, page) => {
+
+	};
+
+	const handleOpenEditUsers = (id, firstName, lastName, email) => {
+		setUserEditData({ id, firstName, lastName, email })
+		setEditActive(true)
 	}
+
+	const handleCloseEditUsers = () =>{
+		setUserEditData({})
+		setEditActive(false) 
+	}
+
 
 	return (
 		<div className="row">
@@ -104,88 +108,109 @@ const DataTableUsers = () => {
 					<Table size="small" aria-label="a dense table">
 						<TableHead>
 							<TableRow>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400  }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="users.table.column1" />
 								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff',fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="users.table.column2" />
 								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="users.table.column3" />
 								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="users.table.column4" />
 								</TableCell>
-                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="users.table.column5" />
 								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							
-						{	userdata.map(({id,firstName, lastName, email, enabled},index)=>{
+
+							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external }, index) => {
+
 								return <TableRow key={index}>
 									<TableCell>{id}</TableCell>
-									<TableCell>{firstName}{``}{lastName}</TableCell>
-									<TableCell>{email}</TableCell>
-									<TableCell>
-										<Switch
-											checked={enabled}
-											onChange={handleChange}
-											color="primary"
-											id={id}
-											inputProps={{ 'aria-label': 'primary checkbox' }}
-										/>
-									</TableCell>
-									<TableCell>
-									<div className={classes.iconsHolder}>			
-										<TableActionButton
-											materialIcon={
-												<BorderColorOutlinedIcon
-													className={classes.iconos}
-													onClick={(event) => handleEditUsers(id,firstName,lastName,email)}
-												/>
-											}
-										/>
-														
-										<TableActionButton
-											materialIcon={
-												<DeleteOutlinedIcon
-													className={classes.iconos}
-													//onClick={() => handleSelectActionTags(3)}
-												/>
-											}
-										/>		
-									</div>
-									</TableCell>
-									
-									</TableRow>
+									<TableCell align="center">{firstName}{` `}{lastName}</TableCell>
+									<TableCell align="center">{email}</TableCell>
+									<TableCell align="center">
+											<Switch
+												checked={enabled}
+												onChange={handleChange}
+												color="primary"
+												id={id}
+												disabled={!external}
+												inputProps={{ 'aria-label': 'primary checkbox' }}
+											/>
+										
 
-									})
+									</TableCell>
+									<TableCell align="center" >
+										{external &&
+											<div className={classes.iconsHolder}>
+												<TableActionButton
+													materialIcon={
+														<BorderColorOutlinedIcon
+															className={classes.iconos}
+															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email)}
+														/>
+													}
+												/>
 
-									}
-						
+												<TableActionButton
+													materialIcon={
+														<DeleteOutlinedIcon
+															className={classes.iconos}
+														//onClick={() => handleSelectActionTags(3)}
+														/>
+													}
+												/>
+											</div>
+										}
+
+										{!external &&
+											<span style={{fontFamily: "Poppins", fontStyle:'oblique'}}>Active Directory</span>
+										}
+									</TableCell>
+
+								</TableRow>
+
+							})
+
+							}
+							{!userdata || userdata.length == 0 &&
+								<TableRow>
+									<TableCell
+										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
+										colSpan='5'
+									>
+										<IntlMessages id="users.nousers" />
+									</TableCell>
+								</TableRow>
+
+							}
+
 						</TableBody>
 					</Table>
 					<Grid className="mt-3 mb-3 mr-3"
-									container
-									justify="flex-end"
-									alignItems="flex-end"
+						container
+						justify="flex-end"
+						alignItems="flex-end"
 
-								>
-									{/* <Pagination 
+					>
+						<Pagination 
 									style={{color: '#369bff'}}
 									count={Math.ceil(totalItems/10)} 
 									color="primary" 
 									shape="rounded" 
 									total={totalItems} 
-									onChange={handleChangePage}/> */}
-								</Grid>
+									onChange={handleChangePage}/> 
+					</Grid>
 				</TableContainer>
-				<ModalEditUsers data={userEditData} close={()=> setEditActive(false)} open={editActive} />					
+				<ModalEditUsers data={userEditData} close={handleCloseEditUsers} open={editActive} />
 			</div>
 		</div>
 	)
 }
 
-export { DataTableUsers}
+export { DataTableUsers }

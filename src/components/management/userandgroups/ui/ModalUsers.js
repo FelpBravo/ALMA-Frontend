@@ -320,7 +320,6 @@ const ModalUsers = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            autoFocus
            // disabled={messageErrorName}
           >
            Crear

@@ -635,6 +635,7 @@
 	"folders.modal.field.position": "Posición",
 	"button.text.cancel": "Cancelar",
 	"button.text.save": "Guardar",
+	"button.text.edit": "Editar",
 	"tags.modal.title.create": "Crear etiqueta",
 	"tags.modal.title.edit": "Editar etiqueta",
 	"tags.title": "Administración de etiquetas",
@@ -679,7 +680,14 @@
 	"users.table.column4": "Estado",
 	"users.table.column5": "Acciones",
 	"users.title.creation": "Agregar nuevo usuario",
-	"users.title.edit": "Editar usuario"
+	"users.title.edit": "Editar usuario",
+	"users.nousers": "No hay usuarios registrados",
+	"users.firstName": "Nombres",
+	"users.lastName": "Apellidos ",
+	"users.email": "Correo electronico",
+	"users.validate.firstName": "Nombre invalido",
+	"users.validate.lastName": "Apellido invalido",
+	"users.validate.email": "Email invalido"
 
 	
 

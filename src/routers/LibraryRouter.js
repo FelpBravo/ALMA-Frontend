@@ -38,28 +38,34 @@ const LibraryRouter = () => {
 					path={["/directory/:id/:page","/directory/:id"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
+
 				<Route
 					path="/tags"
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
+
 				<Route
 					path="/management/folders"
 					component={asyncComponent(() => import('../components/management/folders/Folders'))}
 				/>
+
 				<Route
-					path="/management/Usersandgroups"
+					path={["/management/Usersandgroups/:id","/management/Usersandgroups"]}
 					component={asyncComponent(() => import('../components/management/userandgroups/UsersandGroup'))}
 				/>
+
 				<Route
 
 					path="/reports"
 					component={asyncComponent(() => import('../components/reports/Reports'))}
 				/>
+
 				<Route
 
 					path="/document/:id/edit"
 					component={asyncComponent(() => import('../components/documents/EditUpload'))}
 				/>
+
 				<Route
 
 					path="/document/:id/version"

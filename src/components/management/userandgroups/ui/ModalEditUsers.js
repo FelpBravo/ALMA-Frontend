@@ -15,7 +15,7 @@ import { editUserData } from 'actions/adminUsers';
 const ModalEditUsers = (props) => {
   const { data, close, open } = props
 
-  const { id, firstName, lastName, email } = data
+  const { id, firstName = '', lastName = '', email = ''  } = data
 
   const dispatch = useDispatch();
 
@@ -23,18 +23,24 @@ const ModalEditUsers = (props) => {
 
   const [dataEdit, setDataEdit] = useState({});
 
+  const [validation, setValidation] = useState({ firstName: true, lastName:true, email:true})
 
-  const [messageErrorName, setMessageErrorName] = useState(null);
+  const letra = /^[a-zñ ]+$/i
+
+  const correo = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
 
   useEffect(() => {
-
-    setDataEdit({
-      firstName: firstName,
-      lastName: lastName,
-      email: email
-    })
-
-  }, [data])
+      setDataEdit({
+        firstName: firstName,
+        lastName: lastName,
+        email: email
+      })
+      if(id){
+        setValidation({ firstName:!letra.test(firstName) || firstName.length < 3 ? false : true, lastName:!letra.test(lastName) || lastName.length < 3? false : true, email:email.length < 3? false : true})
+      }
+   }, [id,firstName,lastName,email])
+   
+  
 
   const handleClose = () => {
     close()
@@ -42,16 +48,30 @@ const ModalEditUsers = (props) => {
 
   const handleOnChange = ({ target }) => {
     const { name, value } = target
-    setDataEdit({ ...dataEdit, [name]: value })
+    switch (name) {
+      case 'firstName':
+        setValidation({...validation,['firstName']:!letra.test(value) || value.length < 3 ? false: true})
+      break;
+      case 'lastName':
+        setValidation({...validation,['lastName']:!letra.test(value) || value.length < 3 ? false: true})
+      break;
+      case 'email':
+        setValidation({...validation,['email']:!correo.test(value)? false : true})
+      break;
+      default:
+        break;
+    }
+    setDataEdit({ ...dataEdit, [name]: value})
   }
 
   const handleOnSave = ()=>{
     dispatch(editUserData(authUser,id,dataEdit))
-    setTimeout(() => {
       close()
-    }, 300);
-    
   }
+
+ 
+
+
 
 
   return (
@@ -68,7 +88,6 @@ const ModalEditUsers = (props) => {
           <IntlMessages id="users.title.edit" /> <span style={{ color: '#3699FF' }} >{id}</span>
 
         </DialogTitle>
-
         <DialogContent>
           <Grid container spacing={1}>
             <Grid item xs={6}>
@@ -76,11 +95,14 @@ const ModalEditUsers = (props) => {
                 value={dataEdit.firstName}
                 name='firstName'
                 fullWidth
-                label="Nombres"
+                label={<IntlMessages id="users.firstName" />}
                 type="text"
                 variant="outlined"
                 size="small"
                 onChange={event => handleOnChange(event)}
+                error={!validation.firstName}
+                helperText={validation.firstName? ' ': <IntlMessages id="users.validate.firstName" />}
+
               />
             </Grid>
             <Grid item xs={6}>
@@ -88,24 +110,28 @@ const ModalEditUsers = (props) => {
                 value={dataEdit.lastName}
                 name='lastName'
                 fullWidth
-                label="Apellidos"
+                label={<IntlMessages id="users.lastName" />}
                 type="text"
                 variant="outlined"
                 size="small"
                 onChange={event => handleOnChange(event)}
+                error={!validation.lastName}
+                helperText={validation.lastName? ' ': <IntlMessages id="users.validate.lastName" />}
               />
             </Grid>
           </Grid>
           <Grid item xs className="mt-3">
             <TextField
               value={dataEdit.email}
-              label="Correo electrónico"
+              label={<IntlMessages id="users.email" />}
               name='email'
+              error={!validation.email}
               type="text"
               variant="outlined"
               size="small"
               fullWidth
               onChange={event => handleOnChange(event)}
+              helperText={validation.email? ' ': <IntlMessages id="users.validate.email" />}
             />
           </Grid>
 
@@ -125,10 +151,9 @@ const ModalEditUsers = (props) => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            autoFocus
-            disabled={messageErrorName}
+            disabled={validation.email && validation.firstName && validation.lastName? false : true}
           >
-            Editar
+             <IntlMessages id="button.text.edit" />
           </Button>
 
         </DialogActions>
