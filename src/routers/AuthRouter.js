@@ -19,7 +19,6 @@ export const AuthRouter = () => {
 				path="/auth/signup"
 				component={SignUp}
 			/>
-
 			<Redirect to="/auth/signin" />
 
 		</Switch>

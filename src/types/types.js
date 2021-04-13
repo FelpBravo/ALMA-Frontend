@@ -119,6 +119,11 @@ export const types = {
 	informationRemoveAll: 'Information Remove All',
 
 	addBreadcrumbs: 'Add BreadCrumbs',
-	createBreadcrumbs: 'Create BreadCrumbs'
+	createBreadcrumbs: 'Create BreadCrumbs',
 
+	sharedDocumentSetValue: 'shared Document Set Value',
+	saveSharedFile: 'Save new shared file',
+	saveFileStatus: "save file status data",
+	sharedFileClearErrors: "Clear fields errors",
+	sharedFileNotFoundError: "Not found file shared"
 }

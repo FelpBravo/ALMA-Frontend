@@ -33,6 +33,7 @@ export const MainRouter = () => {
 	return (
 		<ConnectedRouter history={history}>
 			<Switch>
+
 				<Route
 					path="/"
 					component={AppRouter}
