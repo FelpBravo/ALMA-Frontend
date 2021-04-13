@@ -1,62 +1,64 @@
-import { Grid, makeStyles, Paper, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
-import Button from 'components/ui/Button'
-import GetAppIcon from '@material-ui/icons/GetApp';
-import AlmaLogo from 'assets/images/alma-logo.jpg';
-import { useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { sharedDocumentSetValue, startDownloadFile, startVerifyFile } from 'actions/sharedDocument';
-import DialogPassword from './DialogPassword';
-import IntlMessages from 'util/IntlMessages';
+import { Grid, makeStyles, Paper } from '@material-ui/core';
+import { startDownloadFile, startVerifyFile } from 'actions/sharedDocument';
 import FileSaver from 'file-saver';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import AliveFile from './alive';
+import ExpiredFile from './expired';
+import LoadingFile from './loading';
 
 const useStyles = makeStyles(theme => ({
     rootPaper: {
         padding: theme.spacing(4),
     },
-    button: {
-        padding: theme.spacing(2, 8),
-        fontSize: 16
-    },
 }));
 
-export default function DownloadFilePage() {
-    const { fields, fileName } = useSelector(state => state.sharedDocument);
+
+export default function DownloadFile() {
+    const { documentId } = useParams();
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+    const classes = useStyles();
+    const { fields, fileName, errors, alive } = useSelector(state => state.sharedDocument);
     const [file, setFile] = useState(null)
-    const classes = useStyles()
+    const [goDownload, setGoDownload] = useState(false);
 
-    const handleDownload = () => file && FileSaver.saveAs(file?.data, file?.fileName)
+    useEffect(() => {
+        dispatch(startVerifyFile(documentId));
+    }, [documentId])
 
-    return <Grid container alignItems="center" justify="center" >
-        <DialogPassword file={file} setFile={setFile} />
+    const handleGetFile = (directDownload = false) => {
+        setLoading(true);
+        dispatch(startDownloadFile(documentId, fields?.password, fileName, file, setFile, setLoading, setGoDownload, directDownload))
+    }
+
+    useEffect(() => {
+        if (goDownload && file) {
+            FileSaver.saveAs(file?.data, file?.fileName)
+            setGoDownload(false);
+        };
+    }, [goDownload, file])
+
+
+    const getByStatus = () => {
+        switch (true) {
+            case alive:
+                return <AliveFile file={file} handleGetFile={handleGetFile} loading={loading} />
+
+            case alive === false:
+                return <ExpiredFile />
+
+            default:
+                return <LoadingFile />
+        }
+    }
+
+    return (<Grid container alignItems="center" justify="center" >
         <Grid item md={8}>
             <Paper elevation={3} className={classes.rootPaper}>
-                <Grid direction="column" spacing={8} container alignItems="center" justify="center" >
-                    {
-                        <>
-                            <Grid item md>
-                                <img style={{ height: 250 }} src={AlmaLogo} alt="alma logo" />
-                            </Grid>
-                            <Grid item md>
-                                <h1>{fileName}</h1>
-                            </Grid>
-                            <Grid item md>
-                                <Button
-                                    className={classes.button}
-                                    startIcon={<GetAppIcon size="large" />}
-                                    variant="contained"
-                                    size="large"
-                                    disabled={!file || !fields?.password}
-                                    onClick={handleDownload}
-                                    color="secondary">
-                                    <IntlMessages id="downloadFile.shared.button.download" />
-                                </Button>
-                            </Grid>
-                        </>
-                    }
-
-                </Grid>
+                {getByStatus()}
             </Paper>
         </Grid>
-    </Grid>
+    </Grid >)
 }

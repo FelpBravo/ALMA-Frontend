@@ -61,19 +61,20 @@ export const startVerifyFile = (fileId) => {
 	}
 };
 
-export const startDownloadFile = (fileId, password, fileName, setFile, setLoading) => {
+export const startDownloadFile = (fileId, password, fileName, file, setFile, setLoading, setGoDownload, directDownload) => {
 	return async (dispatch) => {
 
 		try {
-			const {data} = await postDownloadFile(fileId, password);
-			setFile({data, fileName})
+			if (!file) {
+				const { data } = await postDownloadFile(fileId, password);
+				setFile({ data, fileName })
+			}
 
 		} catch (error) {
 			dispatch(saveFileStatus(fileId, { errors: { password: "Contraseña incorrecta" } })); //While backend return errors 
-
-			console.log(error);
 		} finally {
 			setLoading(false);
+			setGoDownload(directDownload)
 		}
 	}
 };

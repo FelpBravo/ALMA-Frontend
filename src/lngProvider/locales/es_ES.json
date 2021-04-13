@@ -316,6 +316,8 @@
 	"downloadFile.shared.dialog.message.protected": "está protegido. Ingrese la contraseña para abrir el documento.",
 	"downloadFile.shared.button.download": "Descargar",
 	"downloadFile.shared.dialog.title": "Contraseña",
+	"downloadFile.shared.expired.title": "¡Enlace expirado!",
+	"downloadFile.shared.expired.subtitle": "Parece que este enlace ya ha caducado. Pero no te preocupes, puedes solicitar uno nuevo.",
 	
 	"todo": "Que hacer",
 	"todo.addTask": "AGREGAR TAREA",

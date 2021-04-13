@@ -1,42 +1,28 @@
-import { Grid, makeStyles, Paper, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
-import Button from 'components/ui/Button'
-import GetAppIcon from '@material-ui/icons/GetApp';
-import AlmaLogo from 'assets/images/alma-logo.jpg';
-import { useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearErrors, sharedDocumentSetValue, startDownloadFile, startVerifyFile } from 'actions/sharedDocument';
+import { CircularProgress, DialogTitle, Divider, Grid, makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
-import { CircularProgress, DialogTitle, Divider, } from '@material-ui/core';
-import IntlMessages from 'util/IntlMessages';
+import { clearErrors, sharedDocumentSetValue } from 'actions/sharedDocument';
+import Button from 'components/ui/Button';
 import { isEmpty } from 'lodash-es';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles(theme => ({
-
-}));
+    description:{
+        textAlign: 'justify'
+    }
+})); 
 
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 
-
-export default function DialogPassword({ file, setFile }) {
-    const { documentId } = useParams();
+export default function DialogPassword({ file, handleGetFile, loading }) {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
     const classes = useStyles();
     const { fields, fileName, errors } = useSelector(state => state.sharedDocument);
     const errorPassword = Boolean(errors?.password)
-
-    useEffect(() => {
-        dispatch(startVerifyFile(documentId));
-    }, [documentId])
-
-    const handleDownload = () => {
-        setLoading(true);
-        dispatch(startDownloadFile(documentId, fields?.password, fileName, setFile, setLoading))
-    }
 
     const handleOnChange = ({ target }) => {
         const { name, value } = target;
@@ -59,7 +45,7 @@ export default function DialogPassword({ file, setFile }) {
         <DialogContent>
             <Grid container spacing={2}>
                 <Grid item md={12}>
-                    <h5 style={{ textAlign: 'justify' }}><strong>{`${fileName} `}</strong>
+                    <h5 className={classes.description}><strong>{`${fileName} `}</strong>
                         <IntlMessages id="downloadFile.shared.dialog.message.protected" />
                     </h5>
                 </Grid>
@@ -83,7 +69,7 @@ export default function DialogPassword({ file, setFile }) {
 
         <DialogActions className={classes.dialogActions}>
             <Button
-                onClick={handleDownload}
+                onClick={() => handleGetFile(false)}
                 variant="contained"
                 color="primary"
                 autoFocus
