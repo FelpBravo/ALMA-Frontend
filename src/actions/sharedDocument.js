@@ -31,9 +31,17 @@ const saveFileStatus = (documentId, data) => {
 	}
 };
 
+const fileNotFound = (documentId, data) => {
+	return {
+		type: types.sharedFileNotFoundError,
+		payload: {}
+	}
+};
+
+
 export const clearErrors = () => {
 	return {
-		type: types.sharedFieldClearErrors,
+		type: types.sharedFileClearErrors,
 	}
 };
 
@@ -56,6 +64,10 @@ export const startVerifyFile = (fileId) => {
 			const resp = await getFileStatus(fileId);
 			dispatch(saveFileStatus(fileId, resp.data));
 		} catch (error) {
+			const status = error?.response?.status
+			if (status === 404){
+				dispatch(fileNotFound())
+			}
 			console.log(error);
 		}
 	}

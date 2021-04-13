@@ -318,7 +318,8 @@
 	"downloadFile.shared.dialog.title": "Contraseña",
 	"downloadFile.shared.expired.title": "¡Enlace expirado!",
 	"downloadFile.shared.expired.subtitle": "Parece que este enlace ya ha caducado. Pero no te preocupes, puedes solicitar uno nuevo.",
-	
+	"downloadFile.shared.notFound.title": "Archivo no encontrado",
+	"downloadFile.shared.notFound.subtitle": "No se encontró la URL solicitada. Compruebe que el enlace sea correcto.",
 	"todo": "Que hacer",
 	"todo.addTask": "AGREGAR TAREA",
 	"todo.all": "Todas",

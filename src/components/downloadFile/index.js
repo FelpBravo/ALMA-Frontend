@@ -4,8 +4,9 @@ import FileSaver from 'file-saver';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import IntlMessages from 'util/IntlMessages';
 import AliveFile from './alive';
-import ExpiredFile from './expired';
+import ErrorFile from './error';
 import LoadingFile from './loading';
 
 const useStyles = makeStyles(theme => ({
@@ -46,8 +47,15 @@ export default function DownloadFile() {
             case alive:
                 return <AliveFile file={file} handleGetFile={handleGetFile} loading={loading} />
 
+            case errors?.notFound:
+                return <ErrorFile
+                    title={<IntlMessages id="downloadFile.shared.notFound.title" />}
+                    description={<IntlMessages id="downloadFile.shared.notFound.subtitle" />} />
+
             case alive === false:
-                return <ExpiredFile />
+                return <ErrorFile
+                    title={<IntlMessages id="downloadFile.shared.expired.title" />}
+                    description={<IntlMessages id="downloadFile.shared.expired.subtitle" />} />
 
             default:
                 return <LoadingFile />

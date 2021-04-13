@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function ExpiredFile() {
+export default function ExpiredFile({ title, description}) {
     const classes = useStyles()
 
     return <Grid direction="column" spacing={8} container alignItems="center" justify="center" >
@@ -24,10 +24,10 @@ export default function ExpiredFile() {
         </Grid>
         <Grid item md className={classes.root}>
             <h1 className={classes.text}>
-                <IntlMessages id="downloadFile.shared.expired.title" />
+                {title}
             </h1>
             <h5 className={classes.text}>
-                <IntlMessages id="downloadFile.shared.expired.subtitle" />
+                {description}
             </h5>
         </Grid>
     </Grid>

@@ -19,7 +19,7 @@ export const sharedDocumentReducer = (state = initialState, action) => {
                 ...state,
                 fields: { ...state.fields, [name]: value },
             }
-        
+
         case types.saveSharedFile:
             const { token, documentId } = action.payload
 
@@ -28,17 +28,25 @@ export const sharedDocumentReducer = (state = initialState, action) => {
                 token,
                 documentId,
             }
-        
+
         case types.saveFileStatus:
             return {
                 ...state,
                 ...payload,
             }
 
-        case types.sharedFieldClearErrors:
+        case types.sharedFileNotFoundError:
             return {
                 ...state,
-                errors:{},
+                errors: {
+                    notFound: true
+                },
+            }
+
+        case types.sharedFileClearErrors:
+            return {
+                ...state,
+                errors: {},
             }
 
         default:
