@@ -25,6 +25,13 @@ const validateUsers = (authUser, idUser) => {
 		},
 	});
 };
+const searchUsersPage = (authUser, search,page, maxItems) => {
+	return axiosInstance.post(`/users/user/search/${search}/paged`, {page, maxItems},{
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
 
 const addUsers = (authUser, id, firstName, lastName, email, password) => {
 	return axiosInstance.post(`/users/user`,
@@ -69,4 +76,5 @@ export {
     infoUsers,
     validateUsers,
     statusUsers,
+	searchUsersPage,
 }

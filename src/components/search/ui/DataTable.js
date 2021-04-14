@@ -78,18 +78,21 @@ const DataTable = () => {
 	const history = useHistory();
 
 	const dispatch = useDispatch();
+
 	const location = useLocation();
 
 	const { documents = {}, fields = [], textSearch = '' } = useSelector(state => state.searchs);
+
 	const { data = [], totalItems = 0 } = documents;
+
 	const { filters } = fields;
 
 	
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 
 	const { id, page } = useParams()
-	const { path, url } = useRouteMatch();
 
+	const { path, url } = useRouteMatch();
 
 	let page_url = 1
 	if(page){

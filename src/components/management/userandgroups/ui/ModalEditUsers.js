@@ -5,7 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useParams,  } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, Grid } from '@material-ui/core';
 import { editUserData } from 'actions/adminUsers';
@@ -15,7 +15,7 @@ import { editUserData } from 'actions/adminUsers';
 const ModalEditUsers = (props) => {
   const { data, close, open } = props
 
-  const { id, firstName = '', lastName = '', email = ''  } = data
+  const { id, firstName = '', lastName = '', email = '' , search } = data
 
   const dispatch = useDispatch();
 
@@ -28,6 +28,14 @@ const ModalEditUsers = (props) => {
   const letra = /^[a-zñ ]+$/i
 
   const correo = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
+
+  const { page } = useParams()
+
+  let page_url = 1
+
+	if(page){
+		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,'') : 1
+	}
 
   useEffect(() => {
       setDataEdit({
@@ -65,7 +73,7 @@ const ModalEditUsers = (props) => {
   }
 
   const handleOnSave = ()=>{
-    dispatch(editUserData(authUser,id,dataEdit))
+     search? dispatch(editUserData(authUser,id,dataEdit,page_url,search)) :dispatch(editUserData(authUser,id,dataEdit,page_url))
       close()
   }
 
@@ -84,9 +92,7 @@ const ModalEditUsers = (props) => {
         fullWidth={true}
       >
         <DialogTitle id="form-dialog-title" >
-
           <IntlMessages id="users.title.edit" /> <span style={{ color: '#3699FF' }} >{id}</span>
-
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={1}>

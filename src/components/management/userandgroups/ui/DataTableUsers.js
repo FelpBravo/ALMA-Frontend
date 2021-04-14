@@ -3,13 +3,12 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
+import { useHistory, useParams,useRouteMatch ,useLocation } from 'react-router-dom';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { startReportsLoading } from 'actions/reports'
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
 import TableActionButton from 'components/search/ui/TableActionButton';
@@ -17,7 +16,7 @@ import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import { startUsersInitLoading, editUserStatus } from 'actions/adminUsers';
+import { startUsersInitLoading, editUserStatus,userSearchLoading } from 'actions/adminUsers';
 import ModalEditUsers from './ModalEditUsers';
 
 
@@ -41,7 +40,24 @@ const DataTableUsers = () => {
 
 	const isMounted = useRef(true)
 	const history = useHistory()
+
 	const dispatch = useDispatch()
+
+	const useQuery = () => new URLSearchParams(useLocation().search);
+
+	let query = useQuery();
+
+	const search = query.get("search")
+
+	const { path, url } = useRouteMatch();
+
+	const { page } = useParams()
+
+	let page_url = 1
+
+	if(page){
+		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,'') : 1
+	}
 
 	const { authUser } = useSelector(state => state.auth)
 
@@ -52,11 +68,18 @@ const DataTableUsers = () => {
 	const [userdata, setUserdata] = useState([])
 
 	const [userEditData, setUserEditData] = useState({})
+
 	const [editActive, setEditActive] = useState(false)
 
 	useEffect(() => {
-
-		dispatch(startUsersInitLoading(authUser));
+		if(search){
+			dispatch(userSearchLoading(authUser,search,page_url))
+		}
+		else
+		{
+			dispatch(startUsersInitLoading(authUser,page_url));
+		}
+		
 
 	}, [dispatch,authUser]);
 
@@ -64,7 +87,6 @@ const DataTableUsers = () => {
 		setUserdata(data)
 	}, [data])
 
-	const [page, setPage] = useState(0)
 
 
 
@@ -73,9 +95,8 @@ const DataTableUsers = () => {
 		const findUser = userdata.find(user => user.id === id)
 		findUser.enabled = checked
 		setUserdata([...userdata])
-		dispatch(editUserStatus(authUser, id, checked))
-
-
+		search?	dispatch(editUserStatus(authUser, id, checked,page_url,search)) : dispatch(editUserStatus(authUser, id, checked,page_url))
+		
 	};
 
 
@@ -85,12 +106,8 @@ const DataTableUsers = () => {
 		}
 	}, [])
 
-	const handleChangePage = (event, page) => {
-
-	};
-
-	const handleOpenEditUsers = (id, firstName, lastName, email) => {
-		setUserEditData({ id, firstName, lastName, email })
+	const handleOpenEditUsers = (id, firstName, lastName, email, search) => {
+		setUserEditData({ id, firstName, lastName, email, search })
 		setEditActive(true)
 	}
 
@@ -99,11 +116,24 @@ const DataTableUsers = () => {
 		setEditActive(false) 
 	}
 
+	const handleChangePage = (event, page) => {
+		if(search){
+			dispatch(userSearchLoading(authUser,search,page_url))
+			history.push(page != 1? `/management/usersandgroups/${page}?search=${search}`: `/management/usersandgroups?search=${search}`);
+		}
+		else
+		{
+			dispatch(startUsersInitLoading(authUser,page));
+			history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
+		}
+	
+	
+	}
+
 
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
 				<TableContainer component={Paper}>
 					<Table size="small" aria-label="a dense table">
 						<TableHead>
@@ -152,7 +182,7 @@ const DataTableUsers = () => {
 													materialIcon={
 														<BorderColorOutlinedIcon
 															className={classes.iconos}
-															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email)}
+															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email,search)}
 														/>
 													}
 												/>

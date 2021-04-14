@@ -50,7 +50,7 @@ const LibraryRouter = () => {
 				/>
 
 				<Route
-					path={["/management/Usersandgroups/:id","/management/Usersandgroups"]}
+					path={["/management/usersandgroups/:id","/management/usersandgroups"]}
 					component={asyncComponent(() => import('../components/management/userandgroups/UsersandGroup'))}
 				/>
 

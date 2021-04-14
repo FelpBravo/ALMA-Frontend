@@ -4,10 +4,12 @@ import {
 	getUsers,
 	editUsers,
 	statusUsers,
-	validateUsers
+	validateUsers,
+	searchUsersPage
 } from 'services/usersService';
+import { PagesOutlined } from '@material-ui/icons';
 
-export const startUsersInitLoading = (authUser) => {
+export const startUsersInitLoading = (authUser,page) => {
 	return async (dispatch) => {
 
 		try {
@@ -31,7 +33,7 @@ export const startUsersInitLoading = (authUser) => {
 
 	}
 };
-export const editUserData = (authUser, idUser, data) => {
+export const editUserData = (authUser, idUser, data,page,search) => {
 	return async (dispatch) => {
 		try {
 			Swal.fire({
@@ -42,9 +44,9 @@ export const editUserData = (authUser, idUser, data) => {
 			});
 			Swal.showLoading();
 			await editUsers(authUser, idUser, data).then(() => {
-				dispatch(startUsersInitLoading(authUser))
+				search? dispatch(userSearchLoading(authUser,search,page)) : dispatch(startUsersInitLoading(authUser,page))
 			}).catch(() => {
-				dispatch(startUsersInitLoading(authUser))
+				search? dispatch(userSearchLoading(authUser,search,page)) : dispatch(startUsersInitLoading(authUser,page))
 			})
 		} catch (error) {
 			console.log(error);
@@ -54,7 +56,7 @@ export const editUserData = (authUser, idUser, data) => {
 	}
 };
 
-export const editUserStatus = (authUser, idUser, status) => {
+export const editUserStatus = (authUser, idUser, status,page,search) => {
 	return async (dispatch) => {
 		try {
 			Swal.fire({
@@ -66,10 +68,33 @@ export const editUserStatus = (authUser, idUser, status) => {
 			Swal.showLoading();
 
 			await statusUsers(authUser, idUser, status).then(() => {
-				dispatch(startUsersInitLoading(authUser))
+				search? dispatch(userSearchLoading(authUser,search,page)) : dispatch(startUsersInitLoading(authUser,page))
 			}).catch(() => {
-				dispatch(startUsersInitLoading(authUser))
+				search? dispatch(userSearchLoading(authUser,search,page)) : dispatch(startUsersInitLoading(authUser,page))
 			})
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+	}
+};
+
+export const userSearchLoading = (authUser, search,page) => {
+	return async (dispatch) => {
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+			Swal.showLoading();
+
+			const resp = await searchUsersPage(authUser,search,page,10)
+			dispatch(usersInitLoaded(resp.data))
+
 
 		} catch (error) {
 			console.log(error);
