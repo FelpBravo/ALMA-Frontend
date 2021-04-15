@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, InputBase, Grid, makeStyles, Paper } from '@material-ui/core';
+import { Button, InputBase, Grid, makeStyles, Paper, OutlinedInput } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory,useLocation } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
@@ -85,24 +85,23 @@ const SearchUsers = () => {
 		<div className="row">
 		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 					<form onSubmit={handleOnSearch}>
-					<Grid container spacing={2}>
+					<Grid container spacing={1}>
 						<Grid item xs={6}>
-							<Paper className={classes.root}>
-								<SearchIcon color="primary" />
-								<InputBase
-									className={classes.input}
-									value={searchText}
-									name="inputSearch"
-									fullWidth
-									placeholder="Buscar por nombre de usuario"
-									onChange={handleOnChange}
-									required
-								/>
-							</Paper>
+						<OutlinedInput
+						    style={{height: 41, fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
+							value={searchText}
+							name="inputSearch"
+							fullWidth
+							placeholder="Buscar usuario"
+							onChange={handleOnChange}
+							required
+							startAdornment={<SearchIcon color="primary" />}
+							
+						/>
 							<span className="text-danger text-error">{messageError}</span>
 						</Grid>
 
-						<Grid item xs={2}>
+						<Grid item xs={3}>
 							<Button
 								style={{ paddingTop: "10px", paddingBottom: "10px", fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
 								disabled={disabledButton}
@@ -115,17 +114,18 @@ const SearchUsers = () => {
 							</Button>
 						</Grid>
 					
-						<Grid xs={4} container justify="flex-end">
-							<div style={{ border:'1px solid "#3699FF'}}>
-							<Link component="button"
-							 variant="body2" 
+						<Grid xs={3} container 
+						//justify="flex-end"
+						>
+							<Link 
+							component="button"
+							variant="body2" 
 							onClick={() => handleSelectNew()}
-							style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, }}
+							style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, marginLeft:10}}
 							>
-							    <AddIcon style={{fontSize:30, color:"#3699FF"}}/>
+							    <AddIcon style={{fontSize:30, color:"#3699FF", marginLeft:10}}/>
 							    Crear nuevo usuario
-							</Link>	
-							</div>			
+							</Link>			
 									
 						</Grid>
 

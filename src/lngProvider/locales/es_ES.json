@@ -675,10 +675,12 @@
 
 	"users.result": "Resultado usuarios",
 	"users.table.column1": "Usuario",
-	"users.table.column2": "Nombre completo",
-	"users.table.column3": "Correo electrónico",
+	"users.table.column2": "Nombre",
+	"users.table.column3": "Email",
 	"users.table.column4": "Estado",
 	"users.table.column5": "Acciones",
+	"users.table.column6": "Empresa",
+	"users.table.column7": "Departamento",
 	"users.title.creation": "Agregar nuevo usuario",
 	"users.title.edit": "Editar usuario",
 	"users.nousers": "No hay usuarios registrados",
@@ -687,7 +689,8 @@
 	"users.email": "Correo electronico",
 	"users.validate.firstName": "Nombre invalido",
 	"users.validate.lastName": "Apellido invalido",
-	"users.validate.email": "Email invalido"
+	"users.validate.email": "Email invalido",
+	"user.modal.title": "Agregar nuevo usuario"
 
 	
 

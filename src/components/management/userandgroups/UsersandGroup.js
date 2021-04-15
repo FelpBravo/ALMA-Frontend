@@ -26,7 +26,7 @@ function TabPanel(props) {
 		>
 			{value === index && (
 				<Box p={3}>
-					<Typography >{children}</Typography>
+					<Typography>{children}</Typography>
 				</Box>
 			)}
 		</div>
@@ -101,10 +101,11 @@ const Management = () => {
 									onChange={handleChange}
 									indicatorColor="primary"
 									textColor="primary"
+									variant="fullWidth"
 									centered
 								>
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none"}} label="Administración de usuarios" {...a11yProps(0)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none"}}label="Administración de grupos" {...a11yProps(1)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none",color:"#369bff"}} label="Administración de usuarios" {...a11yProps(0)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none", color:"#369bff"}}label="Administración de grupos" {...a11yProps(1)} />
 									
 								</Tabs>
 								<TabPanel value={value} index={0}>

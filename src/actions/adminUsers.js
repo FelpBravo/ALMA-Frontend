@@ -140,5 +140,16 @@ export const closeModalUsers = () => {
 		type: types.usersCloseModal,
 	}
 };
+export const openModalGroup = () => {
+	return {
+		type: types.groupOpenModal,
+	}
+};
+
+export const closeModalGroup = () => {
+	return {
+		type: types.groupCloseModal,
+	}
+};
 
 

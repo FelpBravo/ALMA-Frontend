@@ -18,6 +18,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { startUsersInitLoading, editUserStatus,userSearchLoading } from 'actions/adminUsers';
 import ModalEditUsers from './ModalEditUsers';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -148,6 +149,12 @@ const DataTableUsers = () => {
 									<IntlMessages id="users.table.column3" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="users.table.column6" />
+								</TableCell>
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="users.table.column7" />
+								</TableCell>
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="users.table.column4" />
 								</TableCell>
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
@@ -155,15 +162,20 @@ const DataTableUsers = () => {
 								</TableCell>
 							</TableRow>
 						</TableHead>
-						<TableBody>
+						<TableBody >
 
 							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external }, index) => {
 
-								return <TableRow key={index}>
-									<TableCell>{id}</TableCell>
-									<TableCell align="center">{firstName}{` `}{lastName}</TableCell>
-									<TableCell align="center">{email}</TableCell>
-									<TableCell align="center">
+								return <TableRow key={index} >
+									<TableCell style={{fontFamily:"Poppins"}}>
+										<AccountCircleOutlinedIcon className="mr-1"/>
+										{id}
+									</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>{firstName}{` `}{lastName}</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>{email}</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>Departamento</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>Empresa</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
 											<Switch
 												checked={enabled}
 												onChange={handleChange}
@@ -175,7 +187,7 @@ const DataTableUsers = () => {
 										
 
 									</TableCell>
-									<TableCell align="center" >
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
 										{external &&
 											<div className={classes.iconsHolder}>
 												<TableActionButton
@@ -199,7 +211,7 @@ const DataTableUsers = () => {
 										}
 
 										{!external &&
-											<span style={{fontFamily: "Poppins", fontStyle:'oblique'}}>Active Directory</span>
+											<span style={{fontFamily: "Poppins", fontStyle:'oblique', textAlign:"center"}}>Active Directory</span>
 										}
 									</TableCell>
 

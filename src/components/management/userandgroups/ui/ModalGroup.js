@@ -3,21 +3,15 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { makeStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 
 import IntlMessages from 'util/IntlMessages';
-import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
+
 import { Card, CardHeader, DialogTitle, Divider, InputBase, Paper, Grid} from '@material-ui/core';
-import {closeModalUsers,validateUserNickname ,nicknameValidate} from 'actions/adminUsers';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import {closeModalGroup ,validateUserNickname ,nicknameValidate} from 'actions/adminUsers';
 import Checkbox from '@material-ui/core/Checkbox';
-import SearchIcon from '@material-ui/icons/Search';
 import Alert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -59,60 +53,17 @@ const top100Films = [
 ];
  
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 'auto',
-  },
-  cardHeader: {
-    padding: theme.spacing(1, 2),
-    backgroundColor: '#E1F0FF'
-  },
-  list: {
-    width: "100%",
-    height: 230,
-    backgroundColor: theme.palette.background.paper,
-    overflow: 'auto',
-  },
-  button: {
-    margin: theme.spacing(0.5, 0),
-  },
-  input: {
-		color: '#3699FF',
-		fontSize: '14px',
-		radius: '4px',
-		fontWeight: 500,
-		fontFamily: "Poppins, sans-serif !important ",
-
-		"&::placeholder": {
-			fontFamily: "Poppins, sans-serif !important ",
-			color: '#3699FF',
-			align: 'left',
-			fontWeight: 500,
-		}
-	},
-  base: {
-		border: "none",
-		boxShadow: "none",
-		padding: "2px 4px",
-		display: "flex",
-		alignItems: "center",
-		padding: 6,
-	},
-
-}));
-
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const ModalUsers = () => {
-  const classes = useStyles();
+const ModalGroup = () => {
+ 
 
   const dispatch = useDispatch();
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal ,validateNickname } = useSelector(state => state.adminUsers);
+  const { openModal1 ,validateNickname } = useSelector(state => state.adminUsers);
 
   const [value, setValue] = useState('');
 
@@ -139,7 +90,7 @@ const ModalUsers = () => {
 
 
   const handleClose = () => {
-    dispatch(closeModalUsers());
+    dispatch(closeModalGroup());
   }
 
   const handleOnChange = ({target})=>{
@@ -176,7 +127,7 @@ const ModalUsers = () => {
 
     <div>
       <Dialog
-        open={openModal}
+        open={openModal1}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
@@ -185,102 +136,28 @@ const ModalUsers = () => {
         <DialogTitle id="form-dialog-title">
         <div style={{fontFamily:'Poppins', fontSize:"16px"}}>
         
-            <IntlMessages id="user.modal.title" />
+            <IntlMessages id="Crear nuevo grupo" />
         
         </div>
         </DialogTitle>
 
         <DialogContent>
-          <form onSubmit={handleOnSave}>
-          <Grid container spacing={1}>
+        
           <Grid item xs={6}>
               <TextField
                   //value={value}
                   fullWidth
-                  label="Nombres"
+                  label="Nombre del grupo"
                   type="text"
                   variant="outlined"
-                  size="small"
                   required
                   //onChange={handleOnChange}
               />  
           </Grid>  
-          <Grid item xs={6}>
-              <TextField
-                  //value={value}
-                  fullWidth
-                  label="Apellidos"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  required
-                // onChange={handleOnChange}
-              />
-          </Grid>
-          </Grid>
-          <Grid container spacing={1} className="mt-3" >
-          <Grid item xs={6}>
-              <TextField
-                  //value={value}
-                  fullWidth
-                  label="Empresa"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  required
-                  //onChange={handleOnChange}
-              />  
-          </Grid>  
-          <Grid item xs={6}>
-              <TextField
-                  //value={value}
-                  fullWidth
-                  label="Departamento"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  required
-                // onChange={handleOnChange}
-              />
-          </Grid>
-          </Grid>
-          <Grid item xs className="mt-3">
-              <TextField
-                  //value={value}
-                  label="Correo electrónico"
-                  type="email"
-                  required
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  //onChange={handleOnChange}
-                />
-          </Grid>
-          <Grid item xs={6} className="mt-3">
-              <TextField
-                 // value={value}
-                  fullWidth
-                  label="Usuario"
-                  name='usuario'
-                  error={validateNickname || messageErrorUser? true : false}
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  required
-                  onChange={handleOnChange}
-                  helperText={!validateNickname? (messageErrorUser? messageErrorUser : '' ): 'Usuario ya existe'}
-              /> 
-             
-          </Grid>
-          </form>
        
-          <Alert severity="info" style={{fontFamily:"Poppins", color:"#3699FF", fontSize:"12px"}} className="mt-3">
-            La contraseña de generará automatícamente y llegara al correo indicado.
-          </Alert>
-
           <Divider className="mt-3"/>
         
-        <h5 className="mt-3">Grupos Asignados</h5>
+        <h5 className="mt-3">Asignación de usuarios</h5>
 
                 <Autocomplete
                   multiple
@@ -347,4 +224,4 @@ const ModalUsers = () => {
   )
 }
 
-export default ModalUsers;
+export default ModalGroup;

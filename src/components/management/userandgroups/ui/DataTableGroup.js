@@ -77,8 +77,6 @@ const DataTableGroup = () => {
 									<IntlMessages id="Grupos" />
 								</TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
-                                    <GroupAddOutlinedIcon/>
-                                    Crear nuevo Grupo
 								</TableCell>
 							</TableRow>
 						</TableHead>
@@ -86,7 +84,8 @@ const DataTableGroup = () => {
 							
 						 <TableRow>
 									<TableCell>
-                                        <GroupOutlinedIcon color="primary" className="mr-2"/>
+									   
+									    <img src={require("assets/images/group.png")}/>
                                         Nombre grupo
                                     </TableCell>
 									<TableCell>

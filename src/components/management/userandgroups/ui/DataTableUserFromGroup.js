@@ -12,7 +12,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles} from '@material-ui/core/styles';
-import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+import AddIcon from '@material-ui/icons/Add';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -75,7 +77,7 @@ const DataTableUserFromGroup = () => {
 									
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
-								<PersonAddOutlinedIcon/>
+								<AddIcon/>
                                 Agregar Usuario
 								</TableCell>
 							</TableRow>
@@ -83,7 +85,10 @@ const DataTableUserFromGroup = () => {
 						<TableBody>
 							
 						<TableRow >
-									<TableCell>Usuario</TableCell>
+									<TableCell>
+									<AccountCircleOutlinedIcon className="mr-1" fontSize="small" />
+									Usuario
+									</TableCell>
 									<TableCell>Correo electrónico</TableCell>
 									<TableCell>
 									<div className={classes.iconsHolder}>							

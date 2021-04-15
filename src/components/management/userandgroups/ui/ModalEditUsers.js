@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams,  } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
-import { DialogTitle, Grid } from '@material-ui/core';
+import { DialogTitle, Divider, Grid } from '@material-ui/core';
 import { editUserData } from 'actions/adminUsers';
 
 
@@ -92,8 +92,9 @@ const ModalEditUsers = (props) => {
         fullWidth={true}
       >
         <DialogTitle id="form-dialog-title" >
-          <IntlMessages id="users.title.edit" /> <span style={{ color: '#3699FF' }} >{id}</span>
+            <IntlMessages id="users.title.edit" />
         </DialogTitle>
+
         <DialogContent>
           <Grid container spacing={1}>
             <Grid item xs={6}>
@@ -126,6 +127,30 @@ const ModalEditUsers = (props) => {
               />
             </Grid>
           </Grid>
+          <Grid container spacing={1} className="mt-3" >
+          <Grid item xs={6}>
+              <TextField
+                  //value={value}
+                  fullWidth
+                  label="Empresa"
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                  //onChange={handleOnChange}
+              />  
+          </Grid>  
+          <Grid item xs={6}>
+              <TextField
+                  //value={value}
+                  fullWidth
+                  label="Departamento"
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                // onChange={handleOnChange}
+              />
+          </Grid>
+          </Grid>
           <Grid item xs className="mt-3">
             <TextField
               value={dataEdit.email}
@@ -140,20 +165,44 @@ const ModalEditUsers = (props) => {
               helperText={validation.email? ' ': <IntlMessages id="users.validate.email" />}
             />
           </Grid>
+          <Grid item xs={6} className="mt-3">
+              <TextField
+                  value={id}
+                  fullWidth
+                  label="Usuario"
+                  name='usuario'
+                  //error={validateNickname || messageErrorUser? true : false}
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                  disabled
+                  //onChange={handleOnChange}
+                  //helperText={!validateNickname? (messageErrorUser? messageErrorUser : '' ): 'Usuario ya existe'}
+              /> 
+             
+          </Grid>
+
+          <Divider className="mt-3"/>
 
         </DialogContent>
 
-        <DialogActions>
+        <DialogActions style={{marginRight:12}}>
 
           <Button
             onClick={handleClose}
             variant="contained"
-            style={{ backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", border: "none", boxShadow: "none" }}
+            style={{
+              backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+              boxShadow: "none", height: '45px', width: '120px'
+            }}
           >
             <IntlMessages id="button.text.cancel" />
           </Button>
 
           <Button
+          style={{
+           fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
+          }}
             onClick={handleOnSave}
             variant="contained"
             color="primary"

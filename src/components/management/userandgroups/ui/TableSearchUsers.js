@@ -16,6 +16,7 @@ export const TableSearchUsers = () => {
 							<h3 className="mb-0">
 								<IntlMessages id="users.result" />
 							</h3>
+							<span className="user-description mt-2 mr-2">Mostrando todos los resultado</span>	
 							</div>
 							<div style={{color: '#FFA800'}} className="row ml-auto">		
 							</div>
