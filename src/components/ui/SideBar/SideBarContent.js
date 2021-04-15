@@ -48,7 +48,6 @@ const SideBarContent = () => {
 	const [folders, setFolders] = useState([]);
 
 	useEffect(() => {
-		console.log("prueba");
 
 		return () => {
 			isMounted.current = false;
