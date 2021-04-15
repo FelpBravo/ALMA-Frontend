@@ -16,6 +16,7 @@ import { AuthRouter } from 'routers/AuthRouter';
 import { PrivateRouter } from 'routers/PrivateRouter';
 import { applyTheme } from 'helpers/applyTheme';
 import DownloadFilePage from 'components/downloadFile';
+import ChangePasswordPage from 'components/changePassword';
 
 const App = (props) => {
 
@@ -72,6 +73,12 @@ const App = (props) => {
 									exact
 									path="/download/:documentId"
 									component={DownloadFilePage}
+								/>
+
+								<Route
+									exact
+									path="/change-password/:token"
+									component={ChangePasswordPage}
 								/>
 
 								<PublicRouter

@@ -686,8 +686,13 @@
 	"comment.newcomment.title": "Escribe tu nuevo comentario",
 	"comment.attachment.title": "Adjuntar documento",
 	"comment.button.comment": "Comentar",
-	"comment.button.totalcomments": "Comentarios"
-
+	"comment.button.totalcomments": "Comentarios",
+	
+	"changePassword.paper.title": "Cambiar contraseña",
+	"changePassword.input.password": "Contraseña",
+	"changePassword.input.passwordVerify": "Repetir Contraseña",
+	"changePassword.input.verificationCode": "Código de verificación",
+	"changePassword.button.submit": "Guardar cambios"
 	
 
 }
