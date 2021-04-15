@@ -85,7 +85,7 @@ const ChangePasswordPage = () => {
 
                             <TextField
                                 size="small"
-                                type="passwordVerify"
+                                type="password"
                                 label={<IntlMessages id="changePassword.input.passwordVerify" />}
                                 fullWidth
                                 onChange={(event) => setPasswordVerify(event.target.value)}
