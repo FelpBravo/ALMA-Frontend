@@ -10,10 +10,13 @@ import { CheckBox, LockOpen, PermIdentity } from '@material-ui/icons';
 import { uiShowLoading } from 'actions/uiAuth';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { isEmpty, omit } from 'lodash-es';
+import { useParams } from 'react-router';
+import { startVerifyPasswordStatus } from 'actions/changePassword';
 
 const exp = /^(?=.*\d{2,})(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$/g
 
 const ChangePasswordPage = () => {
+    const { tokenId } = useParams();
 
     const dispatch = useDispatch();
     const { loader } = useSelector(state => state.uiAuth);
@@ -24,6 +27,12 @@ const ChangePasswordPage = () => {
     const [errors, setErrors] = useState({});
 
     console.log("errors", errors)
+
+    useEffect(() => {
+        console.log("tokenId", tokenId)
+        tokenId && dispatch(startVerifyPasswordStatus(tokenId));
+    }, [tokenId])
+
     useEffect(() => {
         switch (true) {
 

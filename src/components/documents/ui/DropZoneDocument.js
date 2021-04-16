@@ -22,7 +22,6 @@ export function DropZoneDocument( {document, setFiles} ){
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const [dataDialogPreview, setDataDialogPreview] = useState(null);
-	const [count, setCount] = useState(0)
 
 
 	// ID DOCUMENTO URL	
@@ -35,6 +34,7 @@ export function DropZoneDocument( {document, setFiles} ){
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	const nDocuments = documentsList?.length;
 	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
+	const [count, setCount] = useState(nDocuments)
 
 	const data = chunk(documentsList, nColumns)
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({

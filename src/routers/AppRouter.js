@@ -77,7 +77,7 @@ const App = (props) => {
 
 								<Route
 									exact
-									path="/change-password/:token"
+									path="/change-password/:tokenId"
 									component={ChangePasswordPage}
 								/>
 
