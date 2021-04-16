@@ -688,7 +688,7 @@
 	"comment.button.comment": "Comentar",
 	"comment.button.totalcomments": "Comentarios",
 	
-	"changePassword.paper.title": "Cambiar contraseña",
+	"changePassword.paper.title": "Actualizar contraseña",
 	"changePassword.input.password": "Contraseña",
 	"changePassword.input.passwordVerify": "Repetir Contraseña",
 	"changePassword.input.verificationCode": "Código de verificación",

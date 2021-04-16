@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,9 @@ import { FormControlLabel, InputAdornment, Typography } from '@material-ui/core'
 import { CheckBox, LockOpen, PermIdentity } from '@material-ui/icons';
 import { uiShowLoading } from 'actions/uiAuth';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { isEmpty, omit } from 'lodash-es';
+
+const exp = /^(?=.*\d{2,})(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$/g
 
 const ChangePasswordPage = () => {
 
@@ -18,13 +21,32 @@ const ChangePasswordPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVerify, setPasswordVerify] = useState('');
+    const [errors, setErrors] = useState({});
 
+    console.log("errors", errors)
+    useEffect(() => {
+        switch (true) {
 
-    const handleLogin = (e) => {
+            case isEmpty(password) || isEmpty(passwordVerify):
+            case password === passwordVerify:
+                setErrors({ ...omit(errors, 'passwordVerify') })
+                break;
+    
+            case password !== passwordVerify:
+                setErrors({ ...errors, passwordVerify: "Las contraseñas no coinciden" })
+                break;
+                
+        
+            default:
+                break;
+        }
+    }, [password, passwordVerify])
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(uiShowLoading());
-        dispatch(startUserSignInLogin(email, password));
+        // dispatch(uiShowLoading());
+        // dispatch(startUserSignInLogin(email, password));
     }
 
     return (
@@ -44,7 +66,7 @@ const ChangePasswordPage = () => {
                     </div>
 
                     <div className="app-login-form">
-                        <form onSubmit={handleLogin}>
+                        <form onSubmit={handleSubmit}>
 
                             <TextField
                                 size="small"
@@ -89,10 +111,12 @@ const ChangePasswordPage = () => {
                                 label={<IntlMessages id="changePassword.input.passwordVerify" />}
                                 fullWidth
                                 onChange={(event) => setPasswordVerify(event.target.value)}
-                                defaultValue={password}
+                                defaultValue={passwordVerify}
                                 margin="normal"
                                 variant="outlined"
                                 className="mt-1 my-sm-3"
+                                error={!isEmpty(errors['passwordVerify'])}
+                                helperText={errors['passwordVerify']}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -104,7 +128,7 @@ const ChangePasswordPage = () => {
 
 
                             <Button
-                                disabled={!email || !password || !passwordVerify}
+                                disabled={!isEmpty(errors) || !email || !password || !passwordVerify}
                                 className="mt-3"
                                 variant="contained"
                                 type="submit"
