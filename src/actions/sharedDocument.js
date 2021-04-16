@@ -45,6 +45,12 @@ export const clearErrors = () => {
 	}
 };
 
+export const clearValues = () => {
+	return {
+		type: types.sharedFileClearValues,
+		payload: {}
+	}
+};
 export const startCreateSharedLink = (authUser, fileId, password, expirationDate) => {
 	return async (dispatch) => {
 

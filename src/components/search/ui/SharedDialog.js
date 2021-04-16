@@ -8,15 +8,17 @@ import IntlMessages from 'util/IntlMessages';
 import { CircularProgress, DialogTitle, Divider, Grid, InputBase, Paper, Tooltip } from '@material-ui/core';
 import Button from 'components/ui/Button';
 import IconButton from '@material-ui/core/IconButton';
-import { sharedDocumentSetValue, startCreateSharedLink } from 'actions/sharedDocument';
+import { clearValues, sharedDocumentSetValue, startCreateSharedLink } from 'actions/sharedDocument';
 import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import LinkIcon from '@material-ui/icons/Link';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { AliceBlue } from 'helpers/themes/indigoTheme';
 import moment from 'moment';
+import { get } from 'lodash-es';
 
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
+const fieldWithoutPassword = <IntlMessages id="table.shared.dialog.field.withoutPassword" />
 
 const useStyles = makeStyles(theme => ({
   dialogActions: {
@@ -74,8 +76,17 @@ const SharedDialog = ({ data, handleClose }) => {
   };
 
   useEffect(() => {
+    dispatch(clearValues());
+  }, [data])
+
+  useEffect(() => {
     setLoading(false);
   }, [token])
+
+  useEffect(() => {
+    if (!checked)
+      dispatch(sharedDocumentSetValue("password", ""));
+  }, [checked])
 
   const handleOnChange = ({ target }) => {
     const { name, value } = target;
@@ -134,13 +145,14 @@ const SharedDialog = ({ data, handleClose }) => {
             <Grid item md={11}>
               <TextField
                 name="password"
-                label={fieldName}
+                label={!checked ? fieldWithoutPassword : fieldName}
                 type="text"
                 variant="outlined"
                 fullWidth
                 disabled={!checked}
                 size="small"
                 type="password"
+                value={get(fields,'password','')}
                 onChange={handleOnChange}
               />
             </Grid>
@@ -162,11 +174,10 @@ const SharedDialog = ({ data, handleClose }) => {
                 />
               </Paper>
               <Tooltip title={<IntlMessages id="table.shared.dialog.field.copyLink" />}>
-                <IconButton aria-label="copy">
+                <IconButton aria-label="copy" onClick={() => navigator.clipboard.writeText(SHARED_URL)}>
                   <FileCopyIcon
                     color="primary"
-                    fontSize="inherit"
-                    onClick={() => navigator.clipboard.writeText(SHARED_URL)} />
+                    fontSize="inherit" />
                 </IconButton>
               </Tooltip>
             </Grid>
