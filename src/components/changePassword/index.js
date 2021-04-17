@@ -130,7 +130,7 @@ const ChangePasswordPage = () => {
                     </div>
 
                     <div className="app-login-form">
-                        {pageFound
+                        {!pageFound
                             ? <Grid container alignItems="center" justify="center" direction="column">
                                 <ErrorOutlineIcon color="error" style={{ fontSize: 72 }} />
                                 <h2>
