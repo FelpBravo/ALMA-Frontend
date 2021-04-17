@@ -48,6 +48,10 @@ export const sharedDocumentReducer = (state = initialState, action) => {
                 ...state,
                 errors: {},
             }
+        
+        case types.sharedFileClearValues:
+            return initialState;
+
 
         default:
             return state;

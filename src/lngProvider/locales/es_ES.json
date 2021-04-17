@@ -306,6 +306,7 @@
 
 	"table.shared.dialog.title": "Compartir documento",
 	"table.shared.dialog.field.password": "Contraseña",
+	"table.shared.dialog.field.withoutPassword": "Sin contraseña",
 	"table.shared.dialog.tooltip.title": "Compartir",
 	"table.shared.dialog.field.expirationDate": "Fecha de vencimiento",
 	"table.shared.dialog.field.copyLink": "Copiar enlace",

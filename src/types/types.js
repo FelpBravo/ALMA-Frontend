@@ -126,6 +126,8 @@ export const types = {
 	saveFileStatus: "save file status data",
 	sharedFileClearErrors: "Clear fields errors",
 	sharedFileNotFoundError: "Not found file shared",
+	sharedFileClearValues: "Clear all values file shared"
+	sharedFileNotFoundError: "Not found file shared",
 
 	restorePasswordSaveStatus: "Save status restore password",
 	restorePasswordSuccess: "Restore password verificate success"
