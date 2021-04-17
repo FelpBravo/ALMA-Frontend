@@ -1,4 +1,4 @@
-import { Grid, InputAdornment, Snackbar } from '@material-ui/core';
+import { Grid, InputAdornment, makeStyles, Snackbar } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
@@ -15,10 +15,21 @@ import IntlMessages from 'util/IntlMessages';
 
 const regularExp = /^(?=.*\d{2,})(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$/g
 
+const useStyles = makeStyles(theme => ({
+    rules: {
+        margin: 0,
+    },
+    titlePasswordPolicy: {
+        margin: 0,
+        color: theme.palette.primary.main
+    },
+}));
+
 const ChangePasswordPage = () => {
     const { tokenId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
+    const classes = useStyles();
 
     const { processStatus, invalidCode } = useSelector(state => state.restorePassword);
 
@@ -119,7 +130,7 @@ const ChangePasswordPage = () => {
                     </div>
 
                     <div className="app-login-form">
-                        {!pageFound
+                        {pageFound
                             ? <Grid container alignItems="center" justify="center" direction="column">
                                 <ErrorOutlineIcon color="error" style={{ fontSize: 72 }} />
                                 <h2>
@@ -170,6 +181,30 @@ const ChangePasswordPage = () => {
                                         ),
                                     }}
                                 />
+                                <h6 className={classes.titlePasswordPolicy}>
+                                    <IntlMessages id="changePassword.passwordPolicy.title" />
+                                </h6>
+                                <ul>
+                                    <li>
+                                        <h6 className={classes.rules}>
+                                            <IntlMessages id="changePassword.passwordPolicy.rule.one" />
+                                        </h6>
+                                    </li>
+                                    <li>
+                                        <h6 className={classes.rules}><IntlMessages id="changePassword.passwordPolicy.rule.two" />
+                                        </h6>
+                                    </li>
+                                    <li>
+                                        <h6 className={classes.rules}>
+                                            <IntlMessages id="changePassword.passwordPolicy.rule.three" />
+                                        </h6>
+                                    </li>
+                                    <li>
+                                        <h6 className={classes.rules}>
+                                            <IntlMessages id="changePassword.passwordPolicy.rule.four" />
+                                        </h6>
+                                    </li>
+                                </ul>
 
                                 <TextField
                                     size="small"
