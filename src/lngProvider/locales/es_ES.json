@@ -690,9 +690,12 @@
 	
 	"changePassword.paper.title": "Actualizar contraseña",
 	"changePassword.input.password": "Contraseña",
-	"changePassword.input.passwordVerify": "Repetir Contraseña",
+	"changePassword.input.rePassword": "Repetir Contraseña",
 	"changePassword.input.verificationCode": "Código de verificación",
-	"changePassword.button.submit": "Guardar cambios"
+	"changePassword.button.submit": "Guardar cambios",
+	"changePassword.paper.title.notFound": "No encontrado",
+	"changePassword.paper.subtitle.notFound": "Comprueba que el enlace sea correcto",
+	"changePassword.paper.title.success": "Contraseña actualizada con éxito, en segundos serás redireccionado a autenticarte..."
 	
 
 }

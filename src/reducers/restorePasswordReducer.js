@@ -2,6 +2,8 @@ import { types } from 'types/types';
 
 const initialState = {
     alive: null,
+    processStatus: null,
+    invalidCode: null,
 }
 
 export const restorePasswordReducer = (state = initialState, action) => {
@@ -10,6 +12,12 @@ export const restorePasswordReducer = (state = initialState, action) => {
             return {
                 ...state,
                 alive: action.payload.alive,
+            }
+        
+        case types.restorePasswordSuccess:
+            return {
+                ...state,
+                ...action.payload,
             }
 
         default:
