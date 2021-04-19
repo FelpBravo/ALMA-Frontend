@@ -10,7 +10,7 @@ const downloadDocument = (authUser, id) => {
 };
 
 const deleteDocument = (authUser, id) => {
-	return axiosInstance.delete(`/files/${id}/delete`, {
+	return axiosInstance.delete(`/files/${id}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
