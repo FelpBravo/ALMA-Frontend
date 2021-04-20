@@ -687,8 +687,19 @@
 	"comment.newcomment.title": "Escribe tu nuevo comentario",
 	"comment.attachment.title": "Adjuntar documento",
 	"comment.button.comment": "Comentar",
-	"comment.button.totalcomments": "Comentarios"
-
+	"comment.button.totalcomments": "Comentarios",
 	
-
+	"changePassword.paper.title": "Actualizar contraseña",
+	"changePassword.input.password": "Contraseña",
+	"changePassword.input.rePassword": "Repetir Contraseña",
+	"changePassword.input.verificationCode": "Código de verificación",
+	"changePassword.button.submit": "Guardar cambios",
+	"changePassword.paper.title.notFound": "No encontrado",
+	"changePassword.paper.subtitle.notFound": "Comprueba que el enlace sea correcto",
+	"changePassword.paper.title.success": "Contraseña actualizada con éxito, en segundos serás redireccionado a autenticarte...",
+	"changePassword.passwordPolicy.title": "Debe tener al menos:",
+	"changePassword.passwordPolicy.rule.one": "8 caracteres alfanuméricos",
+	"changePassword.passwordPolicy.rule.two": "2 dígitos",
+	"changePassword.passwordPolicy.rule.three": "1 letra mayúscula",
+	"changePassword.passwordPolicy.rule.four": "1 carácter especial"
 }
