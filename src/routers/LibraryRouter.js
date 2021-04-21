@@ -2,8 +2,12 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import asyncComponent from 'util/asyncComponent';
+import { PrivateRouter } from 'routers/PrivateRouter';
+import { useSelector } from 'react-redux';
 
 const LibraryRouter = () => {
+	const { authUser } = useSelector(({ auth }) => auth);
+
 	return (
 		<div className="app-wrapper">
 			<Switch>
@@ -62,6 +66,13 @@ const LibraryRouter = () => {
 
 					path="/document/:id/info"
 					component={asyncComponent(() => import('../components/search/ui/Information/Information'))}
+				/>
+
+				<PrivateRouter
+					exact
+					authUser={Boolean(authUser)}
+					path="/group-permissions"
+					component={asyncComponent(() => import('../components/groupPermissions/index'))}
 				/>
 
 				<Redirect to="/dashboard" />
