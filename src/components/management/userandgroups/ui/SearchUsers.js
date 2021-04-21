@@ -6,7 +6,7 @@ import IntlMessages from 'util/IntlMessages';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
-import { openModalUsers } from 'actions/adminUsers';
+import { openModalUsers } from 'actions/adminUsersAndGroup';
 import ModalUsers from './ModalUsers';
 
 
@@ -60,7 +60,7 @@ const SearchUsers = () => {
 	},[search])
 
     const handleSelectNew = () => {
-		dispatch(openModalUsers());
+		dispatch(openModalUsers());	
 	}
 
 	const handleOnChange = ({target}) =>{

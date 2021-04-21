@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams,  } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, Divider, Grid } from '@material-ui/core';
-import { editUserData } from 'actions/adminUsers';
+import { editUserData } from 'actions/adminUsersAndGroup';
 
 
 
@@ -90,14 +90,28 @@ const ModalEditUsers = (props) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
+        maxWidth={'md'}
       >
         <DialogTitle id="form-dialog-title" >
             <IntlMessages id="users.title.edit" />
         </DialogTitle>
 
         <DialogContent>
-          <Grid container spacing={1}>
-            <Grid item xs={6}>
+        <Grid item xs={4}>
+              <TextField
+                  value={id}
+                  fullWidth
+                  label="Usuario"
+                  name='usuario'
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                  disabled
+              /> 
+             
+          </Grid>
+          <Grid container spacing={1} className="mt-3" >
+            <Grid item xs={4} >
               <TextField
                 value={dataEdit.firstName}
                 name='firstName'
@@ -112,7 +126,7 @@ const ModalEditUsers = (props) => {
 
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4}>
               <TextField
                 value={dataEdit.lastName}
                 name='lastName'
@@ -126,32 +140,7 @@ const ModalEditUsers = (props) => {
                 helperText={validation.lastName? ' ': <IntlMessages id="users.validate.lastName" />}
               />
             </Grid>
-          </Grid>
-          <Grid container spacing={1} className="mt-3" >
-          <Grid item xs={6}>
-              <TextField
-                  //value={value}
-                  fullWidth
-                  label="Empresa"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  //onChange={handleOnChange}
-              />  
-          </Grid>  
-          <Grid item xs={6}>
-              <TextField
-                  //value={value}
-                  fullWidth
-                  label="Departamento"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                // onChange={handleOnChange}
-              />
-          </Grid>
-          </Grid>
-          <Grid item xs className="mt-3">
+            <Grid item xs={4}>
             <TextField
               value={dataEdit.email}
               label={<IntlMessages id="users.email" />}
@@ -165,23 +154,32 @@ const ModalEditUsers = (props) => {
               helperText={validation.email? ' ': <IntlMessages id="users.validate.email" />}
             />
           </Grid>
-          <Grid item xs={6} className="mt-3">
+          </Grid>
+          <Grid container spacing={1} className="mt-3" >
+          <Grid item xs={4}>
               <TextField
-                  value={id}
+                  //value={value}
                   fullWidth
-                  label="Usuario"
-                  name='usuario'
-                  //error={validateNickname || messageErrorUser? true : false}
+                  label="Empresa"
                   type="text"
                   variant="outlined"
                   size="small"
-                  disabled
                   //onChange={handleOnChange}
-                  //helperText={!validateNickname? (messageErrorUser? messageErrorUser : '' ): 'Usuario ya existe'}
-              /> 
-             
+              />  
+          </Grid>  
+          <Grid item xs={4}>
+              <TextField
+                  //value={value}
+                  fullWidth
+                  label="Departamento"
+                  type="text"
+                  variant="outlined"
+                  size="small"
+                // onChange={handleOnChange}
+              />
           </Grid>
-
+          </Grid>
+          
           <Divider className="mt-3"/>
 
         </DialogContent>

@@ -5,9 +5,11 @@ import {
 	editUsers,
 	statusUsers,
 	validateUsers,
-	searchUsersPage
+	searchUsersPage,
+	departmentsUsers,
+	companyUsers
 } from 'services/usersService';
-import { PagesOutlined } from '@material-ui/icons';
+import { dependenciesGroup, profilesGroup } from 'services/groupService';
 
 export const startUsersInitLoading = (authUser,page) => {
 	return async (dispatch) => {
@@ -114,11 +116,91 @@ export const validateUserNickname = (authUser, idUser) => {
 		}
 	}
 };
+export const companyUsersInitLoading = (authUser) => {
+	return async (dispatch) => {
+
+		try {
+			const resp = await companyUsers(authUser);
+			dispatch(companyInitLoaded(resp.data))
+			console.log("la dataaaa", resp.data)
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+export const departmentsUsersInitLoading = (authUser) => {
+	return async (dispatch) => {
+
+		try {
+			const resp = await departmentsUsers(authUser);
+			dispatch(departmentsInitLoaded(resp.data))
+			console.log("la dataaaa", resp.data)
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+export const dependenciesGroupInitLoading = (authUser) => {
+	return async (dispatch) => {
+
+		try {
+			const resp = await dependenciesGroup(authUser);
+			dispatch(dependenciesInitLoaded(resp.data))
+			console.log("la dataaaa", resp.data)
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+export const profilesGroupInitLoading = (authUser) => {
+	return async (dispatch) => {
+
+		try {
+			const resp = await profilesGroup(authUser);
+			dispatch(profilesInitLoaded(resp.data))
+			console.log("la dataaaa", resp.data)
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
 
 export const usersInitLoaded = (userslist) => {
 	return {
 		type: types.usersInitLoaded,
 		payload: userslist,
+	}
+};
+
+export const companyInitLoaded = (company) => {
+	return {
+		type: types.companyInitLoaded,
+		payload: company,
+	}
+};
+
+export const departmentsInitLoaded = (departments) => {
+	return {
+		type: types.departmentsInitLoaded,
+		payload: departments,
 	}
 };
 
@@ -149,6 +231,20 @@ export const openModalGroup = () => {
 export const closeModalGroup = () => {
 	return {
 		type: types.groupCloseModal,
+	}
+};
+
+export const dependenciesInitLoaded = (dependencies) => {
+	return {
+		type: types.dependenciesInitLoaded,
+		payload: dependencies,
+	}
+};
+
+export const profilesInitLoaded = (profiles) => {
+	return {
+		type: types.profilesInitLoaded,
+		payload: profiles,
 	}
 };
 

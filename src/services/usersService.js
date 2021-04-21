@@ -3,7 +3,7 @@ import { axiosInstance } from '../config/axios-instance';
 const token = localStorage.getItem('token');
 
 const getUsers = (authUser,page,maxItems) => {
-	return axiosInstance.post('/users/user/getAll',{page,maxItems}, {
+	return axiosInstance.post('/users/getAll',{page,maxItems}, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -11,7 +11,7 @@ const getUsers = (authUser,page,maxItems) => {
 };
 
 const infoUsers = (authUser, id) => {
-	return axiosInstance.get(`/users/user/id/${id}`, {
+	return axiosInstance.get(`/users/id/${id}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -19,14 +19,31 @@ const infoUsers = (authUser, id) => {
 };
 
 const validateUsers = (authUser, idUser) => {
-	return axiosInstance.get(`/users/user/validate/${idUser}`, {
+	return axiosInstance.get(`/users/validate/${idUser}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
 	});
 };
+
+const departmentsUsers = (authUser) => {
+	return axiosInstance.get(`/users/lists/departments`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
+const companyUsers = (authUser) => {
+	return axiosInstance.get(`/users/lists/companies`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
 const searchUsersPage = (authUser, search,page, maxItems) => {
-	return axiosInstance.post(`/users/user/search/${search}/paged`, {page, maxItems},{
+	return axiosInstance.post(`/users/search/${search}/paged`, {page, maxItems},{
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -34,7 +51,7 @@ const searchUsersPage = (authUser, search,page, maxItems) => {
 };
 
 const addUsers = (authUser, id, firstName, lastName, email, password) => {
-	return axiosInstance.post(`/users/user`,
+	return axiosInstance.post(`/users`,
 		{ id, firstName, lastName, email, password:"password" },
 		{
 			headers: {
@@ -44,8 +61,8 @@ const addUsers = (authUser, id, firstName, lastName, email, password) => {
 	);
 };
 
-const editUsers = (authUser,idUser, data) => {
-	return axiosInstance.put(`/users/user/${idUser}`,data,
+const editUsers = (authUser, idUser, data) => {
+	return axiosInstance.put(`/users/${idUser}`,data,
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,
@@ -55,7 +72,7 @@ const editUsers = (authUser,idUser, data) => {
 };
 
 const statusUsers = (authUser, idUser, status) => {
-	return axiosInstance.put(`/users/user/${idUser}/status`,{ enabled:status },
+	return axiosInstance.put(`/users/${idUser}/status`,{ enabled:status },
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,
@@ -63,9 +80,6 @@ const statusUsers = (authUser, idUser, status) => {
 		}
 	);
 };
-
-
-
 
 
 
@@ -77,4 +91,6 @@ export {
     validateUsers,
     statusUsers,
 	searchUsersPage,
+	departmentsUsers,
+	companyUsers,
 }

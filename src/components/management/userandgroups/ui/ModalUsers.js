@@ -4,61 +4,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
-
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
-
 import IntlMessages from 'util/IntlMessages';
-import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
-import { Card, CardHeader, DialogTitle, Divider, InputBase, Paper, Grid} from '@material-ui/core';
-import {closeModalUsers,validateUserNickname ,nicknameValidate} from 'actions/adminUsers';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import SearchIcon from '@material-ui/icons/Search';
+import { DialogTitle, Divider, InputBase, Paper, Grid, Chip, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
+import {closeModalUsers,validateUserNickname ,nicknameValidate, companyUsersInitLoading, departmentsUsersInitLoading} from 'actions/adminUsersAndGroup';
 import Alert from '@material-ui/lab/Alert';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-  { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  { title: 'The Lord of the Rings: The Two Towers', year: 2002 },
-  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: 'Goodfellas', year: 1990 },
-  { title: 'The Matrix', year: 1999 },
-  { title: 'Seven Samurai', year: 1954 },
-  { title: 'Star Wars: Episode IV - A New Hope', year: 1977 },
-  { title: 'City of God', year: 2002 },
-  { title: 'Se7en', year: 1995 },
-  { title: 'The Silence of the Lambs', year: 1991 },
-  { title: "It's a Wonderful Life", year: 1946 },
-  { title: 'Life Is Beautiful', year: 1997 },
-  { title: 'The Usual Suspects', year: 1995 },
-  { title: 'Léon: The Professional', year: 1994 },
-  { title: 'Spirited Away', year: 2001 },
-  { title: 'Saving Private Ryan', year: 1998 },
-  { title: 'Once Upon a Time in the West', year: 1968 },
-  { title: 'American History X', year: 1998 },
-  { title: 'Interstellar', year: 2014 },
-];
- 
-
+import SelectAndChips from 'components/ui/SelectAndChips';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,20 +29,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(0.5, 0),
   },
-  input: {
-		color: '#3699FF',
-		fontSize: '14px',
-		radius: '4px',
-		fontWeight: 500,
-		fontFamily: "Poppins, sans-serif !important ",
-
-		"&::placeholder": {
-			fontFamily: "Poppins, sans-serif !important ",
-			color: '#3699FF',
-			align: 'left',
-			fontWeight: 500,
-		}
-	},
   base: {
 		border: "none",
 		boxShadow: "none",
@@ -99,11 +37,12 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		padding: 6,
 	},
+  formControl: {
+    width: "100%",
+  },
 
 }));
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const ModalUsers = () => {
   const classes = useStyles();
@@ -112,7 +51,7 @@ const ModalUsers = () => {
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal ,validateNickname } = useSelector(state => state.adminUsers);
+  const { openModal ,validateNickname, company, departments} = useSelector(state => state.adminUsers);
 
   const [value, setValue] = useState('');
 
@@ -121,22 +60,19 @@ const ModalUsers = () => {
   const [checked, setChecked] = React.useState([0]);
 
   const [dataUser,setDataUser ] = useState({})
+  
+  const [age, setAge] = React.useState('');
 
+    useEffect(() => {
 
+        dispatch(companyUsersInitLoading(authUser));
+        dispatch(departmentsUsersInitLoading(authUser));
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+    }, [dispatch]);
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
-
 
   const handleClose = () => {
     dispatch(closeModalUsers());
@@ -158,7 +94,10 @@ const ModalUsers = () => {
         }
       
         break;
-    
+      case 'company':
+        if(value === "other"){
+          
+        }
       default:
 
         break;
@@ -179,21 +118,20 @@ const ModalUsers = () => {
         open={openModal}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        fullWidth={true}
+        fullWidth
+        maxWidth={'md'}
       >
 
         <DialogTitle id="form-dialog-title">
         <div style={{fontFamily:'Poppins', fontSize:"16px"}}>
-        
             <IntlMessages id="user.modal.title" />
-        
         </div>
         </DialogTitle>
 
         <DialogContent>
           <form onSubmit={handleOnSave}>
           <Grid container spacing={1}>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
               <TextField
                   //value={value}
                   fullWidth
@@ -205,7 +143,7 @@ const ModalUsers = () => {
                   //onChange={handleOnChange}
               />  
           </Grid>  
-          <Grid item xs={6}>
+          <Grid item xs={4}>
               <TextField
                   //value={value}
                   fullWidth
@@ -217,34 +155,7 @@ const ModalUsers = () => {
                 // onChange={handleOnChange}
               />
           </Grid>
-          </Grid>
-          <Grid container spacing={1} className="mt-3" >
-          <Grid item xs={6}>
-              <TextField
-                  //value={value}
-                  fullWidth
-                  label="Empresa"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  required
-                  //onChange={handleOnChange}
-              />  
-          </Grid>  
-          <Grid item xs={6}>
-              <TextField
-                  //value={value}
-                  fullWidth
-                  label="Departamento"
-                  type="text"
-                  variant="outlined"
-                  size="small"
-                  required
-                // onChange={handleOnChange}
-              />
-          </Grid>
-          </Grid>
-          <Grid item xs className="mt-3">
+          <Grid item xs={4}>
               <TextField
                   //value={value}
                   label="Correo electrónico"
@@ -256,7 +167,42 @@ const ModalUsers = () => {
                   //onChange={handleOnChange}
                 />
           </Grid>
-          <Grid item xs={6} className="mt-3">
+          </Grid>
+          <Grid container spacing={1} className="mt-3" >
+          <Grid item xs={4}>
+            <FormControl  size="small" variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">Empresa</InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  name="company"
+                  onChange={handleChange}
+                  label="Empresa"
+                >
+                  {company.map((item) => {
+                  return(<MenuItem value={item}>{item}</MenuItem>)
+                  })}
+                </Select>
+            </FormControl>
+          </Grid>  
+          <Grid item xs={4}>
+            <FormControl  size="small" variant="outlined" className={classes.formControl}>
+                <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  //value={dep}
+                  onChange={handleChange}
+                  label="Departamento"
+                >
+                  {departments.map((dep) => {
+                  return(<MenuItem value={dep}>{dep}</MenuItem>)
+                 
+                  })}
+                </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={4}>
               <TextField
                  // value={value}
                   fullWidth
@@ -272,6 +218,7 @@ const ModalUsers = () => {
               /> 
              
           </Grid>
+          </Grid>
           </form>
        
           <Alert severity="info" style={{fontFamily:"Poppins", color:"#3699FF", fontSize:"12px"}} className="mt-3">
@@ -280,33 +227,9 @@ const ModalUsers = () => {
 
           <Divider className="mt-3"/>
         
-        <h5 className="mt-3">Grupos Asignados</h5>
+        <h5 className="mt-3">Asignar grupos</h5>
 
-                <Autocomplete
-                  multiple
-                  id="checkboxes-tags-demo"
-                  options={top100Films}
-                  disableCloseOnSelect
-                  getOptionLabel={(option) => option.title}
-                  renderOption={(option, { selected }) => (
-                    <React.Fragment>
-                      <Checkbox
-                        color="primary"
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.title}
-                    </React.Fragment>
-                  )}
-                  fullWidth
-                  color="primary"
-                  renderInput={(params) => (
-                    <TextField {...params} variant="outlined" label="Seleccionar grupos" placeholder="Buscar por nombre" />
-                  )}
-                />  
-          
+          <SelectAndChips/>
             
           <Divider className="mt-3"/>
         

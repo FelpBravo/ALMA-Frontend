@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 
 import { Card, CardHeader, DialogTitle, Divider, InputBase, Paper, Grid} from '@material-ui/core';
-import {closeModalGroup ,validateUserNickname ,nicknameValidate} from 'actions/adminUsers';
+import {closeModalGroup ,validateUserNickname ,nicknameValidate} from 'actions/adminUsersAndGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';

@@ -5,6 +5,10 @@ const initialState = {
     openModal1: false,
     userslist: [],
     validateNickname: false,
+    company: [],
+    departments: [],
+    dependencies: [],
+    profiles:[],
    
 }
 
@@ -15,7 +19,17 @@ export const adminUsersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userslist: action.payload,
+            } 
+        case types.companyInitLoaded:
+            return {
+                ...state,
+                company: action.payload,
             }
+        case types.departmentsInitLoaded:
+            return {
+                ...state,
+                departments: action.payload,
+                }
         case types.usersOpenModal:
             return {
                 ...state,
@@ -42,10 +56,17 @@ export const adminUsersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 validateNickname: action.payload
-                }
-    
-
-    
+            }
+        case types.dependenciesInitLoaded:
+            return {
+                ...state,
+                dependencies: action.payload,
+            }
+        case types.profilesInitLoaded:
+            return {
+                ...state,
+                profiles: action.payload,
+            }              
 
         default:
             return state;

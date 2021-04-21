@@ -8,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
 import ModalGroup from './ModalGroup';
-import { openModalGroup } from 'actions/adminUsers';
+import { openModalGroup } from 'actions/adminUsersAndGroup';
 
 
 const SearchUsers = () => {

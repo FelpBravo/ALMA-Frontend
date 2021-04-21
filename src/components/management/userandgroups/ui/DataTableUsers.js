@@ -16,7 +16,7 @@ import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import { startUsersInitLoading, editUserStatus,userSearchLoading } from 'actions/adminUsers';
+import { startUsersInitLoading, editUserStatus,userSearchLoading } from 'actions/adminUsersAndGroup';
 import ModalEditUsers from './ModalEditUsers';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
@@ -164,18 +164,18 @@ const DataTableUsers = () => {
 						</TableHead>
 						<TableBody >
 
-							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external }, index) => {
+							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external, company, department}, index) => {
 
 								return <TableRow key={index} >
-									<TableCell style={{fontFamily:"Poppins"}}>
+									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
 										<AccountCircleOutlinedIcon className="mr-1"/>
 										{id}
 									</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>{firstName}{` `}{lastName}</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>{email}</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>Departamento</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>Empresa</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{firstName}{` `}{lastName}</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{email}</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{department}</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{company}</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
 											<Switch
 												checked={enabled}
 												onChange={handleChange}
