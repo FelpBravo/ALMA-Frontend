@@ -53,15 +53,9 @@ const ModalUsers = () => {
 
   const { openModal ,validateNickname, company, departments} = useSelector(state => state.adminUsers);
 
-  const [value, setValue] = useState('');
-
   const [messageErrorUser, setMessageErrorUser] = useState(null);
 
-  const [checked, setChecked] = React.useState([0]);
-
-  const [dataUser,setDataUser ] = useState({})
-  
-  const [age, setAge] = React.useState('');
+  const [stateCompany,setStateCompany] = useState({ name:false,department:false  })
 
     useEffect(() => {
 
@@ -71,7 +65,7 @@ const ModalUsers = () => {
     }, [dispatch]);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+   
   };
 
   const handleClose = () => {
@@ -95,9 +89,21 @@ const ModalUsers = () => {
       
         break;
       case 'company':
-        if(value === "other"){
-          
+        if(value === "Other"){  
+          setStateCompany({ name:true, department:stateCompany.department})
+        }else
+        {
+          setStateCompany({ name:false, department:stateCompany.department})
         }
+      break
+      case 'department':
+        if(value === "Other"){  
+          setStateCompany({ name:stateCompany.name, department:true})
+        }else
+        {
+          setStateCompany({ name:stateCompany.name, department:false})
+        }
+      break
       default:
 
         break;
@@ -121,7 +127,6 @@ const ModalUsers = () => {
         fullWidth
         maxWidth={'md'}
       >
-
         <DialogTitle id="form-dialog-title">
         <div style={{fontFamily:'Poppins', fontSize:"16px"}}>
             <IntlMessages id="user.modal.title" />
@@ -176,7 +181,7 @@ const ModalUsers = () => {
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   name="company"
-                  onChange={handleChange}
+                  onChange={handleOnChange}
                   label="Empresa"
                 >
                   {company.map((item) => {
@@ -191,8 +196,8 @@ const ModalUsers = () => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  //value={dep}
-                  onChange={handleChange}
+                  name='department'
+                  onChange={handleOnChange}
                   label="Departamento"
                 >
                   {departments.map((dep) => {
@@ -218,6 +223,21 @@ const ModalUsers = () => {
               /> 
              
           </Grid>
+          {stateCompany.name &&
+          <Grid item xs={4}>
+          <TextField
+             // value={value}
+              fullWidth
+              label="Compañia"
+              name='Compañia'
+              type="text"
+              variant="outlined"
+              size="small"
+          /> 
+         
+      </Grid>
+
+          }
           </Grid>
           </form>
        
