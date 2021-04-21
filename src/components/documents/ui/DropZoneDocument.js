@@ -33,15 +33,13 @@ export function DropZoneDocument( {document, setFiles} ){
 
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	const nDocuments = documentsList?.length;
+	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
 	const [count, setCount] = useState(nDocuments)
 
 	useEffect(() => {
-		if(count === 0 )
+		if (count === 0)
 			setCount(nDocuments);
 	}, [nDocuments])
-
-	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
-	const [count, setCount] = useState(nDocuments)
 
 	const data = chunk(documentsList, nColumns)
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({
