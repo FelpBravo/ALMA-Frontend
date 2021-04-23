@@ -31,25 +31,32 @@ const ModalGroup = () => {
 
   const [messageErrorGroup, setMessageErrorGroup] = useState(null);
 
-  const [nameGroup, setNameGroup] = useState({ dependencie: '', profile: '' })
+  const [nameGroup, setNameGroup] = useState({ dependencie: '', profile: '' , fullnamegroup: ''})
+
+  useEffect(()=>{
+    setNameGroup({ dependencie: '', profile: '' , fullnamegroup: ''})
+  },[])
 
   const handleOnChangeName = ({ target }) => {
     const { name, value } = target
     console.log(name, value)
 
     switch (name) {
-      case 'names':
-        if(nameGroup.dependencie.length > 0 && nameGroup.profile.length > 0 && value.length > 6){
-            dispatch(validateGroupName(authUser, value))
-            console.log("soy",groupname)
-            setMessageErrorGroup()
-          }
-        break;
       case 'dependency':
-        setNameGroup({ dependencie: value, profile: nameGroup.profile })
+        setNameGroup({ dependencie: value, profile: nameGroup.profile, fullnamegroup: value+'_'+nameGroup.profile  })
+        if(value.length > 0 && nameGroup.profile.length > 0){
+          dispatch(validateGroupName(authUser, value+'_'+nameGroup.profile))
+          console.log("soy",groupname)
+          setMessageErrorGroup()
+        }
         break;
       case 'profile':
-        setNameGroup({ profile: value, dependencie: nameGroup.dependencie })
+        setNameGroup({ profile: value, dependencie: nameGroup.dependencie, fullnamegroup: nameGroup.dependencie+'_'+value  })
+        if(nameGroup.dependencie.length > 0 && value.length > 0){
+          dispatch(validateGroupName(authUser, nameGroup.dependencie+"_"+value))
+          console.log("soy",groupname)
+          setMessageErrorGroup()
+        }
         break;
       default:
 
@@ -123,7 +130,7 @@ const ModalGroup = () => {
             </Grid>
             <Grid item xs={4}>
               <TextField
-                value={nameGroup.dependencie + "_" + nameGroup.profile}
+                value={nameGroup.fullnamegroup}
                 fullWidth
                 size="small"
                 label="Nombre del grupo"
