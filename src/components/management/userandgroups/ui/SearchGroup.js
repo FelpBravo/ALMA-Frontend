@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Grid, OutlinedInput } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import IntlMessages from 'util/IntlMessages';
 import { searchSetText, startSearchLoading } from 'actions/search';
 import SearchIcon from '@material-ui/icons/Search';
@@ -9,60 +8,49 @@ import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
 import ModalGroup from './ModalGroup';
 import { openModalGroup } from 'actions/adminUsersAndGroup';
+import { useHistory,useLocation } from 'react-router-dom';
 
 
-const SearchUsers = () => {
+const SearchGroup = () => {
 
 	const { authUser } = useSelector(state => state.auth);
-
-	const { textSearch = '', fields } = useSelector(state => state.searchs);
-
-	const { maxTermLength = 20, minTermLength = 3 } = fields;
 
 	const dispatch = useDispatch();
 
 	const history = useHistory();
 
-	const [searchText, setSearchText] = useState(textSearch);
+	const useQuery = () => new URLSearchParams(useLocation().search);
+
+	let query = useQuery();
+
+	const search = query.get("search")
 
 	const [disabledButton, setDisabledButton] = useState(true);
+
 	const [messageError, setMessageError] = useState('');
 
-	useEffect(() => {
+	const [ searchText, setSearchText ] = useState('')
 
-		if (!searchText) {
-			setDisabledButton(true);
-			setMessageError('');
-			return;
+	useEffect(()=>{
+		setSearchText(search)
+	},[search])
+
+	const handleOnChange = ({target}) =>{
+		const { value } = target
+		if(value.length > 1){
+			setDisabledButton(false)
+			setMessageError('')
 		}
-
-		if (searchText.length < minTermLength) {
-			setDisabledButton(true);
-			setMessageError(`Minimo ${minTermLength} caracteres`);
-			return;
+		else
+		{
+			setDisabledButton(true)
+			setMessageError('Tiene que tener 3 caracteres como minimo')
 		}
-
-		if (searchText.length > maxTermLength) {
-			setDisabledButton(true);
-			setMessageError(`Máximo ${maxTermLength} caracteres`);
-			return;
-		}
-
-		setDisabledButton(false);
-		setMessageError('');
-
-	}, [searchText]);
-
-	const handleOnChange = ({ target }) => {
-		setSearchText(target.value);
-		dispatch(searchSetText(target.value));
+		setSearchText(value)
 	}
 
-	const handleSearch = (e) => {
-		e.preventDefault();
-		dispatch(startSearchLoading(authUser, searchText));
-
-		history.push(`/search`);
+	const handleOnSearch = ()=>{
+		history.push(`/management/usersandgroups?search=${searchText}`);
 	}
 	
 	const handleSelectNew = () => {
@@ -73,8 +61,7 @@ const SearchUsers = () => {
 	return (
 		<div className="row">
 		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-		<form //onSubmit={handleOnSearch}
-		>
+				<form onSubmit={handleOnSearch}>
 					<Grid container spacing={1}>
 						<Grid item xs={6}>
 						<OutlinedInput
@@ -132,4 +119,4 @@ const SearchUsers = () => {
 	)
 }
 
-export default SearchUsers;
+export default SearchGroup;

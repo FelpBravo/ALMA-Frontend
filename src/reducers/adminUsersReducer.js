@@ -5,10 +5,12 @@ const initialState = {
     openModal1: false,
     userslist: [],
     validateNickname: false,
-    company: [],
+    companys: [],
     departments: [],
     dependencies: [],
     profiles:[],
+    groupname: false,
+    grouplist: [],
    
 }
 
@@ -23,7 +25,7 @@ export const adminUsersReducer = (state = initialState, action) => {
         case types.companyInitLoaded:
             return {
                 ...state,
-                company: action.payload,
+                companys: action.payload,
             }
         case types.departmentsInitLoaded:
             return {
@@ -57,6 +59,11 @@ export const adminUsersReducer = (state = initialState, action) => {
                 ...state,
                 validateNickname: action.payload
             }
+        case types.groupValidateName:
+            return {
+                ...state,
+                groupname: action.payload
+                }              
         case types.dependenciesInitLoaded:
             return {
                 ...state,
@@ -66,8 +73,12 @@ export const adminUsersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 profiles: action.payload,
-            }              
-
+            }
+        case types.groupInitLoaded:
+            return {
+                ...state,
+                grouplist: action.payload,
+                } 
         default:
             return state;
     }

@@ -7,9 +7,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
-import {closeModalGroup , dependenciesGroupInitLoading, profilesGroupInitLoading} from 'actions/adminUsersAndGroup';
+import { closeModalGroup, dependenciesGroupInitLoading, profilesGroupInitLoading, validateGroupName } from 'actions/adminUsersAndGroup';
 import SelectAndChips from 'components/ui/SelectAndChips';
-import { DialogTitle, Divider, Grid, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
+import { DialogTitle, Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -20,28 +20,46 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ModalGroup = () => {
- 
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal1 ,dependencies, profiles } = useSelector(state => state.adminUsers);
+  const { openModal1, dependencies, profiles, groupname } = useSelector(state => state.adminUsers);
 
-  const [value, setValue] = useState('');
+  const [messageErrorGroup, setMessageErrorGroup] = useState(null);
 
-  const [messageErrorUser, setMessageErrorUser] = useState(null);
+  const [nameGroup, setNameGroup] = useState({ dependencie: '', profile: '' })
 
-  const [checked, setChecked] = React.useState([0]);
+  const handleOnChangeName = ({ target }) => {
+    const { name, value } = target
+    console.log(name, value)
 
-  const [dataUser,setDataUser ] = useState({})
+    switch (name) {
+      case 'names':
+        if(nameGroup.dependencie.length > 0 && nameGroup.profile.length > 0 && value.length > 6){
+            dispatch(validateGroupName(authUser, value))
+            console.log("soy",groupname)
+            setMessageErrorGroup()
+          }
+        break;
+      case 'dependency':
+        setNameGroup({ dependencie: value, profile: nameGroup.profile })
+        break;
+      case 'profile':
+        setNameGroup({ profile: value, dependencie: nameGroup.dependencie })
+        break;
+      default:
 
+        break;
+    }
+  }
+  useEffect(() => {
 
-    useEffect(() => {
-
-      dispatch(dependenciesGroupInitLoading(authUser));
-      dispatch(profilesGroupInitLoading(authUser));
+    dispatch(dependenciesGroupInitLoading(authUser));
+    dispatch(profilesGroupInitLoading(authUser));
 
   }, [dispatch]);
 
@@ -60,80 +78,82 @@ const ModalGroup = () => {
       >
 
         <DialogTitle id="form-dialog-title">
-        <div style={{fontFamily:'Poppins', fontSize:"16px"}}>
-        
+          <div style={{ fontFamily: 'Poppins', fontSize: "16px" }}>
+
             <IntlMessages id="Crear nuevo grupo" />
-        
-        </div>
+
+          </div>
         </DialogTitle>
 
         <DialogContent>
 
-        <Grid container spacing={1}>
-          <Grid item xs={4}>
-            <FormControl  size="small" variant="outlined" className={classes.formControl}>
+          <Grid container spacing={1}>
+            <Grid item xs={4}>
+              <FormControl size="small" variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">Dependencia</InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  //value={value}
-                 // onChange={handleChange}
+                  name="dependency"
+                  onChange={handleOnChangeName}
                   label="Dependencia"
                 >
-                  {dependencies.map(({id,name}) => {
-                  return(<MenuItem value={id}>{name}</MenuItem>)
+                  {dependencies.map(({ id, name }) => {
+                    return (<MenuItem value={name}>{name}</MenuItem>)
                   })}
                 </Select>
-            </FormControl>
-          </Grid>  
-          <Grid item xs={4}>
-            <FormControl  size="small" variant="outlined" className={classes.formControl}>
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
+              <FormControl size="small" variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">Perfiles</InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  //value={dep}
-                  //onChange={handleChange}
+                  name="profile"
+                  onChange={handleOnChangeName}
                   label="Perfiles"
                 >
-                  {profiles.map(({id, name}) => {
-                  return(<MenuItem value={id}>{name}</MenuItem>)
-                 
+                  {profiles.map(({ id, name }) => {
+                    return (<MenuItem value={name}>{name}</MenuItem>)
+
                   })}
                 </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={4}>
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
               <TextField
-                  value={dependencies.id}
-                  fullWidth
-                  size="small"
-                  label="Nombre del grupo"
-                  type="text"
-                  variant="outlined"
-                  disabled
-                  //onChange={handleOnChange}
-              />  
-          </Grid>  
+                value={nameGroup.dependencie + "_" + nameGroup.profile}
+                fullWidth
+                size="small"
+                label="Nombre del grupo"
+                type="text"
+                variant="outlined"
+                name="names"
+                error={groupname || messageErrorGroup? true : false}
+                onChange={handleOnChangeName}
+                helperText={!groupname? (messageErrorGroup? messageErrorGroup : '' ): 'Grupo ya existe'}
+              />
+            </Grid>
           </Grid>
-       
-          <Divider className="mt-3"/>
-        
+
+          <Divider className="mt-3" />
+
           <h5 className="mt-3">Asignación de usuarios</h5>
 
-           <SelectAndChips/>
-             
-          <Divider className="mt-3"/>
-        
+          <SelectAndChips />
+
+          <Divider className="mt-3" />
+
         </DialogContent>
 
         <DialogActions>
-        
+
           <Button
-          style={{
-            backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
-            boxShadow: "none", height: '45px', width: '120px'
-          }}
+            style={{
+              backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+              boxShadow: "none", height: '45px', width: '120px'
+            }}
             onClick={handleClose}
             variant="contained"
             color="primary"
@@ -142,15 +162,15 @@ const ModalGroup = () => {
           </Button>
 
           <Button
-           style={{
-           fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",boxShadow: "none", height: '45px', width: '120px'
-          }}
+            style={{
+              fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
+            }}
             //onClick={handleOnSave}
             variant="contained"
             color="primary"
-           // disabled={messageErrorName}
+          // disabled={messageErrorName}
           >
-           Crear
+            Crear
           </Button>
 
         </DialogActions>

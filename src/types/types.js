@@ -128,10 +128,12 @@ export const types = {
 	
 	companyInitLoaded: 'Companies',
 	departmentsInitLoaded: 'Departments',
-	groupOpenModal: 'Group Open Modal',
-	groupCloseModal: 'Group Close Modal',
 	dependenciesInitLoaded: 'Dependencies',
-	profilesInitLoaded: 'Profiles'
+	profilesInitLoaded: 'Profiles',
+	groupValidateName: 'Group Validate Name',
+	groupInitLoaded: 'Group List',
+	groupOpenModal: 'Group Open Modal',
+	groupCloseModal: 'Group Close Modal'
 
 
 }

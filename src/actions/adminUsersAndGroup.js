@@ -9,7 +9,7 @@ import {
 	departmentsUsers,
 	companyUsers
 } from 'services/usersService';
-import { dependenciesGroup, profilesGroup } from 'services/groupService';
+import { dependenciesGroup, getGroup, profilesGroup, searchGroup, validateGroup } from 'services/groupService';
 
 export const startUsersInitLoading = (authUser,page) => {
 	return async (dispatch) => {
@@ -116,14 +116,24 @@ export const validateUserNickname = (authUser, idUser) => {
 		}
 	}
 };
+export const validateGroupName = (authUser, name) => {
+	return async (dispatch) => {
+		try {
+			const resp = await validateGroup(authUser, name)
+			dispatch(nameGroupValidate(resp.data.exists))
+			console.log("la dataaaa validadora", resp.data.exists)
+		} catch (error) {
+			console.log(error);
+		}
+	}
+};
+
 export const companyUsersInitLoading = (authUser) => {
 	return async (dispatch) => {
 
 		try {
 			const resp = await companyUsers(authUser);
 			dispatch(companyInitLoaded(resp.data))
-			console.log("la dataaaa", resp.data)
-
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -138,7 +148,6 @@ export const departmentsUsersInitLoading = (authUser) => {
 		try {
 			const resp = await departmentsUsers(authUser);
 			dispatch(departmentsInitLoaded(resp.data))
-			console.log("la dataaaa", resp.data)
 
 		} catch (error) {
 			console.log(error);
@@ -155,7 +164,6 @@ export const dependenciesGroupInitLoading = (authUser) => {
 		try {
 			const resp = await dependenciesGroup(authUser);
 			dispatch(dependenciesInitLoaded(resp.data))
-			console.log("la dataaaa", resp.data)
 
 		} catch (error) {
 			console.log(error);
@@ -172,7 +180,6 @@ export const profilesGroupInitLoading = (authUser) => {
 		try {
 			const resp = await profilesGroup(authUser);
 			dispatch(profilesInitLoaded(resp.data))
-			console.log("la dataaaa", resp.data)
 
 		} catch (error) {
 			console.log(error);
@@ -180,6 +187,54 @@ export const profilesGroupInitLoading = (authUser) => {
 			Swal.close();
 		}
 
+	}
+};
+
+export const startGroupInitLoading = (authUser) => {
+	return async (dispatch) => {
+
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getGroup(authUser);
+			dispatch(groupInitLoaded(resp.data))
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+export const groupSearchLoading = (authUser, search) => {
+	return async (dispatch) => {
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+			Swal.showLoading();
+
+			const resp = await searchGroup(authUser,search)
+			dispatch(groupInitLoaded(resp.data))
+
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
 	}
 };
 
@@ -207,7 +262,13 @@ export const departmentsInitLoaded = (departments) => {
 export const nicknameValidate = (validate) => {
 	return {
 		type: types.usersValidateNickname,
-		payload: validate
+		payload: validate,
+	}
+}
+export const nameGroupValidate = (groupname) => {
+	return {
+		type: types.groupValidateName,
+		payload: groupname,
 	}
 }
 
@@ -245,6 +306,13 @@ export const profilesInitLoaded = (profiles) => {
 	return {
 		type: types.profilesInitLoaded,
 		payload: profiles,
+	}
+};
+
+export const groupInitLoaded = (grouplist) => {
+	return {
+		type: types.groupInitLoaded,
+		payload: grouplist,
 	}
 };
 

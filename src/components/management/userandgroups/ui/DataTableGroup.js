@@ -7,14 +7,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import TableActionButton from 'components/search/ui/TableActionButton';
-import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles} from '@material-ui/core/styles';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
+import { groupSearchLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
+import { useLocation } from 'react-router';
 
 
 
@@ -37,33 +37,35 @@ const DataTableGroup = () => {
 	const classes = useStyles();
 
 	const isMounted = useRef(true)
+
 	const dispatch = useDispatch()
 	
 	const { authUser } = useSelector(state => state.auth)
 
-	
+	const { grouplist = {}, } = useSelector(state => state.adminUsers);
+
+	const useQuery = () => new URLSearchParams(useLocation().search);
+
+	let query = useQuery();
+
+	const search = query.get("search")
 
 	useEffect(() => {
-
+		if(search){
+			dispatch(groupSearchLoading(authUser,search))
+		}
+		else
+		{
+			dispatch(startGroupInitLoading(authUser));
+		}
 		
 	}, [dispatch]);
-
-	
-
-	  const handleChange = ({target}) => {
-
-	  };
-
 
 	useEffect(()=>{
 		return ()=>{
 			isMounted.current = false
 		}
 	},[])
-
-	const handleEditUsers = () =>{
-		
-	}
 
 	return (
 		<div className="row">
@@ -82,23 +84,15 @@ const DataTableGroup = () => {
 						</TableHead>
 						<TableBody>
 							
-						 <TableRow>
-									<TableCell>
-									   
-									    <img src={require("assets/images/group.png")}/>
-                                        Nombre grupo
+						{grouplist.map(({ id, name}, index) => {
+
+                            return <TableRow key={index} >
+									<TableCell style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} >
+									    {/*<img src={require("assets/images/group.png")}/>*/}
+                                    {name}
                                     </TableCell>
 									<TableCell>
-									<div className={classes.iconsHolder}>			
-										<TableActionButton
-											materialIcon={
-												<BorderColorOutlinedIcon
-													className={classes.iconos}
-													onClick={() => handleEditUsers()}
-												/>
-											}
-										/>
-														
+									<div className={classes.iconsHolder}>										
 										<TableActionButton
 											materialIcon={
 												<DeleteOutlinedIcon
@@ -108,9 +102,11 @@ const DataTableGroup = () => {
 											}
 										/>		
 									</div>
+							
 									</TableCell>
 									
 									</TableRow>
+										})}
 						
 						</TableBody>
 					</Table>

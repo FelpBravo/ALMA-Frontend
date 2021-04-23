@@ -13,30 +13,6 @@ import Alert from '@material-ui/lab/Alert';
 import SelectAndChips from 'components/ui/SelectAndChips';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: 'auto',
-  },
-  cardHeader: {
-    padding: theme.spacing(1, 2),
-    backgroundColor: '#E1F0FF'
-  },
-  list: {
-    width: "100%",
-    height: 230,
-    backgroundColor: theme.palette.background.paper,
-    overflow: 'auto',
-  },
-  button: {
-    margin: theme.spacing(0.5, 0),
-  },
-  base: {
-		border: "none",
-		boxShadow: "none",
-		padding: "2px 4px",
-		display: "flex",
-		alignItems: "center",
-		padding: 6,
-	},
   formControl: {
     width: "100%",
   },
@@ -51,7 +27,7 @@ const ModalUsers = () => {
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal ,validateNickname, company, departments} = useSelector(state => state.adminUsers);
+  const { openModal ,validateNickname, companys, departments} = useSelector(state => state.adminUsers);
 
   const [messageErrorUser, setMessageErrorUser] = useState(null);
 
@@ -184,12 +160,28 @@ const ModalUsers = () => {
                   onChange={handleOnChange}
                   label="Empresa"
                 >
-                  {company.map((item) => {
+                  {companys.map((item) => {
                   return(<MenuItem value={item}>{item}</MenuItem>)
                   })}
                 </Select>
             </FormControl>
           </Grid>  
+          {stateCompany.name &&
+          <Grid item xs={4}>
+              <TextField
+                // value={value}
+                  fullWidth
+                  label="Escriba nombre de la empresa"
+                  name='Compañia'
+                  type="text"
+                  variant="outlined"
+                  size="small"
+              /> 
+         
+          </Grid>
+          }
+          </Grid>
+          <Grid container spacing={1} className="mt-3" >
           <Grid item xs={4}>
             <FormControl  size="small" variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
@@ -207,7 +199,22 @@ const ModalUsers = () => {
                 </Select>
             </FormControl>
           </Grid>
+          {stateCompany.department &&
           <Grid item xs={4}>
+              <TextField
+                // value={value}
+                  fullWidth
+                  label="Escriba nombre del departamento"
+                  name='departamento'
+                  type="text"
+                  variant="outlined"
+                  size="small"
+              /> 
+         
+          </Grid>
+          }
+          </Grid>
+          <Grid item xs={4} className="mt-3" >
               <TextField
                  // value={value}
                   fullWidth
@@ -222,22 +229,6 @@ const ModalUsers = () => {
                   helperText={!validateNickname? (messageErrorUser? messageErrorUser : '' ): 'Usuario ya existe'}
               /> 
              
-          </Grid>
-          {stateCompany.name &&
-          <Grid item xs={4}>
-          <TextField
-             // value={value}
-              fullWidth
-              label="Compañia"
-              name='Compañia'
-              type="text"
-              variant="outlined"
-              size="small"
-          /> 
-         
-      </Grid>
-
-          }
           </Grid>
           </form>
        

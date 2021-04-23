@@ -59,10 +59,6 @@ const SearchUsers = () => {
 		setSearchText(search)
 	},[search])
 
-    const handleSelectNew = () => {
-		dispatch(openModalUsers());	
-	}
-
 	const handleOnChange = ({target}) =>{
 		const { value } = target
 		if(value.length > 1){
@@ -79,6 +75,10 @@ const SearchUsers = () => {
 
 	const handleOnSearch = ()=>{
 		history.push(`/management/usersandgroups?search=${searchText}`);
+	}
+
+	const handleSelectNew = () => {
+		dispatch(openModalUsers());	
 	}
 
 	return (

@@ -107,8 +107,8 @@ const DataTableUsers = () => {
 		}
 	}, [])
 
-	const handleOpenEditUsers = (id, firstName, lastName, email, search) => {
-		setUserEditData({ id, firstName, lastName, email, search })
+	const handleOpenEditUsers = (id, firstName, lastName, email, company, department, search) => {
+		setUserEditData({ id, firstName, lastName, email, company, department, search })
 		setEditActive(true)
 	}
 
@@ -194,7 +194,7 @@ const DataTableUsers = () => {
 													materialIcon={
 														<BorderColorOutlinedIcon
 															className={classes.iconos}
-															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email,search)}
+															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department, search)}
 														/>
 													}
 												/>
