@@ -1,9 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField } from 'components/ui/Form';
+import { TextField, SelectField } from 'components/ui/Form';
 import schema from './FormTest.schema';
-import { Button, Grid, makeStyles, Paper } from '@material-ui/core';
+import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 const CampaignForm = () => {
     const classes = useStyles();
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, control, formState: { errors } } = useForm({
         mode: 'onTouched',
         name: 'nameTest',
         // defaultValues: {},
@@ -52,6 +52,16 @@ const CampaignForm = () => {
         className: classes.input
     };
 
+    const statusProps = {
+        label: 'Estado',
+        name: 'status',
+        className: classes.input,
+        shrink: true,
+        register,
+        control,
+        errors
+    };
+
 
     console.log("emailProps", emailProps)
 
@@ -73,6 +83,11 @@ const CampaignForm = () => {
                     <TextField {...titleProps} />
                     <TextField {...emailProps} />
                     <TextField {...goalProps} />
+                    <SelectField {...statusProps}>
+                        <MenuItem key="todas" value="todas">Todas</MenuItem>
+                        <MenuItem key="in_progress" value="in_progress">En progreso</MenuItem>
+                        <MenuItem key="completed" value="completed">Completadas</MenuItem>
+                    </SelectField>
                     <Button {...jsonButton} >Enviar</Button>
                 </form>
             </Paper>
