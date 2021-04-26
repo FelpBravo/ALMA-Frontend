@@ -1,8 +1,8 @@
 import React from 'react'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { InputLabel, TextField as InputField  } from '@material-ui/core';
-import { isEmpty } from 'lodash-es';
+import { InputLabel, TextField as InputField } from '@material-ui/core';
+import { get, isEmpty } from 'lodash-es';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,9 +16,8 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const TextFieldComponent = ({
+const TextField = ({
     className,
-    error,
     id,
     label,
     name,
@@ -31,12 +30,15 @@ const TextFieldComponent = ({
     rows,
     multiline,
     InputProps,
+    errors,
     disabled,
-} ) => {
+    ...props
+}) => {
     const classes = useStyles();
-    const errorMessage = error && error.message;
+    const errorMessage = get(errors, `${name}.message`, '');
     const textFieldProps = {
         helperText: errorMessage,
+        error: Boolean(errorMessage),
         id: id || name,
         ...register(name),
         label: shrink ? label : null,
@@ -44,7 +46,7 @@ const TextFieldComponent = ({
         placeholder,
         size,
         type,
-        variant,
+        variant: variant || 'outlined',
         rows,
         multiline,
         InputProps,
@@ -59,12 +61,9 @@ const TextFieldComponent = ({
     return (
         <div className={clsx(classes.root, className)}>
             {!shrink && <InputLabel {...labelProps}>{label}</InputLabel>}
-            <InputField {...textFieldProps} />
+            <InputField {...textFieldProps} {...props} />
         </div>
     );
 };
 
-
-const TextField = React.memo(TextFieldComponent);
-
-export { TextField };
+export { TextField }

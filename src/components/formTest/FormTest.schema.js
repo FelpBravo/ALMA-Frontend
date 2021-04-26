@@ -1,7 +1,9 @@
-import { object, string } from 'yup';
+import { object, string, number } from 'yup';
 
 const schema = object().shape({
-    title: string().required("Campo requerido"),
+    title: string().min(3, "Minimo 3 caracteres").required("Titulo Campo requerido"),
+    email: string().email().required("Titulo Campo requerido"),
+    goal: number().positive(),
 });
 
 export default schema;
