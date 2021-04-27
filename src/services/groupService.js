@@ -52,6 +52,15 @@ const addGroup = (authUser, name, users =[]) => {
 	);
 };
 
+const membersGroup = (authUser, id) => {
+	return axiosInstance.get(`/groups/members/${id}`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
+
 
 export {
 	getGroup,
@@ -60,4 +69,5 @@ export {
     dependenciesGroup,
     profilesGroup,
 	addGroup,
+	membersGroup,
 }

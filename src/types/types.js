@@ -130,6 +130,7 @@ export const types = {
 	departmentsInitLoaded: 'Departments',
 	dependenciesInitLoaded: 'Dependencies',
 	profilesInitLoaded: 'Profiles',
+	membersInitLoaded: 'Members Group',
 	groupValidateName: 'Group Validate Name',
 	groupInitLoaded: 'Group List',
 	groupOpenModal: 'Group Open Modal',

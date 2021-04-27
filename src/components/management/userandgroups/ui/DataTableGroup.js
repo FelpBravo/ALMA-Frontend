@@ -13,7 +13,7 @@ import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles} from '@material-ui/core/styles';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
-import { groupSearchLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
+import { groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
 import { useLocation } from 'react-router';
 
 
@@ -48,11 +48,11 @@ const DataTableGroup = () => {
 
 	let query = useQuery();
 
-	const search = query.get("search")
+	const searchGroup = query.get("searchGroup")
 
 	useEffect(() => {
-		if(search){
-			dispatch(groupSearchLoading(authUser,search))
+		if(searchGroup){
+			dispatch(groupSearchLoading(authUser,searchGroup))
 		}
 		else
 		{
@@ -66,6 +66,12 @@ const DataTableGroup = () => {
 			isMounted.current = false
 		}
 	},[])
+
+	const handleSelectName = (id) => {
+		console.log("soy el id del grupo",id)
+		dispatch(membersGroupInitLoading(authUser,id));
+	}
+
 
 	return (
 		<div className="row">
@@ -87,7 +93,10 @@ const DataTableGroup = () => {
 						{grouplist.map(({ id, name}, index) => {
 
                             return <TableRow key={index} >
-									<TableCell style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} >
+									<TableCell style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
+									onClick={() => handleSelectName(id)}
+									>
+										
 									    {/*<img src={require("assets/images/group.png")}/>*/}
                                     {name}
                                     </TableCell>

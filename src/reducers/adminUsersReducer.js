@@ -13,7 +13,8 @@ const initialState = {
     grouplist: [],
     users: {
         id: '',
-            }
+            },
+    members: [],        
    
 }
 
@@ -82,14 +83,19 @@ export const adminUsersReducer = (state = initialState, action) => {
                 ...state,
                 grouplist: action.payload,
                 } 
-         case types.groupSaveLoaded:
+        case types.groupSaveLoaded:
             return {
                 ...state,
                 openModal1: false,
                 users: {
                     id: '',
                         }
-                    }
+                }
+        case types.membersInitLoaded:
+            return {
+                ...state,
+                members: action.payload,
+                }                
         
         default:
             return state;

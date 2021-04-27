@@ -64,7 +64,7 @@ const Management = () => {
 	};
 
 	useEffect(() => {
-
+        setValue(1)
 		if (!authUser) {
 			return;
 		}
