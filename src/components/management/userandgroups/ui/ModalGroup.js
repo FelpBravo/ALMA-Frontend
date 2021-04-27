@@ -35,10 +35,10 @@ const ModalGroup = () => {
 
   const [messageErrorGroup, setMessageErrorGroup] = useState(null);
 
-  const [nameGroup, setNameGroup] = useState({ dependencie: '', profile: '' , fullnamegroup: ''})
+  const [nameGroup, setNameGroup] = useState({ dependencie: '', profile: '' , fullnamegroup: '', users:[] })
 
   useEffect(()=>{
-    setNameGroup({ dependencie: '', profile: '' , fullnamegroup: ''})
+    setNameGroup({ dependencie: '', profile: '' , fullnamegroup: '', users:[]})
   },[])
 
   const handleOnChangeName = ({ target }) => {
@@ -80,7 +80,8 @@ const ModalGroup = () => {
   }
  
   const handleOnSave =() =>{
-    dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup))
+    console.log(nameGroup);
+   // dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup))
   }
   return (
 
@@ -156,7 +157,7 @@ const ModalGroup = () => {
 
           <h5 className="mt-3">Asignación de usuarios</h5>
 
-          <SelectAndChips data={data} />
+          <SelectAndChips data={data} returnData={(users)=> setNameGroup({ ...nameGroup, ['users']: users.map(user=> user.id)})}/>
 
           <Divider className="mt-3" />
 

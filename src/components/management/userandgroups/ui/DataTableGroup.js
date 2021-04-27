@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import { groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
 import { useLocation } from 'react-router';
@@ -19,16 +19,16 @@ import { useLocation } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
-	
+
 	iconos: {
 		cursor: "pointer",
 		color: "#2196f3",
 		fontSize: '18px',
-	  },
-	  iconsHolder: {
+	},
+	iconsHolder: {
 		display: "flex",
 		justifyContent: "flex-end",
-	  },
+	},
 }));
 
 
@@ -39,7 +39,7 @@ const DataTableGroup = () => {
 	const isMounted = useRef(true)
 
 	const dispatch = useDispatch()
-	
+
 	const { authUser } = useSelector(state => state.auth)
 
 	const { grouplist = {}, } = useSelector(state => state.adminUsers);
@@ -51,25 +51,23 @@ const DataTableGroup = () => {
 	const searchGroup = query.get("searchGroup")
 
 	useEffect(() => {
-		if(searchGroup){
-			dispatch(groupSearchLoading(authUser,searchGroup))
+		if (searchGroup) {
+			dispatch(groupSearchLoading(authUser, searchGroup))
 		}
-		else
-		{
+		else {
 			dispatch(startGroupInitLoading(authUser));
 		}
-		
+
 	}, [dispatch, authUser]);
 
-	useEffect(()=>{
-		return ()=>{
+	useEffect(() => {
+		return () => {
 			isMounted.current = false
 		}
-	},[])
+	}, [])
 
 	const handleSelectName = (id) => {
-		console.log("soy el id del grupo",id)
-		dispatch(membersGroupInitLoading(authUser,id));
+		dispatch(membersGroupInitLoading(authUser, id));
 	}
 
 
@@ -81,42 +79,42 @@ const DataTableGroup = () => {
 					<Table size="small" aria-label="a dense table">
 						<TableHead>
 							<TableRow>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400  }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Grupos" />
 								</TableCell>
-                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
+								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
 								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							
-						{grouplist.map(({ id, name}, index) => {
 
-                            return <TableRow key={index} >
-									<TableCell style={{fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }} 
-									onClick={() => handleSelectName(id)}
+							{grouplist.map(({ id, name }, index) => {
+
+								return <TableRow key={index} >
+									<TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor:'pointer' }}
+										onClick={() => handleSelectName(id)}
 									>
-										
-									    {/*<img src={require("assets/images/group.png")}/>*/}
-                                    {name}
-                                    </TableCell>
-									<TableCell>
-									<div className={classes.iconsHolder}>										
-										<TableActionButton
-											materialIcon={
-												<DeleteOutlinedIcon
-													className={classes.iconos}
-													//onClick={() => handleSelectActionTags(3)}
-												/>
-											}
-										/>		
-									</div>
-							
+
+										{/*<img src={require("assets/images/group.png")}/>*/}
+										{name}
 									</TableCell>
-									
-									</TableRow>
-										})}
-						
+									<TableCell>
+										<div className={classes.iconsHolder}>
+											<TableActionButton
+												materialIcon={
+													<DeleteOutlinedIcon
+														className={classes.iconos}
+													//onClick={() => handleSelectActionTags(3)}
+													/>
+												}
+											/>
+										</div>
+
+									</TableCell>
+
+								</TableRow>
+							})}
+
 						</TableBody>
 					</Table>
 				</TableContainer>
@@ -126,4 +124,4 @@ const DataTableGroup = () => {
 	)
 }
 
-export { DataTableGroup}
+export { DataTableGroup }

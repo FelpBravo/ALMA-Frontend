@@ -274,9 +274,15 @@ export const membersGroupInitLoading = (authUser, id) => {
 	return async (dispatch) => {
 
 		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+			Swal.showLoading();
 			const resp = await membersGroup(authUser, id);
 			dispatch(membersInitLoaded(resp.data))
-            console.log("Usuarios del grupo",resp.data)
 		} catch (error) {
 			console.log(error);
 		} finally {

@@ -5,15 +5,20 @@ import DoneIcon from '@material-ui/icons/Done';
    
 
 const SelectAndChips = (props) => {
-    const { data } = props
+    const { data ,returnData } = props
     console.log("data del chip", data)
 
     const [values, setValues] = React.useState([]);
+
+    useEffect(()=>{
+        returnData(values)
+    },[values])
 
 
     const onChange = (_, value) => {
      setValues(value);
      console.log("usuarios elegidos",value)
+     
     };
 
     return (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -11,6 +11,7 @@ import SearchUsers from './ui/SearchUsers';
 import SearchGroup from './ui/SearchGroup';
 import { TableSearchUsers } from './ui/TableSearchUsers';
 import { TableSearchGroup } from './ui/TableSearchGroup';
+import { useHistory, useLocation, useParams,useRouteMatch  } from 'react-router-dom';
 
 
 function TabPanel(props) {
@@ -55,21 +56,31 @@ const useStyles = makeStyles({
 const Management = () => {
 
     const dispatch = useDispatch();
+
 	const { authUser } = useSelector(state => state.auth);
+
 	const classes = useStyles();
-	const [value, setValue] = React.useState(0);
+	
+	const { path, url } = useRouteMatch();
+
+	const [value, setValue] = useState(path === '/management/usersandgroups'? 0:1);
+
+	const history = useHistory();
+
+	
 
 	const handleChange = (event, newValue) => {
-		setValue(newValue);
+		history.push(newValue === 1 ? '/management/usersandgroups/group':'/management/usersandgroups');
 	};
 
 	useEffect(() => {
-        setValue(1)
+		path === '/management/usersandgroups'? setValue(0): setValue(1)
+			
 		if (!authUser) {
 			return;
 		}
 
-	}, [dispatch, authUser]);
+	}, [dispatch, authUser,path]);
 
 	const Result = ()=>{
 		switch (value) {
@@ -83,19 +94,19 @@ const Management = () => {
 	}
 
 	return (
+
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
+							
 							<div className="jr-card-header d-flex align-items-center">
 								<h3 className="mb-0">
 									<IntlMessages id="sidebar.tags.usersandgroup" />
 								</h3>
 							</div>
 							<div className={classes.root}>
-
 								<Tabs
 									value={value}
 									onChange={handleChange}

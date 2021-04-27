@@ -11,23 +11,23 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 
 
 
 const useStyles = makeStyles((theme) => ({
-	
+
 	iconos: {
 		cursor: "pointer",
 		color: "#2196f3",
 		fontSize: '18px',
-	  },
-	  iconsHolder: {
+	},
+	iconsHolder: {
 		display: "flex",
 		justifyContent: "flex-end",
-	  },
+	},
 }));
 
 
@@ -38,10 +38,10 @@ const DataTableUserFromGroup = () => {
 	const isMounted = useRef(true)
 	const history = useHistory()
 	const dispatch = useDispatch()
-	
+
 	const { authUser } = useSelector(state => state.auth)
 
-	
+	const { members } = useSelector(state => state.adminUsers)
 
 	useEffect(() => {
 
@@ -49,17 +49,17 @@ const DataTableUserFromGroup = () => {
 	}, [dispatch]);
 
 
-	
-	  const handleChange = ({target}) => {
-		
-	  };
+
+	const handleChange = ({ target }) => {
+
+	};
 
 
-	useEffect(()=>{
-		return ()=>{
+	useEffect(() => {
+		return () => {
 			isMounted.current = false
 		}
-	},[])
+	}, [])
 
 
 	return (
@@ -70,49 +70,65 @@ const DataTableUserFromGroup = () => {
 					<Table size="small" aria-label="a dense table">
 						<TableHead>
 							<TableRow>
-								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400  }} >
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Usuarios del grupo" />
 								</TableCell>
-								<TableCell style={{ background: '#369bff', color: '#ffffff',fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									
+								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
-								<AddIcon/>
-                                Agregar Usuario
+									<AddIcon />
+									Agregar Usuario
 								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							
-						<TableRow >
-									<TableCell>
-									<AccountCircleOutlinedIcon className="mr-1" fontSize="small" />
-									Usuario
-									</TableCell>
-									<TableCell>Correo electrónico</TableCell>
-									<TableCell>
-									<div className={classes.iconsHolder}>							
-										<TableActionButton
-											materialIcon={
-												<DeleteOutlinedIcon
-													className={classes.iconos}
-													//onClick={() => handleSelectActionTags(3)}
+
+
+							{members && members.length > 0 && members.map(({id, firstName, lastName,email}) => {
+								return (
+									<TableRow key={id} >
+										<TableCell>
+											<AccountCircleOutlinedIcon className="mr-1" fontSize="small" />
+											{id}
+										</TableCell>
+										<TableCell>{email}</TableCell>
+										<TableCell>
+											<div className={classes.iconsHolder}>
+												<TableActionButton
+													materialIcon={
+														<DeleteOutlinedIcon
+															className={classes.iconos}
+														//onClick={() => handleSelectActionTags(3)}
+														/>
+													}
 												/>
-											}
-										/>		
-									</div>
-									</TableCell>
-									
+											</div>
+										</TableCell>
 									</TableRow>
-						
+								)
+							})
+
+							}
+							{members.length === 0 &&
+									<TableRow key='1' >
+									<TableCell>
+										No hay usuarios
+									</TableCell>
+								</TableRow>
+							}
+
+
+
+
 						</TableBody>
 					</Table>
 				</TableContainer>
 
 			</div>
-			
+
 		</div>
 	)
 }
 
-export { DataTableUserFromGroup}
+export { DataTableUserFromGroup }

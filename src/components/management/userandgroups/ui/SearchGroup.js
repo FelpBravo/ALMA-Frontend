@@ -23,7 +23,7 @@ const SearchGroup = () => {
 
 	let query = useQuery();
 
-	const search = query.get("search")
+	const searchGroup = query.get("searchGroup")
 
 	const [disabledButton, setDisabledButton] = useState(true);
 
@@ -32,8 +32,8 @@ const SearchGroup = () => {
 	const [ searchText, setSearchText ] = useState('')
 
 	useEffect(()=>{
-		setSearchText(search)
-	},[search])
+		setSearchText(searchGroup)
+	},[searchGroup])
 
 	const handleOnChange = ({target}) =>{
 		const { value } = target
@@ -51,7 +51,7 @@ const SearchGroup = () => {
 	}
 
 	const handleOnSearch = ()=>{
-		history.push(`/management/usersandgroups?searchGroup=${searchText}`);
+		history.push(`/management/usersandgroups/group/?searchGroup=${searchText}`);
 	}
 	
 	const handleSelectNew = () => {
