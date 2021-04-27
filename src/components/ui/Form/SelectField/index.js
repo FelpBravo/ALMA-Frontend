@@ -68,6 +68,9 @@ const SelectField = (props) => {
     );
 };
 
+<<<<<<< HEAD
+export { SelectField };*/}
+=======
 SelectField.defaultProps = {
     defaultValue: "",
     variant: "outlined",
@@ -97,3 +100,4 @@ SelectField.propTypes = {
 };
 
 export { SelectField };
+>>>>>>> bf9b64d6645b5d362eb1916160b737999daf472e
