@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField, SelectField } from 'components/ui/Form';
+import { TextField, SelectField, CheckField } from 'components/ui/Form';
 import schema from './FormTest.schema';
 import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
 
@@ -55,6 +55,12 @@ const CampaignForm = () => {
         ...commonProps
     };
 
+    const isAnonymousProps = {
+        name: 'is_anonymous',
+        label: '¿Es anonimo?',
+        ...commonProps,
+    };
+
 
     console.log("emailProps", emailProps)
 
@@ -76,6 +82,7 @@ const CampaignForm = () => {
                     <TextField {...titleProps} />
                     <TextField {...emailProps} />
                     <TextField {...goalProps} />
+                    <CheckField {...isAnonymousProps} />
                     <SelectField {...statusProps}>
                         {
                             ["todas", "en progreso", "completado"].map(elem => <MenuItem key={elem} value={elem}>{elem}</MenuItem>)
