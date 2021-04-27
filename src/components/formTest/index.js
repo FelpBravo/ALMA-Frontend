@@ -7,7 +7,8 @@ import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     input: {
-        margin: theme.spacing(0.5, 0)
+        marginBottom: theme.spacing(2),
+        marginTop: 0,
     },
 }));
 
@@ -61,6 +62,16 @@ const CampaignForm = () => {
         ...commonProps,
     };
 
+    const dueDateProps = {
+        type: 'date',
+        label: 'Fecha vencimiento',
+        name: 'dueDate',
+        InputLabelProps: {
+            shrink: true,
+        },
+        ...commonProps,
+    }
+
 
     console.log("emailProps", emailProps)
 
@@ -80,6 +91,7 @@ const CampaignForm = () => {
             <Paper style={{ padding: 20 }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField {...titleProps} />
+                    <TextField {...dueDateProps} />
                     <TextField {...emailProps} />
                     <TextField {...goalProps} />
                     <CheckField {...isAnonymousProps} />

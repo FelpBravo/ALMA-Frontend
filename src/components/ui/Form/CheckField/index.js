@@ -7,17 +7,20 @@ const CheckField = ({
   name,
   label,
   control,
+  className
 }) => (
   <FormControlLabel
     label={label}
+    className={className}
     control={(
       <Controller
         label={label}
         name={name}
         control={control}
         defaultValue={false}
-        render={({ field: {onChange, value} }) => (
+        render={({ field: { onChange, value } }) => (
           <Checkbox
+            color="primary"
             name={name}
             onChange={(e) => onChange(e.target.checked)}
             checked={value}
@@ -39,4 +42,4 @@ CheckField.propTypes = {
   control: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export { CheckField } ;
+export { CheckField };
