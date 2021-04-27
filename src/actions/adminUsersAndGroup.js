@@ -9,7 +9,7 @@ import {
 	departmentsUsers,
 	companyUsers
 } from 'services/usersService';
-import { dependenciesGroup, getGroup, profilesGroup, searchGroup, validateGroup } from 'services/groupService';
+import { addGroup, dependenciesGroup, getGroup, profilesGroup, searchGroup, validateGroup } from 'services/groupService';
 
 export const startUsersInitLoading = (authUser,page) => {
 	return async (dispatch) => {
@@ -238,6 +238,42 @@ export const groupSearchLoading = (authUser, search) => {
 	}
 };
 
+export const startCreateGroupLoading = (authUser, name, users) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await addGroup(authUser, name, users);
+
+			const resp = await getGroup(authUser);
+			
+			Swal.close();
+
+			dispatch(saveGroupLoaded());
+			dispatch(usersInitLoaded(resp.data));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+		}
+
+	}
+};
+
+export const saveGroupLoaded = () => {
+	return {
+		type: types.groupSaveLoaded,
+	}
+}
 export const usersInitLoaded = (userslist) => {
 	return {
 		type: types.usersInitLoaded,

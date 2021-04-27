@@ -47,11 +47,12 @@ const SearchGroup = () => {
 			setMessageError('Tiene que tener 3 caracteres como minimo')
 		}
 		setSearchText(value)
+		console.log("valor grupo",value)
 	}
 
-	const handleOnSearch = ()=>{
-		history.push(`/management/usersandgroups?search=${searchText}`);
-	}
+	//const handleOnSearch = ()=>{
+		//history.push(`/management/usersandgroups?search=${searchText}`);
+	//}
 	
 	const handleSelectNew = () => {
 		dispatch(openModalGroup());
@@ -61,7 +62,8 @@ const SearchGroup = () => {
 	return (
 		<div className="row">
 		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-				<form onSubmit={handleOnSearch}>
+				<form //onSubmit={handleOnSearch}
+				>
 					<Grid container spacing={1}>
 						<Grid item xs={6}>
 						<OutlinedInput
@@ -69,8 +71,8 @@ const SearchGroup = () => {
 							value={searchText}
 							name="inputSearch"
 							fullWidth
-							placeholder="Buscar por nombre de usuario"
-							//onChange={handleOnChange}
+							placeholder="Buscar grupo"
+							onChange={handleOnChange}
 							required
 							startAdornment={<SearchIcon color="primary" />}
 							

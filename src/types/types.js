@@ -133,7 +133,8 @@ export const types = {
 	groupValidateName: 'Group Validate Name',
 	groupInitLoaded: 'Group List',
 	groupOpenModal: 'Group Open Modal',
-	groupCloseModal: 'Group Close Modal'
+	groupCloseModal: 'Group Close Modal',
+	groupSaveLoaded: 'Group Save Loaded'
 
 
 }

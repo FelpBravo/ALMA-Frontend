@@ -59,7 +59,7 @@ const DataTableGroup = () => {
 			dispatch(startGroupInitLoading(authUser));
 		}
 		
-	}, [dispatch]);
+	}, [dispatch, authUser]);
 
 	useEffect(()=>{
 		return ()=>{

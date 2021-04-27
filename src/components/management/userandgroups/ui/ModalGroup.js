@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
-import { closeModalGroup, dependenciesGroupInitLoading, profilesGroupInitLoading, validateGroupName } from 'actions/adminUsersAndGroup';
+import { closeModalGroup, dependenciesGroupInitLoading, profilesGroupInitLoading, startCreateGroupLoading, startUsersInitLoading, validateGroupName } from 'actions/adminUsersAndGroup';
 import SelectAndChips from 'components/ui/SelectAndChips';
 import { DialogTitle, Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
@@ -26,6 +26,10 @@ const ModalGroup = () => {
   const dispatch = useDispatch();
 
   const { authUser } = useSelector(state => state.auth);
+
+  const { userslist = {}, } = useSelector(state => state.adminUsers);
+  
+  const { data = [] } = userslist
 
   const { openModal1, dependencies, profiles, groupname } = useSelector(state => state.adminUsers);
 
@@ -67,13 +71,17 @@ const ModalGroup = () => {
 
     dispatch(dependenciesGroupInitLoading(authUser));
     dispatch(profilesGroupInitLoading(authUser));
+    dispatch(startUsersInitLoading(authUser));
 
   }, [dispatch]);
 
   const handleClose = () => {
     dispatch(closeModalGroup());
   }
-
+ 
+  const handleOnSave =() =>{
+    dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup))
+  }
   return (
 
     <div>
@@ -148,7 +156,7 @@ const ModalGroup = () => {
 
           <h5 className="mt-3">Asignación de usuarios</h5>
 
-          <SelectAndChips />
+          <SelectAndChips data={data} />
 
           <Divider className="mt-3" />
 
@@ -172,7 +180,7 @@ const ModalGroup = () => {
             style={{
               fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
             }}
-            //onClick={handleOnSave}
+            onClick={handleOnSave}
             variant="contained"
             color="primary"
           // disabled={messageErrorName}

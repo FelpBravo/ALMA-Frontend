@@ -11,6 +11,9 @@ const initialState = {
     profiles:[],
     groupname: false,
     grouplist: [],
+    users: {
+        id: '',
+            }
    
 }
 
@@ -79,6 +82,15 @@ export const adminUsersReducer = (state = initialState, action) => {
                 ...state,
                 grouplist: action.payload,
                 } 
+         case types.groupSaveLoaded:
+            return {
+                ...state,
+                openModal1: false,
+                users: {
+                    id: '',
+                        }
+                    }
+        
         default:
             return state;
     }

@@ -41,6 +41,17 @@ const profilesGroup = (authUser) => {
 	});
 };
 
+const addGroup = (authUser, name, users =[]) => {
+	return axiosInstance.post(`/groups`,
+		{ name, users},
+		{
+			headers: {
+				Authorization: `Bearer ${authUser}`,
+			},
+		}
+	);
+};
+
 
 export {
 	getGroup,
@@ -48,4 +59,5 @@ export {
     validateGroup,
     dependenciesGroup,
     profilesGroup,
+	addGroup,
 }
