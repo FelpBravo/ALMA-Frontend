@@ -7,7 +7,7 @@ import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     input: {
-        marginBottom: theme.spacing(1)
+        margin: theme.spacing(0.5, 0)
     },
 }));
 
@@ -21,45 +21,38 @@ const CampaignForm = () => {
         resolver: yupResolver(schema),
     });
 
+    const commonProps = {
+        register,
+        errors,
+        control,
+        shrink: true,
+        size: "small",
+        className: classes.input
+    }
+
     const titleProps = {
         label: 'Título de campaña',
         name: 'title',
-        register,
-        shrink: true,
-        size: 'small',
-        errors,
-        className: classes.input
+        ...commonProps
     };
 
     const emailProps = {
         label: 'Correo electronico',
         name: 'email',
-        register,
-        shrink: true,
-        size: 'medium',
-        errors,
-        className: classes.input
+        ...commonProps
     };
 
     const goalProps = {
         type: 'number',
         label: 'Cantidad ($)',
         name: 'goal',
-        register,
-        size: 'medium',
-        shrink: true,
-        errors,
-        className: classes.input
+        ...commonProps
     };
 
     const statusProps = {
         label: 'Estado',
         name: 'status',
-        className: classes.input,
-        shrink: true,
-        register,
-        control,
-        errors
+        ...commonProps
     };
 
 
@@ -71,11 +64,11 @@ const CampaignForm = () => {
     };
 
     const jsonButton = {
-        variant:"outlined",
-        color:"primary",
-        type:"submit"
+        variant: "outlined",
+        color: "primary",
+        type: "submit"
     }
-
+    console.log("errors", errors)
     return (<Grid container alignItems="center" justify="center">
         <Grid item md>
             <Paper style={{ padding: 20 }}>
@@ -84,9 +77,9 @@ const CampaignForm = () => {
                     <TextField {...emailProps} />
                     <TextField {...goalProps} />
                     <SelectField {...statusProps}>
-                        <MenuItem key="todas" value="todas">Todas</MenuItem>
-                        <MenuItem key="in_progress" value="in_progress">En progreso</MenuItem>
-                        <MenuItem key="completed" value="completed">Completadas</MenuItem>
+                        {
+                            ["todas", "en progreso", "completado"].map(elem => <MenuItem key={elem} value={elem}>{elem}</MenuItem>)
+                        }
                     </SelectField>
                     <Button {...jsonButton} >Enviar</Button>
                 </form>

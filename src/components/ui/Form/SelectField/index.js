@@ -27,7 +27,8 @@ const SelectField = (props) => {
         name,
         defaultValue,
         control,
-        rules
+        rules,
+        size
     } = props;
 
     const labelId = `${name}-label`;
@@ -39,6 +40,7 @@ const SelectField = (props) => {
             margin={margin}
             error={Boolean(errorMessage)}
             disabled={disabled}
+            size={size}
             className={`${className} ${classes.fullWidth}`}
         >
             <InputLabel id={labelId}>{label}</InputLabel>
@@ -73,6 +75,7 @@ SelectField.defaultProps = {
     error: false,
     disabled: false,
     rules: {},
+    size: "medium",
     changeEvent: (e) => { }
 };
 
@@ -89,6 +92,7 @@ SelectField.propTypes = {
     error: PropTypes.bool,
     helperText: PropTypes.string,
     variant: PropTypes.string,
+    size: PropTypes.string,
     changeEvent: PropTypes.func
 };
 
