@@ -88,7 +88,7 @@ const CampaignForm = () => {
     console.log("errors", errors)
     return (<Grid container alignItems="center" justify="center">
         <Grid item md>
-            <Paper style={{ padding: 20 }}>
+            <Paper style={{ padding: 20, margin: 120 }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField {...titleProps} />
                     <TextField {...dueDateProps} />
