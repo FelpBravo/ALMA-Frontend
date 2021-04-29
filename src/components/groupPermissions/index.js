@@ -1,10 +1,18 @@
 import { FormControl, InputLabel, MenuItem, NativeSelect, Select } from '@material-ui/core'
 import Tags from './tags'
-import { BootstrapInput } from 'components/ui/helpers/BootstrapInput'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { startPermissionsModuleLoading } from 'actions/permissions';
 
 
 export default function GroupPermissions() {
+    const dispatch = useDispatch();
+    const { authUser } = useSelector(state => state.auth);
+
+    useEffect(() => {
+        dispatch(startPermissionsModuleLoading(authUser))
+       
+    }, [])
     return <>
         <div className="jr-card">
             <h3>Perfiles</h3>
