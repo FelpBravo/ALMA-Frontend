@@ -125,6 +125,7 @@ export const types = {
 	usersCloseModal: 'Users Close Modal',
 	usersInitLoaded: 'Users List',
 	usersValidateNickname: 'Users Validate Nickname',
+	usersSaveLoaded: 'Users Save Loaded',
 	
 	companyInitLoaded: 'Companies',
 	departmentsInitLoaded: 'Departments',

@@ -41,7 +41,8 @@ const DataTableUserFromGroup = () => {
 
 	const { authUser } = useSelector(state => state.auth)
 
-	const { members } = useSelector(state => state.adminUsers)
+	const { members,  grouplist = {},} = useSelector(state => state.adminUsers)
+	const { id, name } = grouplist
 
 	useEffect(() => {
 
@@ -71,7 +72,8 @@ const DataTableUserFromGroup = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Usuarios del grupo" />
+									<IntlMessages id="Usuarios del grupo :" />
+									{id}
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 
@@ -85,7 +87,7 @@ const DataTableUserFromGroup = () => {
 						<TableBody>
 
 
-							{members && members.length > 0 && members.map(({id, firstName, lastName,email}) => {
+							{members && members.length > 0 && members.map(({id, firstName, lastName, email}) => {
 								return (
 									<TableRow key={id} >
 										<TableCell>

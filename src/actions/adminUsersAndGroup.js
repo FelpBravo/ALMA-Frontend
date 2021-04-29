@@ -7,7 +7,8 @@ import {
 	validateUsers,
 	searchUsersPage,
 	departmentsUsers,
-	companyUsers
+	companyUsers,
+	addUsers
 } from 'services/usersService';
 import { addGroup, dependenciesGroup, getGroup, membersGroup, profilesGroup, searchGroup, validateGroup } from 'services/groupService';
 
@@ -121,7 +122,6 @@ export const validateGroupName = (authUser, name) => {
 		try {
 			const resp = await validateGroup(authUser, name)
 			dispatch(nameGroupValidate(resp.data.exists))
-			console.log("la dataaaa validadora", resp.data.exists)
 		} catch (error) {
 			console.log(error);
 		}
@@ -157,6 +157,37 @@ export const departmentsUsersInitLoading = (authUser) => {
 
 	}
 };
+
+export const startCreateUsersLoading = (authUser,id, firstName, lastName, email, password, company, departament, companyOther, departmentOther, group) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await addUsers(authUser, id, firstName, lastName, email, password, company, departament, companyOther, departmentOther, group);
+
+			const resp = await getUsers(authUser);
+			
+			Swal.close();
+
+			dispatch(saveUsersLoaded());
+			dispatch(usersInitLoaded(resp.data));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+		}
+
+	}
+}
 
 export const dependenciesGroupInitLoading = (authUser) => {
 	return async (dispatch) => {
@@ -228,9 +259,7 @@ export const groupSearchLoading = (authUser, search) => {
 
 			const resp = await searchGroup(authUser,search)
 			dispatch(groupInitLoaded(resp.data))
-			console.log("busqueda",resp.data)
-
-
+	
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -260,7 +289,7 @@ export const startCreateGroupLoading = (authUser, name, users) => {
 			Swal.close();
 
 			dispatch(saveGroupLoaded());
-			dispatch(usersInitLoaded(resp.data));
+			dispatch(groupInitLoaded(resp.data));
 
 		} catch (error) {
 			Swal.close();
@@ -295,6 +324,12 @@ export const membersGroupInitLoading = (authUser, id) => {
 export const saveGroupLoaded = () => {
 	return {
 		type: types.groupSaveLoaded,
+	}
+}
+
+export const saveUsersLoaded = () => {
+	return {
+		type: types.usersSaveLoaded,
 	}
 }
 export const usersInitLoaded = (userslist) => {

@@ -107,8 +107,8 @@ const DataTableUsers = () => {
 		}
 	}, [])
 
-	const handleOpenEditUsers = (id, firstName, lastName, email, company, department, search) => {
-		setUserEditData({ id, firstName, lastName, email, company, department, search })
+	const handleOpenEditUsers = (id, firstName, lastName, email, company, department, companyOther, departmentOther, search) => {
+		setUserEditData({ id, firstName, lastName, email, company, department,companyOther, departmentOther, search })
 		setEditActive(true)
 	}
 
@@ -164,7 +164,7 @@ const DataTableUsers = () => {
 						</TableHead>
 						<TableBody >
 
-							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external, company, department}, index) => {
+							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external, company, department, companyOther, departmentOther}, index) => {
 
 								return <TableRow key={index} >
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
@@ -173,7 +173,11 @@ const DataTableUsers = () => {
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{firstName}{` `}{lastName}</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{email}</TableCell>
+									{/*{department === 'Other'
+										<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{departmentOther}</TableCell>
+										}*/}
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{department}</TableCell>
+				
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{company}</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
 											<Switch
@@ -194,7 +198,7 @@ const DataTableUsers = () => {
 													materialIcon={
 														<BorderColorOutlinedIcon
 															className={classes.iconos}
-															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department, search)}
+															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department,companyOther, departmentOther, search)}
 														/>
 													}
 												/>

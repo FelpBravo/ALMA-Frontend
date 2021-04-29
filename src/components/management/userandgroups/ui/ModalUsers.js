@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, Divider, InputBase, Paper, Grid, Chip, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
-import {closeModalUsers,validateUserNickname ,nicknameValidate, companyUsersInitLoading, departmentsUsersInitLoading} from 'actions/adminUsersAndGroup';
+import {closeModalUsers,validateUserNickname ,nicknameValidate, companyUsersInitLoading, departmentsUsersInitLoading, startCreateUsersLoading} from 'actions/adminUsersAndGroup';
 import Alert from '@material-ui/lab/Alert';
 import SelectAndChips from 'components/ui/SelectAndChips';
 
@@ -26,12 +26,14 @@ const ModalUsers = () => {
   const dispatch = useDispatch();
 
   const { authUser } = useSelector(state => state.auth);
-
-  const { openModal ,validateNickname, companys, departments} = useSelector(state => state.adminUsers);
+ 
+  const { openModal ,validateNickname, companys, departments,  grouplist = {}, } = useSelector(state => state.adminUsers);
 
   const [messageErrorUser, setMessageErrorUser] = useState(null);
 
   const [stateCompany,setStateCompany] = useState({ name:false,department:false  })
+
+  const [nameUser, setNameUser] = useState({ group:[] })
 
     useEffect(() => {
 
@@ -89,6 +91,7 @@ const ModalUsers = () => {
   const handleOnSave = () =>{
       if(!validateNickname){
         console.log('es valido')
+        dispatch(startCreateUsersLoading())
       }
       console.log("EEEss");
   }
@@ -240,7 +243,7 @@ const ModalUsers = () => {
         
         <h5 className="mt-3">Asignar grupos</h5>
 
-          <SelectAndChips/>
+          <SelectAndChips data={grouplist} returnData={(group)=> setNameUser({ ...nameUser, ['group']: group.map(group=> group.id)})}/>
             
           <Divider className="mt-3"/>
         

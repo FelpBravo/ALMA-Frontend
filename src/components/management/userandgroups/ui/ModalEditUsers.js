@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const ModalEditUsers = (props) => {
   const { data, close, open } = props
 
-  const { id, firstName = '', lastName = '', email = '', company = '', department = '', search } = data
+  const { id, firstName = '', lastName = '', email = '', company = '', department = '', companyOther = '', departmentOther = '', search } = data
 
   const dispatch = useDispatch();
 
@@ -55,7 +55,10 @@ const ModalEditUsers = (props) => {
       lastName: lastName,
       email: email,
       company: company,
-      department: department
+      department: department,
+      companyOther: companyOther,
+      departmentOther: departmentOther
+
     })
     if (id) {
       setValidation({ firstName: !letra.test(firstName) || firstName.length < 3 ? false : true, lastName: !letra.test(lastName) || lastName.length < 3 ? false : true, email: email.length < 3 ? false : true })
@@ -204,7 +207,7 @@ const ModalEditUsers = (props) => {
                   name="company"
                   onChange={handleOnChange}
                   label="Empresa"
-                  value={(dataEdit.company === "ESO" || dataEdit.company === "NRAO" || dataEdit.company === "NAOJ")? dataEdit.company :'Other'} 
+                  value={(dataEdit.company)} 
                 >
                   {companys.map((item) => {
                     return (<MenuItem value={item}>{item}</MenuItem>)
@@ -215,7 +218,7 @@ const ModalEditUsers = (props) => {
             {stateCompany.name &&
               <Grid item xs={4}>
                 <TextField
-                  value={dataEdit.company}
+                  value={dataEdit.companyOther}
                   onChange={handleOnChange}
                   fullWidth
                   label="Escriba nombre de la empresa"
@@ -238,7 +241,7 @@ const ModalEditUsers = (props) => {
                   name='department'
                   onChange={handleOnChange}
                   label="Departamento"
-                  value={(dataEdit.department != "ESO" || dataEdit.department != "NRAO") ? dataEdit.department : 'Other'}
+                  value={(dataEdit.department)}
                 >
                   {departments.map((dep) => {
                     return (<MenuItem value={dep}>{dep}</MenuItem>)
@@ -257,7 +260,7 @@ const ModalEditUsers = (props) => {
                   type="text"
                   variant="outlined"
                   size="small"
-                  value={dataEdit.department}
+                  value={dataEdit.departmentOther}
                 />
 
               </Grid>
