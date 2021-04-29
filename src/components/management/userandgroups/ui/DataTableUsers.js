@@ -173,12 +173,14 @@ const DataTableUsers = () => {
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{firstName}{` `}{lastName}</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{email}</TableCell>
-									{/*{department === 'Other'
-										<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{departmentOther}</TableCell>
-										}*/}
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{department}</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									{ company === 'Other'? (companyOther.length > 8 ? companyOther.substring(0,6) + "..." : companyOther) : company}
+									</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+											{ department === 'Other'? (departmentOther.length > 8 ? departmentOther.substring(0,6) + "..." : departmentOther) : department}
+									</TableCell>
 				
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{company}</TableCell>
+									
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
 											<Switch
 												checked={enabled}

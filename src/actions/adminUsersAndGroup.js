@@ -158,7 +158,7 @@ export const departmentsUsersInitLoading = (authUser) => {
 	}
 };
 
-export const startCreateUsersLoading = (authUser,id, firstName, lastName, email, password, company, departament, companyOther, departmentOther, group) => {
+export const startCreateUsersLoading = (authUser, data) => {
 	return async (dispatch) => {
 
 		try {
@@ -171,15 +171,15 @@ export const startCreateUsersLoading = (authUser,id, firstName, lastName, email,
 			});
 
 			Swal.showLoading();
+			 const {id, firstName, lastName, email, password, company, departament, companyOther, departmentOther, group} = data
 
 			await addUsers(authUser, id, firstName, lastName, email, password, company, departament, companyOther, departmentOther, group);
 
 			const resp = await getUsers(authUser);
 			
-			Swal.close();
-
 			dispatch(saveUsersLoaded());
 			dispatch(usersInitLoaded(resp.data));
+			Swal.close();
 
 		} catch (error) {
 			Swal.close();

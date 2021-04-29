@@ -67,7 +67,7 @@ const DataTableGroup = () => {
 	}, [])
 
 	const handleSelectName = (id) => {
-		dispatch(membersGroupInitLoading(authUser, id));
+		dispatch(membersGroupInitLoading(authUser, id, grouplist));
 	}
 
 

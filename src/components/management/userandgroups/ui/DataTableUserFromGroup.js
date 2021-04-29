@@ -42,7 +42,8 @@ const DataTableUserFromGroup = () => {
 	const { authUser } = useSelector(state => state.auth)
 
 	const { members,  grouplist = {},} = useSelector(state => state.adminUsers)
-	const { id, name } = grouplist
+	
+	
 
 	useEffect(() => {
 

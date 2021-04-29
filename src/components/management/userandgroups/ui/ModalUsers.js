@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, Divider, InputBase, Paper, Grid, Chip, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
-import {closeModalUsers,validateUserNickname ,nicknameValidate, companyUsersInitLoading, departmentsUsersInitLoading, startCreateUsersLoading} from 'actions/adminUsersAndGroup';
+import {closeModalUsers,validateUserNickname ,nicknameValidate, companyUsersInitLoading, departmentsUsersInitLoading, startCreateUsersLoading, startGroupInitLoading} from 'actions/adminUsersAndGroup';
 import Alert from '@material-ui/lab/Alert';
 import SelectAndChips from 'components/ui/SelectAndChips';
 
@@ -35,16 +35,21 @@ const ModalUsers = () => {
 
   const [nameUser, setNameUser] = useState({ group:[] })
 
+  const [dataCreate, setDataCreate] = useState({});
+
     useEffect(() => {
 
         dispatch(companyUsersInitLoading(authUser));
         dispatch(departmentsUsersInitLoading(authUser));
+        dispatch(startGroupInitLoading(authUser));
 
     }, [dispatch]);
 
-  const handleChange = (event) => {
-   
-  };
+    useEffect(() => {
+      
+      setDataCreate({ ...dataCreate, ["group"]: nameUser })
+
+    }, [nameUser]);
 
   const handleClose = () => {
     dispatch(closeModalUsers());
@@ -86,15 +91,14 @@ const ModalUsers = () => {
 
         break;
     }
-  }
+  setDataCreate({ ...dataCreate, [name]: value })
+}
 
   const handleOnSave = () =>{
-      if(!validateNickname){
-        console.log('es valido')
-        dispatch(startCreateUsersLoading())
+      
+        dispatch(startCreateUsersLoading(authUser, dataCreate))
       }
-      console.log("EEEss");
-  }
+      
 
   return (
 
@@ -119,24 +123,26 @@ const ModalUsers = () => {
               <TextField
                   //value={value}
                   fullWidth
+                  name='firstname'
                   label="Nombres"
                   type="text"
                   variant="outlined"
                   size="small"
                   required
-                  //onChange={handleOnChange}
+                  onChange={handleOnChange}
               />  
           </Grid>  
           <Grid item xs={4}>
               <TextField
                   //value={value}
                   fullWidth
+                  name="lastname"
                   label="Apellidos"
                   type="text"
                   variant="outlined"
                   size="small"
                   required
-                // onChange={handleOnChange}
+                  onChange={handleOnChange}
               />
           </Grid>
           <Grid item xs={4}>
@@ -148,7 +154,8 @@ const ModalUsers = () => {
                   variant="outlined"
                   size="small"
                   fullWidth
-                  //onChange={handleOnChange}
+                  onChange={handleOnChange}
+                  name="email"
                 />
           </Grid>
           </Grid>
@@ -175,10 +182,11 @@ const ModalUsers = () => {
                 // value={value}
                   fullWidth
                   label="Escriba nombre de la empresa"
-                  name='Compañia'
+                  name='companyOther'
                   type="text"
                   variant="outlined"
                   size="small"
+                  onChange={handleOnChange}
               /> 
          
           </Grid>
@@ -208,10 +216,11 @@ const ModalUsers = () => {
                 // value={value}
                   fullWidth
                   label="Escriba nombre del departamento"
-                  name='departamento'
+                  name='departmentOther'
                   type="text"
                   variant="outlined"
                   size="small"
+                  onChange={handleOnChange}
               /> 
          
           </Grid>
@@ -243,7 +252,9 @@ const ModalUsers = () => {
         
         <h5 className="mt-3">Asignar grupos</h5>
 
-          <SelectAndChips data={grouplist} returnData={(group)=> setNameUser({ ...nameUser, ['group']: group.map(group=> group.id)})}/>
+          <SelectAndChips data={grouplist} returnData={(group)=> setNameUser( group.map(group=> {
+           return{'id': group.id}
+          }))}/>
             
           <Divider className="mt-3"/>
         

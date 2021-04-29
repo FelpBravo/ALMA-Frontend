@@ -87,17 +87,17 @@ const ModalEditUsers = (props) => {
         setValidation({ ...validation, ['email']: !correo.test(value) ? false : true })
         break;
       case 'company':
-        if (value === "ESO" || value === "NRAO" || value === "NAOJ") {
-          setStateCompany({ name: false, department: stateCompany.department })
-        } else {
+        if (value === 'Other') {
           setStateCompany({ name: true, department: stateCompany.department })
+        } else {
+          setStateCompany({ name: false, department: stateCompany.department })
         }
         break
       case 'department':
-        if (value === "ADS" || value === "ADO" || value === "ADC" || value === "ADE" || value === "ADA") {
-          setStateCompany({ name: stateCompany.name, department: false })
-        } else {
+        if (value === "Other") {
           setStateCompany({ name: stateCompany.name, department: true })
+        } else {
+          setStateCompany({ name: stateCompany.name, department: false})
         }
         break;
       default:
@@ -222,7 +222,7 @@ const ModalEditUsers = (props) => {
                   onChange={handleOnChange}
                   fullWidth
                   label="Escriba nombre de la empresa"
-                  name='company'
+                  name='companyOther'
                   type="text"
                   variant="outlined"
                   size="small"
@@ -256,7 +256,7 @@ const ModalEditUsers = (props) => {
                   onChange={handleOnChange}
                   fullWidth
                   label="Escriba nombre del departamento"
-                  name='department'
+                  name='departmentOther'
                   type="text"
                   variant="outlined"
                   size="small"
