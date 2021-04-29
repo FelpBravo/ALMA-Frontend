@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, NativeSelect, Select } from '@materi
 import Tags from './tags'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { startPermissionsModuleLoading } from 'actions/permissions';
+import { startGetPolicies, startGetProfiles,  } from 'actions/permissions';
 
 
 export default function GroupPermissions() {
@@ -10,8 +10,8 @@ export default function GroupPermissions() {
     const { authUser } = useSelector(state => state.auth);
 
     useEffect(() => {
-        dispatch(startPermissionsModuleLoading(authUser))
-       
+        dispatch(startGetProfiles(authUser))
+        dispatch(startGetPolicies(authUser))
     }, [])
     return <>
         <div className="jr-card">
