@@ -1,6 +1,7 @@
 import {
     getActionsByModule, getPolicies, getProfiles, getActionsByModuleByPolicy, saveProfilePolicies, saveActionsModuleByPolicy
  } from "services/permissionService";
+import { types } from "types/types";
 
 export const startGetProfiles = (authUser) => {
 
@@ -8,8 +9,8 @@ export const startGetProfiles = (authUser) => {
         try {
 
             const resp = await getProfiles(authUser);
-            console.log("resp", resp)
-            // dispatch(searchLoaded(resp.data));
+            console.log("resp", resp.data)
+            dispatch(profilesInitLoaded(resp.data));
 
         } catch (error) {
             console.log(error);
@@ -26,8 +27,8 @@ export const startGetPolicies = (authUser) => {
         try {
 
             const resp = await getPolicies(authUser);
-            console.log("resp", resp)
-            // dispatch(searchLoaded(resp.data));
+            console.log("resp", resp.data)
+            dispatch(policiesInitLoaded(resp.data));
 
         } catch (error) {
             console.log(error);
@@ -47,7 +48,7 @@ export const startPermissionsModuleLoading = (authUser) => {
 
             const resp = await getActionsByModule(authUser);
             console.log("resp", resp)
-            // dispatch(searchLoaded(resp.data));
+            dispatch(actionsModuleInitLoaded(resp.data));
 
         } catch (error) {
             console.log(error);
@@ -110,5 +111,36 @@ export const startSaveProfilePolicies = ({ authUser, policyId, data }) => {
             // Swal.close();
         }
 
+    }
+};
+
+export const profilesInitLoaded = (profiles) => {
+    return {
+        type: types.addModulePermission,
+        payload: {profiles},
+    }
+};
+
+export const policiesInitLoaded = (policies) => {
+    return {
+        type: types.addModulePermission,
+        payload: { policies },
+    }
+};
+
+export const actionsModuleInitLoaded = (actionsModule) => {
+    return {
+        type: types.addModulePermission,
+        payload: { actionsModule },
+    }
+};
+
+export const actionsModuleSetValueField = (name, value) => {
+    return {
+        type: types.actionsModuleSetValueField,
+        payload: {
+            name,
+            value
+        }
     }
 };

@@ -20,6 +20,7 @@ import { informationReducer } from 'reducers/informationReducer'
 import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
 import { savedSearchesReducer } from 'reducers/savedSearchesReducer'
 import { sharedDocumentReducer } from 'reducers/sharedDocumentReducer';
+import { modulePermissionsReducer } from 'reducers/modulePermissionReducer';
 
 
 export const history = createBrowserHistory();
@@ -47,6 +48,8 @@ const rootReducer = (history) => combineReducers({
 	info:informationReducer,
 	crumbs:breadcrumbsReducer,
 	sharedDocument: sharedDocumentReducer,
+	modulePermissions: modulePermissionsReducer,
+
 });
 
 export const store = createStore(

@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, InputLabel, makeStyles } from '@material-ui/core';
 import Chip from 'components/ui/Chip';
+import { get } from 'lodash-es';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -41,46 +42,37 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Tags = () => {
-    const [tagsSelected, setTagsSelected] = useState([])
+const Tags = ({ moduleId, tagsList, name, updateActions, tagsSelected}) => {
     const classes = useStyles();
-
     const handleChange = ({ target }) => {
         const { value } = target;
-        setTagsSelected(handleAddOrRemove(value[value.length - 1]))
+        updateActions(moduleId,value)
     };
 
     const handleRenderValue = (tagsSelected) => {
-        const nTags = tagsSelected.length
+        const nTags = tagsSelected?.length
         if (tagsSelected && nTags > 0) {
             return `${nTags} etiqueta${nTags > 1 ? 's' : ''}`;
         }
         return '0 etiquetas';
     }
 
-    const handleRemove = id => [...tagsSelected.filter((elem) => elem.id !== id)]
+    const handleRemove = id => [...tagsSelected?.filter((elem) => elem !== id)]
 
-    const handleAddOrRemove = id => {
-        const existsTag = tagsSelected.find(x => x.id === parseInt(id));
-        let response = []
-        if (!existsTag) {
-            response = [...tagsSelected, tagsList.find(x => x.id === parseInt(id))]
-        } else {
-            response = handleRemove(id)
-        }
-        return response;
-    }
+    const getNameById = id => get(tagsList.find(e =>e.id === id), 'name', '')
 
-
+    console.log("tagsList", tagsList, 'tagsSelected',tagsSelected)
     return (<Grid container spacing={1}>
         <Grid item md={3}>
-            <FormControl fullWidth>
+            <FormControl fullWidth variant="outlined">
+                <InputLabel id="demo-mutiple-checkbox-label">{name}</InputLabel>
                 <Select
                     id="demo-mutiple-checkbox"
                     multiple
+                    label={name}
                     value={tagsSelected}
                     onChange={handleChange}
-                    input={<BootstrapInput />}
+                    // input={<BootstrapInput />}
                     renderValue={handleRenderValue}
                     MenuProps={MenuProps}
                 >
@@ -92,7 +84,7 @@ const Tags = () => {
                             >
                                 <Checkbox
                                     color="primary"
-                                    checked={tagsSelected.find(x => x.id === id) ? true : false}
+                                    checked={tagsSelected?.find(x => x === id) ? true : false}
                                 />
 
                                 <ListItemText
@@ -105,12 +97,12 @@ const Tags = () => {
             </FormControl>
         </Grid>
         <Grid item md={9} container>
-            {tagsSelected.map(({ id, name }) => <Chip
+            {tagsSelected?.map( id => <Chip
                 key={id}
                 size="small"
                 variant="outlined"
-                label={name}
-                onDelete={() => setTagsSelected(handleRemove(id))}
+                label={getNameById(id)}
+                onDelete={() => updateActions(moduleId, handleRemove(id))}
                 color="primary"
             />)}
         </Grid>
