@@ -60,14 +60,13 @@ export const startPermissionsModuleLoading = (authUser) => {
 };
 
 
-export const startGetActionsByModuleByPolicy = ({ authUser, policyId}) => {
+export const startGetActionsByModuleByPolicy = ({ authUser, policyId}, setData) => {
 
     return async (dispatch) => {
         try {
 
             const resp = await getActionsByModuleByPolicy(authUser, policyId);
-            console.log("resp", resp)
-            // dispatch(searchLoaded(resp.data));
+            setData(resp?.data)
 
         } catch (error) {
             console.log(error);

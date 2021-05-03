@@ -1,9 +1,9 @@
-import { Divider, FormControl, InputLabel, makeStyles, MenuItem, NativeSelect, Select } from '@material-ui/core'
+import { Divider, FormControl, InputLabel, makeStyles, MenuItem, Button, Select } from '@material-ui/core'
 import Tags from './tags'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { actionsModuleSetValueField, startGetPolicies, startGetProfiles, startPermissionsModuleLoading } from 'actions/permissions';
-import { get } from 'lodash-es';
+import { actionsModuleSetValueField, startGetPolicies, startGetProfiles, startPermissionsModuleLoading, startGetActionsByModuleByPolicy, startSaveActionsModuleByPolicy } from 'actions/permissions';
+import { get, isEmpty } from 'lodash-es';
 
 const useStyles = makeStyles(theme => ({
     divider: {
@@ -11,91 +11,47 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const actionsModuleList = [
-    {
-        "id": 1,
-        "actions": [
-            1,
-            2,
-            3,
-            6,
-            7
-        ]
-    },
-    {
-        "id": 2,
-        "actions": [
-            1,
-            2,
-            3,
-            6,
-            7
-        ]
-    },
-    {
-        "id": 3,
-        "actions": [
-            1,
-            2,
-            3,
-            6,
-            7
-        ]
-    }
-]
-
-const actionsSelectedHC = [
-    {
-        "id": 1,
-        "actions": [
-            1,
-            2,
-            3,
-            6,
-            7
-        ]
-    },
-    {
-        "id": 2,
-        "actions": [
-            1,
-            2,
-            3,
-        ]
-    },
-    {
-        "id": 3,
-        "actions": [
-            1,
-            2,
-            3,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12
-        ]
-    }
-]
-
 export default function GroupPermissions() {
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
-    const { actionsModule, profiles, fields } = useSelector(state => state.modulePermissions);
+    const { actionsModule, profiles, policies,  fields } = useSelector(state => state.modulePermissions);
     const classes = useStyles();
-    const [actionsModuleList, setActionsModuleList] = useState(actionsSelectedHC)
-    console.log("actionsModuleList", actionsModuleList)
+    const [actionsModuleList, setActionsModuleList] = useState([])
+    const profileIdSelected = get(fields.find(({name}) => name === "profile"),'value', null)
+
+
+    const geyPolicyId = () => {
+        const profileName = profiles.find(({ id }) => id === profileIdSelected)?.name
+        const matchPolicy = policies.find(({ name }) => name.replace("POLITIC_", "") === profileName)
+        const policyId = get(matchPolicy, 'id')
+        return policyId
+    }
+    
+    console.log("profileIdSelected", profileIdSelected)
     useEffect(() => {
         dispatch(startGetProfiles(authUser))
         dispatch(startGetPolicies(authUser))
         dispatch(startPermissionsModuleLoading(authUser))
     }, [])
 
+    useEffect(() => {
+        if (profileIdSelected){
+            const policyId = geyPolicyId()
+            dispatch(startGetActionsByModuleByPolicy({ authUser, policyId }, setActionsModuleList))
+        }
+
+    }, [profileIdSelected])
+
+
+
+    const handleSaveActions = () => {
+        const policyId = geyPolicyId()
+        dispatch(startSaveActionsModuleByPolicy({ authUser, policyId, data: actionsModuleList}))
+
+    }
+
     const handleOnChange = ({ target }) => {
         const { name, value } = target;
-        console.log("name", name, "value", value)
         dispatch(actionsModuleSetValueField(name, value));
 
     }
@@ -144,7 +100,7 @@ export default function GroupPermissions() {
                 )
             }
 
-
+            <Button onClick={handleSaveActions}>Guardar</Button>
         </div>
     </>
 }
