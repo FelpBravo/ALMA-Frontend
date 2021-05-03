@@ -60,6 +60,26 @@ const membersGroup = (authUser, id) => {
 	});
 };
 
+const addUsersGroup = (authUser, id, userId) => {
+	return axiosInstance.put(`/groups/members/${id}/add/${userId}`,
+		{
+			headers: {
+				Authorization: `Bearer ${authUser}`,
+			},
+		}
+	);
+};
+
+const removeUsersGroup = (authUser, id, userId) => {
+	return axiosInstance.put(`/groups/members/${id}/remove/${userId}`,
+		{
+			headers: {
+				Authorization: `Bearer ${authUser}`,
+			},
+		}
+	);
+};
+
 
 
 export {
@@ -70,4 +90,6 @@ export {
     profilesGroup,
 	addGroup,
 	membersGroup,
+	addUsersGroup,
+	removeUsersGroup,
 }

@@ -205,14 +205,14 @@ const DataTableUsers = () => {
 													}
 												/>
 
-												<TableActionButton
+												{/*<TableActionButton
 													materialIcon={
 														<DeleteOutlinedIcon
 															className={classes.iconos}
 														//onClick={() => handleSelectActionTags(3)}
 														/>
 													}
-												/>
+												/>*/}
 											</div>
 										}
 

@@ -10,7 +10,7 @@ import {
 	companyUsers,
 	addUsers
 } from 'services/usersService';
-import { addGroup, dependenciesGroup, getGroup, membersGroup, profilesGroup, searchGroup, validateGroup } from 'services/groupService';
+import { addGroup, addUsersGroup, dependenciesGroup, getGroup, membersGroup, profilesGroup, searchGroup, validateGroup } from 'services/groupService';
 
 export const startUsersInitLoading = (authUser,page) => {
 	return async (dispatch) => {
@@ -299,7 +299,7 @@ export const startCreateGroupLoading = (authUser, name, users) => {
 	}
 };
 
-export const membersGroupInitLoading = (authUser, id) => {
+export const membersGroupInitLoading = (authUser, idGroup, nameGroup) => {
 	return async (dispatch) => {
 
 		try {
@@ -310,8 +310,8 @@ export const membersGroupInitLoading = (authUser, id) => {
 				heightAuto: false,
 			});
 			Swal.showLoading();
-			const resp = await membersGroup(authUser, id);
-			dispatch(membersInitLoaded(resp.data))
+			const resp = await membersGroup(authUser, idGroup);
+			dispatch(membersInitLoaded(resp.data, idGroup, nameGroup))
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -321,9 +321,46 @@ export const membersGroupInitLoading = (authUser, id) => {
 	}
 };
 
+export const createUsersGroupLoading = (authUser, nameGroup, idGroup) => {
+	return async (dispatch) => {
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await addUsersGroup(authUser, nameGroup, idGroup);
+
+			const resp = await membersGroup(authUser, idGroup);
+			
+			Swal.close();
+
+			dispatch(saveUsersGroupLoaded());
+			dispatch(membersInitLoaded(resp.data));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+		}
+
+	}
+};
+
+
 export const saveGroupLoaded = () => {
 	return {
 		type: types.groupSaveLoaded,
+	}
+}
+export const saveUsersGroupLoaded = () => {
+	return {
+		type: types.usersGroupSaveLoaded,
 	}
 }
 
@@ -410,10 +447,14 @@ export const groupInitLoaded = (grouplist) => {
 	}
 };
 
-export const membersInitLoaded = (members) => {
+export const membersInitLoaded = (members, idGroup, nameGroup) => {
 	return {
 		type: types.membersInitLoaded,
-		payload: members,
+		payload: {
+			members: members,
+			idGroup: idGroup,
+			nameGroup: nameGroup,
+		}
 	}
 };
 

@@ -66,8 +66,10 @@ const DataTableGroup = () => {
 		}
 	}, [])
 
-	const handleSelectName = (id) => {
-		dispatch(membersGroupInitLoading(authUser, id, grouplist));
+	const handleSelectName = (id, name) => {
+		dispatch(membersGroupInitLoading(authUser, id, name));
+		console.log(id, name)
+
 	}
 
 
@@ -92,7 +94,7 @@ const DataTableGroup = () => {
 
 								return <TableRow key={index} >
 									<TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor:'pointer' }}
-										onClick={() => handleSelectName(id)}
+										onClick={() => handleSelectName(id, name)}
 									>
 
 										{/*<img src={require("assets/images/group.png")}/>*/}
@@ -104,7 +106,7 @@ const DataTableGroup = () => {
 												materialIcon={
 													<DeleteOutlinedIcon
 														className={classes.iconos}
-													//onClick={() => handleSelectActionTags(3)}
+													//onClick={() => handleDelete(id)}
 													/>
 												}
 											/>

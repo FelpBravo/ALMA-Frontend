@@ -126,6 +126,7 @@ export const types = {
 	usersInitLoaded: 'Users List',
 	usersValidateNickname: 'Users Validate Nickname',
 	usersSaveLoaded: 'Users Save Loaded',
+	usersGroupSaveLoaded: 'Users Group Save Loaded',
 	
 	companyInitLoaded: 'Companies',
 	departmentsInitLoaded: 'Departments',

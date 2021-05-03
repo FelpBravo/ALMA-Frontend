@@ -14,7 +14,9 @@ const initialState = {
     users: {
         id: '',
             },
-    members: [],        
+    members: [],
+    nameGroup: '',
+    idGroup: '',        
    
 }
 
@@ -94,7 +96,9 @@ export const adminUsersReducer = (state = initialState, action) => {
         case types.membersInitLoaded:
             return {
                 ...state,
-                members: action.payload,
+                members: action.payload.members,
+                idGroup: action.payload.idGroup,
+                nameGroup: action.payload.nameGroup,
                 }                
         
         default:
