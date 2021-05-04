@@ -3,7 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import URLSearchParams from 'url-search-params';
 import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Redirect, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import 'assets/vendors/style';
@@ -15,6 +15,9 @@ import { PublicRouter } from 'routers/PublicRouter';
 import { AuthRouter } from 'routers/AuthRouter';
 import { PrivateRouter } from 'routers/PrivateRouter';
 import { applyTheme } from 'helpers/applyTheme';
+import DownloadFilePage from 'components/downloadFile';
+import ChangePasswordPage from 'components/changePassword';
+import FormTestPage from 'components/formTest';
 
 const App = (props) => {
 
@@ -66,6 +69,25 @@ const App = (props) => {
 					<RTL>
 						<div className='app-main'>
 							<Switch>
+
+								<Route
+									exact
+									path="/download/:documentId"
+									component={DownloadFilePage}
+								/>
+
+								<Route
+									exact
+									path="/change-password/:tokenId"
+									component={ChangePasswordPage}
+								/>
+
+								{/* Formularios test */}
+								<Route
+									exact
+									path="/form/test"
+									component={FormTestPage}
+								/>
 
 								<PublicRouter
 									path="/auth"

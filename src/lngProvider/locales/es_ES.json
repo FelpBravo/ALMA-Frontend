@@ -303,6 +303,24 @@
 	"table.dataTable": "Tabla de datos",
 	"table.basicTable": "Tabla básica",
 	"table.application": "Tabla de aplicaciones",
+
+	"table.shared.dialog.title": "Compartir documento",
+	"table.shared.dialog.field.password": "Contraseña",
+	"table.shared.dialog.field.withoutPassword": "Sin contraseña",
+	"table.shared.dialog.tooltip.title": "Compartir",
+	"table.shared.dialog.field.expirationDate": "Fecha de vencimiento",
+	"table.shared.dialog.field.copyLink": "Copiar enlace",
+	"table.shared.dialog.field.createDocument": "Crear",
+	"table.shared.dialog.field.cancelDocument": "Cancelar",
+
+	"downloadFile.shared.dialog.button.send": "Enviar",
+	"downloadFile.shared.dialog.message.protected": "está protegido. Ingrese la contraseña para abrir el documento.",
+	"downloadFile.shared.button.download": "Descargar",
+	"downloadFile.shared.dialog.title": "Contraseña",
+	"downloadFile.shared.expired.title": "¡Enlace expirado!",
+	"downloadFile.shared.expired.subtitle": "Parece que este enlace ya ha caducado. Pero no te preocupes, puedes solicitar uno nuevo.",
+	"downloadFile.shared.notFound.title": "Archivo no encontrado",
+	"downloadFile.shared.notFound.subtitle": "No se encontró la URL solicitada. Compruebe que el enlace sea correcto.",
 	"todo": "Que hacer",
 	"todo.addTask": "AGREGAR TAREA",
 	"todo.all": "Todas",
@@ -311,7 +329,8 @@
 	"dashboard.advancedSearchText": "Buscar",
 	"dashboard.advancedSearchClear": "Limpiar",
 	"dashboard.advancedSearch": "Búsqueda Avanzada",
-	"dashboard.saveSearch": "Guardar búsqueda",
+	"dashboard.listSearch": "Mis búsquedas guardadas",
+	"dashboard.saveSearch": "Guardar parámetros búsqueda",
 
 	"dashboard.advancedSearchTitle": "Buscar por atributo",
 	"dashboard.advancedSearchDate": "Buscar por rangos de fechas",
@@ -593,6 +612,7 @@
 	"sidebar.tags.folders": "Directorios",
 	"sidebar.tags.report": "Reportes",
 	"sidebar.loadDocuments": "Carga documentos",
+	"sidebar.documents": "Creación documentos",
 	"company.name": "APIUX",
 	"table.search.documentName": "Nombre documento",
 	"table.search.responsable": "Responsable",
@@ -606,6 +626,7 @@
 	"table.search.subscribe": "Suscribir",
 	"table.search.unsubscribe": "Desuscribir",
 	"document.loadDocuments": "Carga de documentos",
+	"document.loadDocuments.creation": "Creación de documentos",
 	"document.loadDocuments.typeDoc": "Tipo de documento",
 	"document.loadDocuments.folders": "Carpetas",
 	"document.loadDocuments.load": "Cargar",
@@ -690,8 +711,25 @@
 	"users.validate.firstName": "Nombre invalido",
 	"users.validate.lastName": "Apellido invalido",
 	"users.validate.email": "Email invalido",
-	"user.modal.title": "Agregar nuevo usuario"
+	"user.modal.title": "Agregar nuevo usuario",
+
+	 "groupPermissions.title": "Perfiles",
+	 "groupPermissions.select.profile": "Seleccionar perfil",
+	 "groupPermissions.select.tags":"Seleccionar etiquetas",
+	 "groupPermissions.permissions.submit": "Guardar",
 
 	
-
+	"changePassword.paper.title": "Actualizar contraseña",
+	"changePassword.input.password": "Contraseña",
+	"changePassword.input.rePassword": "Repetir Contraseña",
+	"changePassword.input.verificationCode": "Código de verificación",
+	"changePassword.button.submit": "Guardar cambios",
+	"changePassword.paper.title.notFound": "No encontrado",
+	"changePassword.paper.subtitle.notFound": "Comprueba que el enlace sea correcto",
+	"changePassword.paper.title.success": "Contraseña actualizada con éxito, en segundos serás redireccionado a autenticarte...",
+	"changePassword.passwordPolicy.title": "Debe tener al menos:",
+	"changePassword.passwordPolicy.rule.one": "8 caracteres alfanuméricos",
+	"changePassword.passwordPolicy.rule.two": "2 dígitos",
+	"changePassword.passwordPolicy.rule.three": "1 letra mayúscula",
+	"changePassword.passwordPolicy.rule.four": "1 carácter especial"
 }

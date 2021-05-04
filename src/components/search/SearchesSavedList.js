@@ -45,18 +45,16 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
             open={open}
             anchorEl={anchorEl}
             onClose={onClose}
-            className={classes.root}
+            //className={classes.root}
             anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'center',
+                horizontal: 'right',
             }}
             transformOrigin={{
                 vertical: 'top',
-                horizontal: 'center',
+                horizontal: 'left',
             }}
-            PaperProps={{
-                style: { width: '100%' }
-            }}
+           
         >
             {
                 loading
@@ -73,9 +71,9 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
                     </List>
                     : <List component="nav" aria-label="secondary mailbox folders">
                         {
-                            savedSearchesList?.map(({ name, id }) => 
+                            savedSearchesList?.slice(savedSearchesList.length-3, savedSearchesList.length ).reverse().map(({ name, id }) => 
                             <ListItem onClick={() => handleGetSavedSearch(id)} button key={id}>
-                                <ListItemText primary={name} />
+                                <ListItemText primary={name} disableTypography={true} style={{color:"#FFA800"}}/>
                             </ListItem>)
                         }
                     </List>

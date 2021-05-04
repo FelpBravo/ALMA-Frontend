@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -41,7 +42,9 @@ const SideBarContent = () => {
 	const isMounted = useRef(true);
 
 	const [selected, setSelected] = useState([]);
+
 	const [expanded, setExpanded] = useState([]);
+
 	const [folders, setFolders] = useState([]);
 
 	useEffect(() => {
@@ -49,6 +52,8 @@ const SideBarContent = () => {
 		return () => {
 			isMounted.current = false;
 		}
+
+		
 
 	}, []);
 
@@ -66,6 +71,8 @@ const SideBarContent = () => {
 		setExpanded(selectedIds);
 
 	}, [selectedIds, setExpanded]);
+	
+	
 
 	useEffect(() => {
 		if (authorities) {
@@ -73,15 +80,20 @@ const SideBarContent = () => {
 			const ROLE_FOLDER_VIEW = authorities.find(rol => rol === 'ROLE_FOLDER_VIEW')
 
 
-			if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
+				if (initFolders.length === 0 && authUser && ROLE_FOLDER_VIEW) {
 
 
-				dispatch(startFoldersInitLoading(authUser));
+					dispatch(startFoldersInitLoading(authUser));
+	
+				}
+			
+			
 
-			}
 		}
 
-	}, [dispatch, initFolders, authUser]);
+	}, [dispatch]);
+
+	
 
 	const handleRenderMenu = (folders) => {
 
@@ -100,6 +112,7 @@ const SideBarContent = () => {
 	}
 
 	const handleSelect = async (event, folderId) => {
+		
 
 		if (selected === folderId) {
 			return;
