@@ -10,7 +10,7 @@ import {
 	companyUsers,
 	addUsers
 } from 'services/usersService';
-import { addGroup, addUsersGroup, dependenciesGroup, getGroup, membersGroup, profilesGroup, searchGroup, validateGroup } from 'services/groupService';
+import { addGroup, addUsersGroup, dependenciesGroup, getGroup, membersGroup, profilesGroup, removeUsersGroup, searchGroup, validateGroup } from 'services/groupService';
 
 export const startUsersInitLoading = (authUser,page) => {
 	return async (dispatch) => {
@@ -352,6 +352,45 @@ export const createUsersGroupLoading = (authUser, nameGroup, idGroup) => {
 	}
 };
 
+export const removeUserGroupLoading = (authUser, idGroup, userId) => {
+	return async (dispatch, getState) => {
+
+		const { members = [] } = getState().adminUsers;
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await removeUsersGroup(authUser, idGroup, userId);
+			Swal.close();
+
+			const newCurrentMembers = members.filter(user => user.id !== userId);
+
+			dispatch(deleteUsersGroupLoaded(newCurrentMembers));	
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+export const deleteUsersGroupLoaded = (usersData) => {
+	return {
+		type: types.usersDeleteLoaded,
+		payload: usersData
+		
+	}
+}
 
 export const saveGroupLoaded = () => {
 	return {
@@ -423,6 +462,18 @@ export const openModalGroup = () => {
 export const closeModalGroup = () => {
 	return {
 		type: types.groupCloseModal,
+	}
+};
+
+export const openModalUsersGroup = () => {
+	return {
+		type: types.usersGroupOpenModal,
+	}
+};
+
+export const closeModalUsersGroup = () => {
+	return {
+		type: types.usersGroupCloseModal,
 	}
 };
 

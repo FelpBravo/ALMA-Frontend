@@ -10,11 +10,13 @@ import IntlMessages from 'util/IntlMessages';
 import { closeModalGroup, dependenciesGroupInitLoading, profilesGroupInitLoading, startCreateGroupLoading, startUsersInitLoading, validateGroupName } from 'actions/adminUsersAndGroup';
 import SelectAndChips from 'components/ui/SelectAndChips';
 import { DialogTitle, Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     width: "100%",
   },
 }));
+
 const ModalGroup = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -24,20 +26,20 @@ const ModalGroup = () => {
   const { openModal1, dependencies, profiles, groupname } = useSelector(state => state.adminUsers);
   const [messageErrorGroup, setMessageErrorGroup] = useState(null);
   const [nameGroup, setNameGroup] = useState({ dependencie: "", profile: "" , fullnamegroup: "", users:[] })
+
    useEffect(() => {
     dispatch(dependenciesGroupInitLoading(authUser));
     dispatch(profilesGroupInitLoading(authUser));
     dispatch(startUsersInitLoading(authUser));
   }, [dispatch]);
+
   const handleOnChangeName = ({ target }) => {
     const { name, value } = target
-    console.log(name, value)
     switch (name) {
       case 'dependency':
         setNameGroup({ dependencie: value, profile: nameGroup.profile, fullnamegroup: value+'_'+nameGroup.profile ,users:nameGroup.users })
         if(nameGroup.profile && value.length > 0 && nameGroup.profile.length > 0){
           dispatch(validateGroupName(authUser, value+'_'+nameGroup.profile))
-          console.log("soy",groupname)
           setMessageErrorGroup()
         }
         break;
@@ -45,7 +47,6 @@ const ModalGroup = () => {
         setNameGroup({...nameGroup, profile: value, dependencie: nameGroup.dependencie, fullnamegroup: nameGroup.dependencie+'_'+value,users:nameGroup.users  })
         if(nameGroup.dependencie.length > 0 && value.length > 0){
           dispatch(validateGroupName(authUser, nameGroup.dependencie+"_"+value))
-          console.log("soy",groupname)
           setMessageErrorGroup()
         }
         break;
@@ -57,9 +58,7 @@ const ModalGroup = () => {
     dispatch(closeModalGroup());
   }
   const handleOnSave =() =>{
-    console.log(nameGroup);
    dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup, nameGroup.users))
-   console.log( nameGroup.fullnamegroup, nameGroup.users)
   }
   return (
     <div>

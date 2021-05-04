@@ -16,7 +16,8 @@ const initialState = {
             },
     members: [],
     nameGroup: '',
-    idGroup: '',        
+    idGroup: '', 
+    openModal2: false,       
    
 }
 
@@ -60,6 +61,17 @@ export const adminUsersReducer = (state = initialState, action) => {
                 ...state,
                 openModal1: false,
             }
+        case types.usersGroupOpenModal:
+            return {
+                ...state,
+                openModal2: true,
+                }
+    
+        case types.usersGroupCloseModal:
+            return {
+                ...state,
+                openModal2: false,
+                }
         case types.usersValidateNickname:
             return {
                 ...state,
@@ -99,7 +111,12 @@ export const adminUsersReducer = (state = initialState, action) => {
                 members: action.payload.members,
                 idGroup: action.payload.idGroup,
                 nameGroup: action.payload.nameGroup,
-                }                
+                }  
+        case types.usersDeleteLoaded:
+            return {
+                ...state,
+                members: action.payload,
+                }                       
         
         default:
             return state;

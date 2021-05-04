@@ -256,7 +256,7 @@ const ModalEditUsers = (props) => {
                   onChange={handleOnChange}
                   fullWidth
                   label="Escriba nombre del departamento"
-                  name='departmentOther'
+                  name='department'
                   type="text"
                   variant="outlined"
                   size="small"

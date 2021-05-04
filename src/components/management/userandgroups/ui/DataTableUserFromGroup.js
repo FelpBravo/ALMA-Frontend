@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,8 +15,8 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { createUsersGroupLoading } from 'actions/adminUsersAndGroup';
-
+import ModalAddUsersGroup from './ModalAddUsersGroup';
+import { openModalUsersGroup, removeUserGroupLoading } from 'actions/adminUsersAndGroup';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,8 +44,6 @@ const DataTableUserFromGroup = () => {
 	const { authUser } = useSelector(state => state.auth)
 
 	const { members, idGroup, nameGroup} = useSelector(state => state.adminUsers)
-	console.log(idGroup,nameGroup)
-	
 
 	useEffect(() => {
 
@@ -63,9 +62,27 @@ const DataTableUserFromGroup = () => {
 			isMounted.current = false
 		}
 	}, [])
+	
     const handleAdd = () => {
-		dispatch(openModalGroup());
-		dispatch(createUsersGroupLoading(authUser ,nameGroup, idGroup))
+		dispatch(openModalUsersGroup());
+	}
+
+	const handleRemove = (id) => {
+		console.log(id, idGroup)
+		const resp = Swal.fire({
+			title: 'Eliminar',
+			text: "¿Estas seguro que quiere eliminar al usuario de este grupo?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
+
+		if (resp.value) {
+		dispatch(removeUserGroupLoading(authUser, idGroup ,id));
+		console.log(id, idGroup)
+		}
+		
 	}
 
 	return (
@@ -84,7 +101,7 @@ const DataTableUserFromGroup = () => {
 
 								</TableCell>
 								<TableCell 
-								onClick={() => handleAdd(nameGroup,idGroup)}
+								onClick={() => handleAdd()}
 								style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
 									<AddIcon />
 									Agregar Usuario
@@ -107,8 +124,8 @@ const DataTableUserFromGroup = () => {
 												<TableActionButton
 													materialIcon={
 														<DeleteOutlinedIcon
-															className={classes.iconos}
-														//onClick={() => handleSelectActionTags(3)}
+														className={classes.iconos}
+														onClick={() => handleRemove(id)}
 														/>
 													}
 												/>
@@ -133,7 +150,7 @@ const DataTableUserFromGroup = () => {
 						</TableBody>
 					</Table>
 				</TableContainer>
-
+				<ModalAddUsersGroup/>
 			</div>
 
 		</div>
