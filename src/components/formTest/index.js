@@ -1,9 +1,10 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField, SelectField, CheckField } from 'components/ui/Form';
+import { TextField, SelectField, CheckField, AutoCompleteField } from 'components/ui/Form';
 import schema from './FormTest.schema';
 import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
+import { countries } from './countries';
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -72,8 +73,15 @@ const CampaignForm = () => {
         ...commonProps,
     }
 
+    const countryProps = {
+        name: 'country',
+        label: 'Ciudad',
+        options: countries,
+        optionsLabel: "label",
+        optionsValue: "code",
+        ...commonProps,
+    };
 
-    console.log("emailProps", emailProps)
 
     const onSubmit = values => {
         console.log("values", values)
@@ -95,6 +103,7 @@ const CampaignForm = () => {
                     <TextField {...emailProps} />
                     <TextField {...goalProps} />
                     <CheckField {...isAnonymousProps} />
+                    <AutoCompleteField {...countryProps} />
                     <SelectField {...statusProps}>
                         {
                             ["todas", "en progreso", "completado"].map(elem => <MenuItem key={elem} value={elem}>{elem}</MenuItem>)
