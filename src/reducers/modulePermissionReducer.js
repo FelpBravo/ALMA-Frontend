@@ -22,9 +22,7 @@ export const modulePermissionsReducer = (state = initialState, action) => {
             }
         
         case types.actionsModuleSetValueField:
-            console.log("state", state)
             const newArray = state?.fields?.filter((e) => e?.name !== payload?.name)
-            console.log("newArray", newArray)
             newArray.push(payload)
             return {
                 ...state,

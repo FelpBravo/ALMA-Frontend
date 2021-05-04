@@ -60,7 +60,7 @@ const Tags = ({ moduleId, tagsList, name, updateActions, tagsSelected}) => {
         </Grid>
         <Grid item md={9} container>
             {tagsSelected?.map( id => <Chip
-                key={`$${moduleId}-${id}`}
+                key={`${getNameById(id)}${id}${Math.random()}`}
                 size="small"
                 variant="outlined"
                 label={getNameById(id)}
