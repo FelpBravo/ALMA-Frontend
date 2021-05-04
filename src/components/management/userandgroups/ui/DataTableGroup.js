@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -13,7 +14,7 @@ import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
-import { groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
+import { deleteGroupLoading, groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
 import { useLocation } from 'react-router';
 
 
@@ -68,8 +69,24 @@ const DataTableGroup = () => {
 
 	const handleSelectName = (id, name) => {
 		dispatch(membersGroupInitLoading(authUser, id, name));
-		console.log(id, name)
+	}
 
+	const handleDelete = async (id) => {
+		const resp =  await Swal.fire({
+			title: 'Eliminar',
+			text: "¿Estas seguro que quiere eliminar al usuario de este grupo?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
+
+		if (resp.value) {
+			dispatch(deleteGroupLoading(authUser, id));
+			console.log(id)
+	
+		}
+		
 	}
 
 
@@ -105,8 +122,8 @@ const DataTableGroup = () => {
 											<TableActionButton
 												materialIcon={
 													<DeleteOutlinedIcon
-														className={classes.iconos}
-													//onClick={() => handleDelete(id)}
+													className={classes.iconos}
+													onClick={() => handleDelete(id)}
 													/>
 												}
 											/>

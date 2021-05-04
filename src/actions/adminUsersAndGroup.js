@@ -10,7 +10,18 @@ import {
 	companyUsers,
 	addUsers
 } from 'services/usersService';
-import { addGroup, addUsersGroup, dependenciesGroup, getGroup, membersGroup, profilesGroup, removeUsersGroup, searchGroup, validateGroup } from 'services/groupService';
+import { 
+	addGroup,
+	addUsersGroup,
+	dependenciesGroup, 
+	getGroup, 
+	membersGroup, 
+	profilesGroup,
+	removeUsersGroup, 
+	searchGroup, 
+	validateGroup,
+	deleteGroup
+} from 'services/groupService';
 
 export const startUsersInitLoading = (authUser,page) => {
 	return async (dispatch) => {
@@ -383,6 +394,46 @@ export const removeUserGroupLoading = (authUser, idGroup, userId) => {
 
 	}
 };
+
+export const deleteGroupLoading = (authUser, idGroup) => {
+	return async (dispatch, getState) => {
+
+		const { grouplist = [] } = getState().adminUsers;
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			await deleteGroup(authUser, idGroup);
+			Swal.close();
+
+			const newCurrentGroup = grouplist.filter(group => group.id !== idGroup);
+
+			dispatch(deleteGroupLoaded(newCurrentGroup));	
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
+export const deleteGroupLoaded = (groupData) => {
+	return {
+		type: types.groupDeleteLoaded,
+		payload: groupData
+		
+	}
+}
 
 export const deleteUsersGroupLoaded = (usersData) => {
 	return {

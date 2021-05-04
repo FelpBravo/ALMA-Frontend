@@ -140,7 +140,8 @@ export const types = {
 	groupInitLoaded: 'Group List',
 	groupOpenModal: 'Group Open Modal',
 	groupCloseModal: 'Group Close Modal',
-	groupSaveLoaded: 'Group Save Loaded'
+	groupSaveLoaded: 'Group Save Loaded',
+	groupDeleteLoaded: 'Group Delete Loaded'
 
 
 }

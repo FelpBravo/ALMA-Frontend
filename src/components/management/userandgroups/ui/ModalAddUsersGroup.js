@@ -39,7 +39,7 @@ const ModalAddUsersGroup = () => {
   }
   
   const handleOnSave =() =>{
-    dispatch(createUsersGroupLoading(authUser, idGroup, nameUsersGroup))
+    dispatch(createUsersGroupLoading(authUser, idGroup, nameUsersGroup.users))
   
   }
 

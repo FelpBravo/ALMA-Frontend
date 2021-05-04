@@ -67,9 +67,8 @@ const DataTableUserFromGroup = () => {
 		dispatch(openModalUsersGroup());
 	}
 
-	const handleRemove = (id) => {
-		console.log(id, idGroup)
-		const resp = Swal.fire({
+	const handleRemove = async  (id) => {
+		const resp =  await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Estas seguro que quiere eliminar al usuario de este grupo?",
 			icon: "question",
@@ -80,7 +79,6 @@ const DataTableUserFromGroup = () => {
 
 		if (resp.value) {
 		dispatch(removeUserGroupLoading(authUser, idGroup ,id));
-		console.log(id, idGroup)
 		}
 		
 	}

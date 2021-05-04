@@ -116,7 +116,12 @@ export const adminUsersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 members: action.payload,
-                }                       
+                }
+        case types.groupDeleteLoaded:
+            return {
+                ...state,
+                grouplist: action.payload,
+                }                     
         
         default:
             return state;
