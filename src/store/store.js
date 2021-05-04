@@ -20,6 +20,7 @@ import { informationReducer } from 'reducers/informationReducer'
 import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
 import { savedSearchesReducer } from 'reducers/savedSearchesReducer'
 import { sharedDocumentReducer } from 'reducers/sharedDocumentReducer';
+import { modulePermissionsReducer } from 'reducers/modulePermissionReducer';
 import { restorePasswordReducer } from 'reducers/restorePasswordReducer';
 
 
@@ -49,6 +50,8 @@ const rootReducer = (history) => combineReducers({
 	crumbs:breadcrumbsReducer,
 	sharedDocument: sharedDocumentReducer,
 	restorePassword: restorePasswordReducer,
+	modulePermissions: modulePermissionsReducer,
+
 });
 
 export const store = createStore(

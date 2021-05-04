@@ -688,6 +688,12 @@
 	"comment.attachment.title": "Adjuntar documento",
 	"comment.button.comment": "Comentar",
 	"comment.button.totalcomments": "Comentarios",
+
+	 "groupPermissions.title": "Perfiles",
+	 "groupPermissions.select.profile": "Seleccionar perfil",
+	 "groupPermissions.select.tags":"Seleccionar etiquetas",
+	 "groupPermissions.permissions.submit": "Guardar",
+
 	
 	"changePassword.paper.title": "Actualizar contraseña",
 	"changePassword.input.password": "Contraseña",
