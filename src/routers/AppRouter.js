@@ -17,6 +17,7 @@ import { PrivateRouter } from 'routers/PrivateRouter';
 import { applyTheme } from 'helpers/applyTheme';
 import DownloadFilePage from 'components/downloadFile';
 import ChangePasswordPage from 'components/changePassword';
+import FormTestPage from 'components/formTest';
 
 const App = (props) => {
 
@@ -79,6 +80,13 @@ const App = (props) => {
 									exact
 									path="/change-password/:tokenId"
 									component={ChangePasswordPage}
+								/>
+
+								{/* Formularios test */}
+								<Route
+									exact
+									path="/form/test"
+									component={FormTestPage}
 								/>
 
 								<PublicRouter

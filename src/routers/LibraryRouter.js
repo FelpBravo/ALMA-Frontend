@@ -19,7 +19,11 @@ const LibraryRouter = () => {
 
 				<Route
 					path="/documents"
-					component={asyncComponent(() => import('../components/documents/Documents'))}
+					component={asyncComponent(() => import('../components/documents/flow'))}
+				/>
+				<Route
+					path="/documentcreation"
+					component={asyncComponent(() => import('../components/documents/DocumentCreation'))}
 				/>
 
 				<Route

@@ -13,6 +13,15 @@ export const fixedFolders = [
 				bd: false,
 			},
 			{
+				id: -6,
+				name: 'sidebar.documents',
+				icon: 'file',
+				type: 'item',
+				link: '/documentcreation',
+				auth:'ROLE_FILE_MENU',
+				bd: false,
+			},
+			{
 				id: -1,
 				name: 'sidebar.loadDocuments',
 				icon: 'upload',
