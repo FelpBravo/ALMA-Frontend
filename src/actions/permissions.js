@@ -2,6 +2,8 @@ import {
     getActionsByModule, getPolicies, getProfiles, getActionsByModuleByPolicy, saveProfilePolicies, saveActionsModuleByPolicy
  } from "services/permissionService";
 import { types } from "types/types";
+import Swal from 'sweetalert2';
+import { GENERAL_ERROR } from "constants/constUtil";
 
 export const startGetProfiles = (authUser) => {
 
@@ -9,15 +11,12 @@ export const startGetProfiles = (authUser) => {
         try {
 
             const resp = await getProfiles(authUser);
-            console.log("resp", resp.data)
             dispatch(profilesInitLoaded(resp.data));
 
         } catch (error) {
             console.log(error);
-        } finally {
-            // Swal.close();
         }
-
+        
     }
 };
 
@@ -27,13 +26,10 @@ export const startGetPolicies = (authUser) => {
         try {
 
             const resp = await getPolicies(authUser);
-            console.log("resp", resp.data)
             dispatch(policiesInitLoaded(resp.data));
 
         } catch (error) {
             console.log(error);
-        } finally {
-            // Swal.close();
         }
 
     }
@@ -47,29 +43,31 @@ export const startPermissionsModuleLoading = (authUser) => {
         try {
 
             const resp = await getActionsByModule(authUser);
-            console.log("resp", resp)
             dispatch(actionsModuleInitLoaded(resp.data));
 
         } catch (error) {
             console.log(error);
-        } finally {
-            // Swal.close();
         }
 
     }
 };
 
 
-export const startGetActionsByModuleByPolicy = ({ authUser, policyId}, setData) => {
+export const startGetActionsByModuleByPolicy = ({ authUser, policyId }, setData, setLoading) => {
 
     return async (dispatch) => {
         try {
 
             const resp = await getActionsByModuleByPolicy(authUser, policyId);
             setData(resp?.data)
-
+            setLoading(false)
         } catch (error) {
             console.log(error);
+            const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+            Swal.fire({
+                title: 'Error', text: message, icon: 'error', heightAuto: false
+            });
         } finally {
             // Swal.close();
         }
@@ -77,19 +75,17 @@ export const startGetActionsByModuleByPolicy = ({ authUser, policyId}, setData) 
     }
 };
 
-export const startSaveActionsModuleByPolicy = ({ authUser, policyId, data}) => {
+export const startSaveActionsModuleByPolicy = ({ authUser, policyId, data }, setLoadingSubmit) => {
 
     return async (dispatch) => {
         try {
-
-            const resp = await saveActionsModuleByPolicy(authUser, policyId, data);
-            console.log("resp", resp)
-            // dispatch(searchLoaded(resp.data));
-
+            await saveActionsModuleByPolicy(authUser, policyId, data);
+            setLoadingSubmit(false)
+            Swal.fire({
+                title: 'Guardado con éxito', icon: 'success', heightAuto: false
+            });
         } catch (error) {
             console.log(error);
-        } finally {
-            // Swal.close();
         }
 
     }
@@ -100,14 +96,10 @@ export const startSaveProfilePolicies = ({ authUser, policyId, data }) => {
     return async (dispatch) => {
         try {
 
-            const resp = await saveProfilePolicies(authUser, policyId, data);
-            console.log("resp", resp)
-            // dispatch(searchLoaded(resp.data));
+        await saveProfilePolicies(authUser, policyId, data);
 
         } catch (error) {
             console.log(error);
-        } finally {
-            // Swal.close();
         }
 
     }
@@ -141,5 +133,12 @@ export const actionsModuleSetValueField = (name, value) => {
             name,
             value
         }
+    }
+};
+
+export const actionsModuleClear = () => {
+    return {
+        type: types.actionsModuleClear,
+        payload: {}
     }
 };

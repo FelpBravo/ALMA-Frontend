@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
-import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
-import { Grid, InputLabel, makeStyles } from '@material-ui/core';
+import { Grid, InputLabel } from '@material-ui/core';
 import Chip from 'components/ui/Chip';
 import { get } from 'lodash-es';
 
@@ -32,7 +31,7 @@ const Tags = ({ moduleId, tagsList, name, updateActions, tagsSelected}) => {
             <FormControl fullWidth variant="outlined">
                 <InputLabel id="demo-mutiple-checkbox-label">{name}</InputLabel>
                 <Select
-                    id="demo-mutiple-checkbox"
+                    id="tags-mutiple-checkbox"
                     multiple
                     label={name}
                     value={tagsSelected}

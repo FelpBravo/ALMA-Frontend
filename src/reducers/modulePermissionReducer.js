@@ -31,6 +31,9 @@ export const modulePermissionsReducer = (state = initialState, action) => {
                 fields: [...newArray]
             }
 
+        case types.actionsModuleClear:
+            return initialState
+
         default:
             return state;
     }

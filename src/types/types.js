@@ -129,5 +129,6 @@ export const types = {
 	sharedFileClearValues: "Clear all values file shared",
 
 	addModulePermission: "Add new item in module permission",
-	actionsModuleSetValueField: "set field value from form"
+	actionsModuleSetValueField: "set field value from form",
+	actionsModuleClear: "Clear all values from action modules"
 }
