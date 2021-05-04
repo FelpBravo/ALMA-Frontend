@@ -201,6 +201,9 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				...initialState,
+				folders: state.folders,
+				tags: state.tags,
+				documentsType: state.documentsType,
 				detailDocumentType: {
 					aspectList: [],
 				},

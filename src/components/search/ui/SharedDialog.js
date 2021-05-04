@@ -15,7 +15,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import { AliceBlue } from 'helpers/themes/indigoTheme';
 import moment from 'moment';
-import { get } from 'lodash-es';
+import { get, isEmpty } from 'lodash-es';
 
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 const fieldWithoutPassword = <IntlMessages id="table.shared.dialog.field.withoutPassword" />
@@ -200,7 +200,7 @@ const SharedDialog = ({ data, handleClose }) => {
           variant="contained"
           color="primary"
           autoFocus
-          disabled={loading || !fields?.expirationDate}
+          disabled={loading || !fields?.expirationDate || (checked && isEmpty(fields.password))}
         >
           {loading && <CircularProgress size={14} />}
           <IntlMessages id="table.shared.dialog.field.createDocument" />

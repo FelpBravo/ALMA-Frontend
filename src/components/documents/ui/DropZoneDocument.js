@@ -33,9 +33,13 @@ export function DropZoneDocument( {document, setFiles} ){
 
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	const nDocuments = documentsList?.length;
+	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
 	const [count, setCount] = useState(nDocuments)
 
-	const nColumns = (documentsList.length >= 5 && documentsList.length <= 8) ? 2 : 4
+	useEffect(() => {
+		if (count === 0)
+			setCount(nDocuments);
+	}, [nDocuments])
 
 	const data = chunk(documentsList, nColumns)
 	const { acceptedFiles, getRootProps, getInputProps, open } = useDropzone({
@@ -47,7 +51,6 @@ export function DropZoneDocument( {document, setFiles} ){
 	const dropFile = async (files) => {
 		setCount(files.length)
 		const diff = MAX_FILES - nDocuments - files.length
-		console.log("diff", diff)
 		if (diff < 0) {
 			const resp = await Swal.fire({
 				title: 'Error',

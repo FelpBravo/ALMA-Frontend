@@ -128,6 +128,8 @@ export const types = {
 	sharedFileNotFoundError: "Not found file shared",
 	sharedFileClearValues: "Clear all values file shared",
 
+	restorePasswordSaveStatus: "Save status restore password",
+	restorePasswordSuccess: "Restore password verificate success"
 	addModulePermission: "Add new item in module permission",
 	actionsModuleSetValueField: "set field value from form",
 	actionsModuleClear: "Clear all values from action modules"
