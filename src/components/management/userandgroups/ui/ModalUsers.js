@@ -57,7 +57,6 @@ const ModalUsers = () => {
 
   const handleOnChange = ({target})=>{
     const { name, value} = target
-    console.log(name,value)
    
     switch (name) {
       case 'usuario':
@@ -95,9 +94,7 @@ const ModalUsers = () => {
 }
 
   const handleOnSave = () =>{
-      
-        dispatch(startCreateUsersLoading(authUser, dataCreate))
-        console.log(dataCreate)
+        dispatch(startCreateUsersLoading(authUser, dataCreate))    
       }
       
 

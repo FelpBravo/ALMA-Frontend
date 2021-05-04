@@ -9,11 +9,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
-import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import { deleteGroupLoading, groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
 import { useLocation } from 'react-router';
 
@@ -83,8 +81,6 @@ const DataTableGroup = () => {
 
 		if (resp.value) {
 			dispatch(deleteGroupLoading(authUser, id));
-			console.log(id)
-	
 		}
 		
 	}

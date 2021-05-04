@@ -38,23 +38,12 @@ const DataTableUserFromGroup = () => {
 	const classes = useStyles();
 
 	const isMounted = useRef(true)
-	const history = useHistory()
+
 	const dispatch = useDispatch()
 
 	const { authUser } = useSelector(state => state.auth)
 
 	const { members, idGroup, nameGroup} = useSelector(state => state.adminUsers)
-
-	useEffect(() => {
-
-
-	}, [dispatch]);
-
-
-
-	const handleChange = ({ target }) => {
-
-	};
 
 
 	useEffect(() => {

@@ -126,8 +126,7 @@ const DataTableUsers = () => {
 		{
 			dispatch(startUsersInitLoading(authUser,page));
 			history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
-		}
-	
+		}	
 	
 	}
 
