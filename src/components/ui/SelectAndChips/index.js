@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Button, Chip, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DoneIcon from '@material-ui/icons/Done';
+import Chip from 'components/ui/Chip';
    
 
 const SelectAndChips = (props) => {
     const { data ,returnData } = props
-    console.log("data del chip", data)
 
     const [values, setValues] = React.useState([]);
 
@@ -17,7 +17,6 @@ const SelectAndChips = (props) => {
 
     const onChange = (_, value) => {
      setValues(value);
-     console.log("usuarios elegidos",value)
      
     };
 
@@ -45,9 +44,10 @@ const SelectAndChips = (props) => {
             {values.map((objet, index) => (
                
                     <Chip
-                    style={{fontFamily:"Poppins", color:"#3699FF", background:"#E1F0FF"}}
                     label={objet.id}
                     size="small"
+                    variant="outlined"
+                    color="primary"
                     onDelete={(objet3, index2) => {
                         setValues(values.filter((i, index2) => index2 !== index));
                     }}
