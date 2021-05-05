@@ -122,11 +122,16 @@ const ModalTags = () => {
       >
 
         <DialogTitle id="form-dialog-title">
-          {
-            actionModal === ACTION_CREATE
-              ? <IntlMessages id="tags.modal.title.create" />
-              : <IntlMessages id="tags.modal.title.edit" />
-          }
+        <div className="jr-card-header d-flex align-items-center">
+         
+            {
+              actionModal === ACTION_CREATE
+                ? <IntlMessages id="tags.modal.title.create" />
+                : <IntlMessages id="tags.modal.title.edit" />
+            }
+          
+        </div>
+          
         </DialogTitle>
 
         <DialogContent>

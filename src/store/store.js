@@ -19,6 +19,7 @@ import { firmReducer } from 'reducers/firmReducer'
 import { informationReducer } from 'reducers/informationReducer'
 import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
 import { savedSearchesReducer } from 'reducers/savedSearchesReducer'
+import { adminUsersReducer } from 'reducers/adminUsersReducer';
 import { sharedDocumentReducer } from 'reducers/sharedDocumentReducer';
 import { modulePermissionsReducer } from 'reducers/modulePermissionReducer';
 import { restorePasswordReducer } from 'reducers/restorePasswordReducer';
@@ -48,6 +49,7 @@ const rootReducer = (history) => combineReducers({
 	savedSearches: savedSearchesReducer,
 	info:informationReducer,
 	crumbs:breadcrumbsReducer,
+	adminUsers: adminUsersReducer,
 	sharedDocument: sharedDocumentReducer,
 	restorePassword: restorePasswordReducer,
 	modulePermissions: modulePermissionsReducer,
