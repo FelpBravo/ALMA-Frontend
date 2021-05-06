@@ -693,6 +693,7 @@
 	"comment.attachment.title": "Adjuntar documento",
 	"comment.button.comment": "Comentar",
 	"comment.button.totalcomments": "Comentarios",
+	"edit.modal.title": "Editar documento en linea",
 
 	"users.result": "Resultado usuarios",
 	"users.table.column1": "Usuario",

@@ -47,6 +47,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
+import ModalEditOnline from './ModalEditOnline';
  
 
 const StyledMenu = withStyles({
@@ -141,7 +142,9 @@ const DataTable = () => {
 
 	const { id, page } = useParams()
 	const { path, url } = useRouteMatch();
+
 	const [dataSharedDialog, setDataSharedDialog] = useState(null)
+	const [editOnline, setEditOnline] = useState(null)
 
 	let page_url = 1
 	if (page) {
@@ -260,6 +263,7 @@ const DataTable = () => {
 	return (
 		<div className="row mt-3">
 			<SharedDialog handleClose={() => setDataSharedDialog(null)} data={dataSharedDialog} />
+			<ModalEditOnline handleClose={() => setEditOnline(null)} data={editOnline} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<TableContainer component={Paper}>
@@ -396,7 +400,7 @@ const DataTable = () => {
 													materialIcon={
 														<RateReviewOutlinedIcon
 															className={classes.iconos}
-															//onClick={() => handleEditOnline(id, name)}
+															onClick={() => setEditOnline({id, name})}
 														/>
 													}
 												/>
