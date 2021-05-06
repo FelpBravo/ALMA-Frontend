@@ -2,8 +2,8 @@ import { axiosInstance } from '../config/axios-instance';
 
 const token = localStorage.getItem('token');
 
-const getUsers = (authUser,page,maxItems) => {
-	return axiosInstance.post('/users/getAll',{page,maxItems}, {
+const getUsers = (authUser, page, maxItems) => {
+	return axiosInstance.post('/users/getAll',{page, maxItems}, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
