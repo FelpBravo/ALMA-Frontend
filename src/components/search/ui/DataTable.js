@@ -127,10 +127,13 @@ const DataTable = () => {
 	const history = useHistory();
 
 	const dispatch = useDispatch();
+
 	const location = useLocation();
 
 	const { documents = {}, fields = [], textSearch = '' } = useSelector(state => state.searchs);
+
 	const { data = [], totalItems = 0 } = documents;
+
 	const { filters } = fields;
 
 
