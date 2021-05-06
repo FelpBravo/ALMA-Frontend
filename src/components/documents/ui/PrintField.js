@@ -1,15 +1,29 @@
-import React from 'react'
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { DATE, NUMERIC, LIST, FORMAT_YYYY_MM_DD } from 'constants/constUtil';
-import { TextField } from '@material-ui/core';
+import React from 'react'
+import { useFormContext } from 'react-hook-form';
+// import { useDispatch } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+
 import { detailDocumentSetValueField } from 'actions/documents';
+import { AutoCompleteField, CheckField, SelectField, TextField } from 'components/ui/Form';
+import { DATE, FORMAT_YYYY_MM_DD, LIST, NUMERIC } from 'constants/constUtil';
+
 import { MultiLevelSelect } from './MultiLevelSelect';
 
 export const PrintField = ({ sectionId, name, label, type, value, propertyItemList,mandatory }) => {
-
+	const { register, control, formState: { errors } } = useFormContext();
 	const dispatch = useDispatch();
+	console.log("register", register)
+	const commonProps = {
+		register,
+		errors,
+		control,
+		shrink: true,
+		size: "small",
+		// className: classes.input
+	}
+
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
@@ -23,36 +37,32 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 			return (
 				<TextField
 					key={name}
+					type="date"
 					label={label}
 					name={name}
-					variant="outlined"
-					fullWidth
-					type="date"
-					value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
-					size="small"
-					required={mandatory}
 					InputLabelProps={{
 						shrink: true,
-					}
-					}
-					onChange={handleOnChange}
+					}}
+					{...commonProps}
+					// onChange={handleOnChange}
+					// value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
+
 				/>
 			);
 
 		case NUMERIC:
 			return (
 				<TextField
-					name={name}
+					key={name}
 					type="number"
-					value={value ? value : ''}
 					label={label}
-					variant="outlined"
-					fullWidth
-					size="small"
-					required={mandatory}
-					onChange={handleOnChange}
+					name={name}
+					{...commonProps}
+					// required={mandatory}
+					// onChange={handleOnChange}
 				/>
 			);
+			
 		case LIST:
 			return <MultiLevelSelect
 				sectionId={sectionId}
@@ -60,26 +70,24 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				label={label}
 				type={type}
 				value={value}
-				required={mandatory}
+				// required={mandatory}
 				propertyItemList={propertyItemList}
 			/>
 
 		default:
-			return (
-				<>
-				<TextField
+			return (<TextField
+			key={name}
 					name={name}
 					label={label}
-					value={value ? value : ''}
-					variant="outlined"
-					fullWidth
-					required={mandatory}
-					size="small"
-					onChange={handleOnChange}
-					helperText={mandatory? "Campo Requerido": " "}
-				/>
-				</>
-			);
+					{...commonProps}
+					// value={value ? value : ''}
+					// variant="outlined"
+					// fullWidth
+					// required={mandatory}
+					// size="small"
+					// onChange={handleOnChange}
+					// helperText={mandatory? "Campo Requerido": " "}
+				/>);
 		
 
 	}

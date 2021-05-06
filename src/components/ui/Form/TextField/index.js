@@ -1,8 +1,9 @@
-import React from 'react'
-import clsx from 'clsx';
+import { TextField as InputField, InputLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { InputLabel, TextField as InputField } from '@material-ui/core';
+import clsx from 'clsx';
 import { get, isEmpty } from 'lodash-es';
+import PropTypes from 'prop-types';
+import React from 'react'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,6 +37,7 @@ const TextField = ({
 }) => {
     const classes = useStyles();
     const errorMessage = get(errors, `${name}.message`, '');
+
     const textFieldProps = {
         helperText: errorMessage,
         error: Boolean(errorMessage),
@@ -64,6 +66,40 @@ const TextField = ({
             <InputField {...textFieldProps} {...props} />
         </div>
     );
+};
+
+TextField.defaultProps = {
+    className: null,
+    errors: null,
+    id: null,
+    placeholder: '',
+    shrink: false,
+    size: 'small',
+    type: 'text',
+    variant: 'outlined',
+    rows: 1,
+    multiline: false,
+    InputProps: {},
+    disabled: false,
+    register: () => ({})
+};
+
+TextField.propTypes = {
+    className: PropTypes.string,
+    errors: PropTypes.oneOfType([PropTypes.object]),
+    id: PropTypes.string,
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    register: PropTypes.func,
+    shrink: PropTypes.bool,
+    size: PropTypes.string,
+    type: PropTypes.string,
+    variant: PropTypes.string,
+    rows: PropTypes.number,
+    multiline: PropTypes.bool,
+    InputProps: PropTypes.objectOf(PropTypes.object),
+    disabled: PropTypes.bool,
 };
 
 export { TextField }
