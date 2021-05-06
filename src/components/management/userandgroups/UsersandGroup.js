@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
-import SearchReports from './ui/SearchReports';
-import { TableSearchReports } from './ui/TableSearchReports';
-import { TableSearchMissing } from './ui/TableSearchMissing';
+import React, { useEffect , useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import IntlMessages from 'util/IntlMessages';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
-import SearchMissingDoc from './ui/SearchMissingDoc.js';
-import SearchWithout from './ui/SearchWithout';
-import { TableSearchWithout } from './ui/TableSearchWithout';
+import SearchUsers from './ui/SearchUsers';
+import SearchGroup from './ui/SearchGroup';
+import { TableSearchUsers } from './ui/TableSearchUsers';
+import { TableSearchGroup } from './ui/TableSearchGroup';
+import { useHistory, useLocation, useParams,useRouteMatch  } from 'react-router-dom';
+
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -55,70 +53,77 @@ const useStyles = makeStyles({
 	},
 });
 
-const Reports = () => {
-	const dispatch = useDispatch();
+const Management = () => {
+
+    const dispatch = useDispatch();
+
 	const { authUser } = useSelector(state => state.auth);
+
 	const classes = useStyles();
-	const [value, setValue] = React.useState(0);
+	
+	const { path, url } = useRouteMatch();
+
+	const [value, setValue] = useState(path === '/management/usersandgroups'? 0:1);
+
+	const history = useHistory();
+
+	
 
 	const handleChange = (event, newValue) => {
-		setValue(newValue);
+		history.push(newValue === 1 ? '/management/usersandgroups/group':'/management/usersandgroups');
 	};
 
 	useEffect(() => {
-
+		path === '/management/usersandgroups'? setValue(0): setValue(1)
+			
 		if (!authUser) {
 			return;
 		}
 
-	}, [dispatch, authUser]);
+	}, [dispatch, authUser,path]);
 
 	const Result = ()=>{
 		switch (value) {
 			case 0:
-			return <TableSearchReports/>
+			return<TableSearchUsers/>
 			case 1:
-			return <TableSearchMissing/>
-			case 2:
-			return <TableSearchWithout/>
+			return<TableSearchGroup/>
 			default:
 				return <></>
 		}
 	}
 
 	return (
+
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 					<div className="row">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
+							
 							<div className="jr-card-header d-flex align-items-center">
 								<h3 className="mb-0">
-									<IntlMessages id="reports.title" />
+									<IntlMessages id="sidebar.tags.usersandgroup" />
 								</h3>
 							</div>
 							<div className={classes.root}>
-
 								<Tabs
 									value={value}
 									onChange={handleChange}
 									indicatorColor="primary"
 									textColor="primary"
+									variant="fullWidth"
 									centered
 								>
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none" }} label="Carga Masiva" {...a11yProps(0)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none" }}label="Documentos Faltantes" {...a11yProps(1)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none" }}label="Documentos sin contenido " {...a11yProps(2)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none",color:"#369bff"}} label="Administración de usuarios" {...a11yProps(0)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none", color:"#369bff"}}label="Administración de grupos" {...a11yProps(1)} />
+									
 								</Tabs>
 								<TabPanel value={value} index={0}>
-									<SearchReports />
+									<SearchUsers/>
 								</TabPanel>
 								<TabPanel value={value} index={1}>
-									<SearchMissingDoc />
-								</TabPanel>
-								<TabPanel value={value} index={2}>
-									<SearchWithout/>
+									<SearchGroup/>
 								</TabPanel>
 							</div>
 						</div>
@@ -129,7 +134,8 @@ const Reports = () => {
 				
 			</div>
 		</div>
-	)
+
+	);
 }
 
-export default Reports;
+export default Management;

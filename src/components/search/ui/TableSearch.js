@@ -65,7 +65,7 @@ export const TableSearch = () => {
 						<h3 className="mb-0">
 							<IntlMessages id="dashboard.searchResults" />
 						</h3>
-						<p className="user-description mt-2 mr-2">Total documentos encontrados {totalItems}</p>
+						<span className="user-description mt-2 mr-2">Total documentos encontrados {totalItems}</span>
 						</div>
 						<div style={{color: '#FFA800'}} className="row ml-auto">
 						

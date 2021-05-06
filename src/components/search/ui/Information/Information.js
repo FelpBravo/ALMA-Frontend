@@ -116,9 +116,9 @@ const Information = () => {
 									textColor="primary"
 									centered
 								>
-									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}} label="Información General" {...a11yProps(0)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}}label="Comentarios" {...a11yProps(1)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500}}label="Documentos adjuntos" {...a11yProps(2)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }} label="Información General" {...a11yProps(0)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Comentarios" {...a11yProps(1)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Documentos adjuntos" {...a11yProps(2)} />
 								</Tabs>
 								<TabPanel value={value} index={0}>
 									<Metadata/>

@@ -41,12 +41,27 @@ export const fixedFolders = [
 			},
 			{
 				id: -4,
-				name: 'sidebar.tags.folders',
+				name: 'sidebar.tags.management',
 				icon: 'settings',
-				type: 'item',
-				link: '/folders',
+				type: 'collapse',
 				auth: 'ROLE_FOLDER_MENU',
 				bd: false,
+				children: [
+					{
+						id: -8,
+						name: 'sidebar.tags.folders',
+						type: 'item',
+						link: '/management/folders',
+						bd: false,
+					},
+					{
+						id: -7,
+						name: 'sidebar.tags.usersandgroup',
+						type: 'item',
+						link: '/management/usersandgroups',
+						bd: false,
+					},
+				],
 			},
 			{
 				id: -5,
@@ -54,7 +69,7 @@ export const fixedFolders = [
 				icon: 'chart',
 				type: 'item',
 				link: '/reports',
-				auth: 'ROLE_REPORT_MENU',
+				//auth: 'ROLE_REPORT_MENU',
 				bd: false,
 			},
 			{
