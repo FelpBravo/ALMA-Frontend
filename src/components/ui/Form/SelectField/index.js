@@ -1,12 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
 import FormControl from "@material-ui/core/FormControl";
-import { Controller } from "react-hook-form";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import get from 'lodash/get'
+import PropTypes from "prop-types";
+import React from "react";
+import { Controller } from "react-hook-form";
+
 const useStyles = makeStyles((theme) => ({
     fullWidth: {
         width: "100%"
@@ -71,7 +72,7 @@ const SelectField = (props) => {
 SelectField.defaultProps = {
     defaultValue: "",
     variant: "outlined",
-    margin: "normal",
+    margin: "none",
     error: false,
     disabled: false,
     rules: {},

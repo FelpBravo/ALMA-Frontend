@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { FormControl, NativeSelect, InputLabel, Select} from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { FormControl, InputLabel, MenuItem, NativeSelect, Select } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
+import { AutoCompleteField, CheckField, SelectField, TextField } from 'components/ui/Form';
 import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
 import IntlMessages from 'util/IntlMessages';
-import {
-	startDocumentsTypeLoading,
-	startDetailDocumentTypeLoading,
-	removeDetailDocumentType,
-	startFoldersLoading,
-} from 'actions/documents';
-import { SelectFolder } from './SelectFolder';
 
+import { SelectFolder } from './SelectFolder';
 
 export const FormInit = () => {
 
@@ -81,21 +77,29 @@ export const FormInit = () => {
 				<>
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
-					<SelectFolder />
+						<SelectFolder />
 
 					</div>
-					
+
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
 						<FormControl fullWidth>
-							<NativeSelect
-							    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, marginTop: '0px' }}
-								value={documentType}
+							<SelectField
+								// style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, marginTop: '0px' }}
+								// value={documentType}
+								label="Seleccionar tipo de documento"
 								name="documentsType"
-								input={<BootstrapInput />}
-								onChange={handleOnChange}
+								size="small"
+							// input={<BootstrapInput />}
+							// onChange={handleOnChange}
 							>
-								<option aria-label="None" value=""></option>
+								{
+									documentsType.length > 0
+									&&
+									documentsType.map(({ id, name }) =>
+										<MenuItem key={id} value={id}>{name}</MenuItem>)
+								}
+								{/* <option aria-label="None" value=""></option>
 								{
 									
 									documentsType.length > 0
@@ -109,14 +113,14 @@ export const FormInit = () => {
 											{name}
 										</option>
 									})
-								}
-							</NativeSelect>
+								} */}
+							</SelectField>
 						</FormControl>
 
 
 					</div>
 
-					
+
 				</>
 			}
 		</div>

@@ -1,13 +1,16 @@
-import React, { useState, Text} from 'react';
-import { TextField,  } from '@material-ui/core';
+import React, { Text, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { SelectFolderDialog } from './SelectFolderDialog';
+import { TextField } from 'components/ui/Form'
 import IntlMessages from 'util/IntlMessages';
+
+import { SelectFolderDialog } from './SelectFolderDialog';
 
 const lblText = <IntlMessages id="document.loadDocuments.folders" />
 
 export const SelectFolder = () => {
+	const { register, control, formState: { errors } } = useFormContext();
 
 	const { folderName = '' } = useSelector(state => state.documents);
 
@@ -18,14 +21,17 @@ export const SelectFolder = () => {
 			
 			<TextField
 			    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}
-				className="modal-select-folder"
+				// className="modal-select-folder"
 				onClick={() => setOpenModal(!openModal)}
 				label={lblText}
 				variant="outlined"
 				color="primary"
 				value={folderName}
 				fullWidth
+				name="folderName"
 				size="small"
+				shrink="true"
+				register={register}
 			/>
 
 
