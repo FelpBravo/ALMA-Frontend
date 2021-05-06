@@ -1,20 +1,16 @@
-import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react'
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
-// import { useDispatch } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 import { detailDocumentSetValueField } from 'actions/documents';
-import { AutoCompleteField, CheckField, SelectField, TextField } from 'components/ui/Form';
-import { DATE, FORMAT_YYYY_MM_DD, LIST, NUMERIC } from 'constants/constUtil';
+import { AutoCompleteField, TextField } from 'components/ui/Form';
+import { DATE, LIST, NUMERIC } from 'constants/constUtil';
 
-import { MultiLevelSelect } from './MultiLevelSelect';
-
-export const PrintField = ({ sectionId, name, label, type, value, propertyItemList,mandatory }) => {
+export const PrintField = ({ sectionId, name, label, type, value, propertyItemList, mandatory }) => {
 	const { register, control, formState: { errors } } = useFormContext();
 	const dispatch = useDispatch();
-	console.log("register", register)
+
 	const commonProps = {
 		register,
 		errors,
@@ -23,7 +19,6 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 		size: "small",
 		// className: classes.input
 	}
-
 
 	const handleOnChange = ({ target }) => {
 		const { name, value } = target;
@@ -44,8 +39,8 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 						shrink: true,
 					}}
 					{...commonProps}
-					// onChange={handleOnChange}
-					// value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
+				// onChange={handleOnChange}
+				// value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
 
 				/>
 			);
@@ -58,37 +53,45 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					label={label}
 					name={name}
 					{...commonProps}
-					// required={mandatory}
-					// onChange={handleOnChange}
+				// required={mandatory}
+				// onChange={handleOnChange}
 				/>
 			);
-			
+
 		case LIST:
-			return <MultiLevelSelect
-				sectionId={sectionId}
+			return <AutoCompleteField
 				name={name}
 				label={label}
-				type={type}
-				value={value}
-				// required={mandatory}
-				propertyItemList={propertyItemList}
+				options={propertyItemList}
+				optionsLabel="value"
+				optionsValue="value"
+				{...commonProps}
 			/>
+		// return <MultiLevelSelect
+		// 	sectionId={sectionId}
+		// 	name={name}
+		// 	label={label}
+		// 	type={type}
+		// 	value={value}
+		// 	// required={mandatory}
+		// 	propertyItemList={propertyItemList}
+		// />
 
 		default:
 			return (<TextField
-			key={name}
-					name={name}
-					label={label}
-					{...commonProps}
-					// value={value ? value : ''}
-					// variant="outlined"
-					// fullWidth
-					// required={mandatory}
-					// size="small"
-					// onChange={handleOnChange}
-					// helperText={mandatory? "Campo Requerido": " "}
-				/>);
-		
+				key={name}
+				name={name}
+				label={label}
+				{...commonProps}
+			// value={value ? value : ''}
+			// variant="outlined"
+			// fullWidth
+			// required={mandatory}
+			// size="small"
+			// onChange={handleOnChange}
+			// helperText={mandatory? "Campo Requerido": " "}
+			/>);
+
 
 	}
 }
