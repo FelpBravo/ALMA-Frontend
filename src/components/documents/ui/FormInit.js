@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, MenuItem, NativeSelect, Select } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
@@ -11,6 +12,8 @@ import IntlMessages from 'util/IntlMessages';
 import { SelectFolder } from './SelectFolder';
 
 export const FormInit = () => {
+	const { watch } = useFormContext();
+	const documentsTypeField = watch('documentsType', null);
 
 	const dispatch = useDispatch();
 
@@ -32,24 +35,15 @@ export const FormInit = () => {
 
 	}, [dispatch, authUser]);
 
-	const handleOnChange = ({ target }) => {
-		const { name, value } = target;
-
-		switch (name) {
-			case 'documentsType':
-				if (value) {
-					dispatch(startDetailDocumentTypeLoading(value));
-				} else {
-					dispatch(removeDetailDocumentType());
-				}
-
-				break;
-
-			default:
-				break;
+	useEffect(() => {
+		if (documentsTypeField){
+			dispatch(startDetailDocumentTypeLoading(documentsTypeField));
 		}
+		return () => {
+			dispatch(removeDetailDocumentType());
+		}
+	}, [documentsTypeField])
 
-	}
 	return (
 		<div className="row">
 
