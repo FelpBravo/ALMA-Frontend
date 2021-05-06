@@ -96,6 +96,7 @@ const ModalUsers = () => {
 
   const handleOnSave = () =>{
         dispatch(startCreateUsersLoading(authUser, dataCreate))    
+        dispatch(closeModalUsers());
       }
       
 

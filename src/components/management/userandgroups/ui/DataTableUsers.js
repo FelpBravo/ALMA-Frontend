@@ -164,7 +164,7 @@ const DataTableUsers = () => {
 						<TableBody >
 
 							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external, company, department, companyOther, departmentOther}, index) => {
-
+                                console.log(department, departmentOther)
 								return <TableRow key={index} >
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
 										<AccountCircleOutlinedIcon className="mr-1"/>

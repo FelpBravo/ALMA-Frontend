@@ -50,9 +50,9 @@ const searchUsersPage = (authUser, search,page, maxItems) => {
 	});
 };
 
-const addUsers = (authUser, id, firstName, lastName, email, password, company, departament, companyOther, departmentOther, group =[]) => {
+const addUsers = (authUser, id, firstName, lastName, email, password, company, department, companyOther, departmentOther, groups =[]) => {
 	return axiosInstance.post(`/users`,
-		{ id, firstName, lastName, email, password:"password", company, departament, companyOther, departmentOther, group},
+		{ id, firstName, lastName, email, password:"password", company, department, companyOther, departmentOther, groups},
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,
