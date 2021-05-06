@@ -36,7 +36,50 @@ import Tooltip from '@material-ui/core/Tooltip';
 import SharedDialog from './SharedDialog';
 import IntlMessages from 'util/IntlMessages';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
+import { MoreVert } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
  
+
+const StyledMenu = withStyles({
+	paper: {
+	  border: '1px solid #d3d4d5',
+	},
+  })((props) => (
+	<Menu
+	  elevation={0}
+	  getContentAnchorEl={null}
+	  anchorOrigin={{
+		vertical: 'bottom',
+		horizontal: 'center',
+	  }}
+	  transformOrigin={{
+		vertical: 'top',
+		horizontal: 'center',
+	  }}
+	  {...props}
+	/>
+  ));
+  
+  const StyledMenuItem = withStyles((theme) => ({
+	root: {
+	  '&:focus': {
+		backgroundColor: theme.palette.primary.main,
+		'& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+		  color: theme.palette.common.white,
+		},
+	  },
+	},
+  }))(MenuItem);
+  
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -73,6 +116,8 @@ const useStyles = makeStyles((theme) => ({
 
 const DataTable = () => {
 
+	const [anchorEl, setAnchorEl] = React.useState(null);
+
 	const classes = useStyles();
 
 	const { authUser, authorities } = useSelector(state => state.auth);
@@ -99,7 +144,6 @@ const DataTable = () => {
 	if (page) {
 		page_url = page.trim() ? page.replace(/[a-zA-Z ]/g, '') : 1
 	}
-
 
 	const { folderId } = queryString.parse(location.search);
 
@@ -160,7 +204,6 @@ const DataTable = () => {
 	};
 
 
-
 	const handleDownload = async (id, name) => {
 		if (ROLE_FILE_DOWNLOAD) {
 			const resp = await Swal.fire({
@@ -200,8 +243,15 @@ const DataTable = () => {
 	const handleSubscribe = (id) => {
 		dispatch(startSubscribeDocument(id));
 	}
-
-
+ 
+  
+	const handleClick = (event) => {
+	  setAnchorEl(event.currentTarget);
+	};
+  
+	const handleClose = () => {
+	  setAnchorEl(null);
+	};
 
 
 	return (
@@ -339,10 +389,48 @@ const DataTable = () => {
 														</Tooltip>
 													}
 												/>
-												{/*<MoreVert
+												<TableActionButton
+													materialIcon={
+														<RateReviewOutlinedIcon
+															className={classes.iconos}
+															//onClick={() => handleEditOnline(id, name)}
+														/>
+													}
+												/>
+												<MoreVert
 													className={classes.iconos}
-													onClick={() => console.log("test")}
-												/>*/}
+													onClick={handleClick}
+											    />
+												<StyledMenu
+													id="customized-menu"
+													anchorEl={anchorEl}
+													keepMounted
+													open={Boolean(anchorEl)}
+													onClose={handleClose}
+												>
+													<StyledMenuItem>
+													<ListItemIcon>
+														<RateReviewOutlinedIcon
+														fontSize="small"
+															//onClick={() => handleEditOnline(id, name)}
+														/>
+													</ListItemIcon>
+													<ListItemText primary="Editar en linea" />
+													</StyledMenuItem>
+
+													<StyledMenuItem>
+													<ListItemIcon>
+														<DraftsIcon fontSize="small" />
+													</ListItemIcon>
+													<ListItemText primary="Drafts" />
+													</StyledMenuItem>
+													<StyledMenuItem>
+													<ListItemIcon>
+														<InboxIcon fontSize="small" />
+													</ListItemIcon>
+													<ListItemText primary="Inbox" />
+													</StyledMenuItem>
+												</StyledMenu>
 											</div>
 										</TableCell>
 
