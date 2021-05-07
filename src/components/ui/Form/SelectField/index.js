@@ -29,12 +29,15 @@ const SelectField = (props) => {
         defaultValue,
         control,
         rules,
-        size
+        size,
+        multiple,
+        renderValue,
+        MenuProps,
     } = props;
 
     const labelId = `${name}-label`;
     const errorMessage = get(errors, `${name}.message`, '');
-
+    console.log("props", props)
     return (
         <FormControl
             variant={variant}
@@ -57,6 +60,9 @@ const SelectField = (props) => {
                         labelId={labelId}
                         label={label}
                         defaultValue={defaultValue || ""}
+                        multiple={multiple}
+                        renderValue={renderValue}
+                        MenuProps={MenuProps}
                         {...field}
                     >
                         {children}
@@ -76,8 +82,11 @@ SelectField.defaultProps = {
     error: false,
     disabled: false,
     rules: {},
-    size: "medium",
-    changeEvent: (e) => { }
+    size: "small",
+    changeEvent: (e) => { },
+    multiple: false,
+    renderValue: null,
+    MenuProps: {}
 };
 
 SelectField.propTypes = {
@@ -94,7 +103,10 @@ SelectField.propTypes = {
     helperText: PropTypes.string,
     variant: PropTypes.string,
     size: PropTypes.string,
-    changeEvent: PropTypes.func
+    changeEvent: PropTypes.func,
+    multiple: PropTypes.bool,
+    renderValue: PropTypes.func,
+    MenuProps: PropTypes.any,
 };
 
 export { SelectField };

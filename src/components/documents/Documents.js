@@ -40,7 +40,9 @@ const Documents = () => {
 	const methods = useForm({
 		mode: 'onTouched',
 		name: 'documentForm',
-		// defaultValues: {},
+		defaultValues: {
+			tagsField: []
+		},
 		// resolver: yupResolver(schema),
 	});
 	const { handleSubmit, register, control, formState: { errors } } = methods

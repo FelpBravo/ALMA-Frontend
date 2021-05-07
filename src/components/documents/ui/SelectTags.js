@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
-import Select from '@material-ui/core/Select';
+import { Divider } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import React, { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startAddAndRemoveTag, startTagsLoading } from 'actions/documents';
+import { AutoCompleteField, CheckField, SelectField } from 'components/ui/Form';
 import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
 import IntlMessages from 'util/IntlMessages';
-import { Divider } from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,9 +29,11 @@ export const SelectTags = () => {
 
     const dispatch = useDispatch();
 
-    const { tags = [], tagsSelected } = useSelector(state => state.documents);
+    const { tags = [] } = useSelector(state => state.documents);
 
     const { authUser } = useSelector(state => state.auth);
+    const { control, watch } = useFormContext();
+    const tagsSelected = watch('tagsField', []);
 
     useEffect(() => {
 
@@ -57,6 +61,7 @@ export const SelectTags = () => {
         return '0 etiquetas seleccionadas';
 
     }
+    const getTagData = id => tags.find(x => x?.id === id)
 
     const handleRenderTags = () => {
 
@@ -65,13 +70,14 @@ export const SelectTags = () => {
                 <div className="row">
                     <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2">
                         {
-                            tagsSelected.map(({id, tag, hex}) => {
+                            tagsSelected.map((id) => {
+                                const tagElement = getTagData(id)
                                 return (
                                     <span
                                         key={id}
                                         style={
                                             {
-                                                background: hex,
+                                                background: tagElement?.hex,
                                                 color: '#ffffff',
                                                 paddingBottom: 5,
                                                 paddingTop: 5,
@@ -81,7 +87,7 @@ export const SelectTags = () => {
                                         }
                                         className="x-2 jr-fs-sm mr-2 mb-0 rounded-xl order-sm-2"
                                     >
-                                        {tag}
+                                        {tagElement?.tag}
                                     </span>
                                 )
                             })
@@ -109,14 +115,18 @@ export const SelectTags = () => {
                     <div className="col-xl-4 col-lg-4 col-md-12 col-12">
                         <FormControl fullWidth>
 
-                            <InputLabel>Seleccionar etiquetas</InputLabel>
+                            {/* <InputLabel>Seleccionar etiquetas</InputLabel> */}
 
-                            <Select
+                            <SelectField
                                 id="demo-mutiple-checkbox"
                                 multiple
-                                value={tagsSelected}
-                                onChange={handleChange}
-                                input={<BootstrapInput />}
+                                // value={tagsSelected}
+                                name="tagsField"
+                                label="Seleccionar etiquetas"
+                                control={control}
+                                size="small"
+                                // onChange={handleChange}
+                                // input={<BootstrapInput />}
                                 renderValue={handleRenderValue}
                                 MenuProps={MenuProps}
                             >
@@ -128,7 +138,7 @@ export const SelectTags = () => {
                                         >
                                             <Checkbox
                                                 color="primary"
-                                                checked={tagsSelected.find(x => x.id === id) ? true : false}
+                                                checked={tagsSelected.find(x => x === id) ? true : false}
                                             />
 
                                             <ListItemText
@@ -137,7 +147,7 @@ export const SelectTags = () => {
                                         </MenuItem>
                                     ))
                                 }
-                            </Select>
+                            </SelectField>
                         </FormControl>
 
                     </div>
