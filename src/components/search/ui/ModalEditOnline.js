@@ -20,8 +20,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ModalEditOnline = ({ data, handleClose }) => {
+
   const classes = useStyles();
   const open = data !== null
+  const { id, name} = data
+  console.log(id, name)
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
   const [state, setState] = React.useState({

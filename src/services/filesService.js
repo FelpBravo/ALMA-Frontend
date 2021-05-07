@@ -95,6 +95,16 @@ const editDocumentVersion = (authUser, file, fileId, versioningType, versioningC
 
 };
 
+const getOffice = (authUser, fileId) => {
+
+	return axiosInstance.get(`/files/${fileId}/office`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+
+};
+
 
 export {
 	downloadDocument,
@@ -106,4 +116,5 @@ export {
 	getDocumentById,
 	editDocumentVersion,
 	editForm,
+	getOffice,
 }
