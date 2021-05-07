@@ -64,13 +64,16 @@ const DataTableUsers = () => {
 
 	const { userslist = {}, } = useSelector(state => state.adminUsers);
 
-	const { data = [], totalItems = 0 } = userslist
+	const { data = [], totalItems = 0} = userslist
 
 	const [userdata, setUserdata] = useState([])
 
 	const [userEditData, setUserEditData] = useState({})
 
 	const [editActive, setEditActive] = useState(false)
+
+	const [pageg, setPage] = useState(0)
+	
 	
 
 	useEffect(() => {
@@ -80,6 +83,7 @@ const DataTableUsers = () => {
 		else
 		{
 			dispatch(startUsersInitLoading(authUser,page_url));
+
 		}
 		
 
@@ -119,7 +123,7 @@ const DataTableUsers = () => {
 	}
 
 	const handleChangePage = (event, page) => {
-		console.log("quiero cambiar de pagina",handleChangePage)
+		console.log(page)
 		if(search){
 			dispatch(userSearchLoading(authUser,search,page_url))
 			history.push(page != 1? `/management/usersandgroups/${page}?search=${search}`: `/management/usersandgroups?search=${search}`);
@@ -127,7 +131,8 @@ const DataTableUsers = () => {
 		else
 		{
 			dispatch(startUsersInitLoading(authUser,page));
-			history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
+            setPage(page)
+			//history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
 		}	
 	
 	}
@@ -249,7 +254,7 @@ const DataTableUsers = () => {
 					>
 						<Pagination 
 									style={{color: '#369bff'}}
-									count={Math.ceil(totalItems / 10)} 
+									count={Math.ceil(totalItems/ 10)} 
 									color="primary" 
 									shape="rounded" 
 									total={totalItems} 
