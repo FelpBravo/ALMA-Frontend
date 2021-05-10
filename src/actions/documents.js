@@ -707,6 +707,7 @@ export const startDocumentsOfficeLoading = (authUser, fileId) => {
 			const resp = await getOffice(authUser, fileId);
 
 			dispatch(documentsOfficeLoaded(resp.data));
+			console.log("la data del link", resp)
 
 		} catch (error) {
 			console.log(error);

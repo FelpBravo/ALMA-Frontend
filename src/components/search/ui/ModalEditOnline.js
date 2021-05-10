@@ -9,6 +9,8 @@ import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, Divider} from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { startDocumentsOfficeLoading } from 'actions/documents';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,14 +25,15 @@ const ModalEditOnline = ({ data, handleClose }) => {
 
   const classes = useStyles();
   const open = data !== null
-  const { id, name} = data
-  console.log(id, name)
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
+  const { documentsOffice } = useSelector(state => state.documents);
   const [state, setState] = React.useState({
     checkedA: false,
     checkedB: false,
   });
+ 
+ 
 
   useEffect(() => {
 
@@ -39,7 +42,18 @@ const ModalEditOnline = ({ data, handleClose }) => {
  
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+    dispatch(startDocumentsOfficeLoading(authUser,data?.id))
   };  
+
+  const handleChange1 = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  
+  };  
+
+  const handleOnSave = () => {
+    documentsOffice ? window.location.replace(documentsOffice) : dispatch(console.log("funciono"))
+    handleClose()
+  }
 
   return (
 
@@ -62,7 +76,7 @@ const ModalEditOnline = ({ data, handleClose }) => {
             control={
                 <Checkbox 
                 checked={state.checkedA} 
-                onChange={handleChange} 
+                onChange={handleChange1} 
                 name="checkedA" 
                 color="primary"
                 />
@@ -103,12 +117,12 @@ const ModalEditOnline = ({ data, handleClose }) => {
            style={{
            fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",boxShadow: "none", height: '45px', width: '120px'
           }}
-            //onClick={handleOnSave}
+            onClick={handleOnSave}
             variant="contained"
             color="primary"
            // disabled={messageErrorName}
           >
-           Crear
+           Editar
           </Button>
 
         </DialogActions>
