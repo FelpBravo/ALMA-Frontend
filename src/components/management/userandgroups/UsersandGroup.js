@@ -63,7 +63,7 @@ const Management = () => {
 	
 	const { path, url } = useRouteMatch();
 
-	const [value, setValue] = useState(path === '/management/usersandgroups'? 0:1);
+	const [value, setValue] = useState(path === '/management/usersandgroups/group'? 1:0);
 
 	const history = useHistory();
 
@@ -74,7 +74,7 @@ const Management = () => {
 	};
 
 	useEffect(() => {
-		path === '/management/usersandgroups'? setValue(0): setValue(1)
+		path === '/management/usersandgroups/group'? setValue(1): setValue(0)
 			
 		if (!authUser) {
 			return;

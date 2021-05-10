@@ -71,8 +71,6 @@ const DataTableUsers = () => {
 	const [userEditData, setUserEditData] = useState({})
 
 	const [editActive, setEditActive] = useState(false)
-
-	const [pageg, setPage] = useState(0)
 	
 	
 
@@ -125,14 +123,11 @@ const DataTableUsers = () => {
 	const handleChangePage = (event, page) => {
 		console.log(page)
 		if(search){
-			dispatch(userSearchLoading(authUser,search,page_url))
 			history.push(page != 1? `/management/usersandgroups/${page}?search=${search}`: `/management/usersandgroups?search=${search}`);
 		}
 		else
 		{
-			dispatch(startUsersInitLoading(authUser,page));
-            setPage(page)
-			//history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
+			history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
 		}	
 	
 	}
