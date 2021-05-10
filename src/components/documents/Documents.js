@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Divider, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import get from 'lodash/get'
 import moment from 'moment';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
@@ -82,8 +83,18 @@ const Documents = () => {
 	}, [dispatch, document]);
 
 	const handleSaveForm = values => {
-		console.log("values", values)
-		alert(JSON.stringify(values))
+		console.log("values", values, "aspectList", aspectList)
+
+		// const { tags , ...aspectList} = values
+		// const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
+		// dispatch(
+		// 	startSaveFormLoading(
+		// 		filesId,
+		// 		folderId,
+		// 		{ id: documentId, aspectList},
+		// 		tags
+		// 	)
+		// );
 		// const resp = await Swal.fire({
 		// 	title: 'Carga de documento',
 		// 	text: "¿Estás seguro de realizar la carga de archivos?",
@@ -92,80 +103,101 @@ const Documents = () => {
 		// 	focusConfirm: true,
 		// 	heightAuto: false,
 		// });
-		// if (resp.value) {
+		// const newAspectList = aspectList
+		for (const aspect of aspectList) {
+			aspect.customPropertyList = aspect.customPropertyList.filter( property => {
+				const value = get(values, property?.name, null)
+				if (value){
+					property.value = value
+					return property
+				}
+			})
+		}
 
-		// 	let filters = [];
+		const { tags } = values
+		const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
+		dispatch(
+			startSaveFormLoading(
+				filesId,
+				folderId,
+				{ id: documentId, aspectList},
+				tags
+			)
+		);
+			
+			// let filters = [];
 
-		// 	// FILTROS DE LOS CAMPOS QUE TIENEN VALOR
-		// 	for (const aspect of aspectList) {
+			// FILTROS DE LOS CAMPOS QUE TIENEN VALOR
+			// for (const aspect of aspectList) {
 
-		// 		const existsWithValue = aspect.customPropertyList
-		// 			.filter(property => {
+			// 	const existsWithValue = aspect.customPropertyList
+			// 		.filter(property => {
 
-		// 				if (property.value) {
+			// 			if (property.value) {
 
-		// 					if (property.type === DATE) {
+			// 				if (property.type === DATE) {
 
-		// 						property.value = moment(property.value).format(FORMAT_YYYY_MM_DD);
+			// 					property.value = moment(property.value).format(FORMAT_YYYY_MM_DD);
 
-		// 					}
+			// 				}
 
-		// 					return property;
-		// 				}
+			// 				return property;
+			// 			}
 
-		// 			});
+			// 		});
 
-		// 		if (existsWithValue.length > 0) {
+			// 	if (existsWithValue.length > 0) {
 
-		// 			filters = [
-		// 				...filters,
-		// 				{
-		// 					...aspect,
-		// 					customPropertyList: existsWithValue,
-		// 				}
-		// 			];
-		// 		}
+			// 		filters = [
+			// 			...filters,
+			// 			{
+			// 				...aspect,
+			// 				customPropertyList: existsWithValue,
+			// 			}
+			// 		];
+			// 	}
 
-		// 	}
+			// }
 
-		// 	// TODO: se filtran por el nombre del tag. Requiere ajuste back
-		// 	const tags = tagsSelected.map(({ tag }) => {
+			// // TODO: se filtran por el nombre del tag. Requiere ajuste back
+			// const tags = tagsSelected.map(({ tag }) => {
 
-		// 		return tag
+			// 	return tag
 
-		// 	});
+			// });
 
-		// 	if (document.length === 0) {
-		// 		const filesId = documentsList.map( ({fileIdLoaded}) => fileIdLoaded)
-		// 		dispatch(
-		// 			startSaveFormLoading(
-		// 				filesId,
-		// 				folderId,
-		// 				{ id: documentId, aspectList: filters },
-		// 				tags
-		// 			)
-		// 		);
+			
 
-		// 	} else {
+			// if (document.length === 0) {
+			// 	const filesId = documentsList.map( ({fileIdLoaded}) => fileIdLoaded)
+			// 	dispatch(
+			// 		startSaveFormLoading(
+			// 			filesId,
+			// 			folderId,
+			// 			{ id: documentId, aspectList: filters },
+			// 			tags
+			// 		)
+			// 	);
 
-		// 		dispatch(
-		// 			startEditDocumentLoading(
-		// 				files,
-		// 				fileIdLoaded,
-		// 				versioningType === VERSION_TYPE_MAJOR ? true : false,
-		// 				versioningComments,
-		// 				{ id: documentId, aspectList: filters },
-		// 				tags
-		// 			)
-		// 		);
-		// 		setTimeout(() => {
+			// } else {
 
-		// 			history.goBack();
+			// 	dispatch(
+			// 		startEditDocumentLoading(
+			// 			files,
+			// 			fileIdLoaded,
+			// 			versioningType === VERSION_TYPE_MAJOR ? true : false,
+			// 			versioningComments,
+			// 			{ id: documentId, aspectList: filters },
+			// 			tags
+			// 		)
+			// 	);
+			// 	setTimeout(() => {
 
-		// 		}, 1000);
+			// 		history.goBack();
 
-		// 	}
-		// }
+			// 	}, 1000);
+
+			// }
 
 	}
 

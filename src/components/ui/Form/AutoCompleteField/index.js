@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Controller } from "react-hook-form";
 import get from 'lodash/get'
-function AutoCompleteField({ control, label, name, options, optionsLabel, optionsValue, className, ...props }) {
+function AutoCompleteField({ control, label, name, options, optionsLabel, optionsValue, required,className, ...props }) {
     return (
         <Controller
             render={({ field }) => (
@@ -23,6 +23,7 @@ function AutoCompleteField({ control, label, name, options, optionsLabel, option
                             {...params}
                             label={label}
                             variant="outlined"
+                            required={required}
                         />
                     )}
                     onChange={(_, data) => field.onChange(get(data, optionsValue, null))}

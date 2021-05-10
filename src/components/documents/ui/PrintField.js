@@ -35,6 +35,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					type="date"
 					label={label}
 					name={name}
+					required={mandatory}
 					InputLabelProps={{
 						shrink: true,
 					}}
@@ -52,8 +53,8 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					type="number"
 					label={label}
 					name={name}
+					required={mandatory}
 					{...commonProps}
-				// required={mandatory}
 				// onChange={handleOnChange}
 				/>
 			);
@@ -65,6 +66,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				options={propertyItemList}
 				optionsLabel="value"
 				optionsValue="value"
+				required={mandatory}
 				{...commonProps}
 			/>
 		// return <MultiLevelSelect
@@ -81,6 +83,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 			return (<TextField
 				key={name}
 				name={name}
+				required={mandatory}
 				label={label}
 				{...commonProps}
 			// value={value ? value : ''}

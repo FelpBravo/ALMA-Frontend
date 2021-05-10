@@ -33,6 +33,7 @@ const TextField = ({
     InputProps,
     errors,
     disabled,
+    required,
     ...props
 }) => {
     const classes = useStyles();
@@ -53,6 +54,7 @@ const TextField = ({
         multiline,
         InputProps,
         disabled,
+        required,
     };
 
     const labelProps = {
@@ -81,7 +83,8 @@ TextField.defaultProps = {
     multiline: false,
     InputProps: {},
     disabled: false,
-    register: () => ({})
+    register: () => ({}),
+    required: false,
 };
 
 TextField.propTypes = {
@@ -100,6 +103,7 @@ TextField.propTypes = {
     multiline: PropTypes.bool,
     InputProps: PropTypes.objectOf(PropTypes.object),
     disabled: PropTypes.bool,
+    required: PropTypes.bool,
 };
 
 export { TextField }
