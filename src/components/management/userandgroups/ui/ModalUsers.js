@@ -91,10 +91,12 @@ const ModalUsers = () => {
         break;
     }
   setDataCreate({ ...dataCreate, [name]: value })
+  console.log(dataCreate)
 }
 
   const handleOnSave = () =>{
         dispatch(startCreateUsersLoading(authUser, dataCreate))    
+        dispatch(closeModalUsers());
       }
       
 
@@ -119,9 +121,8 @@ const ModalUsers = () => {
           <Grid container spacing={1}>
           <Grid item xs={4}>
               <TextField
-                  //value={value}
                   fullWidth
-                  name='firstname'
+                  name="firstName"
                   label="Nombres"
                   type="text"
                   variant="outlined"
@@ -132,9 +133,8 @@ const ModalUsers = () => {
           </Grid>  
           <Grid item xs={4}>
               <TextField
-                  //value={value}
                   fullWidth
-                  name="lastname"
+                  name="lastName"
                   label="Apellidos"
                   type="text"
                   variant="outlined"
@@ -145,7 +145,6 @@ const ModalUsers = () => {
           </Grid>
           <Grid item xs={4}>
               <TextField
-                  //value={value}
                   label="Correo electrónico"
                   type="email"
                   required

@@ -86,24 +86,27 @@ const ModalEditUsers = (props) => {
       case 'email':
         setValidation({ ...validation, ['email']: !correo.test(value) ? false : true })
         break;
-      case 'company':
-        if (value === 'Other') {
-          setStateCompany({ name: true, department: stateCompany.department })
-        } else {
-          setStateCompany({ name: false, department: stateCompany.department })
+        case 'company':
+        if(value === "Other"){  
+          setStateCompany({ name:true, department:stateCompany.department})
+        }else
+        {
+          setStateCompany({ name:false, department:stateCompany.department})
         }
-        break
+      break
       case 'department':
-        if (value === "Other") {
-          setStateCompany({ name: stateCompany.name, department: true })
-        } else {
-          setStateCompany({ name: stateCompany.name, department: false})
+        if(value === "Other"){  
+          setStateCompany({ name:stateCompany.name, department:true})
+        }else
+        {
+          setStateCompany({ name:stateCompany.name, department:false})
         }
-        break;
+      break
       default:
         break;
     }
-    if(name != "department" && value !='Other' || name != 'company' && value != 'Other'){
+    //if(name != "department" && value !='Other' || name != 'company' && value != 'Other')
+    {
       setDataEdit({ ...dataEdit, [name]: value })
     }
 
@@ -116,9 +119,6 @@ const ModalEditUsers = (props) => {
     search ? dispatch(editUserData(authUser, id, dataEdit, page_url, search)) : dispatch(editUserData(authUser, id, dataEdit, page_url))
     close()
   }
-
-
-
 
 
 
@@ -135,9 +135,6 @@ const ModalEditUsers = (props) => {
         <DialogTitle id="form-dialog-title" >
           <IntlMessages id="users.title.edit" />
         </DialogTitle>
-        <p onClick={()=>{
-          console.log(stateCompany);
-        }}>Prueba</p>
         <DialogContent>
           <Grid item xs={4}>
             <TextField
@@ -238,7 +235,7 @@ const ModalEditUsers = (props) => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  name='department'
+                  name="department"
                   onChange={handleOnChange}
                   label="Departamento"
                   value={(dataEdit.department)}
@@ -253,14 +250,14 @@ const ModalEditUsers = (props) => {
             {stateCompany.department &&
               <Grid item xs={4}>
                 <TextField
+                 value={dataEdit.departmentOther}
                   onChange={handleOnChange}
                   fullWidth
                   label="Escriba nombre del departamento"
-                  name='department'
+                  name='departmentOther'
                   type="text"
                   variant="outlined"
-                  size="small"
-                  value={dataEdit.departmentOther}
+                  size="small"           
                 />
 
               </Grid>
