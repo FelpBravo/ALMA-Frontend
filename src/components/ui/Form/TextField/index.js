@@ -38,12 +38,14 @@ const TextField = ({
 }) => {
     const classes = useStyles();
     const errorMessage = get(errors, `${name}.message`, '');
+    const { ref, ...rest } = register(name);
 
     const textFieldProps = {
         helperText: errorMessage,
         error: Boolean(errorMessage),
         id: id || name,
-        ...register(name),
+        inputRef: ref,
+        ...rest,
         label: shrink ? label : null,
         name,
         placeholder,

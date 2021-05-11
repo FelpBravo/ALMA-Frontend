@@ -1,15 +1,14 @@
+import Swal from 'sweetalert2';
+
 import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
-import {
-	editDocumentVersion, getDocumentById, getThumbnail, saveForm, uploadDocument, editForm
-} from 'services/filesService';
+import { editDocumentVersion, editForm, getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
-import Swal from 'sweetalert2';
 import { types } from 'types/types';
-import { GENERAL_ERROR } from '../constants/constUtil';
 
+import { GENERAL_ERROR } from '../constants/constUtil';
 
 export const startDocumentsTypeLoading = (authUser) => {
 	return async (dispatch) => {
@@ -341,7 +340,6 @@ export const documentsClear = () => {
 
 export const startDocumentByIdLoading = (fileId) => {
 	return async (dispatch, getState) => {
-
 		const { authUser } = getState().auth;
 
 		try {

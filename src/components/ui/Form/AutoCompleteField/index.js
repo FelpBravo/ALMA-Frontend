@@ -1,9 +1,12 @@
-import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Controller } from "react-hook-form";
 import get from 'lodash/get'
-function AutoCompleteField({ control, label, name, options, optionsLabel, optionsValue, required,className, ...props }) {
+import React from "react";
+import { Controller } from "react-hook-form";
+
+function AutoCompleteField({ control, register, label, name, options, optionsLabel, optionsValue, required,className, ...props }) {
+    const { ref, ...rest } = register(name);
+
     return (
         <Controller
             render={({ field }) => (
@@ -22,6 +25,8 @@ function AutoCompleteField({ control, label, name, options, optionsLabel, option
                         <TextField
                             {...params}
                             label={label}
+                            inputRef={ref}
+                            {...rest}
                             variant="outlined"
                             required={required}
                         />

@@ -1,10 +1,12 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField, SelectField, CheckField, AutoCompleteField } from 'components/ui/Form';
-import schema from './FormTest.schema';
-import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
+
+import { AutoCompleteField, CheckField, SelectField, TextField } from 'components/ui/Form';
+
 import { countries } from './countries';
+import schema from './FormTest.schema';
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -19,7 +21,9 @@ const CampaignForm = () => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         mode: 'onTouched',
         name: 'nameTest',
-        // defaultValues: {},
+        defaultValues: {
+            title: "SHDDH"
+        },
         resolver: yupResolver(schema),
     });
 
