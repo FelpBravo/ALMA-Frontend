@@ -36,7 +36,52 @@ import Tooltip from '@material-ui/core/Tooltip';
 import SharedDialog from './SharedDialog';
 import IntlMessages from 'util/IntlMessages';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
+import { MoreVert } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import ModalEditOnline from './ModalEditOnline';
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
  
+
+const StyledMenu = withStyles({
+	paper: {
+	  border: '1px solid #d3d4d5',
+	},
+  })((props) => (
+	<Menu
+	  elevation={0}
+	  getContentAnchorEl={null}
+	  anchorOrigin={{
+		vertical: 'bottom',
+		horizontal: 'center',
+	  }}
+	  transformOrigin={{
+		vertical: 'top',
+		horizontal: 'center',
+	  }}
+	  {...props}
+	/>
+  ));
+  
+  const StyledMenuItem = withStyles((theme) => ({
+	root: {
+	  '&:focus': {
+		backgroundColor: theme.palette.primary.main,
+		'& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+		  color: theme.palette.common.white,
+		},
+	  },
+	},
+  }))(MenuItem);
+  
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -68,10 +113,17 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '10px',
 		width: '100%',
 	},
+	menu:{
+		fontFamily: "Poppins",
+		fontSize: 12,
+		fontWeight: 400,
+	}
 }));
 
 
 const DataTable = () => {
+
+	const [anchorEl, setAnchorEl] = React.useState(null);
 
 	const classes = useStyles();
 
@@ -96,13 +148,14 @@ const DataTable = () => {
 
 	const { id, page } = useParams()
 	const { path, url } = useRouteMatch();
+
 	const [dataSharedDialog, setDataSharedDialog] = useState(null)
+	const [editOnline, setEditOnline] = useState(null)
 
 	let page_url = 1
 	if (page) {
 		page_url = page.trim() ? page.replace(/[a-zA-Z ]/g, '') : 1
 	}
-
 
 	const { folderId } = queryString.parse(location.search);
 
@@ -163,7 +216,6 @@ const DataTable = () => {
 	};
 
 
-
 	const handleDownload = async (id, name) => {
 		if (ROLE_FILE_DOWNLOAD) {
 			const resp = await Swal.fire({
@@ -203,13 +255,21 @@ const DataTable = () => {
 	const handleSubscribe = (id) => {
 		dispatch(startSubscribeDocument(id));
 	}
-
-
+ 
+  
+	const handleClick = (event) => {
+	  setAnchorEl(event.currentTarget);
+	};
+  
+	const handleClose = () => {
+	  setAnchorEl(null);
+	};
 
 
 	return (
 		<div className="row mt-3">
 			<SharedDialog handleClose={() => setDataSharedDialog(null)} data={dataSharedDialog} />
+			<ModalEditOnline handleClose={() => setEditOnline(null)} data={editOnline} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<TableContainer component={Paper}>
@@ -241,7 +301,7 @@ const DataTable = () => {
 										key={id}
 									>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}>
-											<span style={{ color: "#2196f3" }}><i className="far fa-file-pdf custom-link-dash"></i>{` `} {name}</span>
+											<span style={{ color: "#2196f3" }}><i className="far fa-file custom-link-dash"></i>{` `} {name}</span>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0, 10)}</TableCell>
@@ -298,7 +358,7 @@ const DataTable = () => {
 															/>
 														}
 													/>}
-												{(ROLE_FILE_DELETE || DELETE) &&
+												{/*{(ROLE_FILE_DELETE || DELETE) &&
 													<TableActionButton
 														materialIcon={
 															<DeleteOutlinedIcon
@@ -307,7 +367,7 @@ const DataTable = () => {
 															/>
 														}
 													/>}
-												{/* <TableActionButton
+												 <TableActionButton
 													materialIcon={
 														<PlaylistAddCheckOutlinedIcon
 															className={classes.iconos}
@@ -322,16 +382,7 @@ const DataTable = () => {
 															onClick={() => handleFirm(id, name)}
 														/>
 													}
-												/> */}
-												<TableActionButton
-													materialIcon={
-														<LoopOutlinedIcon
-															className={classes.iconos}
-															onClick={() => handleVersioning(id, name)}
-														/>
-													}
 												/>
-
 												<TableActionButton
 													materialIcon={
 														<Tooltip title={<IntlMessages id="table.shared.dialog.tooltip.title" />}>
@@ -341,11 +392,58 @@ const DataTable = () => {
 															/>
 														</Tooltip>
 													}
-												/>
-												{/*<MoreVert
-													className={classes.iconos}
-													onClick={() => console.log("test")}
+												/> 
+												<TableActionButton
+													materialIcon={
+														<RateReviewOutlinedIcon
+															className={classes.iconos}
+															onClick={() => setEditOnline({id, name})}
+														/>
+													}
 												/>*/}
+												<TableActionButton
+													materialIcon={
+														<LoopOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleVersioning(id, name)}
+														/>
+													}
+												/>
+												<MoreVert
+													className={classes.iconos}
+													onClick={handleClick}
+											    />
+												<StyledMenu
+													id="customized-menu"
+													anchorEl={anchorEl}
+													keepMounted
+													open={Boolean(anchorEl)}
+													onClose={handleClose}
+												>
+													<StyledMenuItem onClick={() => setEditOnline({id, name})}>
+													        <RateReviewOutlinedIcon
+																className={classes.iconos}	
+															/>{` `}
+													<span className={classes.menu}>Editar en linea</span>	
+													</StyledMenuItem>
+
+													<StyledMenuItem onClick={() => handleDelete(id)} >
+													{(ROLE_FILE_DELETE || DELETE) &&
+												
+															<DeleteOutlinedIcon
+																className={classes.iconos}
+															/>
+															
+													}<span className={classes.menu}>Eliminar</span>	
+													</StyledMenuItem>
+													
+													<StyledMenuItem onClick={() => setDataSharedDialog({ id, name })} >
+													        <ShareIcon
+																className={classes.iconos}	
+															/>{` `}
+													<span className={classes.menu}>Compartir</span>		
+													</StyledMenuItem>
+												</StyledMenu>
 											</div>
 										</TableCell>
 

@@ -2,7 +2,7 @@ import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
 import {
-	editDocumentVersion, getDocumentById, getThumbnail, saveForm, uploadDocument, editForm
+	editDocumentVersion, getDocumentById, getThumbnail, saveForm, uploadDocument, editForm, getOffice
 } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
@@ -698,4 +698,28 @@ const addAndRemoveTagLoaded = (tags) => {
 		payload: tags,
 	}
 }
+
+export const startDocumentsOfficeLoading = (authUser, fileId) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getOffice(authUser, fileId);
+
+			dispatch(documentsOfficeLoaded(resp.data));
+			console.log("la data del link", resp)
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+const documentsOfficeLoaded = (documentsOffice) => {
+	return {
+		type: types.docsDocumentsOfficeLoaded,
+		payload: documentsOffice
+	}
+};
 

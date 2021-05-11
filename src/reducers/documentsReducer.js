@@ -34,7 +34,8 @@ const initialState = {
 	},
 	loadingFolderModal: false,
 	docs: {},
-	filesLoaded: []
+	filesLoaded: [],
+	documentsOffice: ''
 }
 
 const fileLoadedStructure = {
@@ -334,7 +335,11 @@ export const documentsReducer = (state = initialState, action) => {
 				...state,
 				loadingFolderModal: !state.loadingFolderModal,
 			}
-
+		case types.docsDocumentsOfficeLoaded:
+			return {
+				...state,
+				documentsOffice: action.payload,
+				}
 		default:
 			return state;
 	}

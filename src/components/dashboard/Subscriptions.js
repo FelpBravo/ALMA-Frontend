@@ -29,7 +29,7 @@ export const Subscriptions = () => {
 						return {
 							id: fileId,
 							name: fileName,
-							icon: 'far fa-file-pdf',
+							icon: 'far fa-file',
 							tags,
 							folder,
 							date: activityDate,

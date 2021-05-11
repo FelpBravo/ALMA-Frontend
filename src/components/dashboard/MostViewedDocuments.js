@@ -31,7 +31,7 @@ export const MostViewedDocuments = () => {
 						return {
 							id: fileId,
 							name: fileName,
-							icon: 'far fa-file-pdf',
+							icon: 'far fa-file',
 							large: true,
 							date:new Date(activityDate).toLocaleString("es-ES",{ year: "numeric", month: "long", day: "numeric"}),
 							isViewedDocuments: true,
