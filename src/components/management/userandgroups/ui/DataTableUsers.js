@@ -121,7 +121,6 @@ const DataTableUsers = () => {
 	}
 
 	const handleChangePage = (event, page) => {
-		console.log(page)
 		if(search){
 			history.push(page != 1? `/management/usersandgroups/${page}?search=${search}`: `/management/usersandgroups?search=${search}`);
 		}

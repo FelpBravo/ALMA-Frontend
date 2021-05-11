@@ -61,6 +61,14 @@ export const fixedFolders = [
 						link: '/management/usersandgroups',
 						bd: false,
 					},
+					{
+						id: -9,
+						name: 'sidebar.permissions',
+						type: 'item',
+						link: '/group-permissions',
+						auth: 'ROLE_DASHBOARD_MENU',
+						bd: false,
+					},
 				],
 			},
 			{
@@ -72,15 +80,7 @@ export const fixedFolders = [
 				//auth: 'ROLE_REPORT_MENU',
 				bd: false,
 			},
-			{
-				id: -6,
-				name: 'Permisos de grupo',
-				icon: 'view-dashboard',
-				type: 'item',
-				link: '/group-permissions',
-				auth: 'ROLE_DASHBOARD_MENU',
-				bd: false,
-			},
+			
 		],
 	},
 	/*{
