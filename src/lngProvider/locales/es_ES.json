@@ -613,6 +613,7 @@
 	"sidebar.tags.report": "Reportes",
 	"sidebar.loadDocuments": "Carga documentos",
 	"sidebar.documents": "Creación documentos",
+	"sidebar.permissions": "Permisos de grupo",
 	"company.name": "APIUX",
 	"table.search.documentName": "Nombre documento",
 	"table.search.responsable": "Responsable",
