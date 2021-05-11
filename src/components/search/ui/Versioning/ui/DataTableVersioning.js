@@ -15,12 +15,6 @@ import Grid from '@material-ui/core/Grid';
 import TableActionButton from '../../../ui/TableActionButton';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import AssignmentTurnedInTwoToneIcon from '@material-ui/icons/AssignmentTurnedInTwoTone';
-import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
-import BrightnessHighOutlinedIcon from '@material-ui/icons/BrightnessHighOutlined';
-import BrightnessLowOutlinedIcon from '@material-ui/icons/BrightnessLowOutlined';
-import Brightness7RoundedIcon from '@material-ui/icons/Brightness7Rounded';
 import BeenhereRoundedIcon from '@material-ui/icons/BeenhereRounded';
 import BeenhereOutlinedIcon from '@material-ui/icons/BeenhereOutlined';
 

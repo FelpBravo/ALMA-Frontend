@@ -64,13 +64,15 @@ const DataTableUsers = () => {
 
 	const { userslist = {}, } = useSelector(state => state.adminUsers);
 
-	const { data = [], totalItems, currentPage } = userslist
+	const { data = [], totalItems = 0} = userslist
 
 	const [userdata, setUserdata] = useState([])
 
 	const [userEditData, setUserEditData] = useState({})
 
 	const [editActive, setEditActive] = useState(false)
+	
+	
 
 	useEffect(() => {
 		if(search){
@@ -79,6 +81,7 @@ const DataTableUsers = () => {
 		else
 		{
 			dispatch(startUsersInitLoading(authUser,page_url));
+
 		}
 		
 
@@ -118,13 +121,12 @@ const DataTableUsers = () => {
 	}
 
 	const handleChangePage = (event, page) => {
+		console.log(page)
 		if(search){
-			dispatch(userSearchLoading(authUser,search,page_url))
 			history.push(page != 1? `/management/usersandgroups/${page}?search=${search}`: `/management/usersandgroups?search=${search}`);
 		}
 		else
 		{
-			dispatch(startUsersInitLoading(authUser,page));
 			history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
 		}	
 	
@@ -164,7 +166,6 @@ const DataTableUsers = () => {
 						<TableBody >
 
 							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external, company, department, companyOther, departmentOther}, index) => {
-
 								return <TableRow key={index} >
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
 										<AccountCircleOutlinedIcon className="mr-1"/>
@@ -239,7 +240,8 @@ const DataTableUsers = () => {
 
 						</TableBody>
 					</Table>
-					<Grid className="mt-3 mb-3 mr-3"
+				</TableContainer>
+				<Grid className="mt-3 mb-3 mr-3"
 						container
 						justify="flex-end"
 						alignItems="flex-end"
@@ -247,13 +249,13 @@ const DataTableUsers = () => {
 					>
 						<Pagination 
 									style={{color: '#369bff'}}
-									count={Math.ceil(totalItems/10)} 
+									count={Math.ceil(totalItems/ 10)} 
 									color="primary" 
 									shape="rounded" 
 									total={totalItems} 
-									onChange={handleChangePage}/> 
+									onChange={handleChangePage}
+						/> 
 					</Grid>
-				</TableContainer>
 				<ModalEditUsers data={userEditData} close={handleCloseEditUsers} open={editActive} />
 			</div>
 		</div>
