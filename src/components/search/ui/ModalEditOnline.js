@@ -75,8 +75,9 @@ const ModalEditOnline = ({ data, handleClose }) => {
         <FormControlLabel
             control={
                 <Checkbox 
-                checked={state.checkedA} 
-                onChange={handleChange1} 
+                //checked={state.checkedA} 
+                //onChange={handleChange1} 
+                disabled
                 name="checkedA" 
                 color="primary"
                 />

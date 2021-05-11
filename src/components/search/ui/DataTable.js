@@ -48,6 +48,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import ModalEditOnline from './ModalEditOnline';
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
  
 
 const StyledMenu = withStyles({
@@ -112,6 +113,11 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '10px',
 		width: '100%',
 	},
+	menu:{
+		fontFamily: "Poppins",
+		fontSize: 12,
+		fontWeight: 400,
+	}
 }));
 
 
@@ -295,7 +301,7 @@ const DataTable = () => {
 										key={id}
 									>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}>
-											<span style={{ color: "#2196f3" }}><i className="far fa-file-pdf custom-link-dash"></i>{` `} {name}</span>
+											<span style={{ color: "#2196f3" }}><i className="far fa-file custom-link-dash"></i>{` `} {name}</span>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0, 10)}</TableCell>
@@ -352,7 +358,7 @@ const DataTable = () => {
 															/>
 														}
 													/>}
-												{(ROLE_FILE_DELETE || DELETE) &&
+												{/*{(ROLE_FILE_DELETE || DELETE) &&
 													<TableActionButton
 														materialIcon={
 															<DeleteOutlinedIcon
@@ -361,7 +367,7 @@ const DataTable = () => {
 															/>
 														}
 													/>}
-												{/* <TableActionButton
+												 <TableActionButton
 													materialIcon={
 														<PlaylistAddCheckOutlinedIcon
 															className={classes.iconos}
@@ -376,16 +382,7 @@ const DataTable = () => {
 															onClick={() => handleFirm(id, name)}
 														/>
 													}
-												/> */}
-												<TableActionButton
-													materialIcon={
-														<LoopOutlinedIcon
-															className={classes.iconos}
-															onClick={() => handleVersioning(id, name)}
-														/>
-													}
 												/>
-
 												<TableActionButton
 													materialIcon={
 														<Tooltip title={<IntlMessages id="table.shared.dialog.tooltip.title" />}>
@@ -395,12 +392,20 @@ const DataTable = () => {
 															/>
 														</Tooltip>
 													}
-												/>
+												/> 
 												<TableActionButton
 													materialIcon={
 														<RateReviewOutlinedIcon
 															className={classes.iconos}
 															onClick={() => setEditOnline({id, name})}
+														/>
+													}
+												/>*/}
+												<TableActionButton
+													materialIcon={
+														<LoopOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleVersioning(id, name)}
 														/>
 													}
 												/>
@@ -415,27 +420,28 @@ const DataTable = () => {
 													open={Boolean(anchorEl)}
 													onClose={handleClose}
 												>
-													<StyledMenuItem>
-													<ListItemIcon>
-														<RateReviewOutlinedIcon
-														fontSize="small"
-															//onClick={() => handleEditOnline(id, name)}
-														/>
-													</ListItemIcon>
-													<ListItemText primary="Editar en linea" />
+													<StyledMenuItem onClick={() => setEditOnline({id, name})}>
+													        <RateReviewOutlinedIcon
+																className={classes.iconos}	
+															/>{` `}
+													<span className={classes.menu}>Editar en linea</span>	
 													</StyledMenuItem>
 
-													<StyledMenuItem>
-													<ListItemIcon>
-														<DraftsIcon fontSize="small" />
-													</ListItemIcon>
-													<ListItemText primary="Drafts" />
+													<StyledMenuItem onClick={() => handleDelete(id)} >
+													{(ROLE_FILE_DELETE || DELETE) &&
+												
+															<DeleteOutlinedIcon
+																className={classes.iconos}
+															/>
+															
+													}<span className={classes.menu}>Eliminar</span>	
 													</StyledMenuItem>
-													<StyledMenuItem>
-													<ListItemIcon>
-														<InboxIcon fontSize="small" />
-													</ListItemIcon>
-													<ListItemText primary="Inbox" />
+													
+													<StyledMenuItem onClick={() => setDataSharedDialog({ id, name })} >
+													        <ShareIcon
+																className={classes.iconos}	
+															/>{` `}
+													<span className={classes.menu}>Compartir</span>		
 													</StyledMenuItem>
 												</StyledMenu>
 											</div>

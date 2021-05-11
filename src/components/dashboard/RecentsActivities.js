@@ -34,7 +34,7 @@ export const RecentsActivities = () => {
 						return {
 							id: fileId,
 							name: fileName,
-							icon: 'far fa-file-pdf',
+							icon: 'far fa-file',
 							tags,
 							date: activityDate,
 							activity: getActivityType(activity),
