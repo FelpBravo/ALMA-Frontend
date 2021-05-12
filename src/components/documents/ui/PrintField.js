@@ -1,10 +1,12 @@
-import React from 'react'
+import { TextField } from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { DATE, NUMERIC, LIST, FORMAT_YYYY_MM_DD } from 'constants/constUtil';
-import { TextField } from '@material-ui/core';
+import React from 'react'
 import { useDispatch } from 'react-redux';
+
 import { detailDocumentSetValueField } from 'actions/documents';
+import { DATE, FORMAT_YYYY_MM_DD, LIST, NUMERIC } from 'constants/constUtil';
+
 import { MultiLevelSelect } from './MultiLevelSelect';
 
 export const PrintField = ({ sectionId, name, label, type, value, propertyItemList,mandatory }) => {
@@ -75,6 +77,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					fullWidth
 					required={mandatory}
 					size="small"
+					disabled={name === "mc:alma_doc_number"}
 					onChange={handleOnChange}
 					helperText={mandatory? "Campo Requerido": " "}
 				/>

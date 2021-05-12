@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecordOutlined';
+import FolderIcon from '@material-ui/icons/Folder';
 import MailIcon from '@material-ui/icons/FolderOutlined';
 import TreeView from '@material-ui/lab/TreeView';
 import React, { useEffect, useRef, useState } from 'react';
@@ -104,7 +105,7 @@ const SideBarContent = () => {
 					folderId={folder.id}
 					nodeId={String(folder.id)}
 					labelText={folder.name}
-					labelIcon={folder.hashSubFolders ? MailIcon : FiberManualRecord}
+					labelIcon={folder.hashSubFolders ? FolderIcon : MailIcon}
 					onClick={() => { dispatch(startBreadcrumbs(folder.name, `/directory/${folder.id}`)) }}
 				>
 					{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
