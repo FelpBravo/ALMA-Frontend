@@ -1,10 +1,11 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
+import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
+import Stepper from '@material-ui/core/Stepper';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import React from 'react';
+
 import Documents from './Documents';
 
 const useStyles = makeStyles((theme) => ({
@@ -53,7 +54,8 @@ export default function HorizontalLabelPositionBelowStepper() {
     const handleReset = () => {
         setActiveStep(0);
     };
-
+    return getStepContent(activeStep);
+    
     return (
         <div className={classes.root}>
             <div>
@@ -64,14 +66,14 @@ export default function HorizontalLabelPositionBelowStepper() {
                     </div>
                 ) : (
                     <div>
-                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                        {getStepContent(activeStep)}
                         <div>
                             <Button
                                 disabled={activeStep === 0}
                                 onClick={handleBack}
                                 className={classes.backButton}
                             >
-                                Back
+                                Regresar
               </Button>
                             <Button variant="contained" color="primary" onClick={handleNext}>
                                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
