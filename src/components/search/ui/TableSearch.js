@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		cursor: 'pointer',
 		fontWeight: '400',
 		color: '#FFA800',
-		marginLeft: 10,
+		
 	},
 
 }));
@@ -74,7 +74,7 @@ export const TableSearch = () => {
 						</div>
 
 						<Grid
-							item xs={3} 
+							item xs={2} 
 							onClick={handleSaveSearch}
 							container
 							alignItems="center">

@@ -143,13 +143,14 @@ const DataTable = () => {
 
 	const { filters } = fields;
 
-
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 
 	const { id, page } = useParams()
+
 	const { path, url } = useRouteMatch();
 
 	const [dataSharedDialog, setDataSharedDialog] = useState(null)
+
 	const [editOnline, setEditOnline] = useState(null)
 
 	let page_url = 1

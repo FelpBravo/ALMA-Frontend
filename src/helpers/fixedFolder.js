@@ -12,7 +12,7 @@ export const fixedFolders = [
 				auth:'ROLE_DASHBOARD_MENU',
 				bd: false,
 			},
-			{
+		{/*	{
 				id: -6,
 				name: 'sidebar.documents',
 				icon: 'file',
@@ -20,7 +20,7 @@ export const fixedFolders = [
 				link: '/documentcreation',
 				auth:'ROLE_FILE_MENU',
 				bd: false,
-			},
+			},*/},
 			{
 				id: -1,
 				name: 'sidebar.loadDocuments',
