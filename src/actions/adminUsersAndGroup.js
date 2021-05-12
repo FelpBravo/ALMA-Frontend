@@ -36,7 +36,7 @@ export const startUsersInitLoading = (authUser,page) => {
 
 			Swal.showLoading();
 
-			const resp = await getUsers(authUser,page,12);
+			const resp = await getUsers(authUser,page,10);
 			dispatch(usersInitLoaded(resp.data))
 
 		} catch (error) {

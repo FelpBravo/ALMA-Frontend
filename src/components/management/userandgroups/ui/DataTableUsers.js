@@ -71,7 +71,7 @@ const DataTableUsers = () => {
 	const [userEditData, setUserEditData] = useState({})
 
 	const [editActive, setEditActive] = useState(false)
-	
+
 	
 
 	useEffect(() => {
@@ -248,7 +248,8 @@ const DataTableUsers = () => {
 					>
 						<Pagination 
 									style={{color: '#369bff'}}
-									count={Math.ceil(totalItems/ 10)} 
+									defaultPage={parseInt(page_url)}
+									count={Math.ceil(totalItems/10)} 
 									color="primary" 
 									shape="rounded" 
 									total={totalItems} 

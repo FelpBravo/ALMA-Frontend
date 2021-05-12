@@ -91,7 +91,7 @@ const DataTableUserFromGroup = () => {
 								</TableCell>
 								<TableCell 
 								onClick={() => handleAdd()}
-								style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
+								style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end', cursor:'pointer' }} >
 									<AddIcon />
 									Agregar Usuario
 								</TableCell>
