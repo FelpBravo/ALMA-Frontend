@@ -85,6 +85,7 @@ const Folders = () => {
 									<Grid item xs={10}>
 
 									<SimpleBreadcrumbs
+									className="mb-0"
 									items={historyFolders}
 									currentItem={currentFolders.id}
 									handleClick={handleClickBreadcrumbs}
@@ -92,7 +93,7 @@ const Folders = () => {
 									</Grid>
 
 									<Grid item xs={2}>
-									<Link component="button" variant="body2" onClick={handleNewFolder}  style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 500}}>
+									<Link component="button" variant="body2" onClick={handleNewFolder} >
 																		<AddIcon color='primary' />
 																			Crear nuevo directorio
 									</Link>
