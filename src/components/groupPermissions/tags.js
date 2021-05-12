@@ -28,7 +28,7 @@ const Tags = ({ moduleId, tagsList, name, updateActions, tagsSelected}) => {
 
     return (<Grid container spacing={1}>
         <Grid item md={3}>
-            <FormControl fullWidth variant="outlined">
+            <FormControl fullWidth variant="outlined" size="small" >
                 <InputLabel id="demo-mutiple-checkbox-label">{name}</InputLabel>
                 <Select
                     id="tags-mutiple-checkbox"

@@ -94,13 +94,13 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 				className="folders-table-row"
 			>
 			{type.name === 'workspace' &&
-			<SupervisedUserCircleIcon color="primary" fontSize="small"/>
+			<SupervisedUserCircleIcon  fontSize="small"/>
 			} 
 			{type.name === 'forum' &&
-			<FolderSharedOutlinedIcon color="primary" fontSize="small"/>
+			<FolderSharedOutlinedIcon  fontSize="small"/>
 			}
 			{type.name === 'folder' &&
-			<FolderOutlinedIcon color="primary" fontSize="small"/>
+			<FolderOutlinedIcon fontSize="small"/>
 			}
 			{''} {''} {name}
 			</TableCell>

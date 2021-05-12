@@ -135,7 +135,7 @@ const Tags = () => {
 
 										<Grid item xs={2}>
 										{ ROLE_TAG_CREATE &&
-											<Link component="button" variant="body2" onClick={() => handleSelectActionTags(1)}>
+											<Link component="button" variant="body2" onClick={() => handleSelectActionTags(1)} >
 																				<AddIcon color='primary' />
 																					Crear nueva etiqueta
 											</Link>
