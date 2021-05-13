@@ -59,7 +59,7 @@ const ModalUsers = () => {
     const { name, value} = target
    
     switch (name) {
-      case 'usuario':
+      case 'id':
         if(value.length > 4){
           dispatch(validateUserNickname(authUser,value))
           console.log(validateNickname);
@@ -228,7 +228,7 @@ const ModalUsers = () => {
                  // value={value}
                   fullWidth
                   label="Usuario"
-                  name='usuario'
+                  name="id"
                   error={validateNickname || messageErrorUser? true : false}
                   type="text"
                   variant="outlined"
