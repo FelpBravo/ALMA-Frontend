@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
-import { DialogTitle, Divider, InputBase, Paper, Grid, Chip, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
+import { DialogTitle, Divider, Grid, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
 import {closeModalUsers,validateUserNickname ,nicknameValidate, companyUsersInitLoading, departmentsUsersInitLoading, startCreateUsersLoading, startGroupInitLoading} from 'actions/adminUsersAndGroup';
 import Alert from '@material-ui/lab/Alert';
 import SelectAndChips from 'components/ui/SelectAndChips';
@@ -59,7 +59,7 @@ const ModalUsers = () => {
     const { name, value} = target
    
     switch (name) {
-      case 'usuario':
+      case 'id':
         if(value.length > 4){
           dispatch(validateUserNickname(authUser,value))
           console.log(validateNickname);
@@ -91,10 +91,12 @@ const ModalUsers = () => {
         break;
     }
   setDataCreate({ ...dataCreate, [name]: value })
+  console.log(dataCreate)
 }
 
   const handleOnSave = () =>{
         dispatch(startCreateUsersLoading(authUser, dataCreate))    
+        dispatch(closeModalUsers());
       }
       
 
@@ -119,9 +121,8 @@ const ModalUsers = () => {
           <Grid container spacing={1}>
           <Grid item xs={4}>
               <TextField
-                  //value={value}
                   fullWidth
-                  name='firstname'
+                  name="firstName"
                   label="Nombres"
                   type="text"
                   variant="outlined"
@@ -132,9 +133,8 @@ const ModalUsers = () => {
           </Grid>  
           <Grid item xs={4}>
               <TextField
-                  //value={value}
                   fullWidth
-                  name="lastname"
+                  name="lastName"
                   label="Apellidos"
                   type="text"
                   variant="outlined"
@@ -145,7 +145,6 @@ const ModalUsers = () => {
           </Grid>
           <Grid item xs={4}>
               <TextField
-                  //value={value}
                   label="Correo electrónico"
                   type="email"
                   required
@@ -229,7 +228,7 @@ const ModalUsers = () => {
                  // value={value}
                   fullWidth
                   label="Usuario"
-                  name='usuario'
+                  name="id"
                   error={validateNickname || messageErrorUser? true : false}
                   type="text"
                   variant="outlined"

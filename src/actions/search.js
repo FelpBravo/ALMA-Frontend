@@ -1,10 +1,11 @@
-import { deleteDocument, subscribeDocument, downloadDocument } from 'services/filesService';
-import { getSearchFields, search, saveSearch, getSavedSearches, getSavedSearchById } from 'services/searchService';
+import FileSaver from 'file-saver';
+import Swal from 'sweetalert2';
+
+import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
+import { deleteDocument, downloadDocument, subscribeDocument } from 'services/filesService';
+import { getSavedSearchById, getSavedSearches, getSearchFields, saveSearch, search } from 'services/searchService';
 import { getVersioning } from 'services/versioningService'
 import { types } from 'types/types';
-import Swal from 'sweetalert2';
-import { GENERAL_ERROR, SUCCESS_MESSAGE } from 'constants/constUtil';
-import FileSaver from 'file-saver';
 
 export const startVersioningLoading = (authUser, page, fileId) => {
 	return async (dispatch) => {
@@ -129,8 +130,11 @@ export const startSaveSearchLoading = (authUser, filters) => {
 		try {
 
 			Swal.fire({
-				title: 'Asigna un nombre a tu búsqueda avanzada',
+				title: 'Guarda tu búsqueda',
+				icon: 'question',
+				html: `<center><h5>Ingresa un nombre para los criterios de tu búsqueda.</h5></center>`,
 				input: 'text',
+				inputPlaceholder: "Nombre de la búsqueda",
 				inputAttributes: {
 					autocapitalize: 'off'
 				},

@@ -83,10 +83,10 @@ export default function GroupPermissions() {
         <Paper className={classes.card}>
             <Grid item container md={12}>
                 <Grid item md={5}>
-                    <h2>
+                    <h3>
                         <IntlMessages id="groupPermissions.title" />
-                    </h2>
-                    <FormControl fullWidth variant="outlined">
+                    </h3>
+                    <FormControl fullWidth variant="outlined" size="small" >
                         <InputLabel id="demo-mutiple-checkbox-label">
                             <IntlMessages id="groupPermissions.select.profile" />
                         </InputLabel>
@@ -118,7 +118,7 @@ export default function GroupPermissions() {
                             {
                                 !loading && actionsModule && actionsModule.map(({ id, name, actions }) =>
                                     <Grid item md={12} key={id}>
-                                        <h3>{name}</h3>
+                                        <h4>{name}</h4>
                                         <Tags
                                             moduleId={id}
                                             name={<IntlMessages id="groupPermissions.select.tags" />}

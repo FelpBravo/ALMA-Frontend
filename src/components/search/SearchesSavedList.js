@@ -48,7 +48,7 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
             //className={classes.root}
             anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'right',
+                horizontal: 'center',
             }}
             transformOrigin={{
                 vertical: 'top',
@@ -73,7 +73,7 @@ export default function SearchesSavedList({ anchorEl, onClose }) {
                         {
                             savedSearchesList?.slice(savedSearchesList.length-3, savedSearchesList.length ).reverse().map(({ name, id }) => 
                             <ListItem onClick={() => handleGetSavedSearch(id)} button key={id}>
-                                <ListItemText primary={name} disableTypography={true} style={{color:"#FFA800"}}/>
+                                <ListItemText primary={name} disableTypography={true} style={{color:'#FFA800'}}/>
                             </ListItem>)
                         }
                     </List>

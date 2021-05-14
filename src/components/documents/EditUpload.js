@@ -222,10 +222,11 @@ const EditUpload = () => {
 		else {
 			return <><div style={{display:'flex', height:38}}>
 				<h4 style={{marginTop:10}}>Directorio Actual</h4>
-				<Fab color="primary" style={{ width: 35, height: 35, marginLeft: 70 }}>
+				<Fab 
+				onClick={() => setOpenModal(!openModal)}
+				color="primary" style={{ width: 35, height: 35, marginLeft: 70 }}>
 					<EditIcon
 						style={{ width: 15, height: 15 }}
-						onClick={() => setOpenModal(!openModal)}
 						value={folderName} />
 				</Fab>
 			</div>

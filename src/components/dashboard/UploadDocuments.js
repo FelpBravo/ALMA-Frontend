@@ -33,7 +33,7 @@ export const UploadDocuments = () => {
 						return {
 							id: fileId,
 							name: fileName,
-							icon: 'far fa-file-pdf',
+							icon: 'far fa-file',
 							tags,
 							activity:'Subio',
 							userName: userFirstName + " "+userLastName,

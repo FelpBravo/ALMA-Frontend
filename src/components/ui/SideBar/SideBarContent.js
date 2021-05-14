@@ -1,24 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { useHistory } from 'react-router-dom';
-import MailIcon from '@material-ui/icons/FolderOutlined';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecordOutlined';
-import CustomScrollbars from 'util/CustomScrollbars';
-import Navigation from '../components/Navigation';
-import { SideBarContext } from './SideBarContext';
-import {
-	folderSelected, removeFoldersId, saveFoldersId,
-	startFoldersInitLoading, startFoldersSetChildren
-} from 'actions/folders';
+import FolderIcon from '@material-ui/icons/Folder';
+import MailIcon from '@material-ui/icons/FolderOutlined';
+import TreeView from '@material-ui/lab/TreeView';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fixedFolders } from 'helpers/fixedFolder';
-import { searchRemoveText } from 'actions/search';
-import StyledTreeItem from '../StyledTreeItem';
+import { useParams, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+
 import { startBreadcrumbs } from 'actions/breadcrumbs'
+import { folderSelected, removeFoldersId, saveFoldersId, startFoldersInitLoading, startFoldersSetChildren } from 'actions/folders';
+import { searchRemoveText } from 'actions/search';
+import { fixedFolders } from 'helpers/fixedFolder';
+import CustomScrollbars from 'util/CustomScrollbars';
+
+import Navigation from '../components/Navigation';
+import StyledTreeItem from '../StyledTreeItem';
+import { SideBarContext } from './SideBarContext';
 
 const useStyles = makeStyles({
 	root: {
@@ -94,26 +94,29 @@ const SideBarContent = () => {
 	}, [dispatch]);
 
 	
-
+	const [myRef, setMyRef] = useState(null)
+	
 	const handleRenderMenu = (folders) => {
-
 		return folders.map((folder) => {
-			return <StyledTreeItem
-				key={folder.id}
-				nodeId={String(folder.id)}
-				labelText={folder.name}
-				labelIcon={folder.hashSubFolders ? MailIcon : FiberManualRecord}
-				onClick={()=>{dispatch(startBreadcrumbs(folder.name,`/directory/${folder.id}`))}}
-			>
-				{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
-			</StyledTreeItem>
+			const isSelected = parseInt(folderId) === parseInt(folder.id)
+			return <div ref={isSelected ? setMyRef : null}>
+				<StyledTreeItem
+					key={folder.id}
+					folderId={folder.id}
+					nodeId={String(folder.id)}
+					labelText={folder.name}
+					labelIcon={folder.hashSubFolders ? FolderIcon : MailIcon}
+					onClick={() => { dispatch(startBreadcrumbs(folder.name, `/directory/${folder.id}`)) }}
+				>
+					{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
+				</StyledTreeItem>
+				</div>
 		});
 
 	}
+	const executeScroll = () => myRef.scrollIntoView()
 
 	const handleSelect = async (event, folderId) => {
-		
-
 		if (selected === folderId) {
 			return;
 		}
@@ -132,11 +135,15 @@ const SideBarContent = () => {
 		dispatch(searchRemoveText());
 
 		history.push(`/directory/${folderId}`);
-
 	}
 
+	useEffect(() => {
+		if (folderId && myRef) executeScroll()
+	}, [folderId, myRef])
+	
+
 	return (
-		<CustomScrollbars className="scrollbar" >
+		<CustomScrollbars className="scrollbar">
 			<SideBarContext.Provider value={{}}>
 				<Navigation menuItems={fixedFolders} privileges={authorities} />
 				<TreeView

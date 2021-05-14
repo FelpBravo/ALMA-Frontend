@@ -69,13 +69,12 @@ const Versioning = () => {
 					<BreadCrumbs/>
 
 					<TableVersioning />
-					<Grid container>
+					<Grid container onClick={handleBackGo}>
 						<KeyboardBackspaceIcon
-							onClick={handleBackGo}
 							color='primary' />
-						<p style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop: 2 }}	>
+						<span style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop: 2 }}	>
 							Volver
-						</p>
+						</span>
 					</Grid>
 				</div>
 

@@ -1,15 +1,16 @@
-import { IconButton, TextField, Grid, Button } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import NearMeOutlinedIcon from '@material-ui/icons/NearMeOutlined';
-import AttachFileOutlinedIcon from '@material-ui/icons/AttachFileOutlined';
-import { makeStyles } from '@material-ui/core/styles';
-import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
-import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
-import { startSaveCommentsLoading, saveComments, getCommentsReply, saveReplies } from 'actions/information'
-import { startDownloadDocument } from 'actions/search'
-import ClearIcon from '@material-ui/icons/Clear';
+import { Button, Grid, IconButton, TextField } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import { makeStyles } from '@material-ui/core/styles';
+import AttachFileOutlinedIcon from '@material-ui/icons/AttachFileOutlined';
+import ClearIcon from '@material-ui/icons/Clear';
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
+import NearMeOutlinedIcon from '@material-ui/icons/NearMeOutlined';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getCommentsReply, saveComments, saveReplies, startSaveCommentsLoading } from 'actions/information'
+import { startDownloadDocument } from 'actions/search'
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -150,7 +151,8 @@ const Comments = (props) => {
         const [name, setName] = useState()
 
 
-        const handleSubmit = async () => {
+        const handleSubmit = async e => {
+            e.preventDefault()
             if (idComment) {
                 dispatch(saveReplies(authUser, fileId, idComment, text, file))
             }
@@ -178,7 +180,7 @@ const Comments = (props) => {
 
         return (
             <div className={classes.newcomment}>
-                <form>
+                <form action="javascript:void(0);">
                     <Grid container>
                         <Grid item xs={10}>
                             <TextField

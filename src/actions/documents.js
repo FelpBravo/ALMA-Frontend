@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { editDocumentVersion, editForm, getDocumentById, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
+import { editDocumentVersion, editForm, getDocumentById, getOffice, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
 import { types } from 'types/types';
@@ -137,9 +137,9 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 			const response = await saveForm(authUser, fileId, folderId, aspectGroup, tags);
 			Swal.fire({
 				icon: 'success',
-				width: 600,
-				title: 'AlmaID Generado con éxito',
-				html: `<ul>${response.data.map(({ name, id }) => `<li> <b>${id}</b> <br/> ${name}</li>`).join("<br/>")}</ul>`,
+				width: 700,
+				title: '<h4>AlmaID Generado con éxito</h4>',
+				html: `<ul>${response.data.map(({ name, id }) => `<li><h6><b>${id}</b>    ${name}</h6></li>`)}</ul>`,
 				showConfirmButton: true,
 			})
 			// Swal.close();
@@ -696,4 +696,28 @@ const addAndRemoveTagLoaded = (tags) => {
 		payload: tags,
 	}
 }
+
+export const startDocumentsOfficeLoading = (authUser, fileId) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getOffice(authUser, fileId);
+
+			dispatch(documentsOfficeLoaded(resp.data));
+			console.log("la data del link", resp)
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+const documentsOfficeLoaded = (documentsOffice) => {
+	return {
+		type: types.docsDocumentsOfficeLoaded,
+		payload: documentsOffice
+	}
+};
 

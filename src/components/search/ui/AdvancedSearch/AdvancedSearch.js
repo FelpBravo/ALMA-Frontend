@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 	pointer: {
 		cursor: 'pointer',
 		fontWeight: '400',
-		color: '#FFA800'
+		color: '#FFA800',
 	},
 
 }));
@@ -213,7 +213,7 @@ export const AdvancedSearch = ({savedSearchId}) => {
 		<Grid container item className="mt-3">
 			<SearchesSavedList onClose={onClosePopover} anchorEl={anchorEl} />
 			<Grid container>
-				<Grid item xs={3} container alignItems="center">
+				<Grid item xs={2}>
 					<span className="text-advanced-search">
 						<IntlMessages id="dashboard.advancedSearch" />
 					</span>
@@ -221,11 +221,9 @@ export const AdvancedSearch = ({savedSearchId}) => {
 					<ExpandMoreIcon color="primary" />
 					</IconButton>
 				</Grid>
-				<Grid
-					item xs={3} 
+				<Grid item xs={3} 
 					//onClick={handleSaveSearch}
-					container
-					alignItems="center">
+					>
 					<span className={classes.pointer}>
 						<IntlMessages id="dashboard.listSearch" />
 					</span>
