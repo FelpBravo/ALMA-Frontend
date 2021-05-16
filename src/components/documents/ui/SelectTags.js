@@ -30,7 +30,7 @@ export const SelectTags = () => {
     const dispatch = useDispatch();
 
     const { tags = [] } = useSelector(state => state.documents);
-
+    console.log("tags", tags)
     const { authUser } = useSelector(state => state.auth);
     const { control, watch } = useFormContext();
     const tagsSelected = watch('tagsField', []);

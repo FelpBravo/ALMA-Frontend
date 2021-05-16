@@ -21,6 +21,7 @@ import { FormInit } from './ui/FormInit';
 import { SelectFolder } from './ui/SelectFolder';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
 import { Versioning } from './ui/Versioning';
+import { SelectTags } from './ui/SelectTags';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -37,6 +38,10 @@ const getInitialValues = list => {
 	}
 	)
 	return response;
+}
+
+const defaultValues = {
+	tagsField: [],
 }
 
 const Documents = () => {
@@ -67,10 +72,7 @@ const Documents = () => {
 	const methods = useForm({
 		mode: 'onTouched',
 		// name: 'documentForm',
-		defaultValues: {
-			tagsField: [],
-			// ...(document ? getInitialValues(get(detailDocumentType, 'aspectList.0.customPropertyList', [])) : {})
-		},
+		defaultValues,
 		// resolver: yupResolver(schema),
 	});
 	const { handleSubmit, register, control, formState: { errors }, reset } = methods
@@ -83,13 +85,13 @@ const Documents = () => {
 	const [files, setFiles] = useState(null);
 	const handleClear = () => {
 		dispatch(documentsClear());
+		reset(defaultValues)
 	}
 
 	useEffect(() => {
 		const initialValues = getInitialValues(get(detailDocumentType, 'aspectList.0.customPropertyList', []))
 		if (document && !isEmpty(initialValues)) {
-			console.log("initialValues", initialValues)
-			reset(initialValues)
+			reset({ ...defaultValues,...initialValues})
 		}
 	}, [reset, detailDocumentType, document])
 
@@ -133,7 +135,7 @@ const Documents = () => {
 		}
 		console.log("newAspectList", newAspectList)
 
-		const { tags } = values
+		const { tagsField } = values
 		const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
 
 		if (document.length === 0) { // TODO Create mode 
@@ -142,28 +144,30 @@ const Documents = () => {
 					filesId,
 					folderId,
 					{ id: documentId, aspectList: newAspectList },
-					tags,
+					tagsField,
 					reset
 				)
 			);
 		}
 		else { // Edition mode
-
+			alert(JSON.stringify(values))
 			dispatch(
 				startEditDocumentLoading(
+					folderId,
 					files,
 					fileIdLoaded,
-					versioningType === VERSION_TYPE_MAJOR ? true : false,
-					versioningComments,
+					values?.version === VERSION_TYPE_MAJOR ? true : false,
+					values?.versioningComments,
 					{ id: documentId, aspectList: newAspectList },
-					tags
+					tagsField
 				)
+				
 			);
-			setTimeout(() => {
+			// setTimeout(() => {
 
-				history.goBack();
+			// 	history.goBack();
 
-			}, 1000);
+			// }, 1000);
 
 		}
 
@@ -220,7 +224,7 @@ const Documents = () => {
 
 	return (
 		<div className="row">
-			<button onClick={reset}>Reset</button>
+			<button onClick={() => reset(defaultValues)}>Reset</button>
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 					<FormProvider {...methods} >
@@ -291,7 +295,7 @@ const Documents = () => {
 								<Versioning />
 							}
 
-							{/* <SelectTags /> */}
+							<SelectTags />
 
 							<div className="row">
 								<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">

@@ -13,8 +13,6 @@ export const DetailDocumentType = () => {
 		return <></>;
 	}
 
-	console.log("aspectList", aspectList)
-
 	return (
 		<>
 			{

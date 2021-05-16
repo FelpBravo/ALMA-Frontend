@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, FormControl, FormControlLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
+import { Divider, FormControl, FormControlLabel, Radio } from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,6 +7,8 @@ import {
 	saveVersioningComments, clearVersioningComments
 } from 'actions/documents';
 import { VERSION_TYPE_MAJOR, VERSION_TYPE_MINOR } from 'constants/constUtil';
+import { RadioGroupField, TextField } from 'components/ui/Form';
+import { useFormContext } from 'react-hook-form';
 
 const labelMajor = <IntlMessages id="document.versioning.type.major" />
 const labelMinor = <IntlMessages id="document.versioning.type.minor" />
@@ -15,6 +17,7 @@ const labelComments = <IntlMessages id="document.versioning.comments" />
 export const Versioning = () => {
 
 	const dispatch = useDispatch();
+	const { register, control, formState: { errors } } = useFormContext();
 
 	const { versioningType = '', versioningComments = '' } = useSelector(state => state.documents);
 
@@ -45,6 +48,14 @@ export const Versioning = () => {
 		}
 	}
 
+	const commonProps = {
+		register,
+		errors,
+		control,
+		shrink: true,
+		size: "small",
+	}
+
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
@@ -57,8 +68,22 @@ export const Versioning = () => {
 
 				<div className="row">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-
-						<FormControl component="fieldset">
+						<RadioGroupField
+							label=""
+							{...commonProps}
+							name="version">
+							<FormControlLabel
+								value={VERSION_TYPE_MAJOR}
+								control={<Radio color="primary" />}
+								label={labelMajor}
+							/>
+							<FormControlLabel
+								value={VERSION_TYPE_MINOR}
+								control={<Radio color="primary" />}
+								label={labelMinor}
+							/>
+						</RadioGroupField>
+						{/* <FormControl component="fieldset">
 							<RadioGroup
 								aria-label="gender"
 								name="versioningType"
@@ -76,7 +101,7 @@ export const Versioning = () => {
 									label={labelMinor}
 								/>
 							</RadioGroup>
-						</FormControl>
+						</FormControl> */}
 
 					</div>
 				</div>
@@ -87,11 +112,14 @@ export const Versioning = () => {
 						<TextField
 							name="versioningComments"
 							label={labelComments}
-							value={versioningComments}
+							// value={versioningComments}
 							variant="outlined"
 							fullWidth
+							multiline
+							rows={3}
 							size="small"
-							onChange={handleOnChange}
+							{...commonProps}
+						// onChange={handleOnChange}
 						/>
 
 					</div>

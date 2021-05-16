@@ -37,7 +37,6 @@ const SelectField = (props) => {
 
     const labelId = `${name}-label`;
     const errorMessage = get(errors, `${name}.message`, '');
-    console.log("props", props)
     return (
         <FormControl
             variant={variant}
