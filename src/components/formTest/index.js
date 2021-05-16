@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
+import moment from 'moment';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 
@@ -24,6 +25,7 @@ const CampaignForm = () => {
         defaultValues: {
             title: "SHDDH",
             country: "AE",
+            dueDate: moment("2021-05-12T04:00:00.000+0000").format('YYYY-MM-DD')
         },
         // resolver: yupResolver(schema),
     });

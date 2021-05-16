@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+import moment from 'moment';
 import Swal from 'sweetalert2';
 
 import { fileBase64 } from 'helpers/fileBase64';
@@ -329,7 +331,7 @@ export const startThumbnailLoading = (fileId) => {
 const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
 		type: types.docsSaveThumbnail,
-		payload: {thumbnail, fileId}
+		payload: { thumbnail, fileId }
 	}
 };
 
@@ -358,9 +360,9 @@ export const startDocumentByIdLoading = (fileId) => {
 
 			Swal.close();
 
-			dispatch(documentByIdLoaded(resp.data));
+			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));
 
-
+			console.log("resp.data", resp.data, getDataWithDate(resp.data))
 		} catch (error) {
 			Swal.close();
 			console.log(error);
@@ -369,6 +371,23 @@ export const startDocumentByIdLoading = (fileId) => {
 
 	}
 };
+
+const getDataWithDate = data => {
+	console.log("data", data)
+
+	const aspectList = get(data, 'aspectGroup.aspectList', null)
+	if (aspectList) {
+		for (const aspect of aspectList) {
+			aspect.customPropertyList = aspect.customPropertyList.filter(property => {
+				if (property?.type === "DATE" && property?.value) {
+					property.value = moment(property.value).format('YYYY-MM-DD')
+				}
+				return property
+			})
+		}
+	}
+	return data
+}
 
 const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [], signatures = [] }) => {
 	return {

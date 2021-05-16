@@ -1,20 +1,15 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Divider, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { isEmpty } from 'lodash-es';
 import get from 'lodash/get'
-import moment from 'moment';
-import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
 
 import { documentsClear, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
-import { AutoCompleteField, TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
-import { DATE, FORMAT_YYYY_MM_DD, VERSION_TYPE_MAJOR } from 'constants/constUtil';
+import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
 import { DocumentContext } from './helpers/DocumentContext';
@@ -22,7 +17,6 @@ import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import { FormInit } from './ui/FormInit';
 import { SelectFolder } from './ui/SelectFolder';
-import { SelectTags } from './ui/SelectTags';
 import { Versioning } from './ui/Versioning';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,13 +53,12 @@ const Documents = () => {
 		folderId = '',
 		versioningType = '',
 		versioningComments = '',
-		tagsSelected = [],
 	} = useSelector(state => state.documents);
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	// ID DOCUMENTO URL
 	const document = id || ""
 	const methods = useForm({
-		// mode: 'onTouched',
+		mode: 'onTouched',
 		// name: 'documentForm',
 		defaultValues: {
 			tagsField: [],
@@ -111,16 +104,6 @@ const Documents = () => {
 	const handleSaveForm = values => {
 		console.log("values", values, "aspectList", aspectList)
 
-		// const { tags , ...aspectList} = values
-		// const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
-		// dispatch(
-		// 	startSaveFormLoading(
-		// 		filesId,
-		// 		folderId,
-		// 		{ id: documentId, aspectList},
-		// 		tags
-		// 	)
-		// );
 		// const resp = await Swal.fire({
 		// 	title: 'Carga de documento',
 		// 	text: "¿Estás seguro de realizar la carga de archivos?",
@@ -144,99 +127,38 @@ const Documents = () => {
 
 		const { tags } = values
 		const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
-		dispatch(
-			startSaveFormLoading(
-				filesId,
-				folderId,
-				{ id: documentId, aspectList: newAspectList },
-				tags,
-				reset
-			)
-		);
 
-		// let filters = [];
+		if (document.length === 0) { // TODO Create mode 
+			dispatch(
+				startSaveFormLoading(
+					filesId,
+					folderId,
+					{ id: documentId, aspectList: newAspectList },
+					tags,
+					reset
+				)
+			);
+		}
+		else { // Edition mode
 
-		// FILTROS DE LOS CAMPOS QUE TIENEN VALOR
-		// for (const aspect of aspectList) {
+			dispatch(
+				startEditDocumentLoading(
+					files,
+					fileIdLoaded,
+					versioningType === VERSION_TYPE_MAJOR ? true : false,
+					versioningComments,
+					{ id: documentId, aspectList: filters },
+					tags
+				)
+			);
+			setTimeout(() => {
 
-		// 	const existsWithValue = aspect.customPropertyList
-		// 		.filter(property => {
+				history.goBack();
 
-		// 			if (property.value) {
+			}, 1000);
 
-		// 				if (property.type === DATE) {
+		}
 
-		// 					property.value = moment(property.value).format(FORMAT_YYYY_MM_DD);
-
-		// 				}
-
-		// 				return property;
-		// 			}
-
-		// 		});
-
-		// 	if (existsWithValue.length > 0) {
-
-		// 		filters = [
-		// 			...filters,
-		// 			{
-		// 				...aspect,
-		// 				customPropertyList: existsWithValue,
-		// 			}
-		// 		];
-		// 	}
-
-		// }
-
-		// // TODO: se filtran por el nombre del tag. Requiere ajuste back
-		// const tags = tagsSelected.map(({ tag }) => {
-
-		// 	return tag
-
-		// });
-
-
-
-		// if (document.length === 0) {
-		// 	const filesId = documentsList.map( ({fileIdLoaded}) => fileIdLoaded)
-		// 	dispatch(
-		// 		startSaveFormLoading(
-		// 			filesId,
-		// 			folderId,
-		// 			{ id: documentId, aspectList: filters },
-		// 			tags
-		// 		)
-		// 	);
-
-		// } else {
-
-		// 	dispatch(
-		// 		startEditDocumentLoading(
-		// 			files,
-		// 			fileIdLoaded,
-		// 			versioningType === VERSION_TYPE_MAJOR ? true : false,
-		// 			versioningComments,
-		// 			{ id: documentId, aspectList: filters },
-		// 			tags
-		// 		)
-		// 	);
-		// 	setTimeout(() => {
-
-		// 		history.goBack();
-
-		// 	}, 1000);
-
-		// }
-
-	}
-
-	const commonProps = {
-		register,
-		errors,
-		control,
-		shrink: true,
-		size: "small",
-		// className: classes.input
 	}
 
 	return (

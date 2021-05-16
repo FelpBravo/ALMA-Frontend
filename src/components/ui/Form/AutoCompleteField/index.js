@@ -39,7 +39,6 @@ function AutoCompleteField({ control, register, label, name, options, optionsLab
                             inputProps={{
                                 ...params.inputProps,
                             }}
-                            InputLabelProps={{ shrink: true }}
                             variant="outlined"
                             required={required}
                         />
