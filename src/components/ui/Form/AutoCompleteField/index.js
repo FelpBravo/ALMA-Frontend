@@ -21,12 +21,25 @@ function AutoCompleteField({ control, register, label, name, options, optionsLab
                             {option[optionsLabel]}
                         </span>
                     )}
+                    getOptionSelected={(option, value) =>
+                        value === undefined || value === "" || option.id === value.id
+                    }
+                    value={
+                        field.value
+                            ? options.find(
+                                (item) => item[optionsValue] === field.value
+                            )
+                            : ""
+                    }
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            label={label}
-                            inputRef={ref}
                             {...rest}
+                            label={label}
+                            inputProps={{
+                                ...params.inputProps,
+                            }}
+                            InputLabelProps={{ shrink: true }}
                             variant="outlined"
                             required={required}
                         />
