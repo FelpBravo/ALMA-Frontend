@@ -1,5 +1,7 @@
-import { Button, Divider, Grid } from '@material-ui/core';
+import { Button, Divider, Fab, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
+import EditIcon from '@material-ui/icons/Edit';
 import { isEmpty } from 'lodash-es';
 import get from 'lodash/get'
 import React, { useEffect, useState } from 'react';
@@ -7,7 +9,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { documentsClear, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
+import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
@@ -17,6 +19,7 @@ import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import { FormInit } from './ui/FormInit';
 import { SelectFolder } from './ui/SelectFolder';
+import { SelectFolderDialog } from './ui/SelectFolderDialog';
 import { Versioning } from './ui/Versioning';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,7 +46,6 @@ const Documents = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const history = useHistory();
-
 	const { id } = useParams()
 	console.log("id Document", id)
 
@@ -53,10 +55,15 @@ const Documents = () => {
 		folderId = '',
 		versioningType = '',
 		versioningComments = '',
+		path = '',
+		pathFolderName = '',
+		folderIdOrigin = '',
+		folderName = '',
 	} = useSelector(state => state.documents);
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	// ID DOCUMENTO URL
 	const document = id || ""
+	const EDIT_MODE = document.length !== 0
 	const methods = useForm({
 		mode: 'onTouched',
 		// name: 'documentForm',
@@ -70,7 +77,8 @@ const Documents = () => {
 
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
-
+	const [directorio, setDirectorio] = useState(false)
+	const [openModal, setOpenModal] = useState(false);
 
 	const [files, setFiles] = useState(null);
 	const handleClear = () => {
@@ -147,7 +155,7 @@ const Documents = () => {
 					fileIdLoaded,
 					versioningType === VERSION_TYPE_MAJOR ? true : false,
 					versioningComments,
-					{ id: documentId, aspectList: filters },
+					{ id: documentId, aspectList: newAspectList },
 					tags
 				)
 			);
@@ -161,6 +169,55 @@ const Documents = () => {
 
 	}
 
+	const clearPath = () => {
+		setDirectorio(false)
+		dispatch(clearFolderIdOrigin(folderIdOrigin))
+	}
+
+	useEffect(() => {
+		if (pathFolderName != path && pathFolderName) {
+			setDirectorio(true)
+		}
+		else {
+			setDirectorio(false)
+		}
+
+	}, [pathFolderName, path])
+
+	const Directory = () => {
+		if (directorio) {
+			return <>
+				<div style={{ display: 'flex', height: 38 }}>
+					<IntlMessages id="document.title.newDirectory" />
+				</div>
+				<p>{pathFolderName}
+					<BackspaceSharpIcon
+						color="primary"
+						onClick={clearPath}
+						style={{ marginLeft: 20 }}
+					/>
+				</p>
+			</>
+
+		}
+		return <>
+			<div style={{ display: 'flex', height: 38 }}>
+				<h4 style={{ marginTop: 10 }}>
+					<IntlMessages id="document.title.currentDirectory" />
+				</h4>
+				<Fab
+					onClick={() => setOpenModal(!openModal)}
+					color="primary" style={{ width: 35, height: 35, marginLeft: 70 }}>
+					<EditIcon
+						style={{ width: 15, height: 15 }}
+						value={folderName} />
+				</Fab>
+			</div>
+			<p> {path} </p>
+		</>
+	}
+
+
 	return (
 		<div className="row">
 			<button onClick={reset}>Reset</button>
@@ -170,22 +227,41 @@ const Documents = () => {
 						<form onSubmit={handleSubmit(handleSaveForm)}>
 							<div className="row">
 								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-									<TitleCard message="document.loadDocuments" />
+									{
+										EDIT_MODE
+											? <TitleCard message="document.title.editDocument" />
+											: <TitleCard message="document.loadDocuments" />
+
+									}
 								</div>
 							</div>
 
 							{
-								document.length === 0
+								!EDIT_MODE
 								&&
 								<FormInit />
 							}
 
-							{
-								document.length > 0
+							{/* {
+								!EDIT_MODE
 								&&
 								<div className="row">
 									<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
 										<SelectFolder />
+									</div>
+								</div>
+							} */}
+							{EDIT_MODE
+								&&
+								<div className="row">
+									<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+										<Directory />
+									</div>
+									<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
+										<SelectFolderDialog
+											setOpenModal={setOpenModal}
+											openModal={openModal}
+										/>
 									</div>
 								</div>
 							}
@@ -211,8 +287,7 @@ const Documents = () => {
 							<DetailDocumentType />
 
 							{
-								document.length > 0
-								&&
+								EDIT_MODE &&
 								<Versioning />
 							}
 
