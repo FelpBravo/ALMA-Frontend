@@ -22,9 +22,10 @@ const CampaignForm = () => {
         mode: 'onTouched',
         name: 'nameTest',
         defaultValues: {
-            title: "SHDDH"
+            title: "SHDDH",
+            country: "AE",
         },
-        resolver: yupResolver(schema),
+        // resolver: yupResolver(schema),
     });
 
     const commonProps = {

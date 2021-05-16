@@ -9,7 +9,7 @@ import IdleTimer from 'helpers/IdleTimer';
 import { history } from '../store/store';
 import AppRouter from './AppRouter';
 
-const TIMEOUT = 60*3; // HardCode for test
+const TIMEOUT = 60*30; // HardCode for test
 
 export const MainRouter = () => {
 	const { authUser } = useSelector(state => state.auth);

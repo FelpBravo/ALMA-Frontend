@@ -86,8 +86,8 @@ const Documents = () => {
 
 	useEffect(() => {
 		const initialValues = getInitialValues(get(detailDocumentType, 'aspectList.0.customPropertyList', []))
-
 		if (document && !isEmpty(initialValues)) {
+			console.log("initialValues", initialValues)
 			reset(initialValues)
 		}
 	}, [reset, detailDocumentType, document])
@@ -129,8 +129,9 @@ const Documents = () => {
 		// 	focusConfirm: true,
 		// 	heightAuto: false,
 		// });
-		// const newAspectList = aspectList
-		for (const aspect of aspectList) {
+
+		const newAspectList = aspectList
+		for (const aspect of newAspectList) {
 			aspect.customPropertyList = aspect.customPropertyList.filter(property => {
 				const value = get(values, property?.name, null)
 				if (value) {
@@ -139,6 +140,7 @@ const Documents = () => {
 				}
 			})
 		}
+		console.log("newAspectList", newAspectList)
 
 		const { tags } = values
 		const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
@@ -146,8 +148,9 @@ const Documents = () => {
 			startSaveFormLoading(
 				filesId,
 				folderId,
-				{ id: documentId, aspectList },
-				tags
+				{ id: documentId, aspectList: newAspectList },
+				tags,
+				reset
 			)
 		);
 
@@ -238,6 +241,7 @@ const Documents = () => {
 
 	return (
 		<div className="row">
+			<button onClick={reset}>Reset</button>
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 					<FormProvider {...methods} >

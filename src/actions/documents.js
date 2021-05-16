@@ -118,7 +118,7 @@ export const detailDocumentSetValueField = (sectionId, name, value) => {
 };
 
 ///
-export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
+export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags, reset) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
@@ -145,6 +145,7 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 			// Swal.close();
 
 			dispatch(saveFormFinish());
+			reset()
 
 		} catch (error) {
 			console.log(error);
