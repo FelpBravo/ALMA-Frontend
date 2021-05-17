@@ -22,7 +22,7 @@ import { SelectFolderDialog } from './ui/SelectFolderDialog';
 import { Versioning } from './ui/Versioning';
 import { SelectTags } from './ui/SelectTags';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { editModeSchema, createModeSchema} from './Documents.schema';
+import { editModeSchema, createModeSchema } from './Documents.schema';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -50,8 +50,6 @@ const Documents = () => {
 	const classes = useStyles();
 
 	const dispatch = useDispatch();
-	const location = useLocation();
-	const history = useHistory();
 	const { id } = useParams()
 	console.log("id Document", id)
 
@@ -59,8 +57,6 @@ const Documents = () => {
 		detailDocumentType = [],
 		fileIdLoaded = '',
 		folderId = '',
-		versioningType = '',
-		versioningComments = '',
 		path = '',
 		pathFolderName = '',
 		folderIdOrigin = '',
@@ -76,13 +72,20 @@ const Documents = () => {
 		defaultValues,
 		resolver: yupResolver(EDIT_MODE ? editModeSchema : createModeSchema),
 	});
-	const { handleSubmit, register, control, formState: { errors }, reset } = methods
+	const { handleSubmit, reset } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
 	const [directorio, setDirectorio] = useState(false)
 	const [openModal, setOpenModal] = useState(false);
 
 	const [files, setFiles] = useState(null);
+
+	const disabledSubmit = (documentsList.length === 0 ||
+		detailDocumentType.length === 0 ||
+		documentId.length === 0 ||
+		aspectList.length === 0 ||
+		folderId.length === 0)
+
 	const handleClear = () => {
 		dispatch(documentsClear());
 		reset(defaultValues)
@@ -91,7 +94,7 @@ const Documents = () => {
 	useEffect(() => {
 		const initialValues = getInitialValues(get(detailDocumentType, 'aspectList.0.customPropertyList', []))
 		if (document && !isEmpty(initialValues)) {
-			reset({ ...defaultValues,...initialValues})
+			reset({ ...defaultValues, ...initialValues })
 		}
 	}, [reset, detailDocumentType, document])
 
@@ -161,7 +164,7 @@ const Documents = () => {
 					{ id: documentId, aspectList: newAspectList },
 					tagsField
 				)
-				
+
 			);
 			// setTimeout(() => {
 
@@ -234,7 +237,6 @@ const Documents = () => {
 
 	return (
 		<div className="row">
-			<button onClick={() => reset(defaultValues)}>Reset</button>
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 					<FormProvider {...methods} >
@@ -333,18 +335,16 @@ const Documents = () => {
 													fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
 													boxShadow: "none", height: '45px', width: '120px'
 												}}
-												// disabled={documentsList.length === 0 ||
-												// 	detailDocumentType.length === 0 ||
-												// 	documentId.length === 0 ||
-												// 	aspectList.length === 0 ||
-												// 	folderId.length === 0
-												// }
+												disabled={disabledSubmit}
 												type="submit"
 												variant="contained"
 												color="primary"
-											//onClick={handleSaveForm}
 											>
-												<IntlMessages id="document.loadDocuments.load" />
+												{
+													EDIT_MODE
+														? <IntlMessages id="document.loadDocuments.submit.edit" />
+														: <IntlMessages id="document.loadDocuments.load" />
+												}
 											</Button>
 										</div>
 									</Grid>
