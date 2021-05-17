@@ -1,12 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
 import FormControl from "@material-ui/core/FormControl";
-import { Controller } from "react-hook-form";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import get from 'lodash/get'
+import PropTypes from "prop-types";
+import React from "react";
+import { Controller } from "react-hook-form";
+
 const useStyles = makeStyles((theme) => ({
     fullWidth: {
         width: "100%"
@@ -28,12 +29,14 @@ const SelectField = (props) => {
         defaultValue,
         control,
         rules,
-        size
+        size,
+        multiple,
+        renderValue,
+        MenuProps,
     } = props;
 
     const labelId = `${name}-label`;
     const errorMessage = get(errors, `${name}.message`, '');
-
     return (
         <FormControl
             variant={variant}
@@ -56,6 +59,9 @@ const SelectField = (props) => {
                         labelId={labelId}
                         label={label}
                         defaultValue={defaultValue || ""}
+                        multiple={multiple}
+                        renderValue={renderValue}
+                        MenuProps={MenuProps}
                         {...field}
                     >
                         {children}
@@ -71,12 +77,15 @@ const SelectField = (props) => {
 SelectField.defaultProps = {
     defaultValue: "",
     variant: "outlined",
-    margin: "normal",
+    margin: "none",
     error: false,
     disabled: false,
     rules: {},
-    size: "medium",
-    changeEvent: (e) => { }
+    size: "small",
+    changeEvent: (e) => { },
+    multiple: false,
+    renderValue: null,
+    MenuProps: {}
 };
 
 SelectField.propTypes = {
@@ -93,7 +102,10 @@ SelectField.propTypes = {
     helperText: PropTypes.string,
     variant: PropTypes.string,
     size: PropTypes.string,
-    changeEvent: PropTypes.func
+    changeEvent: PropTypes.func,
+    multiple: PropTypes.bool,
+    renderValue: PropTypes.func,
+    MenuProps: PropTypes.any,
 };
 
 export { SelectField };

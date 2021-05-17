@@ -1,8 +1,9 @@
-import React from 'react'
-import clsx from 'clsx';
+import { TextField as InputField, InputLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { InputLabel, TextField as InputField } from '@material-ui/core';
+import clsx from 'clsx';
 import { get, isEmpty } from 'lodash-es';
+import PropTypes from 'prop-types';
+import React from 'react'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,15 +33,19 @@ const TextField = ({
     InputProps,
     errors,
     disabled,
+    required,
     ...props
 }) => {
     const classes = useStyles();
     const errorMessage = get(errors, `${name}.message`, '');
+    const { ref, ...rest } = register(name);
+
     const textFieldProps = {
         helperText: errorMessage,
         error: Boolean(errorMessage),
         id: id || name,
-        ...register(name),
+        inputRef: ref,
+        ...rest,
         label: shrink ? label : null,
         name,
         placeholder,
@@ -51,6 +56,7 @@ const TextField = ({
         multiline,
         InputProps,
         disabled,
+        required,
     };
 
     const labelProps = {
@@ -64,6 +70,41 @@ const TextField = ({
             <InputField {...textFieldProps} {...props} />
         </div>
     );
+};
+
+TextField.defaultProps = {
+    className: null,
+    errors: null,
+    id: null,
+    placeholder: '',
+    shrink: true,
+    size: 'small',
+    type: 'text',
+    variant: 'outlined',
+    rows: 1,
+    multiline: false,
+    InputProps: {},
+    disabled: false,
+    register: () => ({}),
+    required: false,
+};
+
+TextField.propTypes = {
+    className: PropTypes.string,
+    errors: PropTypes.oneOfType([PropTypes.object]),
+    id: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+    placeholder: PropTypes.string,
+    register: PropTypes.func,
+    shrink: PropTypes.bool,
+    size: PropTypes.string,
+    type: PropTypes.string,
+    variant: PropTypes.string,
+    rows: PropTypes.number,
+    multiline: PropTypes.bool,
+    InputProps: PropTypes.objectOf(PropTypes.object),
+    disabled: PropTypes.bool,
+    required: PropTypes.bool,
 };
 
 export { TextField }

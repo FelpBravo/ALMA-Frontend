@@ -1,28 +1,27 @@
+import { Grid } from '@material-ui/core';
+import { chunk, remove } from 'lodash-es';
+import get from 'lodash/get';
+import queryString from 'query-string';
 import React, { useContext, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
-import queryString from 'query-string';
-import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import IntlMessages from 'util/IntlMessages';
-import { startDocumentByIdVisibility, startDropFileLoading, startThumbnailLoading } from 'actions/documents';
-import { DocumentContext } from '../helpers/DocumentContext';
-import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
-import { Grid } from '@material-ui/core';
-import get from 'lodash/get';
-import { ThumbnailItem } from './ThumbnailItem';
-import DocumentLoaded from 'components/ui/components/DocumentLoaded';
-import { chunk, remove } from 'lodash-es';
-import { documentRemoveFile } from '../../../actions/documents';
-import DialogPreview from './DialogPreview';
+import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+import { startDocumentByIdVisibility, startDropFileLoading, startThumbnailLoading } from 'actions/documents';
+import DocumentLoaded from 'components/ui/components/DocumentLoaded';
+import IntlMessages from 'util/IntlMessages';
+
+import { documentRemoveFile } from '../../../actions/documents';
+import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
+import { DocumentContext } from '../helpers/DocumentContext';
+import DialogPreview from './DialogPreview';
+import { ThumbnailItem } from './ThumbnailItem';
 
 export function DropZoneDocument( {document, setFiles} ){
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const [dataDialogPreview, setDataDialogPreview] = useState(null);
-
 
 	// ID DOCUMENTO URL	
 	const MAX_FILES = document.length === 0 ? 20 : 1;
@@ -62,10 +61,7 @@ export function DropZoneDocument( {document, setFiles} ){
 			});
 		} else {
 			if (document.length === 0) {
-
 				dispatch(startDropFileLoading(files));
-
-
 			} else {
 				setFiles(files);
 			}

@@ -1,23 +1,20 @@
-import { TextField } from '@material-ui/core';
-import moment from 'moment';
 import PropTypes from 'prop-types';
-import React from 'react'
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { detailDocumentSetValueField } from 'actions/documents';
-import { DATE, FORMAT_YYYY_MM_DD, LIST, NUMERIC } from 'constants/constUtil';
+import { AutoCompleteField, TextField } from 'components/ui/Form';
+import { DATE, LIST, NUMERIC } from 'constants/constUtil';
 
-import { MultiLevelSelect } from './MultiLevelSelect';
+export const PrintField = ({ sectionId, name, label, type, value, propertyItemList, mandatory }) => {
+	const { register, control, formState: { errors } } = useFormContext();
 
-export const PrintField = ({ sectionId, name, label, type, value, propertyItemList,mandatory }) => {
-
-	const dispatch = useDispatch();
-
-	const handleOnChange = ({ target }) => {
-		const { name, value } = target;
-
-		dispatch(detailDocumentSetValueField(sectionId, name, value));
-
+	const commonProps = {
+		register,
+		errors,
+		control,
+		shrink: true,
+		size: "small",
 	}
 
 	switch (type) {
@@ -25,65 +22,50 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 			return (
 				<TextField
 					key={name}
+					type="date"
 					label={label}
 					name={name}
-					variant="outlined"
-					fullWidth
-					type="date"
-					value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
-					size="small"
 					required={mandatory}
 					InputLabelProps={{
 						shrink: true,
-					}
-					}
-					onChange={handleOnChange}
+					}}
+					{...commonProps}
 				/>
 			);
 
 		case NUMERIC:
 			return (
 				<TextField
-					name={name}
+					key={name}
 					type="number"
-					value={value ? value : ''}
 					label={label}
-					variant="outlined"
-					fullWidth
-					size="small"
+					name={name}
 					required={mandatory}
-					onChange={handleOnChange}
+					{...commonProps}
 				/>
 			);
+
 		case LIST:
-			return <MultiLevelSelect
-				sectionId={sectionId}
+			return <AutoCompleteField
 				name={name}
 				label={label}
-				type={type}
-				value={value}
+				options={propertyItemList}
+				optionsLabel="value"
+				optionsValue="value"
 				required={mandatory}
-				propertyItemList={propertyItemList}
+				{...commonProps}
+				shrink={null}
 			/>
 
 		default:
-			return (
-				<>
-				<TextField
-					name={name}
-					label={label}
-					value={value ? value : ''}
-					variant="outlined"
-					fullWidth
-					required={mandatory}
-					size="small"
-					disabled={name === "mc:alma_doc_number"}
-					onChange={handleOnChange}
-					helperText={mandatory? "Campo Requerido": " "}
-				/>
-				</>
-			);
-		
+			return (<TextField
+				key={name}
+				name={name}
+				required={mandatory}
+				label={label}
+				{...commonProps}
+			/>);
+
 
 	}
 }

@@ -47,7 +47,6 @@ const SearchGroup = () => {
 			setMessageError('Tiene que tener 3 caracteres como minimo')
 		}
 		setSearchText(value)
-		console.log("valor grupo",value)
 	}
 
 	const handleOnSearch = ()=>{

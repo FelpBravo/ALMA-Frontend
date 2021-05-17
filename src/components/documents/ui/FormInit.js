@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { FormControl, NativeSelect, InputLabel, Select} from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { FormControl, InputLabel, MenuItem, NativeSelect, Select } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
+import React, { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
+import { AutoCompleteField, CheckField, SelectField, TextField } from 'components/ui/Form';
 import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
 import IntlMessages from 'util/IntlMessages';
-import {
-	startDocumentsTypeLoading,
-	startDetailDocumentTypeLoading,
-	removeDetailDocumentType,
-	startFoldersLoading,
-} from 'actions/documents';
+
 import { SelectFolder } from './SelectFolder';
 
-
 export const FormInit = () => {
+	const { watch, formState: { errors }, control } = useFormContext();
+	const documentsTypeField = watch('documentsType', null);
 
 	const dispatch = useDispatch();
 
@@ -36,24 +35,20 @@ export const FormInit = () => {
 
 	}, [dispatch, authUser]);
 
-	const handleOnChange = ({ target }) => {
-		const { name, value } = target;
-
-		switch (name) {
-			case 'documentsType':
-				if (value) {
-					dispatch(startDetailDocumentTypeLoading(value));
-				} else {
-					dispatch(removeDetailDocumentType());
-				}
-
-				break;
-
-			default:
-				break;
+	useEffect(() => {
+		if (documentsTypeField) {
+			dispatch(startDetailDocumentTypeLoading(documentsTypeField));
 		}
+		return () => {
+			dispatch(removeDetailDocumentType());
+		}
+	}, [documentsTypeField])
 
+	const commonProps = {
+		errors,
+		control
 	}
+
 	return (
 		<div className="row">
 
@@ -81,42 +76,28 @@ export const FormInit = () => {
 				<>
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
-					<SelectFolder />
+						<SelectFolder />
 
 					</div>
-					
+
 					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
 
 						<FormControl fullWidth>
-							<NativeSelect
-							    style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, marginTop: '0px' }}
-								value={documentType}
+							<SelectField
+								label="Seleccionar tipo de documento"
 								name="documentsType"
-								input={<BootstrapInput />}
-								onChange={handleOnChange}
+								size="small"
+								{...commonProps}
 							>
-								<option aria-label="None" value=""></option>
 								{
-									
 									documentsType.length > 0
 									&&
-									documentsType.map(({ id, name }) => {
-										
-										return <option
-											value={id}
-											key={id}
-										>
-											{name}
-										</option>
-									})
+									documentsType.map(({ id, name }) =>
+										<MenuItem key={id} value={id}>{name}</MenuItem>)
 								}
-							</NativeSelect>
+							</SelectField>
 						</FormControl>
-
-
 					</div>
-
-					
 				</>
 			}
 		</div>
