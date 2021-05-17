@@ -19,35 +19,6 @@ export const Versioning = () => {
 	const dispatch = useDispatch();
 	const { register, control, formState: { errors } } = useFormContext();
 
-	const { versioningType = '', versioningComments = '' } = useSelector(state => state.documents);
-
-	const handleOnChange = ({ target }) => {
-		const { name, value } = target;
-
-		switch (name) {
-			case 'versioningType':
-				if (value) {
-					dispatch(saveVersioningType(value));
-				} else {
-					dispatch(clearVersioningType());
-				}
-
-				break;
-
-			case 'versioningComments':
-				if (value) {
-					dispatch(saveVersioningComments(value));
-				} else {
-					dispatch(clearVersioningComments());
-				}
-
-				break;
-
-			default:
-				break;
-		}
-	}
-
 	const commonProps = {
 		register,
 		errors,
@@ -59,17 +30,17 @@ export const Versioning = () => {
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-
+{/* 
 				<div className="row">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 						<h4>{<IntlMessages id="document.versioning.title" />}</h4>
 					</div>
-				</div>
+				</div> */}
 
 				<div className="row">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 						<RadioGroupField
-							label=""
+							label={<IntlMessages id="document.versioning.title" />}
 							{...commonProps}
 							name="version">
 							<FormControlLabel
@@ -83,26 +54,6 @@ export const Versioning = () => {
 								label={labelMinor}
 							/>
 						</RadioGroupField>
-						{/* <FormControl component="fieldset">
-							<RadioGroup
-								aria-label="gender"
-								name="versioningType"
-								value={versioningType}
-								onChange={handleOnChange}
-							>
-								<FormControlLabel
-									value={VERSION_TYPE_MAJOR}
-									control={<Radio color="primary" />}
-									label={labelMajor}
-								/>
-								<FormControlLabel
-									value={VERSION_TYPE_MINOR}
-									control={<Radio color="primary" />}
-									label={labelMinor}
-								/>
-							</RadioGroup>
-						</FormControl> */}
-
 					</div>
 				</div>
 

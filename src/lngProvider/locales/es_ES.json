@@ -632,7 +632,7 @@
 	"document.title.currentDirectory":"Directorio Actual",
 	"document.loadDocuments.creation": "Creación de documentos",
 	"document.loadDocuments.typeDoc": "Tipo de documento",
-	"document.loadDocuments.folders": "Carpetas",
+	"document.loadDocuments.folders": "Seleccionar carpeta",
 	"document.loadDocuments.load": "Cargar",
 	"document.loadDocuments.edit": "Editar",
 	"document.selectDocument": "Seleccionar documentos",

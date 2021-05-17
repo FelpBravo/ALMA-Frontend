@@ -18,10 +18,11 @@ import { DocumentContext } from './helpers/DocumentContext';
 import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import { FormInit } from './ui/FormInit';
-import { SelectFolder } from './ui/SelectFolder';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
 import { Versioning } from './ui/Versioning';
 import { SelectTags } from './ui/SelectTags';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { editModeSchema, createModeSchema} from './Documents.schema';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -73,10 +74,9 @@ const Documents = () => {
 		mode: 'onTouched',
 		// name: 'documentForm',
 		defaultValues,
-		// resolver: yupResolver(schema),
+		resolver: yupResolver(EDIT_MODE ? editModeSchema : createModeSchema),
 	});
 	const { handleSubmit, register, control, formState: { errors }, reset } = methods
-
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
 	const [directorio, setDirectorio] = useState(false)

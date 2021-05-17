@@ -12,7 +12,7 @@ import IntlMessages from 'util/IntlMessages';
 import { SelectFolder } from './SelectFolder';
 
 export const FormInit = () => {
-	const { watch } = useFormContext();
+	const { watch, formState: { errors }, control } = useFormContext();
 	const documentsTypeField = watch('documentsType', null);
 
 	const dispatch = useDispatch();
@@ -36,13 +36,18 @@ export const FormInit = () => {
 	}, [dispatch, authUser]);
 
 	useEffect(() => {
-		if (documentsTypeField){
+		if (documentsTypeField) {
 			dispatch(startDetailDocumentTypeLoading(documentsTypeField));
 		}
 		return () => {
 			dispatch(removeDetailDocumentType());
 		}
 	}, [documentsTypeField])
+
+	const commonProps = {
+		errors,
+		control
+	}
 
 	return (
 		<div className="row">
@@ -79,13 +84,10 @@ export const FormInit = () => {
 
 						<FormControl fullWidth>
 							<SelectField
-								// style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, marginTop: '0px' }}
-								// value={documentType}
 								label="Seleccionar tipo de documento"
 								name="documentsType"
 								size="small"
-							// input={<BootstrapInput />}
-							// onChange={handleOnChange}
+								{...commonProps}
 							>
 								{
 									documentsType.length > 0
@@ -93,28 +95,9 @@ export const FormInit = () => {
 									documentsType.map(({ id, name }) =>
 										<MenuItem key={id} value={id}>{name}</MenuItem>)
 								}
-								{/* <option aria-label="None" value=""></option>
-								{
-									
-									documentsType.length > 0
-									&&
-									documentsType.map(({ id, name }) => {
-										
-										return <option
-											value={id}
-											key={id}
-										>
-											{name}
-										</option>
-									})
-								} */}
 							</SelectField>
 						</FormControl>
-
-
 					</div>
-
-
 				</>
 			}
 		</div>

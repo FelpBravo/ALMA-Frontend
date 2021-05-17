@@ -77,7 +77,7 @@ TextField.defaultProps = {
     errors: null,
     id: null,
     placeholder: '',
-    shrink: false,
+    shrink: true,
     size: 'small',
     type: 'text',
     variant: 'outlined',
