@@ -7,7 +7,7 @@ import get from 'lodash/get'
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { clearFolderIdOrigin, documentsClear, saveFileIdLoaded, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -23,6 +23,7 @@ import { Versioning } from './ui/Versioning';
 import { SelectTags } from './ui/SelectTags';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { editModeSchema, createModeSchema } from './Documents.schema';
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -48,10 +49,9 @@ const defaultValues = {
 const Documents = () => {
 
 	const classes = useStyles();
-
+	const history = useHistory()
 	const dispatch = useDispatch();
 	const { id } = useParams()
-	console.log("id Document", id)
 
 	const {
 		detailDocumentType = [],
@@ -114,63 +114,57 @@ const Documents = () => {
 
 
 
-	const handleSaveForm = values => {
-		console.log("values", values, "aspectList", aspectList)
+	const handleSaveForm = async (values) => {
 
-		// const resp = await Swal.fire({
-		// 	title: 'Carga de documento',
-		// 	text: "¿Estás seguro de realizar la carga de archivos?",
-		// 	icon: "question",
-		// 	showCancelButton: true,
-		// 	focusConfirm: true,
-		// 	heightAuto: false,
-		// });
+		const resp = await Swal.fire({
+			title: 'Carga de documento',
+			text: "¿Estás seguro de realizar la carga de archivos?",
+			icon: "question",
+			showCancelButton: true,
+			focusConfirm: true,
+			heightAuto: false,
+		});
+		if (resp.value) {
 
-		const newAspectList = aspectList
-		for (const aspect of newAspectList) {
-			aspect.customPropertyList = aspect.customPropertyList.filter(property => {
-				const value = get(values, property?.name, null)
-				if (value) {
-					property.value = value
-					return property
-				}
-			})
-		}
-		console.log("newAspectList", newAspectList)
+			const newAspectList = [...(aspectList || [])]
+			for (const aspect of newAspectList) {
+				aspect.customPropertyList = aspect.customPropertyList.filter(property => {
+					const value = get(values, property?.name, null)
+					if (value) {
+						property.value = value
+						return property
+					}
+				})
+			}
 
-		const { tagsField } = values
-		const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
+			const { tagsField } = values
+			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
 
-		if (document.length === 0) { // TODO Create mode 
-			dispatch(
-				startSaveFormLoading(
-					filesId,
-					folderId,
-					{ id: documentId, aspectList: newAspectList },
-					tagsField,
-					reset
-				)
-			);
-		}
-		else { // Edition mode
-			alert(JSON.stringify(values))
-			dispatch(
-				startEditDocumentLoading(
-					folderId,
-					files,
-					fileIdLoaded,
-					values?.version === VERSION_TYPE_MAJOR ? true : false,
-					values?.versioningComments,
-					{ id: documentId, aspectList: newAspectList },
-					tagsField
-				)
-
-			);
-			// setTimeout(() => {
-
-			// 	history.goBack();
-
-			// }, 1000);
+			if (document.length === 0) { // TODO Create mode 
+				dispatch(
+					startSaveFormLoading(
+						filesId,
+						folderId,
+						{ id: documentId, aspectList: newAspectList },
+						tagsField,
+						reset
+					)
+				);
+			}
+			else { // Edition mode
+				dispatch(
+					startEditDocumentLoading(
+						folderId,
+						files,
+						fileIdLoaded,
+						values?.version === VERSION_TYPE_MAJOR ? true : false,
+						values?.versioningComments,
+						{ id: documentId, aspectList: newAspectList },
+						tagsField,
+						() => history.goBack() // CallBack
+					)
+				);
+			}
 
 		}
 

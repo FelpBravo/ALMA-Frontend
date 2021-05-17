@@ -15,7 +15,7 @@ function AutoCompleteField({ control, register, label, name, options, optionsLab
                     {...props}
                     className={className}
                     options={options}
-                    getOptionLabel={(option) => option[optionsLabel]}
+                    getOptionLabel={(option) => get(option,optionsLabel, "")}
                     renderOption={(option) => (
                         <span>
                             {option[optionsLabel]}

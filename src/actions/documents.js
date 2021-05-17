@@ -361,8 +361,6 @@ export const startDocumentByIdLoading = (fileId) => {
 			Swal.close();
 
 			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));
-
-			console.log("resp.data", resp.data, getDataWithDate(resp.data))
 		} catch (error) {
 			Swal.close();
 			console.log(error);
@@ -373,8 +371,6 @@ export const startDocumentByIdLoading = (fileId) => {
 };
 
 const getDataWithDate = data => {
-	console.log("data", data)
-
 	const aspectList = get(data, 'aspectGroup.aspectList', null)
 	if (aspectList) {
 		for (const aspect of aspectList) {
@@ -526,7 +522,8 @@ export const startEditDocumentLoading = (
 	versioningType,
 	versioningComments,
 	aspectGroup,
-	tags
+	tags,
+	callback
 ) => {
 	return async (dispatch, getState) => {
 
@@ -558,7 +555,7 @@ export const startEditDocumentLoading = (
 			await editForm(authUser, folderId, [fileId], aspectGroup, tags);
 
 			dispatch(saveFormFinish());
-
+			callback && callback()
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -725,7 +722,6 @@ export const startDocumentsOfficeLoading = (authUser, fileId) => {
 			const resp = await getOffice(authUser, fileId);
 
 			dispatch(documentsOfficeLoaded(resp.data));
-			console.log("la data del link", resp)
 
 		} catch (error) {
 			console.log(error);

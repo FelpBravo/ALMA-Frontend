@@ -66,7 +66,6 @@ const Customizer = () => {
 				</div>
 			</div>
 			{navigationStyle === HORIZONTAL_NAVIGATION ? <ButtonGroup>
-				{console.log("navigationStyle", horizontalNavPosition)}
 				<Button color="default"
 					className={`jr-btn  ${horizontalNavPosition === INSIDE_THE_HEADER && 'active'} `}
 					onClick={() => {

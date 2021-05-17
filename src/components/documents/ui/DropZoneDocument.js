@@ -23,7 +23,6 @@ export function DropZoneDocument( {document, setFiles} ){
 	const location = useLocation();
 	const [dataDialogPreview, setDataDialogPreview] = useState(null);
 
-	console.log("document.length", document)
 	// ID DOCUMENTO URL	
 	const MAX_FILES = document.length === 0 ? 20 : 1;
 	// const { thumbnail = null,
@@ -51,7 +50,6 @@ export function DropZoneDocument( {document, setFiles} ){
 	const dropFile = async (files) => {
 		setCount(files.length)
 		const diff = MAX_FILES - nDocuments - files.length
-		console.log("diff", diff)
 		if (diff < 0) {
 			const resp = await Swal.fire({
 				title: 'Error',
@@ -63,12 +61,8 @@ export function DropZoneDocument( {document, setFiles} ){
 			});
 		} else {
 			if (document.length === 0) {
-				console.log("startDropFileLoading")
 				dispatch(startDropFileLoading(files));
-
-
 			} else {
-				console.log("Entro por el sino")
 				setFiles(files);
 			}
 		}

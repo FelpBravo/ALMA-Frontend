@@ -3,13 +3,11 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { detailDocumentSetValueField } from 'actions/documents';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
 import { DATE, LIST, NUMERIC } from 'constants/constUtil';
 
 export const PrintField = ({ sectionId, name, label, type, value, propertyItemList, mandatory }) => {
 	const { register, control, formState: { errors } } = useFormContext();
-	const dispatch = useDispatch();
 
 	const commonProps = {
 		register,
@@ -17,14 +15,6 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 		control,
 		shrink: true,
 		size: "small",
-		// className: classes.input
-	}
-
-	const handleOnChange = ({ target }) => {
-		const { name, value } = target;
-
-		dispatch(detailDocumentSetValueField(sectionId, name, value));
-
 	}
 
 	switch (type) {
@@ -40,9 +30,6 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 						shrink: true,
 					}}
 					{...commonProps}
-				// onChange={handleOnChange}
-				// value={value ? moment(value).format(FORMAT_YYYY_MM_DD) : ''}
-
 				/>
 			);
 
@@ -55,7 +42,6 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					name={name}
 					required={mandatory}
 					{...commonProps}
-				// onChange={handleOnChange}
 				/>
 			);
 
@@ -68,16 +54,8 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				optionsValue="value"
 				required={mandatory}
 				{...commonProps}
+				shrink={null}
 			/>
-		// return <MultiLevelSelect
-		// 	sectionId={sectionId}
-		// 	name={name}
-		// 	label={label}
-		// 	type={type}
-		// 	value={value}
-		// 	// required={mandatory}
-		// 	propertyItemList={propertyItemList}
-		// />
 
 		default:
 			return (<TextField
@@ -86,13 +64,6 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				required={mandatory}
 				label={label}
 				{...commonProps}
-			// value={value ? value : ''}
-			// variant="outlined"
-			// fullWidth
-			// required={mandatory}
-			// size="small"
-			// onChange={handleOnChange}
-			// helperText={mandatory? "Campo Requerido": " "}
 			/>);
 
 
