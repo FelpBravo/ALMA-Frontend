@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Divider, Fab, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
@@ -8,22 +9,21 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import { clearFolderIdOrigin, documentsClear, saveFileIdLoaded, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
+import { createModeSchema, editModeSchema } from './Documents.schema';
 import { DocumentContext } from './helpers/DocumentContext';
 import { DetailDocumentType } from './ui/DetailDocumentType';
 import { DropZoneDocument } from './ui/DropZoneDocument';
 import { FormInit } from './ui/FormInit';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
-import { Versioning } from './ui/Versioning';
 import { SelectTags } from './ui/SelectTags';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { editModeSchema, createModeSchema } from './Documents.schema';
-import Swal from 'sweetalert2';
+import { Versioning } from './ui/Versioning';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -157,7 +157,7 @@ const Documents = () => {
 						folderId,
 						files,
 						fileIdLoaded,
-						values?.version === VERSION_TYPE_MAJOR ? true : false,
+						true, //values?.version === VERSION_TYPE_MAJOR ? true : false,
 						values?.versioningComments,
 						{ id: documentId, aspectList: newAspectList },
 						tagsField,
@@ -297,7 +297,7 @@ const Documents = () => {
 							<DetailDocumentType />
 
 							{
-								EDIT_MODE &&
+								EDIT_MODE && files?.length > 0 &&
 								<Versioning />
 							}
 

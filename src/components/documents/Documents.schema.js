@@ -1,8 +1,8 @@
-import { object, string, number, date } from 'yup';
+import { date, number, object, string } from 'yup';
 
 const editModeSchema = object().shape({
-    version: string().required(),
 });
+
 const createModeSchema = object().shape({
     documentsType: string().required(),
 });

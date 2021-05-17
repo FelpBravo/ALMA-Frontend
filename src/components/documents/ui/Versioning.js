@@ -1,22 +1,18 @@
-import React from 'react';
 import { Divider, FormControl, FormControlLabel, Radio } from '@material-ui/core';
-import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-	saveVersioningType, clearVersioningType,
-	saveVersioningComments, clearVersioningComments
-} from 'actions/documents';
-import { VERSION_TYPE_MAJOR, VERSION_TYPE_MINOR } from 'constants/constUtil';
-import { RadioGroupField, TextField } from 'components/ui/Form';
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { clearVersioningComments, clearVersioningType, saveVersioningComments, saveVersioningType } from 'actions/documents';
+import { RadioGroupField, TextField } from 'components/ui/Form';
+import { VERSION_TYPE_MAJOR, VERSION_TYPE_MINOR } from 'constants/constUtil';
+import IntlMessages from 'util/IntlMessages';
 
 const labelMajor = <IntlMessages id="document.versioning.type.major" />
 const labelMinor = <IntlMessages id="document.versioning.type.minor" />
 const labelComments = <IntlMessages id="document.versioning.comments" />
 
 export const Versioning = () => {
-
-	const dispatch = useDispatch();
 	const { register, control, formState: { errors } } = useFormContext();
 
 	const commonProps = {
@@ -30,14 +26,14 @@ export const Versioning = () => {
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-{/* 
+
 				<div className="row">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 						<h4>{<IntlMessages id="document.versioning.title" />}</h4>
 					</div>
-				</div> */}
+				</div>
 
-				<div className="row">
+				{/* <div className="row">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 						<RadioGroupField
 							label={<IntlMessages id="document.versioning.title" />}
@@ -55,7 +51,7 @@ export const Versioning = () => {
 							/>
 						</RadioGroupField>
 					</div>
-				</div>
+				</div> */}
 
 				<div className="row">
 					<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-2">
