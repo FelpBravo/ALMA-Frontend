@@ -9,7 +9,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
+import { clearFolderIdOrigin, documentsClear, saveFileIdLoaded, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
@@ -221,6 +221,16 @@ const Documents = () => {
 		</>
 	}
 
+	useEffect(() => {
+		if (files) {
+			dispatch(saveFileIdLoaded(
+				{
+					fileIdLoaded,
+					thumbnailGenerated: false,
+					name: files[0]?.name,
+				}))
+		}
+	}, [files])
 
 	return (
 		<div className="row">

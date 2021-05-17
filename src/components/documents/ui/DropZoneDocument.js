@@ -68,6 +68,7 @@ export function DropZoneDocument( {document, setFiles} ){
 
 
 			} else {
+				console.log("Entro por el sino")
 				setFiles(files);
 			}
 		}
