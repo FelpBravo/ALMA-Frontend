@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Divider, Fab, Grid } from '@material-ui/core';
+import { Button, Divider, Fab, Grid, Paper, Step, StepLabel, Stepper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -13,17 +13,13 @@ import Swal from 'sweetalert2';
 
 import { clearFolderIdOrigin, documentsClear, saveFileIdLoaded, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
-import { VERSION_TYPE_MAJOR } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
 import { createModeSchema, editModeSchema } from './Documents.schema';
-import { DocumentContext } from './helpers/DocumentContext';
-import { DetailDocumentType } from './ui/DetailDocumentType';
-import { DropZoneDocument } from './ui/DropZoneDocument';
+import { useFlowSteps } from './flow';
+import UploadDocument from './steps/upload';
 import { FormInit } from './ui/FormInit';
 import { SelectFolderDialog } from './ui/SelectFolderDialog';
-import { SelectTags } from './ui/SelectTags';
-import { Versioning } from './ui/Versioning';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -31,6 +27,18 @@ const useStyles = makeStyles((theme) => ({
 			margin: theme.spacing(1),
 		},
 	},
+	container: {
+		padding: theme.spacing(3, 4)
+	},
+	buttonPrimary: {
+		fontFamily: "Poppins",
+		fontSize: '12px',
+		fontWeight: 600,
+		border: "none",
+		boxShadow: "none",
+		height: '45px',
+		width: '120px'
+	}
 }));
 
 const getInitialValues = list => {
@@ -72,13 +80,22 @@ const Documents = () => {
 		defaultValues,
 		resolver: yupResolver(EDIT_MODE ? editModeSchema : createModeSchema),
 	});
-	const { handleSubmit, reset } = methods
+	const { handleSubmit, reset, watch } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 
 	const [directorio, setDirectorio] = useState(false)
 	const [openModal, setOpenModal] = useState(false);
 
 	const [files, setFiles] = useState(null);
+	const [
+		flowSteps,
+		Component,
+		activeStep,
+		setActiveStep] = useFlowSteps({ editMode: EDIT_MODE, setFiles, document, files })
+
+	const controlledDocument = watch('controlled_document', false);
+
+	console.log("flowSteps", flowSteps, "Component", Component, "activeStep", activeStep)
 
 	const disabledSubmit = (documentsList.length === 0 ||
 		detailDocumentType.length === 0 ||
@@ -139,31 +156,36 @@ const Documents = () => {
 
 			const { tagsField } = values
 			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
-
-			if (document.length === 0) { // TODO Create mode 
-				dispatch(
-					startSaveFormLoading(
-						filesId,
-						folderId,
-						{ id: documentId, aspectList: newAspectList },
-						tagsField,
-						reset
-					)
-				);
-			}
-			else { // Edition mode
-				dispatch(
-					startEditDocumentLoading(
-						folderId,
-						files,
-						fileIdLoaded,
-						true, //values?.version === VERSION_TYPE_MAJOR ? true : false,
-						values?.versioningComments,
-						{ id: documentId, aspectList: newAspectList },
-						tagsField,
-						() => history.goBack() // CallBack
-					)
-				);
+			switch (true) {
+				case controlledDocument: 
+					setActiveStep(activeStep+1)
+					break;
+				case !EDIT_MODE:
+					return dispatch(
+						startSaveFormLoading(
+							filesId,
+							folderId,
+							{ id: documentId, aspectList: newAspectList },
+							tagsField,
+							reset
+						)
+					);
+				case EDIT_MODE:
+					return dispatch(
+						startEditDocumentLoading(
+							folderId,
+							files,
+							fileIdLoaded,
+							true, //values?.version === VERSION_TYPE_MAJOR ? true : false,
+							values?.versioningComments,
+							{ id: documentId, aspectList: newAspectList },
+							tagsField,
+							() => history.goBack() // CallBack
+						)
+					);
+			
+				default:
+					break;
 			}
 
 		}
@@ -229,30 +251,29 @@ const Documents = () => {
 		}
 	}, [files])
 
-	return (
-		<div className="row">
-			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-				<div className="jr-card">
-					<FormProvider {...methods} >
-						<form onSubmit={handleSubmit(handleSaveForm)}>
-							<div className="row">
-								<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-									{
-										EDIT_MODE
-											? <TitleCard message="document.title.editDocument" />
-											: <TitleCard message="document.loadDocuments" />
+	return (<FormProvider {...methods} >
+		<form onSubmit={handleSubmit(handleSaveForm)}>
+			<Grid container spacing={2}>
+				<Grid item md={12}>
+					<Paper className={classes.container}>
+						<div className="row">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+								{
+									EDIT_MODE
+										? <TitleCard message="document.title.editDocument" />
+										: <TitleCard message="document.loadDocuments" />
 
-									}
-								</div>
+								}
 							</div>
+						</div>
 
-							{
-								!EDIT_MODE
-								&&
-								<FormInit />
-							}
+						{
+							!EDIT_MODE
+							&&
+							<FormInit />
+						}
 
-							{/* {
+						{/* {
 								!EDIT_MODE
 								&&
 								<div className="row">
@@ -261,95 +282,91 @@ const Documents = () => {
 									</div>
 								</div>
 							} */}
-							{EDIT_MODE
-								&&
-								<div className="row">
-									<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-										<Directory />
-									</div>
-									<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
-										<SelectFolderDialog
-											setOpenModal={setOpenModal}
-											openModal={openModal}
-										/>
-									</div>
-								</div>
-							}
-
-
+						{EDIT_MODE
+							&&
 							<div className="row">
 								<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-									<Divider />
+									<Directory />
+								</div>
+								<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
+									<SelectFolderDialog
+										setOpenModal={setOpenModal}
+										openModal={openModal}
+									/>
 								</div>
 							</div>
+						}
+					</Paper>
+				</Grid>
 
-							<DocumentContext.Provider value={{ setFiles }}>
-								<DropZoneDocument document={document} setFiles={setFiles} />
-							</DocumentContext.Provider>
+				<Grid item md={12}>
 
-							<div className="row">
-								<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+					<Paper className={classes.container}>
+						{
+							controlledDocument && <>
+								<Stepper alternativeLabel activeStep={activeStep}>
+									{
+										Object.keys(flowSteps).map((name, index) => <Step key={index}>
+											<StepLabel>{name}</StepLabel>
+										</Step>)
+									}
+								</Stepper>
+								<Divider />
+							</>
+						}
 
-									<Divider />
-								</div>
-							</div>
+						{Component}
 
-							<DetailDocumentType />
+						<div className="row">
+							<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+								<Grid
+									container
+									justify="flex-end"
+									alignItems="flex-end"
+									spacing={2}
+								>
+									<div className={classes.buttons}>
+										<Button
+											style={{
+												backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+												boxShadow: "none", height: '45px', width: '120px'
+											}}
+											type="button"
+											variant="contained"
+											onClick={handleClear}
+										>
+											<IntlMessages id="dashboard.advancedSearchClear" />
+										</Button>
 
-							{
-								EDIT_MODE && files?.length > 0 &&
-								<Versioning />
-							}
 
-							<SelectTags />
 
-							<div className="row">
-								<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-									<Grid
-										container
-										justify="flex-end"
-										alignItems="flex-end"
-										spacing={2}
-									>
-										<div className={classes.buttons}>
-											<Button
-												style={{
-													backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
-													boxShadow: "none", height: '45px', width: '120px'
-												}}
-												type="button"
-												variant="contained"
-												onClick={handleClear}
-											>
-												<IntlMessages id="dashboard.advancedSearchClear" />
-											</Button>
+										<Button
+											className={classes.buttonPrimary}
+											disabled={disabledSubmit}
+											type="submit"
+											variant="contained"
+											color="primary"
+										>
+											{
 
-											<Button
-												style={{
-													fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
-													boxShadow: "none", height: '45px', width: '120px'
-												}}
-												disabled={disabledSubmit}
-												type="submit"
-												variant="contained"
-												color="primary"
-											>
-												{
-													EDIT_MODE
+												controlledDocument
+													? "Siguiente"
+													: EDIT_MODE
 														? <IntlMessages id="document.loadDocuments.submit.edit" />
 														: <IntlMessages id="document.loadDocuments.load" />
-												}
-											</Button>
-										</div>
-									</Grid>
+											}
+										</Button>
 
-								</div>
+									</div>
+								</Grid>
+
 							</div>
-						</form>
-					</FormProvider>
-				</div>
-			</div>
-		</div>
+						</div>
+					</Paper>
+				</Grid>
+			</Grid>
+		</form>
+	</FormProvider>
 	)
 }
 

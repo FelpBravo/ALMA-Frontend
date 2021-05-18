@@ -49,7 +49,13 @@ export const FormInit = () => {
 		control
 	}
 
-	return (
+	const isAnonymousProps = {
+		name: 'controlled_document',
+		label: 'Documento controlado',
+		control, 
+	};
+
+	return (<>
 		<div className="row">
 
 			{
@@ -101,5 +107,11 @@ export const FormInit = () => {
 				</>
 			}
 		</div>
+		<div className="row">
+			<div className="col-xl-4 mt-3 col-lg-4 col-md-4 col-4">
+				<CheckField {...isAnonymousProps} />
+			</div>
+		</div>
+	</>
 	)
 }
