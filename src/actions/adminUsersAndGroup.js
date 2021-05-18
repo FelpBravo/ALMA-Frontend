@@ -8,7 +8,8 @@ import {
 	searchUsersPage,
 	departmentsUsers,
 	companyUsers,
-	addUsers
+	addUsers,
+	postUsers
 } from 'services/usersService';
 import { 
 	addGroup,
@@ -36,7 +37,7 @@ export const startUsersInitLoading = (authUser,page) => {
 
 			Swal.showLoading();
 
-			const resp = await getUsers(authUser,page,10);
+			const resp = await postUsers(authUser,page,10);
 			dispatch(usersInitLoaded(resp.data))
 
 		} catch (error) {
@@ -47,6 +48,32 @@ export const startUsersInitLoading = (authUser,page) => {
 
 	}
 };
+
+export const usersInitLoading = (authUser) => {
+	return async (dispatch) => {
+
+		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getUsers(authUser);
+			dispatch(usersAllInitLoaded(resp))
+
+		} catch (error) {
+			console.log(error);
+		} finally {
+			Swal.close();
+		}
+
+	}
+};
+
 export const editUserData = (authUser, idUser, data,page,search) => {
 	return async (dispatch) => {
 		try {
@@ -186,7 +213,7 @@ export const startCreateUsersLoading = (authUser, data) => {
 
 			await addUsers(authUser, id, firstName, lastName, email, password, company, department, companyOther, departmentOther, group);
 
-			const resp = await getUsers(authUser, 1, 10);
+			const resp = await postUsers(authUser, 1, 10);
 			
 			dispatch(saveUsersLoaded());
 			dispatch(usersInitLoaded(resp.data));
@@ -464,6 +491,13 @@ export const usersInitLoaded = (userslist) => {
 	return {
 		type: types.usersInitLoaded,
 		payload: userslist,
+	}
+};
+
+export const usersAllInitLoaded = (usersAll) => {
+	return {
+		type: types.usersAllInitLoaded,
+		payload: usersAll,
 	}
 };
 
