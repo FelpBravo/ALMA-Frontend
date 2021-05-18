@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
-import { closeModalUsersGroup, createUsersGroupLoading, startUsersInitLoading } from 'actions/adminUsersAndGroup';
+import { closeModalUsersGroup, createUsersGroupLoading, usersInitLoading } from 'actions/adminUsersAndGroup';
 import SelectAndChips from 'components/ui/SelectAndChips';
 import { DialogTitle, Divider, Grid} from '@material-ui/core';
 
@@ -23,14 +23,14 @@ const ModalAddUsersGroup = () => {
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
 
-  const { userslist = {}, nameGroup, idGroup, openModal2} = useSelector(state => state.adminUsers);
+  const { usersAll = {}, nameGroup, idGroup, openModal2} = useSelector(state => state.adminUsers);
  
-  const { data = [] } = userslist
+  const { data = [] } = usersAll
 
   const [nameUsersGroup, setNameUsersGroup] = useState({ users:[] })
  
    useEffect(() => {
-    dispatch(startUsersInitLoading(authUser));
+    dispatch(usersInitLoading(authUser));
   }, [dispatch]);
 
   
@@ -75,7 +75,7 @@ const ModalAddUsersGroup = () => {
 
           <Divider className="mt-3" />
 
-          <h5 className="mt-3">Asignación de usuarios</h5>
+          <h4 className="mt-3">Asignación de usuarios</h4>
           <SelectAndChips data={data} returnData={(users)=> setNameUsersGroup({...nameUsersGroup,['users']:users.map(users=>{
              return{'id': users.id}
             })})
