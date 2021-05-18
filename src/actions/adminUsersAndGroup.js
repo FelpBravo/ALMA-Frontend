@@ -213,7 +213,7 @@ export const startCreateUsersLoading = (authUser, data) => {
 
 			await addUsers(authUser, id, firstName, lastName, email, password, company, department, companyOther, departmentOther, group);
 
-			const resp = await getUsers(authUser, 1, 10);
+			const resp = await postUsers(authUser, 1, 10);
 			
 			dispatch(saveUsersLoaded());
 			dispatch(usersInitLoaded(resp.data));
