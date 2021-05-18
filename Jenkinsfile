@@ -17,17 +17,17 @@ pipeline {
     stages {
         stage ("Install libraries") {
             steps {
-                sh 'npm install -g'
+                sh 'yarn install'
             }
         }
         stage ("Build") {
             steps {
-                sh 'npm run build-dev'
+                sh 'yarn run build-dev'
             }
         }
         stage ("Test") {
             steps {
-                sh 'npm test'
+                sh 'yarn run test'
                 script {
                     def scannerHome = tool 'sonarqube-scanner'
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
