@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router'
-
-import AppRouter from './AppRouter';
-import { history } from '../store/store';
-import IdleTimer from 'helpers/IdleTimer';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+
 import { startUserSingOut } from 'actions/auth';
+import IdleTimer from 'helpers/IdleTimer';
+
+import { history } from '../store/store';
+import AppRouter from './AppRouter';
 
 const TIMEOUT = 60*30; // HardCode for test
 

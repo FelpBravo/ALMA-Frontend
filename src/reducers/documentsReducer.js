@@ -171,9 +171,9 @@ export const documentsReducer = (state = initialState, action) => {
 		case types.docsSaveFormFinish:
 			return {
 				...state,
-				detailDocumentType: {
-					aspectList: [],
-				},
+				// detailDocumentType: {
+				// 	aspectList: [],
+				// },
 				fileIdLoaded: '',
 				folderId: '',
 				folderIdOrigin: '',
@@ -204,15 +204,14 @@ export const documentsReducer = (state = initialState, action) => {
 				...initialState,
 				folders: state.folders,
 				tags: state.tags,
+				folderName: state.folderName,
+				path: state.path,
 				documentsType: state.documentsType,
-				detailDocumentType: {
-					aspectList: [],
-				},
+				detailDocumentType: state.detailDocumentType,
 				fileIdLoaded: '',
 				folderId: '',
 				folderIdOrigin: '',
-				folderName: '',
-				path: '',
+
 				name: '',
 				pathFolderName: '',
 				thumbnail: null,

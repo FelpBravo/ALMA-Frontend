@@ -1,15 +1,16 @@
+import { get } from 'lodash';
+import moment from 'moment';
+import Swal from 'sweetalert2';
+
 import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
-import {
-	editDocumentVersion, getDocumentById, getThumbnail, saveForm, uploadDocument, editForm, getOffice
-} from 'services/filesService';
+import { editDocumentVersion, editForm, getDocumentById, getOffice, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
-import Swal from 'sweetalert2';
 import { types } from 'types/types';
-import { GENERAL_ERROR } from '../constants/constUtil';
 
+import { GENERAL_ERROR } from '../constants/constUtil';
 
 export const startDocumentsTypeLoading = (authUser) => {
 	return async (dispatch) => {
@@ -119,7 +120,7 @@ export const detailDocumentSetValueField = (sectionId, name, value) => {
 };
 
 ///
-export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
+export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags, reset) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
@@ -138,14 +139,15 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 			const response = await saveForm(authUser, fileId, folderId, aspectGroup, tags);
 			Swal.fire({
 				icon: 'success',
-				width: 600,
-				title: 'AlmaID Generado con éxito',
-				html: `<ul>${response.data.map(({ name, id }) => `<li> <b>${id}</b> <br/> ${name}</li>`).join("<br/>")}</ul>`,
+				width: 700,
+				title: '<h4>AlmaID Generado con éxito</h4>',
+				html: `<ul>${response.data.map(({ name, id }) => `<li><h6><b>${id}</b>    ${name}</h6></li>`)}</ul>`,
 				showConfirmButton: true,
 			})
 			// Swal.close();
 
 			dispatch(saveFormFinish());
+			reset()
 
 		} catch (error) {
 			console.log(error);
@@ -329,7 +331,7 @@ export const startThumbnailLoading = (fileId) => {
 const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
 		type: types.docsSaveThumbnail,
-		payload: {thumbnail, fileId}
+		payload: { thumbnail, fileId }
 	}
 };
 
@@ -341,7 +343,6 @@ export const documentsClear = () => {
 
 export const startDocumentByIdLoading = (fileId) => {
 	return async (dispatch, getState) => {
-
 		const { authUser } = getState().auth;
 
 		try {
@@ -359,9 +360,7 @@ export const startDocumentByIdLoading = (fileId) => {
 
 			Swal.close();
 
-			dispatch(documentByIdLoaded(resp.data));
-
-
+			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));
 		} catch (error) {
 			Swal.close();
 			console.log(error);
@@ -370,6 +369,21 @@ export const startDocumentByIdLoading = (fileId) => {
 
 	}
 };
+
+const getDataWithDate = data => {
+	const aspectList = get(data, 'aspectGroup.aspectList', null)
+	if (aspectList) {
+		for (const aspect of aspectList) {
+			aspect.customPropertyList = aspect.customPropertyList.filter(property => {
+				if (property?.type === "DATE" && property?.value) {
+					property.value = moment(property.value).format('YYYY-MM-DD')
+				}
+				return property
+			})
+		}
+	}
+	return data
+}
 
 const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [], signatures = [] }) => {
 	return {
@@ -508,7 +522,8 @@ export const startEditDocumentLoading = (
 	versioningType,
 	versioningComments,
 	aspectGroup,
-	tags
+	tags,
+	callback
 ) => {
 	return async (dispatch, getState) => {
 
@@ -540,7 +555,7 @@ export const startEditDocumentLoading = (
 			await editForm(authUser, folderId, [fileId], aspectGroup, tags);
 
 			dispatch(saveFormFinish());
-
+			callback && callback()
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -707,7 +722,6 @@ export const startDocumentsOfficeLoading = (authUser, fileId) => {
 			const resp = await getOffice(authUser, fileId);
 
 			dispatch(documentsOfficeLoaded(resp.data));
-			console.log("la data del link", resp)
 
 		} catch (error) {
 			console.log(error);

@@ -1,10 +1,14 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, FormControlLabel, Grid, makeStyles, MenuItem, Paper, Radio } from '@material-ui/core';
+import moment from 'moment';
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField, SelectField, CheckField, AutoCompleteField } from 'components/ui/Form';
-import schema from './FormTest.schema';
-import { Button, Grid, makeStyles, MenuItem, Paper } from '@material-ui/core';
+
+import { AutoCompleteField, CheckField, RadioGroupField, SelectField, TextField } from 'components/ui/Form';
+
 import { countries } from './countries';
+import schema from './FormTest.schema';
+import { VERSION_TYPE_MAJOR, VERSION_TYPE_MINOR } from 'constants/constUtil';
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -19,8 +23,12 @@ const CampaignForm = () => {
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         mode: 'onTouched',
         name: 'nameTest',
-        // defaultValues: {},
-        resolver: yupResolver(schema),
+        defaultValues: {
+            title: "SHDDH",
+            country: "AE",
+            dueDate: moment("2021-05-12T04:00:00.000+0000").format('YYYY-MM-DD')
+        },
+         resolver: yupResolver(schema),
     });
 
     const commonProps = {
@@ -104,6 +112,21 @@ const CampaignForm = () => {
                     <TextField {...goalProps} />
                     <CheckField {...isAnonymousProps} />
                     <AutoCompleteField {...countryProps} />
+                    <RadioGroupField
+                        label="Versionamiento"
+                        {...commonProps}
+                        name="version">
+                        <FormControlLabel
+                            value={VERSION_TYPE_MAJOR}
+                            control={<Radio color="primary" />}
+                            label="MAYOR"
+                        />
+                        <FormControlLabel
+                            value={VERSION_TYPE_MINOR}
+                            control={<Radio color="primary" />}
+                            label="MENOR"
+                        />
+                    </RadioGroupField>
                     <SelectField {...statusProps}>
                         {
                             ["todas", "en progreso", "completado"].map(elem => <MenuItem key={elem} value={elem}>{elem}</MenuItem>)
