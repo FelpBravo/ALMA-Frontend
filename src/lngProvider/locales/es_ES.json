@@ -628,6 +628,7 @@
 	"table.search.unsubscribe": "Desuscribir",
 	"document.loadDocuments": "Carga de documentos",
 	"document.title.editDocument": "Edición Documento",
+	"document.title.requestDocument": "Solicitud de revisión y aprobación",
 	"document.title.newDirectory":"Directorio Nuevo",
 	"document.title.currentDirectory":"Directorio Actual",
 	"document.loadDocuments.creation": "Creación de documentos",
