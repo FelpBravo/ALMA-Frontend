@@ -4,6 +4,7 @@ pipeline {
     }
 
     environment {
+        PYTHON = "${tool 'Node 6.x'}"
         IMAGE_NAME = "image-ms-frontend"
         IMAGE_TAG = "latest"
         PATH_COMPOSE = "/opt/librux/domain/docker-compose.yml"
@@ -18,7 +19,7 @@ pipeline {
         stage ("Install libraries") {
             steps {
                 nodejs(nodeJSInstallationName: 'Node') {
-                    sh 'yarn install'
+                    sh 'yarn'
                 }
             }
         }
@@ -31,9 +32,11 @@ pipeline {
         }
         stage ("Test") {
             steps {
+                /*
                 nodejs(nodeJSInstallationName: 'Node') {
                     sh 'yarn run test'
                 }
+                */
                 script {
                     def scannerHome = tool 'sonarqube-scanner'
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
