@@ -131,6 +131,7 @@ export const types = {
 	usersGroupOpenModal: 'Users Group Open Modal',
 	usersGroupCloseModal: 'Users Group Close Modal',
 	usersDeleteLoaded: 'Users Delete Loaded',
+	usersAllInitLoaded: 'Users All Init Loaded',
 	
 	companyInitLoaded: 'Companies',
 	departmentsInitLoaded: 'Departments',

@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
-import { closeModalGroup, dependenciesGroupInitLoading, profilesGroupInitLoading, startCreateGroupLoading, startUsersInitLoading, validateGroupName } from 'actions/adminUsersAndGroup';
+import { closeModalGroup, dependenciesGroupInitLoading, profilesGroupInitLoading, startCreateGroupLoading, usersInitLoading, validateGroupName } from 'actions/adminUsersAndGroup';
 import SelectAndChips from 'components/ui/SelectAndChips';
 import { DialogTitle, Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
@@ -21,8 +21,8 @@ const ModalGroup = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
-  const { userslist = {}, } = useSelector(state => state.adminUsers);
-  const { data = [] } = userslist
+  const { usersAll = {}, } = useSelector(state => state.adminUsers);
+  const { data = [] } = usersAll
   const { openModal1, dependencies, profiles, groupname } = useSelector(state => state.adminUsers);
   const [messageErrorGroup, setMessageErrorGroup] = useState(null);
   const [nameGroup, setNameGroup] = useState({ dependencie: "", profile: "" , fullnamegroup: "", users:[] })
@@ -30,7 +30,7 @@ const ModalGroup = () => {
    useEffect(() => {
     dispatch(dependenciesGroupInitLoading(authUser));
     dispatch(profilesGroupInitLoading(authUser));
-    dispatch(startUsersInitLoading(authUser));
+    dispatch(usersInitLoading(authUser));
   }, [dispatch]);
 
   const handleOnChangeName = ({ target }) => {
