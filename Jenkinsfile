@@ -17,21 +17,21 @@ pipeline {
     stages {
         stage ("Install libraries") {
             steps {
-                nodejs() {
+                nodejs(nodeJSInstallationName: 'Node') {
                     sh 'yarn install'
                 }
             }
         }
         stage ("Build") {
             steps {
-                nodejs() {
+                nodejs(nodeJSInstallationName: 'Node') {
                     sh 'yarn run build-dev'
                 }
             }
         }
         stage ("Test") {
             steps {
-                nodejs() {
+                nodejs(nodeJSInstallationName: 'Node') {
                     sh 'yarn run test'
                 }
                 script {
