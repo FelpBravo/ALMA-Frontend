@@ -17,7 +17,8 @@ const initialState = {
     members: [],
     nameGroup: '',
     idGroup: '', 
-    openModal2: false,       
+    openModal2: false,
+    usersAll: [],     
    
 }
 
@@ -28,6 +29,12 @@ export const adminUsersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userslist: action.payload,
+            } 
+            
+        case types.usersAllInitLoaded:
+            return {
+                ...state,
+                usersAll: action.payload,
             } 
         case types.companyInitLoaded:
             return {

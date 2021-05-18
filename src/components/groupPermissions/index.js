@@ -1,12 +1,15 @@
 import { CircularProgress, Divider, FormControl, Grid, InputLabel, makeStyles, MenuItem, Paper, Select } from '@material-ui/core'
-import Tags from './tags'
+import { get } from 'lodash-es';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { actionsModuleSetValueField, startGetPolicies, startGetProfiles, startPermissionsModuleLoading, startGetActionsByModuleByPolicy, startSaveActionsModuleByPolicy, actionsModuleClear } from 'actions/permissions';
-import { get } from 'lodash-es';
+
+import { actionsModuleClear, actionsModuleSetValueField, startGetActionsByModuleByPolicy, startGetPolicies, startGetProfiles, startPermissionsModuleLoading, startSaveActionsModuleByPolicy } from 'actions/permissions';
 import Button from 'components/ui/Button'
-import LoadingView from './loadingView';
 import IntlMessages from 'util/IntlMessages';
+
+import LoadingView from './loadingView';
+import Tags from './tags'
+
 const useStyles = makeStyles(theme => ({
     divider: {
         margin: theme.spacing(3, 0),

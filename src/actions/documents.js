@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+import moment from 'moment';
 import Swal from 'sweetalert2';
 
 import { fileBase64 } from 'helpers/fileBase64';
@@ -118,7 +120,7 @@ export const detailDocumentSetValueField = (sectionId, name, value) => {
 };
 
 ///
-export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
+export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags, reset) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
@@ -145,6 +147,7 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags) => {
 			// Swal.close();
 
 			dispatch(saveFormFinish());
+			reset()
 
 		} catch (error) {
 			console.log(error);
@@ -328,7 +331,7 @@ export const startThumbnailLoading = (fileId) => {
 const documentSaveThumbnail = (thumbnail, fileId) => {
 	return {
 		type: types.docsSaveThumbnail,
-		payload: {thumbnail, fileId}
+		payload: { thumbnail, fileId }
 	}
 };
 
@@ -340,7 +343,6 @@ export const documentsClear = () => {
 
 export const startDocumentByIdLoading = (fileId) => {
 	return async (dispatch, getState) => {
-
 		const { authUser } = getState().auth;
 
 		try {
@@ -358,9 +360,7 @@ export const startDocumentByIdLoading = (fileId) => {
 
 			Swal.close();
 
-			dispatch(documentByIdLoaded(resp.data));
-
-
+			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));
 		} catch (error) {
 			Swal.close();
 			console.log(error);
@@ -369,6 +369,21 @@ export const startDocumentByIdLoading = (fileId) => {
 
 	}
 };
+
+const getDataWithDate = data => {
+	const aspectList = get(data, 'aspectGroup.aspectList', null)
+	if (aspectList) {
+		for (const aspect of aspectList) {
+			aspect.customPropertyList = aspect.customPropertyList.filter(property => {
+				if (property?.type === "DATE" && property?.value) {
+					property.value = moment(property.value).format('YYYY-MM-DD')
+				}
+				return property
+			})
+		}
+	}
+	return data
+}
 
 const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = [], signatures = [] }) => {
 	return {
@@ -507,7 +522,8 @@ export const startEditDocumentLoading = (
 	versioningType,
 	versioningComments,
 	aspectGroup,
-	tags
+	tags,
+	callback
 ) => {
 	return async (dispatch, getState) => {
 
@@ -539,7 +555,7 @@ export const startEditDocumentLoading = (
 			await editForm(authUser, folderId, [fileId], aspectGroup, tags);
 
 			dispatch(saveFormFinish());
-
+			callback && callback()
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -706,7 +722,6 @@ export const startDocumentsOfficeLoading = (authUser, fileId) => {
 			const resp = await getOffice(authUser, fileId);
 
 			dispatch(documentsOfficeLoaded(resp.data));
-			console.log("la data del link", resp)
 
 		} catch (error) {
 			console.log(error);

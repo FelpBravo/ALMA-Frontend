@@ -1,10 +1,9 @@
+import { Breadcrumbs, Button, Collapse, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, List, ListItem, ListItemText, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import {
-	Dialog, TextField, DialogContent, DialogTitle, DialogActions, Button,
-	IconButton, ListItemText, ListItem, Breadcrumbs, List, Collapse, makeStyles
-} from '@material-ui/core';
 import { useDispatch } from 'react-redux';
+
 import { detailDocumentSetValueField } from 'actions/documents';
+import { TextField } from 'components/ui/Form';
 import { createUUID } from 'helpers/createUUID';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +22,9 @@ export const MultiLevelSelect = (
 		type,
 		value: valueProps = '',
 		propertyItemList = [],
-		required
+		required,
+		register,
+		errors,
 	}
 ) => {
 
@@ -40,6 +41,7 @@ export const MultiLevelSelect = (
 	const [lastSteps, setLastSteps] = useState([]);
 	const [lastLevel, setLastLevel] = useState(0);
 
+	
 	useEffect(() => {
 
 		setValue(valueProps)
@@ -173,11 +175,14 @@ export const MultiLevelSelect = (
 				variant="outlined"
 				color="primary"
 				onClick={handleOpenModal}
-				value={value ? value : ''}
+				name={name}
+				// value={value ? value : ''}
 				fullWidth
-				required={required}
+				// required={required}
 				size="small"
-				helperText={required? "Campo Requerido" : " "}
+				register={register}
+				errors={errors}
+				// helperText={required? "Campo Requerido" : " "}
 			/>
 
 			<Dialog

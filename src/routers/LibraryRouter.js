@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import asyncComponent from 'util/asyncComponent';
-import { PrivateRouter } from 'routers/PrivateRouter';
 import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router-dom';
+
+import { PrivateRouter } from 'routers/PrivateRouter';
+import asyncComponent from 'util/asyncComponent';
 
 const LibraryRouter = () => {
 	const { authUser } = useSelector(({ auth }) => auth);
@@ -24,7 +25,7 @@ const LibraryRouter = () => {
 
 				<Route
 					path="/documents"
-					component={asyncComponent(() => import('../components/documents/flow'))}
+					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
 				<Route
 					path="/documentcreation"
@@ -69,7 +70,7 @@ const LibraryRouter = () => {
 
 				<Route
 					path="/document/:id/edit"
-					component={asyncComponent(() => import('../components/documents/EditUpload'))}
+					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
 
 				<Route
