@@ -10,7 +10,7 @@ export const useFlowSteps = ({ ...props }) => {
         "Carga de documentos": < UploadDocument {...props} />,
         "Solicitud de Revisión y Aprobación": <Request {...props} />
     }
-    const [activeStep, setActiveStep] = useState(0)
+    const [activeStep, setActiveStep] = useState(1)
 
     const Component = flowSteps[Object.keys(flowSteps)[activeStep]];
 
