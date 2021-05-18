@@ -3,8 +3,11 @@ pipeline {
         label 'dev-node-1'
     }
 
+    options { 
+        disableConcurrentBuilds() 
+    }
+
     environment {
-        PYTHON = "${tool 'Node 6.x'}"
         IMAGE_NAME = "image-ms-frontend"
         IMAGE_TAG = "latest"
         PATH_COMPOSE = "/opt/librux/domain/docker-compose.yml"
