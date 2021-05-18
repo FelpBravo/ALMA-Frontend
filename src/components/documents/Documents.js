@@ -1,8 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Divider, Fab, Grid, Paper, Step, StepLabel, Stepper } from '@material-ui/core';
+import { Button, Divider, Grid, Paper, Step, StepLabel, Stepper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
-import EditIcon from '@material-ui/icons/Edit';
 import { isEmpty } from 'lodash-es';
 import get from 'lodash/get'
 import React, { useEffect, useState } from 'react';
@@ -11,15 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-import { clearFolderIdOrigin, documentsClear, saveFileIdLoaded, startDocumentByIdLoading, startEditDocumentLoading, startSaveFormLoading, startThumbnailLoading } from 'actions/documents';
-import { TitleCard } from 'components/ui/helpers/TitleCard';
+import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormLoading } from 'actions/documents';
 import IntlMessages from 'util/IntlMessages';
 
 import { createModeSchema, editModeSchema } from './Documents.schema';
 import { useFlowSteps } from './flow';
-import UploadDocument from './steps/upload';
-import { FormInit } from './ui/FormInit';
-import { SelectFolderDialog } from './ui/SelectFolderDialog';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -29,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	container: {
 		padding: theme.spacing(3, 4)
+	},
+	margin: {
+		marginBottom: theme.spacing(3)
 	},
 	buttonPrimary: {
 		fontFamily: "Poppins",
@@ -65,10 +62,6 @@ const Documents = () => {
 		detailDocumentType = [],
 		fileIdLoaded = '',
 		folderId = '',
-		path = '',
-		pathFolderName = '',
-		folderIdOrigin = '',
-		folderName = '',
 	} = useSelector(state => state.documents);
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	// ID DOCUMENTO URL
@@ -82,31 +75,24 @@ const Documents = () => {
 	});
 	const { handleSubmit, reset, watch } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
-
-	const [directorio, setDirectorio] = useState(false)
-	const [openModal, setOpenModal] = useState(false);
-
 	const [files, setFiles] = useState(null);
+	
+	const handleClear = () => {
+		dispatch(documentsClear());
+		reset(defaultValues)
+	}
+
 	const [
 		flowSteps,
 		Component,
 		activeStep,
-		setActiveStep] = useFlowSteps({ editMode: EDIT_MODE, setFiles, document, files })
+		setActiveStep] = useFlowSteps({ editMode: EDIT_MODE, setFiles, document, files, handleClear })
 
 	const controlledDocument = watch('controlled_document', false);
 
 	console.log("flowSteps", flowSteps, "Component", Component, "activeStep", activeStep)
 
-	const disabledSubmit = (documentsList.length === 0 ||
-		detailDocumentType.length === 0 ||
-		documentId.length === 0 ||
-		aspectList.length === 0 ||
-		folderId.length === 0)
 
-	const handleClear = () => {
-		dispatch(documentsClear());
-		reset(defaultValues)
-	}
 
 	useEffect(() => {
 		const initialValues = getInitialValues(get(detailDocumentType, 'aspectList.0.customPropertyList', []))
@@ -115,19 +101,6 @@ const Documents = () => {
 		}
 	}, [reset, detailDocumentType, document])
 
-	useEffect(() => { // Cargar datos para editar
-
-		dispatch(documentsClear());
-
-		if (document.length === 0) {
-			return;
-		}
-
-		dispatch(startDocumentByIdLoading(document));
-
-		dispatch(startThumbnailLoading(document));
-		return () => handleClear();
-	}, [dispatch, document]);
 
 
 
@@ -157,8 +130,8 @@ const Documents = () => {
 			const { tagsField } = values
 			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
 			switch (true) {
-				case controlledDocument: 
-					setActiveStep(activeStep+1)
+				case controlledDocument:
+					setActiveStep(activeStep + 1)
 					break;
 				case !EDIT_MODE:
 					return dispatch(
@@ -183,61 +156,13 @@ const Documents = () => {
 							() => history.goBack() // CallBack
 						)
 					);
-			
+
 				default:
 					break;
 			}
 
 		}
 
-	}
-
-	const clearPath = () => {
-		setDirectorio(false)
-		dispatch(clearFolderIdOrigin(folderIdOrigin))
-	}
-
-	useEffect(() => {
-		if (pathFolderName != path && pathFolderName) {
-			setDirectorio(true)
-		}
-		else {
-			setDirectorio(false)
-		}
-
-	}, [pathFolderName, path])
-
-	const Directory = () => {
-		if (directorio) {
-			return <>
-				<div style={{ display: 'flex', height: 38 }}>
-					<IntlMessages id="document.title.newDirectory" />
-				</div>
-				<p>{pathFolderName}
-					<BackspaceSharpIcon
-						color="primary"
-						onClick={clearPath}
-						style={{ marginLeft: 20 }}
-					/>
-				</p>
-			</>
-
-		}
-		return <>
-			<div style={{ display: 'flex', height: 38 }}>
-				<h4 style={{ marginTop: 10 }}>
-					<IntlMessages id="document.title.currentDirectory" />
-				</h4>
-				<Fab
-					onClick={() => setOpenModal(!openModal)}
-					color="primary" style={{ width: 35, height: 35, marginLeft: 70 }}>
-					<EditIcon
-						style={{ width: 15, height: 15 }}
-						value={folderName} />
-				</Fab>
-			</div>
-			<p> {path} </p>
-		</>
 	}
 
 	useEffect(() => {
@@ -256,52 +181,6 @@ const Documents = () => {
 			<Grid container spacing={2}>
 				<Grid item md={12}>
 					<Paper className={classes.container}>
-						<div className="row">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-								{
-									EDIT_MODE
-										? <TitleCard message="document.title.editDocument" />
-										: <TitleCard message="document.loadDocuments" />
-
-								}
-							</div>
-						</div>
-
-						{
-							!EDIT_MODE
-							&&
-							<FormInit />
-						}
-
-						{/* {
-								!EDIT_MODE
-								&&
-								<div className="row">
-									<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
-										<SelectFolder />
-									</div>
-								</div>
-							} */}
-						{EDIT_MODE
-							&&
-							<div className="row">
-								<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-									<Directory />
-								</div>
-								<div className="col-xl-4 col-lg-12 col-md-12 col-12 mt-3">
-									<SelectFolderDialog
-										setOpenModal={setOpenModal}
-										openModal={openModal}
-									/>
-								</div>
-							</div>
-						}
-					</Paper>
-				</Grid>
-
-				<Grid item md={12}>
-
-					<Paper className={classes.container}>
 						{
 							controlledDocument && <>
 								<Stepper alternativeLabel activeStep={activeStep}>
@@ -311,7 +190,7 @@ const Documents = () => {
 										</Step>)
 									}
 								</Stepper>
-								<Divider />
+								<Divider className={classes.margin} />
 							</>
 						}
 
@@ -342,7 +221,7 @@ const Documents = () => {
 
 										<Button
 											className={classes.buttonPrimary}
-											disabled={disabledSubmit}
+											// disabled={disabledSubmit}
 											type="submit"
 											variant="contained"
 											color="primary"
