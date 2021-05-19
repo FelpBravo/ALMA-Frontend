@@ -1,8 +1,8 @@
 import { get } from 'lodash'
 import React, { useState } from 'react'
 
-import Request from './steps/request'
-import UploadDocument from './steps/upload'
+import Request from './steps/requestReview'
+import UploadDocument from './steps/uploadDocument'
 
 export const useFlowSteps = ({ ...props }) => {
 

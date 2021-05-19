@@ -9,13 +9,13 @@ import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startThu
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 
-import { DocumentContext } from '../helpers/DocumentContext';
-import { DetailDocumentType } from '../ui/DetailDocumentType';
-import { DropZoneDocument } from '../ui/DropZoneDocument';
-import { FormInit } from '../ui/FormInit';
-import { SelectFolderDialog } from '../ui/SelectFolderDialog';
-import { SelectTags } from '../ui/SelectTags';
-import { Versioning } from '../ui/Versioning';
+import { DocumentContext } from '../../helpers/DocumentContext';
+import { DetailDocumentType } from '../../ui/DetailDocumentType';
+import { DropZoneDocument } from '../../ui/DropZoneDocument';
+import { FormInit } from '../../ui/FormInit';
+import { SelectFolderDialog } from '../../ui/SelectFolderDialog';
+import { SelectTags } from '../../ui/SelectTags';
+import { Versioning } from '../../ui/Versioning';
 
 export default function UploadDocument({ editMode, setFiles, document, files, handleClear }) {
     const [directorio, setDirectorio] = useState(false)
