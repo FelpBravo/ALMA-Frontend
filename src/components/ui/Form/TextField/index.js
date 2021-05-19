@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
+        width: '100%'
     },
     label: {
         fontSize: 28,

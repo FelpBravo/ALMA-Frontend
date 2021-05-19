@@ -4,9 +4,9 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startApprovesListLoading } from 'actions/flowDocument';
+import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 
-import RolesData from './roles.json';
 import RolItem from './RolItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,8 +37,34 @@ export default function RequestStep() {
 
     const onSubmit = values => {
         console.log("values", values)
-        alert(JSON.stringify(values))
+        // {
+        //     "flow": {
+        //         "name": "GENERAL"
+        //     },
+        //     "document": {
+        //         "uuid": "89b95882-8803-40ca-8ed1-63476bfbb9e1",
+        //             "name": "file1.jpg",
+        //                 "author": "juan.suaza"
+        //     },
+        //     "approves": values.approves,
+        //         "comment": "comentario general",
+        //             "startedBy": "juan.suaza"
+        // }
+        console.log({
+            "flow": {
+                "name": flowName
+            },
+            "document": {
+                "uuid": "89b95882-8803-40ca-8ed1-63476bfbb9e1",
+                "name": "file1.jpg",
+                "author": "juan.suaza"
+            },
+            "startedBy": "juan.suaza",
+            ...values
+        })
     };
+
+
 
 
     const commonProps = {
@@ -72,6 +98,17 @@ export default function RequestStep() {
                             {...rest} />
                     </Grid>)
             }
+            <Grid container item md={12}>
+                <TitleCard message="Observaciones generales" />
+            </Grid>
+            <Grid container item md={12}>
+                <TextField
+                    name="comment"
+                    label="Comentario"
+                    multiline
+                    rows={3}
+                    {...commonProps} />
+            </Grid>
 
             <Grid container item md={12}>
                 <button type="submit">Enviar</button>
