@@ -2,10 +2,12 @@ import { Divider, Grid, Hidden, IconButton, makeStyles } from '@material-ui/core
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import { countries } from 'components/formTest/countries';
 import Button from 'components/ui/Button';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
+import { getUsersFilter } from 'services/usersService';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandatory }) => {
     const { fields, append, remove } = useFieldArray({ name, control });
     const classes = useStyles();
+    const { authUser } = useSelector(state => state.auth);
 
     useEffect(() => {
         setValue(`approves[${index}].role`, rolName);
@@ -30,6 +33,8 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
         e.preventDefault()
         append({})
     }
+
+    const getUsers = userName => getUsersFilter({ authUser, search: userName })
 
     return (<Grid item md={12} spacing={3} container alignItems="center">
         <Grid item md={12} spacing={3} container alignItems="center">
@@ -55,15 +60,18 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                             label="Plazo en días"
                             value={parseInt(index + 1)}
                             type="number"
-                            style={{display: 'none'}}
+                            style={{ display: 'none' }}
                             {...commonProps} />
                         <Grid item md={3}>
                             <AutoCompleteField
                                 name={`${name}[${index}].userId`}
                                 label="Seleccionar nombre"
-                                options={countries}
-                                optionsLabel="label"
-                                optionsValue="label"
+                                getUrl={getUsers}
+                                renderOption={(option) => (
+                                        `${option["firstName"]} ${option["lastName"]} (${option["id"]})`
+                                )}
+                                optionsLabel="id"
+                                optionsValue="id"
                                 {...commonProps} />
                         </Grid>
                         <Grid item md={2}>

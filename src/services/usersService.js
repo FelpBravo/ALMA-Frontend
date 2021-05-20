@@ -58,6 +58,14 @@ const searchUsersPage = (authUser, search,page, maxItems) => {
 	});
 };
 
+const getUsersFilter = ({ authUser, search }) => {
+	return axiosInstance.get(`/users/search/${search}`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
 const addUsers = (authUser, id, firstName, lastName, email, password, company, department, companyOther, departmentOther, groups =[]) => {
 	return axiosInstance.post(`/users`,
 		{ id, firstName, lastName, email, password:"password", company, department, companyOther, departmentOther, groups},
@@ -102,4 +110,5 @@ export {
 	departmentsUsers,
 	companyUsers,
 	postUsers,
+	getUsersFilter
 }

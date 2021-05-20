@@ -1,32 +1,63 @@
+import { CircularProgress } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import AutocompleteBase from "@material-ui/lab/Autocomplete";
+import { withStyles } from "@material-ui/styles";
 import get from 'lodash/get'
-import React from "react";
-import { Controller } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { Controller, useWatch } from "react-hook-form";
 
-function AutoCompleteField({ control, register, label, name, options, optionsLabel, optionsValue, required,className, ...props }) {
+const Autocomplete = withStyles ({
+    paper: {
+        backgroundColor: 'white',
+    },
+})(AutocompleteBase);
+
+function AutoCompleteField({ control, register, getUrl, label, name, options, optionsLabel, renderOption, optionsValue, required, className, ...props }) {
     const { ref, ...rest } = register(name);
+    const [data, setData] = useState(options || [])
+    const [loading, setLoading] = useState(false);
+    const isAsync = typeof getUrl === "function";
+
+    const value = useWatch({
+        control,
+        name,
+        defaultValue: ''
+    });
+
+    useEffect(() => {
+        let active = true;
+
+        if (value?.length > 3 && isAsync && setLoading) {
+            (async () => {
+                setLoading(true)
+                getUrl(value).then(({ data }) => active && setData(data)).finally(() => setLoading(false))
+            })();
+        }
+
+        return () => {
+            active = false;
+        };
+    }, [value, setLoading, isAsync]);
 
     return (
         <Controller
             render={({ field }) => (
                 <Autocomplete
                     {...field}
-                    {...props}
+                    autoHighlight
                     className={className}
-                    options={options}
-                    getOptionLabel={(option) => get(option,optionsLabel, "")}
-                    renderOption={(option) => (
-                        <span>
-                            {option[optionsLabel]}
-                        </span>
-                    )}
+                    options={data}
+                    loading={loading}
+                    getOptionLabel={(option) => get(option, optionsLabel, "")}
+                    renderOption={renderOption ?? ((option) => (
+                            option[optionsLabel]
+                    ))}
                     getOptionSelected={(option, value) =>
                         value === undefined || value === "" || option.id === value.id
                     }
                     value={
                         field.value
-                            ? options.find(
+                            ? data.find(
                                 (item) => item[optionsValue] === field.value
                             )
                             : ""
@@ -36,14 +67,21 @@ function AutoCompleteField({ control, register, label, name, options, optionsLab
                             {...params}
                             {...rest}
                             label={label}
-                            inputProps={{
-                                ...params.inputProps,
+                            InputProps={{
+                                ...params.InputProps,
+                                endAdornment: (
+                                    <React.Fragment>
+                                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                        {params.InputProps.endAdornment}
+                                    </React.Fragment>
+                                ),
                             }}
                             variant="outlined"
                             required={required}
                         />
                     )}
                     onChange={(_, data) => field.onChange(get(data, optionsValue, null))}
+                    {...props}
                 />
             )}
             name={name}

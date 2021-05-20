@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startApprovesListLoading } from 'actions/flowDocument';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
+import { getUsersFilter } from 'services/usersService';
 
 import RolItem from './RolItem';
 
@@ -57,15 +58,13 @@ export default function RequestStep() {
             "document": {
                 "uuid": "89b95882-8803-40ca-8ed1-63476bfbb9e1",
                 "name": "file1.jpg",
-                "author": "juan.suaza"
+                "author": "juan.suaza",
+                "folderId": 101
             },
             "startedBy": "juan.suaza",
             ...values
         })
     };
-
-
-
 
     const commonProps = {
         register,
@@ -86,11 +85,11 @@ export default function RequestStep() {
             </Grid>
 
             {
-                approvesList.map(({ name, ...rest }, index) =>
+                approvesList.map(({ role, ...rest }, index) =>
                     <Grid container item md={12} spacing={2}>
                         <RolItem
                             index={index}
-                            rolName={name}
+                            rolName={role}
                             setValue={setValue}
                             name={`approves[${index}].users`}
                             commonProps={commonProps}

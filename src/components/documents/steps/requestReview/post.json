@@ -5,7 +5,8 @@
     "document": {
         "uuid": "89b95882-8803-40ca-8ed1-63476bfbb9e1",
         "name": "file1.jpg",
-        "author": "juan.suaza"
+        "author": "juan.suaza",
+        "folderId": 101
     },
     "approves": [
         {

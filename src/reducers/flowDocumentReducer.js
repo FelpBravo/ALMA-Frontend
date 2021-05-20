@@ -3,37 +3,37 @@ import { types } from 'types/types';
 const initialState = {
     approvesList: [
         {
-            "name": "owner",
+            "role": "owner",
             "label": "FLOW.OWNER.NAME",
             "order": 1,
             "mandatory": true
         },
         {
-            "name": "co-author",
+            "role": "co-author",
             "label": "FLOW.COAUTHOR.NAME",
             "order": 2,
             "mandatory": false
         },
         {
-            "name": "stakeholder",
+            "role": "stakeholder",
             "label": "FLOW.STAKEHOLDER.NAME",
             "order": 3,
             "mandatory": false
         },
         {
-            "name": "reviewed",
+            "role": "reviewed",
             "label": "FLOW.REVIEWED.NAME",
             "order": 4,
             "mandatory": false
         },
         {
-            "name": "approved",
+            "role": "approved",
             "label": "FLOW.APPROVED.NAME",
             "order": 5,
             "mandatory": false
         },
         {
-            "name": "released",
+            "role": "released",
             "label": "FLOW.RELEASED.NAME",
             "order": 6,
             "mandatory": true
