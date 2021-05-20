@@ -11,8 +11,7 @@ import IntlMessages from 'util/IntlMessages';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '@material-ui/lab/Pagination';
 import TableActionButton from 'components/search/ui/TableActionButton';
-import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
@@ -39,7 +38,9 @@ const Tasks = () => {
 
 	const classes = useStyles();
 
-	const isMounted = useRef(true)
+	const isMounted = useRef(true);
+
+	const history = useHistory();
 	
 
 
@@ -49,7 +50,12 @@ const Tasks = () => {
 		}
 	}, [])
 
+	const handleManage = () => {
+		console.log("Holaaaa")
+		//dispatch(addBreadcrumbs(name, `/document/${id}/version`))
+		history.push(`/manage`);
 
+	};
 
 	return (
 		<div className="row">          
@@ -120,21 +126,12 @@ const Tasks = () => {
 											<div className={classes.iconsHolder}>
 												<TableActionButton
 													materialIcon={
-														<BorderColorOutlinedIcon
+														<DescriptionOutlinedIcon
 															className={classes.iconos}
-															//onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department,companyOther, departmentOther, search)}
+															onClick={handleManage}
 														/>
 													}
 												/>
-
-												{/*<TableActionButton
-													materialIcon={
-														<DeleteOutlinedIcon
-															className={classes.iconos}
-														//onClick={() => handleSelectActionTags(3)}
-														/>
-													}
-												/>*/}
 											</div>
 
 									</TableCell>
