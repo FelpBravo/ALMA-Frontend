@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, Divider} from '@material-ui/core';
 import { SummaryDocument } from './SummaryDocument';
+import { SummaryInvolved } from './SummaryInvolved';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,19 +20,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ModalLoadFlow = () => {
+const ModalLoadFlow = (props) => {
+  const { data, close, open } = props
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
   const { authUser } = useSelector(state => state.auth);
        
-
+  const handleClose = () => {
+    close()
+  }
   return (
 
     <div>
       <Dialog
-        open={openModal}
+        open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullWidth
@@ -50,7 +55,7 @@ const ModalLoadFlow = () => {
 
         <h3>Involucrados</h3> 
 
-          <SummnaryInvolved/>
+          <SummaryInvolved/>
 
         
            <Divider className="mt-3"/>
@@ -85,7 +90,7 @@ const ModalLoadFlow = () => {
            style={{
            fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",boxShadow: "none", height: '45px', width: '120px'
           }}
-            onClick={handleOnSave}
+            //onClick={handleOnSave}
             variant="contained"
             color="primary"
            // disabled={messageErrorName}

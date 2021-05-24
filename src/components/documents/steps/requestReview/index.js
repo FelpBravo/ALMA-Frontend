@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,6 +12,7 @@ import IntlMessages from 'util/IntlMessages';
 
 import schema from './requestReview.schema';
 import RolItem from './RolItem';
+import ModalLoadFlow from 'components/documents/ui/ModalLoadFlow';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -42,6 +43,8 @@ export default function RequestStep() {
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList } = useSelector(state => state.flowDocument);
+    const [active, setActive] =useState(false)
+    const [formData, setFormData] = useState({})
 
     const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValues: {},
@@ -64,7 +67,7 @@ export default function RequestStep() {
             "startedBy": "juan.suaza",
             ...values
         }
-        alert(JSON.stringify(data))
+        setFormData(data)
     };
 
     const commonProps = {
@@ -79,6 +82,14 @@ export default function RequestStep() {
         dispatch(startApprovesListLoading({ authUser, flowName }))
     }, [authUser])
 
+    const handleOpen = () => {
+        setFormData()
+	    setActive(true)
+	}
+
+    const handleClose = () =>{
+		setActive(false) 
+	}
     return <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
             <Grid item md={12}>
@@ -131,6 +142,7 @@ export default function RequestStep() {
                             type="submit"
                             variant="contained"
                             color="primary"
+                            onClick={handleOpen}
                         >
                             <IntlMessages id="document.loadDocuments.submit.flow.next" />
                         </Button>
@@ -139,6 +151,7 @@ export default function RequestStep() {
                 </Grid>
 
             </div>
+            <ModalLoadFlow  data={formData} close={handleClose} open={active}/>
         </div>
 
     </form>
