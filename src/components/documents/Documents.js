@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormLoading } from 'actions/documents';
+import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
 import IntlMessages from 'util/IntlMessages';
 
 import { createModeSchema, editModeSchema } from './Documents.schema';
@@ -131,8 +131,18 @@ const Documents = () => {
 			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
 			switch (true) {
 				case controlledDocument:
-					setActiveStep(activeStep + 1)
-					break;
+					const callback = () => setActiveStep(activeStep + 1)
+					return dispatch(
+						startSaveFormFlowLoading(
+							filesId,
+							folderId,
+							{ id: documentId, aspectList: newAspectList },
+							tagsField,
+							reset,
+							callback
+						)
+					);
+
 				case !EDIT_MODE:
 					return dispatch(
 						startSaveFormLoading(

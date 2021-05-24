@@ -28,7 +28,7 @@ const subscribeDocument = (authUser, id) => {
 const uploadDocument = (authUser, files) => {
 
 	const data = new FormData();
-	files.forEach(function(file, i) {
+	files.forEach(function (file, i) {
 		data.append('files', file);
 	});
 
@@ -60,6 +60,13 @@ const saveForm = (authUser, fileId, folderId, aspectGroup, tags = []) => {
 	});
 
 };
+
+const saveFlowForm = (authUser, fileId, folderId, aspectGroup, tags = []) =>
+	axiosInstance.put(`/files/flow/add-metadata`, { fileId, folderId, aspectGroup, tags }, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
 
 const editForm = (authUser, folderId, fileId, aspectGroup, tags = []) => {
 
@@ -117,4 +124,5 @@ export {
 	editDocumentVersion,
 	editForm,
 	getOffice,
+	saveFlowForm,
 }
