@@ -638,6 +638,7 @@
 	"document.loadDocuments.edit": "Editar",
 	"document.loadDocuments.submit.edit": "Guardar",
 	"document.selectDocument": "Seleccionar documentos",
+	"document.loadDocuments.submit.flow.next": "Siguiente",
 	"document.dropDocument": "Arrasta los documentos aquí ",
 	"document.dropDocuments": "o",
 	"document.documentsLoad": "Documentos cargados",

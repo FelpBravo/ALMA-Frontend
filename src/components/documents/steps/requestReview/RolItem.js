@@ -21,12 +21,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandatory }) => {
-    const { fields, append, remove } = useFieldArray({ name, control });
+    const { fields, append, remove } = useFieldArray({
+        name,
+        control
+    });
     const classes = useStyles();
     const { authUser } = useSelector(state => state.auth);
 
     useEffect(() => {
         setValue(`approves[${index}].role`, rolName);
+        mandatory && append({})
     }, [])
 
     const addField = e => {
@@ -68,7 +72,7 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                                 label="Seleccionar nombre"
                                 getUrl={getUsers}
                                 renderOption={(option) => (
-                                        `${option["firstName"]} ${option["lastName"]} (${option["id"]})`
+                                    `${option["firstName"]} ${option["lastName"]} (${option["id"]})`
                                 )}
                                 optionsLabel="id"
                                 optionsValue="id"
@@ -88,11 +92,14 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                                 {...commonProps} />
                         </Grid>
                         <Grid item md={1}>
-                            <IconButton onClick={() => remove(index)} aria-label="delete">
-                                <DeleteIcon style={{ color: "#c0392b" }} fontSize="small" />
-                            </IconButton>
+                            {
+                                (mandatory && fields.length === 1) 
+                                ? null
+                                : <IconButton onClick={() => remove(index)} aria-label="delete">
+                                    <DeleteIcon color="primary" fontSize="small" />
+                                </IconButton>
+                            }
                         </Grid>
-
                     </Grid>
                 ))
             }

@@ -12,12 +12,13 @@ const Autocomplete = withStyles ({
     },
 })(AutocompleteBase);
 
-function AutoCompleteField({ control, register, getUrl, label, name, options, optionsLabel, renderOption, optionsValue, required, className, ...props }) {
+function AutoCompleteField({ control, errors, register, getUrl, label, name, options, optionsLabel, renderOption, optionsValue, required, className, ...props }) {
     const { ref, ...rest } = register(name);
     const [data, setData] = useState(options || [])
     const [loading, setLoading] = useState(false);
     const isAsync = typeof getUrl === "function";
-
+    const errorMessage = get(errors, `${name}.message`, '');
+    console.log("errorMessage", errorMessage, errors)
     const value = useWatch({
         control,
         name,
@@ -66,6 +67,8 @@ function AutoCompleteField({ control, register, getUrl, label, name, options, op
                         <TextField
                             {...params}
                             {...rest}
+                            helperText={errorMessage}
+                            error={Boolean(errorMessage)}
                             label={label}
                             InputProps={{
                                 ...params.InputProps,

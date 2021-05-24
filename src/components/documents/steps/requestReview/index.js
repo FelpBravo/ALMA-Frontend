@@ -1,13 +1,18 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid, makeStyles } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import { Alert } from '@material-ui/lab';
+import React, { useContext, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startApprovesListLoading } from 'actions/flowDocument';
+import { FlowContext } from 'components/documents/helpers/FlowContext';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import { getUsersFilter } from 'services/usersService';
+import IntlMessages from 'util/IntlMessages';
 
+import schema from './requestReview.schema';
 import RolItem from './RolItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,16 +30,14 @@ export default function RequestStep() {
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList } = useSelector(state => state.flowDocument);
-
+    const { setOnSubmitFlow } = useContext(FlowContext);
+    console.log("setOnSubmitFlow", setOnSubmitFlow)
     const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
-        defaultValues: {}
+        defaultValues: {},
+        mode: "onTouched",
+        resolver: yupResolver(schema),
     });
     const flowName = "GENERAL";
-
-    const { fields } = useFieldArray({
-        control,
-        name: "approves",
-    });
 
     const onSubmit = values => {
         console.log("values", values)
@@ -66,6 +69,10 @@ export default function RequestStep() {
         })
     };
 
+    useEffect(() => {
+        setOnSubmitFlow(onSubmit)
+    }, [onSubmit])
+
     const commonProps = {
         register,
         errors,
@@ -83,7 +90,11 @@ export default function RequestStep() {
             <Grid item md={12}>
                 <TitleCard message="document.title.requestDocument" />
             </Grid>
-
+            <Grid item md={12}>
+                <Alert severity="info">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                </Alert>
+            </Grid>
             {
                 approvesList.map(({ role, ...rest }, index) =>
                     <Grid container item md={12} spacing={2}>
@@ -107,10 +118,6 @@ export default function RequestStep() {
                     multiline
                     rows={3}
                     {...commonProps} />
-            </Grid>
-
-            <Grid container item md={12}>
-                <button type="submit">Enviar</button>
             </Grid>
         </Grid>
     </form>

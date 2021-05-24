@@ -12,8 +12,9 @@ export const useFlowSteps = ({ ...props }) => {
     }
 
     const [activeStep, setActiveStep] = useState(0)
-
+    const [onSubmitFlow, setOnSubmitFlow] = useState(props.onSubmitFlow)
     const Component = flowSteps[Object.keys(flowSteps)[activeStep]];
 
-    return [flowSteps, Component, activeStep, setActiveStep];
+
+    return { flowSteps, Component, activeStep, setActiveStep, onSubmitFlow, setOnSubmitFlow};
 }
