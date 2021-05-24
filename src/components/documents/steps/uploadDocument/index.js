@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument }) {
+export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit }) {
     const [directorio, setDirectorio] = useState(false)
     const [openModal, setOpenModal] = useState(false);
     const classes = useStyles();
@@ -184,7 +184,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
 
                         <Button
                             className={classes.buttonPrimary}
-                            // disabled={disabledSubmit}
+                            disabled={disabledSubmit}
                             type="submit"
                             variant="contained"
                             color="primary"

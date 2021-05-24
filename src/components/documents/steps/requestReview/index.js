@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useContext, useEffect } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -22,6 +22,20 @@ const useStyles = makeStyles((theme) => ({
     rolSubTitle: {
         color: "gray",
         margin: theme.spacing(0, 1),
+    },
+    buttons: {
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+    buttonPrimary: {
+        fontFamily: "Poppins",
+        fontSize: '12px',
+        fontWeight: 600,
+        border: "none",
+        boxShadow: "none",
+        height: '45px',
+        width: '120px'
     }
 }));
 
@@ -31,7 +45,7 @@ export default function RequestStep() {
     const { authUser } = useSelector(state => state.auth);
     const { approvesList } = useSelector(state => state.flowDocument);
     const { setOnSubmitFlow } = useContext(FlowContext);
-    console.log("setOnSubmitFlow", setOnSubmitFlow)
+
     const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValues: {},
         mode: "onTouched",
@@ -69,10 +83,6 @@ export default function RequestStep() {
         })
     };
 
-    useEffect(() => {
-        setOnSubmitFlow(onSubmit)
-    }, [onSubmit])
-
     const commonProps = {
         register,
         errors,
@@ -92,7 +102,9 @@ export default function RequestStep() {
             </Grid>
             <Grid item md={12}>
                 <Alert severity="info">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley</p>
+                    <p style={{margin:0}}>
+                        <IntlMessages id="document.loadDocuments.info.message" />
+                    </p>
                 </Alert>
             </Grid>
             {
@@ -109,7 +121,7 @@ export default function RequestStep() {
                     </Grid>)
             }
             <Grid container item md={12}>
-                <TitleCard message="Observaciones generales" />
+                <TitleCard message="document.loadDocuments.general.remarks" />
             </Grid>
             <Grid container item md={12}>
                 <TextField
@@ -120,5 +132,30 @@ export default function RequestStep() {
                     {...commonProps} />
             </Grid>
         </Grid>
+        <div className="row mt-4">
+            <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+                <Grid
+                    container
+                    justify="flex-end"
+                    alignItems="flex-end"
+                    spacing={2}
+                >
+                    <div className={classes.buttons}>
+
+                        <Button
+                            className={classes.buttonPrimary}
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                        >
+                            <IntlMessages id="document.loadDocuments.submit.flow.next" />
+                        </Button>
+
+                    </div>
+                </Grid>
+
+            </div>
+        </div>
+
     </form>
 }

@@ -92,6 +92,18 @@ const Documents = () => {
 		}
 	}, [reset, detailDocumentType, document])
 
+	const disabledSubmit = (documentsList.length === 0 ||
+		detailDocumentType.length === 0 ||
+		documentId.length === 0 ||
+		aspectList.length === 0 ||
+		folderId.length === 0)
+
+	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit })
+	const { flowSteps,
+		Component,
+		activeStep,
+		setActiveStep } = flowStepsProvider
+		
 	const handleSaveForm = async (values) => {
 
 		const resp = await Swal.fire({
@@ -152,14 +164,6 @@ const Documents = () => {
 		}
 
 	}
-
-	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, onSubmitFlow: null })
-	const { flowSteps,
-		Component,
-		activeStep,
-		setActiveStep,
-		onSubmitFlow } = flowStepsProvider
-
 
 	useEffect(() => {
 		if (files) {

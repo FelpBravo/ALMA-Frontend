@@ -18,7 +18,6 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
     const [loading, setLoading] = useState(false);
     const isAsync = typeof getUrl === "function";
     const errorMessage = get(errors, `${name}.message`, '');
-    console.log("errorMessage", errorMessage, errors)
     const value = useWatch({
         control,
         name,

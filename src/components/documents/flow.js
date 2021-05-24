@@ -11,10 +11,9 @@ export const useFlowSteps = ({ ...props }) => {
         "Solicitud de Revisión y Aprobación": <Request {...props} />,
     }
 
-    const [activeStep, setActiveStep] = useState(0)
-    const [onSubmitFlow, setOnSubmitFlow] = useState(props.onSubmitFlow)
+    const [activeStep, setActiveStep] = useState(1)
     const Component = flowSteps[Object.keys(flowSteps)[activeStep]];
 
 
-    return { flowSteps, Component, activeStep, setActiveStep, onSubmitFlow, setOnSubmitFlow};
+    return { flowSteps, Component, activeStep, setActiveStep };
 }

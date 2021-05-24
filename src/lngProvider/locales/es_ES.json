@@ -638,6 +638,8 @@
 	"document.loadDocuments.edit": "Editar",
 	"document.loadDocuments.submit.edit": "Guardar",
 	"document.selectDocument": "Seleccionar documentos",
+	"document.loadDocuments.info.message": "En este espacio puedes asignar los usuarios encargados para aprobación de la información ingresada. Ten en cuenta que existen roles requeridos y opcionales.",
+	"document.loadDocuments.general.remarks": "Observaciones generales",
 	"document.loadDocuments.submit.flow.next": "Siguiente",
 	"document.dropDocument": "Arrasta los documentos aquí ",
 	"document.dropDocuments": "o",
