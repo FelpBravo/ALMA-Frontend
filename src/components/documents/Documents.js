@@ -14,6 +14,7 @@ import IntlMessages from 'util/IntlMessages';
 
 import { createModeSchema, editModeSchema } from './Documents.schema';
 import { useFlowSteps } from './flow';
+import { FlowContext } from './helpers/FlowContext';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -76,23 +77,13 @@ const Documents = () => {
 	const { handleSubmit, reset, watch } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 	const [files, setFiles] = useState(null);
-	
+
 	const handleClear = () => {
 		dispatch(documentsClear());
 		reset(defaultValues)
 	}
 
-	const [
-		flowSteps,
-		Component,
-		activeStep,
-		setActiveStep] = useFlowSteps({ editMode: EDIT_MODE, setFiles, document, files, handleClear })
-
 	const controlledDocument = watch('controlled_document', false);
-
-	console.log("flowSteps", flowSteps, "Component", Component, "activeStep", activeStep)
-
-
 
 	useEffect(() => {
 		const initialValues = getInitialValues(get(detailDocumentType, 'aspectList.0.customPropertyList', []))
@@ -101,9 +92,18 @@ const Documents = () => {
 		}
 	}, [reset, detailDocumentType, document])
 
+	const disabledSubmit = (documentsList.length === 0 ||
+		detailDocumentType.length === 0 ||
+		documentId.length === 0 ||
+		aspectList.length === 0 ||
+		folderId.length === 0)
 
-
-
+	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit })
+	const { flowSteps,
+		Component,
+		activeStep,
+		setActiveStep } = flowStepsProvider
+		
 	const handleSaveForm = async (values) => {
 
 		const resp = await Swal.fire({
@@ -177,74 +177,30 @@ const Documents = () => {
 	}, [files])
 
 	return (<FormProvider {...methods} >
-		<form onSubmit={handleSubmit(handleSaveForm)}>
-			<Grid container spacing={2}>
-				<Grid item md={12}>
-					<Paper className={classes.container}>
-						{
-							controlledDocument && <>
-								<Stepper alternativeLabel activeStep={activeStep}>
-									{
-										Object.keys(flowSteps).map((name, index) => <Step key={index}>
-											<StepLabel>{name}</StepLabel>
-										</Step>)
-									}
-								</Stepper>
-								<Divider className={classes.margin} />
-							</>
-						}
+		<FlowContext.Provider value={{ ...flowStepsProvider }}>
+			<form onSubmit={handleSubmit(handleSaveForm)}>
+				<Grid container spacing={2}>
+					<Grid item md={12}>
+						<Paper className={classes.container}>
+							{
+								controlledDocument && <>
+									<Stepper alternativeLabel activeStep={activeStep}>
+										{
+											Object.keys(flowSteps).map((name, index) => <Step key={index}>
+												<StepLabel>{name}</StepLabel>
+											</Step>)
+										}
+									</Stepper>
+									<Divider className={classes.margin} />
+								</>
+							}
 
-						{Component}
-
-						<div className="row">
-							<div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
-								<Grid
-									container
-									justify="flex-end"
-									alignItems="flex-end"
-									spacing={2}
-								>
-									<div className={classes.buttons}>
-										<Button
-											style={{
-												backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
-												boxShadow: "none", height: '45px', width: '120px'
-											}}
-											type="button"
-											variant="contained"
-											onClick={handleClear}
-										>
-											<IntlMessages id="dashboard.advancedSearchClear" />
-										</Button>
-
-
-
-										<Button
-											className={classes.buttonPrimary}
-											// disabled={disabledSubmit}
-											type="submit"
-											variant="contained"
-											color="primary"
-										>
-											{
-
-												controlledDocument
-													? "Siguiente"
-													: EDIT_MODE
-														? <IntlMessages id="document.loadDocuments.submit.edit" />
-														: <IntlMessages id="document.loadDocuments.load" />
-											}
-										</Button>
-
-									</div>
-								</Grid>
-
-							</div>
-						</div>
-					</Paper>
+							{Component}
+						</Paper>
+					</Grid>
 				</Grid>
-			</Grid>
-		</form>
+			</form>
+		</FlowContext.Provider>
 	</FormProvider>
 	)
 }

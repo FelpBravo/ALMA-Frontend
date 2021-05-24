@@ -1,4 +1,4 @@
-import { Divider } from '@material-ui/core';
+import { Button, Divider, Grid, makeStyles } from '@material-ui/core';
 import { Fab } from '@material-ui/core';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -9,17 +9,35 @@ import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startThu
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 
-import { DocumentContext } from '../helpers/DocumentContext';
-import { DetailDocumentType } from '../ui/DetailDocumentType';
-import { DropZoneDocument } from '../ui/DropZoneDocument';
-import { FormInit } from '../ui/FormInit';
-import { SelectFolderDialog } from '../ui/SelectFolderDialog';
-import { SelectTags } from '../ui/SelectTags';
-import { Versioning } from '../ui/Versioning';
+import { DocumentContext } from '../../helpers/DocumentContext';
+import { DetailDocumentType } from '../../ui/DetailDocumentType';
+import { DropZoneDocument } from '../../ui/DropZoneDocument';
+import { FormInit } from '../../ui/FormInit';
+import { SelectFolderDialog } from '../../ui/SelectFolderDialog';
+import { SelectTags } from '../../ui/SelectTags';
+import { Versioning } from '../../ui/Versioning';
 
-export default function UploadDocument({ editMode, setFiles, document, files, handleClear }) {
+const useStyles = makeStyles((theme) => ({
+    buttons: {
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+    buttonPrimary: {
+        fontFamily: "Poppins",
+        fontSize: '12px',
+        fontWeight: 600,
+        border: "none",
+        boxShadow: "none",
+        height: '45px',
+        width: '120px'
+    }
+}));
+
+export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit }) {
     const [directorio, setDirectorio] = useState(false)
     const [openModal, setOpenModal] = useState(false);
+    const classes = useStyles();
 
     const {
         path = '',
@@ -98,7 +116,6 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                     editMode
                         ? <TitleCard message="document.title.editDocument" />
                         : <TitleCard message="document.loadDocuments" />
-
                 }
             </div>
         </div>
@@ -142,5 +159,50 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         }
 
         <SelectTags />
+        <div className="row">
+            <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+                <Grid
+                    container
+                    justify="flex-end"
+                    alignItems="flex-end"
+                    spacing={2}
+                >
+                    <div className={classes.buttons}>
+                        <Button
+                            style={{
+                                backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
+                                boxShadow: "none", height: '45px', width: '120px'
+                            }}
+                            type="button"
+                            variant="contained"
+                            onClick={handleClear}
+                        >
+                            <IntlMessages id="dashboard.advancedSearchClear" />
+                        </Button>
+
+
+
+                        <Button
+                            className={classes.buttonPrimary}
+                            disabled={disabledSubmit}
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                        >
+                            {
+
+                                controlledDocument
+                                    ? <IntlMessages id="document.loadDocuments.submit.flow.next" />
+                                    : editMode
+                                        ? <IntlMessages id="document.loadDocuments.submit.edit" />
+                                        : <IntlMessages id="document.loadDocuments.load" />
+                            }
+                        </Button>
+
+                    </div>
+                </Grid>
+
+            </div>
+        </div>
     </>
 }
