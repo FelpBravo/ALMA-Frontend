@@ -19,6 +19,11 @@ const LibraryRouter = () => {
 				/>
 
 				<Route
+					path="/inbox"
+					component={asyncComponent(() => import('../components/inbox/Inbox'))}
+				/>
+
+				<Route
 					path="/documents"
 					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
@@ -57,21 +62,16 @@ const LibraryRouter = () => {
 					component={asyncComponent(() => import('../components/management/userandgroups/UsersandGroup'))}
 				/>
 
-			
-
 				<Route
 					path="/reports"
 					component={asyncComponent(() => import('../components/reports/Reports'))}
 				/>
 
-			
 
 				<Route
 					path="/document/:id/edit"
 					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
-
-			
 
 				<Route
 					path="/document/:id/version"

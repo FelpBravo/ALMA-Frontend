@@ -3,6 +3,10 @@ pipeline {
         label 'dev-node-1'
     }
 
+    options { 
+        disableConcurrentBuilds() 
+    }
+
     environment {
         IMAGE_NAME = "image-ms-frontend"
         IMAGE_TAG = "latest"
@@ -18,7 +22,7 @@ pipeline {
         stage ("Install libraries") {
             steps {
                 nodejs(nodeJSInstallationName: 'Node') {
-                    sh 'yarn install'
+                    sh 'yarn'
                 }
             }
         }
@@ -31,9 +35,11 @@ pipeline {
         }
         stage ("Test") {
             steps {
+                /*
                 nodejs(nodeJSInstallationName: 'Node') {
                     sh 'yarn run test'
                 }
+                */
                 script {
                     def scannerHome = tool 'sonarqube-scanner'
                     withSonarQubeEnv(credentialsId: 'sonar-token') {
