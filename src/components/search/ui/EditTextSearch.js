@@ -112,7 +112,7 @@ export const EditTextSearch = ({ savedSearchId }) => {
 										name="inputSearch"
 										//className="custom-text-field"
 										fullWidth
-										placeholder="Buscar por contenido de documento"
+										placeholder="Haz una búsqueda por contenido de documento"
 										onChange={handleOnChange}
 									/>
 									
