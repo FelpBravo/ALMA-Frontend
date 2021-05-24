@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
+        width: '100%'
     },
     label: {
         fontSize: 28,
@@ -38,7 +39,9 @@ const TextField = ({
 }) => {
     const classes = useStyles();
     const errorMessage = get(errors, `${name}.message`, '');
-    const { ref, ...rest } = register(name);
+    const { ref, ...rest } = register(name, {
+        setValueAs: v => type === "number" ? parseInt(v) : v
+    });
 
     const textFieldProps = {
         helperText: errorMessage,

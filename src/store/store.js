@@ -1,29 +1,29 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
-import { createBrowserHistory } from 'history';
 import { connectRouter } from 'connected-react-router'
+import { createBrowserHistory } from 'history';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
 
-import authReducer from 'reducers/authReducer';
-import commonReducer from 'reducers/commonReducer';
-import settingsReducer from 'reducers/settingsReducer';
-import { uiAuthReducer } from 'reducers/uiAuthReducer';
-import { foldersReducer } from 'reducers/foldersReducer';
-import { auditReducer } from 'reducers/auditReducer';
-import { uiAuditReducer } from 'reducers/uiAuditReducer';
-import { searchReducer } from 'reducers/searchReducer';
-import { documentsReducer } from 'reducers/documentsReducer';
 import { adminFoldersReducer } from 'reducers/adminFoldersReducer';
-import { tagsReducer } from 'reducers/tagsReducer';
-import { reportsReducer } from 'reducers/reportsReducer'
-import { firmReducer } from 'reducers/firmReducer'
-import { informationReducer } from 'reducers/informationReducer'
-import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
-import { savedSearchesReducer } from 'reducers/savedSearchesReducer'
 import { adminUsersReducer } from 'reducers/adminUsersReducer';
-import { sharedDocumentReducer } from 'reducers/sharedDocumentReducer';
+import { auditReducer } from 'reducers/auditReducer';
+import authReducer from 'reducers/authReducer';
+import { breadcrumbsReducer } from 'reducers/breadcrumbsReducer'
+import commonReducer from 'reducers/commonReducer';
+import { documentsReducer } from 'reducers/documentsReducer';
+import { firmReducer } from 'reducers/firmReducer'
+import { flowDocumentReducer } from 'reducers/flowDocumentReducer';
+import { foldersReducer } from 'reducers/foldersReducer';
+import { informationReducer } from 'reducers/informationReducer'
 import { modulePermissionsReducer } from 'reducers/modulePermissionReducer';
+import { reportsReducer } from 'reducers/reportsReducer'
 import { restorePasswordReducer } from 'reducers/restorePasswordReducer';
-
+import { savedSearchesReducer } from 'reducers/savedSearchesReducer'
+import { searchReducer } from 'reducers/searchReducer';
+import settingsReducer from 'reducers/settingsReducer';
+import { sharedDocumentReducer } from 'reducers/sharedDocumentReducer';
+import { tagsReducer } from 'reducers/tagsReducer';
+import { uiAuditReducer } from 'reducers/uiAuditReducer';
+import { uiAuthReducer } from 'reducers/uiAuthReducer';
 
 export const history = createBrowserHistory();
 
@@ -53,7 +53,7 @@ const rootReducer = (history) => combineReducers({
 	sharedDocument: sharedDocumentReducer,
 	restorePassword: restorePasswordReducer,
 	modulePermissions: modulePermissionsReducer,
-
+	flowDocument: flowDocumentReducer,
 });
 
 export const store = createStore(
