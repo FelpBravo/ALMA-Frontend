@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { editDocumentVersion, editForm, getDocumentById, getOffice, getThumbnail, saveForm, uploadDocument } from 'services/filesService';
+import { editDocumentVersion, editForm, getDocumentById, getOffice, getThumbnail, saveFlowForm, saveForm, uploadDocument } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
 import { types } from 'types/types';
@@ -149,6 +149,32 @@ export const startSaveFormLoading = (fileId, folderId, aspectGroup, tags, reset)
 			dispatch(saveFormFinish());
 			reset()
 
+		} catch (error) {
+			console.log(error);
+
+			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
+		}
+
+	}
+};
+
+export const startSaveFormFlowLoading = (fileId, folderId, aspectGroup, tags, reset, callback) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
+
+		try {
+
+			Swal.showLoading();
+
+			const response = await saveFlowForm(authUser, fileId, folderId, aspectGroup, tags);
+			callback()
 		} catch (error) {
 			console.log(error);
 
