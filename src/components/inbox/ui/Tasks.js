@@ -83,10 +83,10 @@ const Tasks = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="users.table.column1" />
+									<IntlMessages id="Nombre de documento" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Estado" />
+									<IntlMessages id="Rol" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Autor" />
@@ -95,11 +95,10 @@ const Tasks = () => {
 									<IntlMessages id="Plazo de revision" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Rol" />
+									<IntlMessages id="Estado" />
 								</TableCell>
-								
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="users.table.column5" />
+									<IntlMessages id="Gestionar" />
 								</TableCell>
 							</TableRow>
 						</TableHead>
@@ -108,18 +107,19 @@ const Tasks = () => {
 							 <TableRow >
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
 									Plantilla-contrato
-										
-									</TableCell>
-                                    <TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>En revisión</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>Nadia Gallardo</TableCell>
-									
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									30-03-2021
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
 									Owner
 									</TableCell>
-				
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									Nadia Gallardo
+									</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									30-03-2021
+									</TableCell>
+                                    <TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									En revisión
+									</TableCell>
 									
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
 									

@@ -40,7 +40,7 @@ const ManagementSummary = () => {
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 
-					<Grid container className="mt-2">
+					<Grid container className="mt-2 mb-3">
 
 						<Grid item xs={11}>
 							<h3 className="mb-0">
@@ -59,7 +59,7 @@ const ManagementSummary = () => {
 
                     <Divider className="mt-3 mb-3"/>
                     <h3>Observaciones Generales</h3>
-e
+
                     <Divider className="mt-3 mb-3"/>
                     <h3>Solicitud de revisión</h3>
 

@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import IntlMessages from 'util/IntlMessages';
 import { DialogTitle, Divider} from '@material-ui/core';
 import { SummaryDocument } from './SummaryDocument';
+import { SummaryInvolved } from './SummaryInvolved';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +51,7 @@ const ModalLoadFlow = () => {
 
         <h3>Involucrados</h3> 
 
-          <SummnaryInvolved/>
+          <SummaryInvolved/>
 
         
            <Divider className="mt-3"/>
