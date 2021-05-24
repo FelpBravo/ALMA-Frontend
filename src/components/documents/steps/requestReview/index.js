@@ -54,21 +54,7 @@ export default function RequestStep() {
     const flowName = "GENERAL";
 
     const onSubmit = values => {
-        console.log("values", values)
-        // {
-        //     "flow": {
-        //         "name": "GENERAL"
-        //     },
-        //     "document": {
-        //         "uuid": "89b95882-8803-40ca-8ed1-63476bfbb9e1",
-        //             "name": "file1.jpg",
-        //                 "author": "juan.suaza"
-        //     },
-        //     "approves": values.approves,
-        //         "comment": "comentario general",
-        //             "startedBy": "juan.suaza"
-        // }
-        console.log({
+        const data = { // TODO: Esta es la variable para enviar por props en el modal informativo.
             "flow": {
                 "name": flowName
             },
@@ -80,7 +66,8 @@ export default function RequestStep() {
             },
             "startedBy": "juan.suaza",
             ...values
-        })
+        }
+        alert(JSON.stringify(data))
     };
 
     const commonProps = {
