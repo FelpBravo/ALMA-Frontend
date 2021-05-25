@@ -37,6 +37,12 @@ const ModalUsers = () => {
 
   const [dataCreate, setDataCreate] = useState({});
 
+  const [validation, setValidation] = useState({ firstName: false, lastName: false, email: false, department: false, company: false, id: false})
+  
+  const letra = /^[a-zñ ]+$/i
+
+  const correo = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
+
     useEffect(() => {
 
         dispatch(companyUsersInitLoading(authUser));
@@ -59,18 +65,17 @@ const ModalUsers = () => {
     const { name, value} = target
    
     switch (name) {
-      case 'id':
-        if(value.length > 4){
-          dispatch(validateUserNickname(authUser,value))
-          console.log(validateNickname);
-          setMessageErrorUser()
-        }else{
-          dispatch(nicknameValidate(false))
-          setMessageErrorUser('Debe contener 5 caracteres como minimo.')
-        }
-      
+      case 'firstName':
+        setValidation({ ...validation, ['firstName']: !letra.test(value) || value.length < 1 ? false : true })
         break;
-      case 'company':
+      case 'lastName':
+        setValidation({ ...validation, ['lastName']: !letra.test(value) || value.length < 1 ? false : true })
+        break;
+      case 'email':
+        setValidation({ ...validation, ['email']: !correo.test(value) ? false : true })
+        break;
+        case 'company':
+          setValidation({ ...validation, ['company']: !letra.test(value) || value.length < 1 ? false : true })
         if(value === "Other"){  
           setStateCompany({ name:true, department:stateCompany.department})
         }else
@@ -79,6 +84,7 @@ const ModalUsers = () => {
         }
       break
       case 'department':
+        setValidation({ ...validation, ['department']: !letra.test(value) || value.length < 1 ? false : true })
         if(value === "Other"){  
           setStateCompany({ name:stateCompany.name, department:true})
         }else
@@ -86,13 +92,32 @@ const ModalUsers = () => {
           setStateCompany({ name:stateCompany.name, department:false})
         }
       break
+      case 'departmentOther':
+        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 ? false : true })
+      break
+      case 'companyOther':
+        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 ? false : true })
+      break
+      case 'id':
+        if(value.length > 4){
+          dispatch(validateUserNickname(authUser,value))
+          setMessageErrorUser()
+          setValidation({ ...validation, ['id']: !letra.test(value) || value.length < 3 ? false : true })
+        }else{
+          dispatch(nicknameValidate(false))
+          setMessageErrorUser('Debe contener 5 caracteres como minimo.')
+        }
+      
+        break;
+      
+     
       default:
 
         break;
     }
   setDataCreate({ ...dataCreate, [name]: value })
-  console.log(dataCreate)
 }
+
 
   const handleOnSave = () =>{
         dispatch(startCreateUsersLoading(authUser, dataCreate))    
@@ -129,7 +154,9 @@ const ModalUsers = () => {
                   size="small"
                   required
                   onChange={handleOnChange}
-              />  
+                  error={!validation.firstName}
+               
+              />
           </Grid>  
           <Grid item xs={4}>
               <TextField
@@ -141,6 +168,8 @@ const ModalUsers = () => {
                   size="small"
                   required
                   onChange={handleOnChange}
+                  error={!validation.lastName}
+                  
               />
           </Grid>
           <Grid item xs={4}>
@@ -153,6 +182,8 @@ const ModalUsers = () => {
                   fullWidth
                   onChange={handleOnChange}
                   name="email"
+                  error={!validation.email}
+                 
                 />
           </Grid>
           </Grid>
@@ -164,8 +195,11 @@ const ModalUsers = () => {
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   name="company"
+                  required
                   onChange={handleOnChange}
                   label="Empresa"
+                  error={!validation.company}
+                 
                 >
                   {companys.map((item) => {
                   return(<MenuItem value={item}>{item}</MenuItem>)
@@ -183,7 +217,11 @@ const ModalUsers = () => {
                   type="text"
                   variant="outlined"
                   size="small"
+                  required
                   onChange={handleOnChange}
+                  error={!validation.companyOther}
+                  
+                 
               /> 
          
           </Grid>
@@ -197,8 +235,11 @@ const ModalUsers = () => {
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   name='department'
+                  required
                   onChange={handleOnChange}
                   label="Departamento"
+                  error={!validation.department}
+                 
                 >
                   {departments.map((dep) => {
                   return(<MenuItem value={dep}>{dep}</MenuItem>)
@@ -210,14 +251,16 @@ const ModalUsers = () => {
           {stateCompany.department &&
           <Grid item xs={4}>
               <TextField
-                // value={value}
                   fullWidth
                   label="Escriba nombre del departamento"
                   name='departmentOther'
                   type="text"
                   variant="outlined"
                   size="small"
+                  required
                   onChange={handleOnChange}
+                  error={!validation.departmentOther}
+                 
               /> 
          
           </Grid>
@@ -225,11 +268,10 @@ const ModalUsers = () => {
           </Grid>
           <Grid item xs={4} className="mt-3" >
               <TextField
-                 // value={value}
                   fullWidth
                   label="Usuario"
                   name="id"
-                  error={validateNickname || messageErrorUser? true : false}
+                  error={validateNickname || messageErrorUser|| !validation.id ? true : false}
                   type="text"
                   variant="outlined"
                   size="small"
@@ -268,7 +310,7 @@ const ModalUsers = () => {
             variant="contained"
             color="primary"
           >
-            Cancelar
+            <IntlMessages id="button.text.cancel" />
           </Button>
 
           <Button
@@ -278,7 +320,8 @@ const ModalUsers = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-           // disabled={messageErrorName}
+            disabled={validation.email && validation.firstName && validation.lastName && validation.department && validation.company && validation.id ? false : true}
+        
           >
            Crear
           </Button>
