@@ -140,7 +140,7 @@ const ModalGroup = () => {
             variant="contained"
             color="primary"
           >
-            Cancelar
+            <IntlMessages id="button.text.cancel" />
           </Button>
           <Button
             style={{
@@ -149,7 +149,7 @@ const ModalGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-          // disabled={messageErrorName}
+            disabled={messageErrorGroup}
           >
             Crear
           </Button>
