@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 
-import { COLLAPSED_DRAWER, FIXED_DRAWER } from "constants/ActionTypes";
 import { switchLanguage, toggleCollapsedNav } from "actions/setting";
+import CardHeader from "components/ui/components/dashboard/Common/CardHeader";
 import LanguageSwitcher from "components/ui/components/LanguageSwitcher";
 import UserInfo from "components/ui/components/UserInfo";
+import { COLLAPSED_DRAWER, FIXED_DRAWER } from "constants/ActionTypes";
+import IntlMessages from "util/IntlMessages";
+
+import AppNotification from "../../../components/AppNotification";
 
 const Index = (props) => {
 
@@ -17,6 +21,11 @@ const Index = (props) => {
 	const { navCollapsed } = useSelector(({ common }) => common);
 	const { drawerType, locale } = useSelector(({ settings }) => settings);
 	const [ langSwitcher, setLangSwitcher ] = useState(false);
+	const [appNotification, setAppNotification] = useState(false);
+
+	const onAppNotificationSelect = () => {
+		setAppNotification(!appNotification);
+	};
 
 	const onLangSwitcherSelect = (event) => {
 		setLangSwitcher(!langSwitcher);
@@ -128,6 +137,30 @@ const Index = (props) => {
 						</Dropdown>
 
 					</li>
+
+					<li className="list-inline-item app-tour">
+						<Dropdown
+							className="quick-menu"
+							isOpen={appNotification}
+							toggle={onAppNotificationSelect}>
+
+							<DropdownToggle
+								className="d-inline-block"
+								tag="span"
+								data-toggle="dropdown">
+								<IconButton className="icon-btn">
+									<i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" />
+								</IconButton>
+							</DropdownToggle>
+
+							<DropdownMenu right>
+								<CardHeader styleName="align-items-center"
+									heading={<IntlMessages id="appNotification.title" />} />
+								<AppNotification />
+							</DropdownMenu>
+						</Dropdown>
+					</li>
+
 
 					<li className="list-inline-item">
 						
