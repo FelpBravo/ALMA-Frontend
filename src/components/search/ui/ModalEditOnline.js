@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ModalEditOnline = ({ data, handleClose }) => {
-  console.log(data)
-  
+
   const classes = useStyles();
   const open = data !== null
   const dispatch = useDispatch();
