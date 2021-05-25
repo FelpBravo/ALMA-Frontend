@@ -222,7 +222,6 @@ const DataTable = () => {
 
 
 	const handleDownload = async (id, name) => {
-		console.log("descarga",id)
 		if (ROLE_FILE_DOWNLOAD) {
 			const resp = await Swal.fire({
 				title: 'Descargar',
@@ -245,7 +244,6 @@ const DataTable = () => {
 	}
 
 	const handleDelete = async (id) => {
-		console.log(id)
 		const resp = await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Está seguro que quiere eliminar el documento?",
