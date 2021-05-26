@@ -25,12 +25,14 @@ const ModalGroup = () => {
   const { data = [] } = usersAll
   const { openModal1, dependencies, profiles, groupname } = useSelector(state => state.adminUsers);
   const [messageErrorGroup, setMessageErrorGroup] = useState(null);
+  const [messageErrorName, setMessageErrorName] = useState(null);
   const [nameGroup, setNameGroup] = useState({ dependencie: "", profile: "" , fullnamegroup: "", users:[] })
 
    useEffect(() => {
     dispatch(dependenciesGroupInitLoading(authUser));
     dispatch(profilesGroupInitLoading(authUser));
     dispatch(usersInitLoading(authUser));
+    
   }, [dispatch]);
 
   const handleOnChangeName = ({ target }) => {
@@ -60,6 +62,20 @@ const ModalGroup = () => {
   const handleOnSave =() =>{
    dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup, nameGroup.users))
   }
+
+  useEffect(() => {
+
+    if (!nameGroup.fullnamegroup || nameGroup.fullnamegroup.length < 3) {
+
+      setMessageErrorName('Este campo debe tener mínimo 3 letras');
+
+    } else
+     {
+      setMessageErrorName(null);
+        }
+
+  }, [nameGroup.fullnamegroup, setMessageErrorName]);
+
   return (
     <div>
       <Dialog
@@ -149,7 +165,7 @@ const ModalGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={messageErrorGroup}
+            disabled={messageErrorName || messageErrorGroup}
           >
             Crear
           </Button>
