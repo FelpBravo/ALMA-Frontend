@@ -1,14 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, FormControlLabel, Grid, makeStyles, MenuItem, Paper, Radio } from '@material-ui/core';
 import moment from 'moment';
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 
-import { AutoCompleteField, CheckField, RadioGroupField, SelectField, TextField } from 'components/ui/Form';
+import { AutoCompleteField, CheckField, DateField, RadioGroupField, SelectField, TextField } from 'components/ui/Form';
+import { VERSION_TYPE_MAJOR, VERSION_TYPE_MINOR } from 'constants/constUtil';
 
 import { countries } from './countries';
 import schema from './FormTest.schema';
-import { VERSION_TYPE_MAJOR, VERSION_TYPE_MINOR } from 'constants/constUtil';
 
 const useStyles = makeStyles(theme => ({
     input: {
@@ -19,16 +19,17 @@ const useStyles = makeStyles(theme => ({
 
 const CampaignForm = () => {
     const classes = useStyles();
-
+    const [resolver, setResolver] = useState(null)
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         mode: 'onTouched',
         name: 'nameTest',
         defaultValues: {
             title: "SHDDH",
             country: "AE",
-            dueDate: moment("2021-05-12T04:00:00.000+0000").format('YYYY-MM-DD')
+            // dueDate: moment("2021-05-12T04:00:00.000+0000").format('YYYY-MM-DD')
         },
-         resolver: yupResolver(schema),
+        resolver: resolver ? yupResolver(resolver ) : null,
+        criteriaMode: "all",
     });
 
     const commonProps = {
@@ -101,13 +102,13 @@ const CampaignForm = () => {
         color: "primary",
         type: "submit"
     }
-    console.log("errors", errors)
+
     return (<Grid container alignItems="center" justify="center">
         <Grid item md>
             <Paper style={{ padding: 20, margin: 120 }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField {...titleProps} />
-                    <TextField {...dueDateProps} />
+                    <DateField {...dueDateProps} />
                     <TextField {...emailProps} />
                     <TextField {...goalProps} />
                     <CheckField {...isAnonymousProps} />
@@ -132,6 +133,7 @@ const CampaignForm = () => {
                             ["todas", "en progreso", "completado"].map(elem => <MenuItem key={elem} value={elem}>{elem}</MenuItem>)
                         }
                     </SelectField>
+                    <Button onClick={() => setResolver(schema)}>Cambiar schema</Button>
                     <Button {...jsonButton} >Enviar</Button>
                 </form>
             </Paper>

@@ -1,13 +1,14 @@
 import { FormControl, MenuItem } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
-import { CheckField, SelectField } from 'components/ui/Form';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { SelectFolder } from './SelectFolder';
 
+import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
+import { CheckField, SelectField } from 'components/ui/Form';
+
+import { SelectFolder } from './SelectFolder';
 
 export const FormInit = () => {
 	const { watch, setValue, formState: { errors }, control } = useFormContext();

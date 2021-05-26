@@ -3,7 +3,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
-import { AutoCompleteField, TextField } from 'components/ui/Form';
+import { AutoCompleteField, DateField, TextField } from 'components/ui/Form';
 import { DATE, LIST, NUMERIC } from 'constants/constUtil';
 
 export const PrintField = ({ sectionId, name, label, type, value, propertyItemList, mandatory }) => {
@@ -20,15 +20,12 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 	switch (type) {
 		case DATE:
 			return (
-				<TextField
+				<DateField
 					key={name}
-					type="date"
 					label={label}
 					name={name}
 					required={mandatory}
-					InputLabelProps={{
-						shrink: true,
-					}}
+					value={null} // No current day
 					{...commonProps}
 				/>
 			);
