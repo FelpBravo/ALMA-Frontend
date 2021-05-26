@@ -37,7 +37,7 @@ const SummaryInvolved = ({ data }) => {
                         </TableHead>
                         <TableBody>
                             {
-                                data.map(({ users, role }, index) =>
+                                (data || []).map(({ users, role }, index) =>
                                     users.map(({ userId, comment, maxDays }) => {
 
                                         return <TableRow key={index} >
