@@ -184,6 +184,7 @@ const Documents = () => {
 					name: files[0]?.name,
 				}))
 		}
+		return () => console.log("DISMOUNT")
 	}, [files])
 
 	return (<FormProvider {...methods} >

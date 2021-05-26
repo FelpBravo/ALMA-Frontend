@@ -204,7 +204,7 @@ export const documentsReducer = (state = initialState, action) => {
 				...initialState,
 				folders: state.folders,
 				tags: state.tags,
-				folderName: state.folderName,
+				// folderName: state.folderName,
 				path: state.path,
 				documentsType: state.documentsType,
 				detailDocumentType: state.detailDocumentType,
