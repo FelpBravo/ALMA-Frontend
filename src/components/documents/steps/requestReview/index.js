@@ -12,7 +12,7 @@ import IntlMessages from 'util/IntlMessages';
 
 import schema from './requestReview.schema';
 import RolItem from './RolItem';
-import ModalLoadFlow from 'components/documents/ui/ModalLoadFlow';
+import ModalLoadFlow from 'components/documents/resume/ModalLoadFlow';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -44,7 +44,7 @@ export default function RequestStep() {
     const { authUser } = useSelector(state => state.auth);
     const { approvesList } = useSelector(state => state.flowDocument);
     const [active, setActive] =useState(false)
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState()
 
     const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValues: {},
@@ -67,7 +67,9 @@ export default function RequestStep() {
             "startedBy": "juan.suaza",
             ...values
         }
+        console.log("resumen",data)
         setFormData(data)
+        
     };
 
     const commonProps = {
@@ -151,7 +153,7 @@ export default function RequestStep() {
                 </Grid>
 
             </div>
-            <ModalLoadFlow  data={formData} close={handleClose} open={active}/>
+            <ModalLoadFlow data={formData} close={handleClose} open={active}/>
         </div>
 
     </form>

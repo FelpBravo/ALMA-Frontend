@@ -5,9 +5,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
-import { DialogTitle, Divider} from '@material-ui/core';
+import { DialogTitle, Divider, Grid} from '@material-ui/core';
 import { SummaryDocument } from './SummaryDocument';
 import { SummaryInvolved } from './SummaryInvolved';
 
@@ -22,16 +22,14 @@ const useStyles = makeStyles((theme) => ({
 
 const ModalLoadFlow = (props) => {
   const { data, close, open } = props
+  console.log("modal",data)
+  console.log("modaldocument",data?.document)
 
-  const classes = useStyles();
 
-  const dispatch = useDispatch();
-
-  const { authUser } = useSelector(state => state.auth);
-       
   const handleClose = () => {
     close()
   }
+
   return (
 
     <div>
@@ -49,26 +47,28 @@ const ModalLoadFlow = (props) => {
         </DialogTitle>
 
         <DialogContent>
-          <SummaryDocument/>
+          <SummaryDocument data={data?.document}/>
 
-            <Divider className="mt-3"/>
+            <Divider className="mt-3 mb-3"/>
 
         <h3>Involucrados</h3> 
 
-          <SummaryInvolved/>
+          <SummaryInvolved data={data?.approves}/>
 
         
-           <Divider className="mt-3"/>
+           <Divider className="mt-3 mb-3"/>
 
         <h3>Observaciones Generales</h3>
 
-        <TextField
-          id="outlined-textarea"
-          label="Multiline Placeholder"
-          placeholder="Placeholder"
-          multiline
-          variant="outlined"
-        />
+        <Grid container item xs={12}>
+                <TextField
+                    name="comment"
+                    label="Comentario"
+                    multiline
+                    rows={3}
+                    value={data?.comment}
+                     />
+            </Grid>
         
         </DialogContent>
 
