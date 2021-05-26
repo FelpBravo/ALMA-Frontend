@@ -7,14 +7,16 @@ import { AutoCompleteField, DateField, TextField } from 'components/ui/Form';
 import { DATE, LIST, NUMERIC } from 'constants/constUtil';
 
 export const PrintField = ({ sectionId, name, label, type, value, propertyItemList, mandatory }) => {
-	const { register, control, formState: { errors }, resolver, setResolver, ...props } = useFormContext();
+	const { register, control, formState: { errors }, resolver, setResolver, setValue } = useFormContext();
 
 	useEffect(() => {
 		if (type === DATE){
+
 			setResolver({
 				...resolver,
 				[name]: date().required().min("1900-01-01").max("2100-01-01"),
 			})
+			setValue(name, null)
 		}
 	}, [type, name])
 
@@ -34,8 +36,6 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					label={label}
 					name={name}
 					required={mandatory}
-					value={null} // No current day
-					minDate={Date('1900-01-01')}
 					{...commonProps}
 				/>
 			);

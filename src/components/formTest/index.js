@@ -26,6 +26,7 @@ const CampaignForm = () => {
         defaultValues: {
             title: "SHDDH",
             country: "AE",
+            dueDate: null,
             // dueDate: moment("2021-05-12T04:00:00.000+0000").format('YYYY-MM-DD')
         },
         resolver: resolver ? yupResolver(resolver ) : null,
@@ -73,12 +74,8 @@ const CampaignForm = () => {
     };
 
     const dueDateProps = {
-        type: 'date',
         label: 'Fecha vencimiento',
         name: 'dueDate',
-        InputLabelProps: {
-            shrink: true,
-        },
         ...commonProps,
     }
 
