@@ -1,19 +1,19 @@
-import { FormControl, InputLabel, MenuItem, NativeSelect, Select } from '@material-ui/core';
+import { FormControl, MenuItem } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-import React, { useEffect, useState } from 'react';
+import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
+import { CheckField, SelectField } from 'components/ui/Form';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
-import { AutoCompleteField, CheckField, SelectField, TextField } from 'components/ui/Form';
-import { BootstrapInput } from 'components/ui/helpers/BootstrapInput';
-import IntlMessages from 'util/IntlMessages';
-
+import Swal from 'sweetalert2';
 import { SelectFolder } from './SelectFolder';
 
+
 export const FormInit = () => {
-	const { watch, formState: { errors }, control } = useFormContext();
+	const { watch, setValue, formState: { errors }, control } = useFormContext();
 	const documentsTypeField = watch('documentsType', null);
+	const controlledDocument = watch('controlled_document', false);
+	const documentsList = useSelector(state => state.documents.filesLoaded)
 
 	const dispatch = useDispatch();
 
@@ -26,6 +26,17 @@ export const FormInit = () => {
 	const { id: documentType = '' } = detailDocumentType;
 
 	const { authUser } = useSelector(state => state.auth);
+
+	useEffect(() => {
+		if (controlledDocument && documentsList.length > 1){
+			Swal.fire({
+				title: 'Oops...',
+				html: 'Solo puedes seleccionar 1 archivo para documento controlado.',
+				icon: 'error',
+			});
+			setValue('controlled_document', false)
+		}
+	}, [controlledDocument])
 
 	useEffect(() => {
 
@@ -49,7 +60,7 @@ export const FormInit = () => {
 		control
 	}
 
-	const isAnonymousProps = {
+	const isControlledDocument = {
 		name: 'controlled_document',
 		label: 'Documento controlado',
 		control, 
@@ -109,7 +120,7 @@ export const FormInit = () => {
 		</div>
 		<div className="row">
 			<div className="col-xl-4 mt-3 col-lg-4 col-md-4 col-4">
-				<CheckField {...isAnonymousProps} />
+				<CheckField {...isControlledDocument} />
 			</div>
 		</div>
 	</>
