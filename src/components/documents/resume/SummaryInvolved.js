@@ -1,24 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Swal from 'sweetalert2';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IntlMessages from 'util/IntlMessages';
 import { get } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 
+import IntlMessages from 'util/IntlMessages';
 
-
-
-const SummaryInvolved = (props) => {
-
-    const { data } = props
+const SummaryInvolved = ({ data }) => {
     console.log('approves', data)
-
-
     return (
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -42,25 +36,26 @@ const SummaryInvolved = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {
+                                data.map(({ users, role }, index) =>
+                                    users.map(({ userId, comment, maxDays }) => {
 
-                            {data.map(({ users, role }, index) =>
-                                users.map(({ userId, comment, maxDays }) => {
-
-                                    return <TableRow key={index} >
-                                        <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}>
-                                            {role}
-                                        </TableCell>
-                                        <TableCell>
-                                            {userId}
-                                        </TableCell>
-                                        <TableCell>
-                                            {maxDays}
-                                        </TableCell>
-                                        <TableCell>
-                                            {comment}
-                                        </TableCell>
-                                    </TableRow>
-                                }))}
+                                        return <TableRow key={index} >
+                                            <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}>
+                                                {role}
+                                            </TableCell>
+                                            <TableCell>
+                                                {userId}
+                                            </TableCell>
+                                            <TableCell>
+                                                {maxDays}
+                                            </TableCell>
+                                            <TableCell>
+                                                {comment}
+                                            </TableCell>
+                                        </TableRow>
+                                    }))
+                            }
 
                         </TableBody>
                     </Table>

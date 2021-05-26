@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { DialogTitle, Divider, Grid } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
-import { DialogTitle, Divider, Grid} from '@material-ui/core';
+
 import { SummaryDocument } from './SummaryDocument';
 import { SummaryInvolved } from './SummaryInvolved';
-
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -20,10 +21,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ModalLoadFlow = (props) => {
-  const { data, close, open } = props
-  console.log("modal",data)
-  console.log("modaldocument",data?.document)
+const ModalLoadFlow = ({ data, close, open }) => {
+  console.log("modal", data)
+  console.log("modaldocument", data?.document)
 
 
   const handleClose = () => {
@@ -41,44 +41,44 @@ const ModalLoadFlow = (props) => {
         maxWidth={'md'}
       >
         <DialogTitle id="form-dialog-title">
-        <div style={{fontFamily:'Poppins', fontSize:"16px"}}>
+          <div style={{ fontFamily: 'Poppins', fontSize: "16px" }}>
             <IntlMessages id="Resumen documento" />
-        </div>
+          </div>
         </DialogTitle>
 
         <DialogContent>
-          <SummaryDocument data={data?.document}/>
+          <SummaryDocument data={data?.document} />
 
-            <Divider className="mt-3 mb-3"/>
+          <Divider className="mt-3 mb-3" />
 
-        <h3>Involucrados</h3> 
+          <h3>Involucrados</h3>
 
-          <SummaryInvolved data={data?.approves}/>
+          <SummaryInvolved data={data?.approves} />
 
-        
-           <Divider className="mt-3 mb-3"/>
 
-        <h3>Observaciones Generales</h3>
+          <Divider className="mt-3 mb-3" />
 
-        <Grid container item xs={12}>
-                <TextField
-                    name="comment"
-                    label="Comentario"
-                    multiline
-                    rows={3}
-                    value={data?.comment}
-                     />
-            </Grid>
-        
+          <h3>Observaciones Generales</h3>
+
+          <Grid container item xs={12}>
+            <TextField
+              name="comment"
+              label="Comentario"
+              multiline
+              rows={3}
+              value={data?.comment}
+            />
+          </Grid>
+
         </DialogContent>
 
         <DialogActions>
-        
+
           <Button
-          style={{
-            backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
-            boxShadow: "none", height: '45px', width: '120px'
-          }}
+            style={{
+              backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+              boxShadow: "none", height: '45px', width: '120px'
+            }}
             onClick={handleClose}
             variant="contained"
             color="primary"
@@ -87,15 +87,15 @@ const ModalLoadFlow = (props) => {
           </Button>
 
           <Button
-           style={{
-           fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",boxShadow: "none", height: '45px', width: '120px'
-          }}
+            style={{
+              fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
+            }}
             //onClick={handleOnSave}
             variant="contained"
             color="primary"
-           // disabled={messageErrorName}
+          // disabled={messageErrorName}
           >
-           Confirmar
+            Confirmar
           </Button>
 
         </DialogActions>
