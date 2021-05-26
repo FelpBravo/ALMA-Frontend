@@ -8,6 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { object } from 'yup';
 
 import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
 import IntlMessages from 'util/IntlMessages';
@@ -58,7 +59,6 @@ const Documents = () => {
 	const history = useHistory()
 	const dispatch = useDispatch();
 	const { id } = useParams()
-
 	const {
 		detailDocumentType = [],
 		fileIdLoaded = '',
@@ -68,11 +68,13 @@ const Documents = () => {
 	// ID DOCUMENTO URL
 	const document = id || ""
 	const EDIT_MODE = document.length !== 0
+	const [resolver, setResolver] = useState(EDIT_MODE ? editModeSchema : createModeSchema)
+
 	const methods = useForm({
 		mode: 'onTouched',
 		// name: 'documentForm',
 		defaultValues,
-		resolver: yupResolver(EDIT_MODE ? editModeSchema : createModeSchema),
+		resolver: yupResolver(object().shape(resolver)),
 	});
 	const { handleSubmit, reset, watch } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
@@ -186,7 +188,7 @@ const Documents = () => {
 		}
 	}, [files])
 
-	return (<FormProvider {...methods} >
+	return (<FormProvider {...{resolver,setResolver}} {...methods} >
 		<FlowContext.Provider value={{ ...flowStepsProvider }}>
 			<form onSubmit={handleSubmit(handleSaveForm)}>
 				<Grid container spacing={2}>

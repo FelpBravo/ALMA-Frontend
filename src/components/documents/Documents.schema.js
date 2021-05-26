@@ -1,10 +1,9 @@
 import { date, number, object, string } from 'yup';
 
-const editModeSchema = object().shape({
-});
+const editModeSchema = {};
 
-const createModeSchema = object().shape({
+const createModeSchema = {
     documentsType: string().required(),
-});
+};
 
 export { editModeSchema, createModeSchema };
