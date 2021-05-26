@@ -1,13 +1,22 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { date } from 'yup';
 
 import { AutoCompleteField, DateField, TextField } from 'components/ui/Form';
 import { DATE, LIST, NUMERIC } from 'constants/constUtil';
 
 export const PrintField = ({ sectionId, name, label, type, value, propertyItemList, mandatory }) => {
-	const { register, control, formState: { errors } } = useFormContext();
+	const { register, control, formState: { errors }, resolver, setResolver, ...props } = useFormContext();
+
+	useEffect(() => {
+		if (type === DATE){
+			setResolver({
+				...resolver,
+				[name]: date().required().min("1900-01-01").max("2100-01-01"),
+			})
+		}
+	}, [type, name])
 
 	const commonProps = {
 		register,
@@ -26,6 +35,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 					name={name}
 					required={mandatory}
 					value={null} // No current day
+					minDate={Date('1900-01-01')}
 					{...commonProps}
 				/>
 			);

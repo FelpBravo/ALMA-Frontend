@@ -21,7 +21,8 @@ const DateField = ({ control, name, label, errors, ...props }) => {
                     fullWidth
                     clearable
                     format={FORMAT_YYYY_MM_DD}
-                    // helperText={errorMessage}
+                    error={Boolean(errorMessage)}
+                    helperText={errorMessage}
                     KeyboardButtonProps={{
                         "aria-label": "change date"
                     }}
