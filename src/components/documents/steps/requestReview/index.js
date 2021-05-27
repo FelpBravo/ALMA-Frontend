@@ -6,13 +6,13 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startApprovesListLoading } from 'actions/flowDocument';
+import ModalLoadFlow from 'components/documents/resume/ModalLoadFlow';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 
 import schema from './requestReview.schema';
 import RolItem from './RolItem';
-import ModalLoadFlow from 'components/documents/ui/ModalLoadFlow';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -43,8 +43,7 @@ export default function RequestStep() {
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList } = useSelector(state => state.flowDocument);
-    const [active, setActive] =useState(false)
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState(null)
 
     const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValues: {},
@@ -82,13 +81,8 @@ export default function RequestStep() {
         dispatch(startApprovesListLoading({ authUser, flowName }))
     }, [authUser])
 
-    const handleOpen = () => {
-        setFormData()
-	    setActive(true)
-	}
-
     const handleClose = () =>{
-		setActive(false) 
+        setFormData(null)
 	}
     return <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
@@ -142,7 +136,6 @@ export default function RequestStep() {
                             type="submit"
                             variant="contained"
                             color="primary"
-                            onClick={handleOpen}
                         >
                             <IntlMessages id="document.loadDocuments.submit.flow.next" />
                         </Button>
@@ -151,7 +144,10 @@ export default function RequestStep() {
                 </Grid>
 
             </div>
-            <ModalLoadFlow  data={formData} close={handleClose} open={active}/>
+            <ModalLoadFlow 
+                data={formData} 
+                close={handleClose} 
+                open={Boolean(formData)} />
         </div>
 
     </form>

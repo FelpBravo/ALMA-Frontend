@@ -49,7 +49,12 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 ...state,
                 approvesList: payload
             }
-
+        case types.flowsLoaded:
+            return {
+                ...state,
+                flows: payload
+                }    
+                
         default:
             return state;
     }
