@@ -18,7 +18,7 @@ export const startApprovesListLoading = ({ authUser, flowName }) => {
 
     }
 };
-export const startInitFlowsLoading = ( authUser, data,) => {
+export const startInitFlowsLoading = ( authUser, data, callback) => {
     return async (dispatch) => {
 
         try {
@@ -26,16 +26,18 @@ export const startInitFlowsLoading = ( authUser, data,) => {
 
             const {flow, document, approves, comment, startedBy} = data
             const resp = await postFlows(authUser, flow, document, approves, comment, startedBy);
-            Swal.fire({
+            const {value} = await Swal.fire({
 				icon: 'success',
 				width: 400,
 				title: '<h4>Solicitud enviada</h4>',
-				html: `<ul> ID Asignado: ${resp.data.id}</ul>`,
+				html: `<ul>ID Asignado: ${resp.data.id}</ul>`,
 				showConfirmButton: true,
 			})
-			
+            
             dispatch(saveFlowInit());
-
+            if (value){
+                callback && callback()
+            }
 		} catch (error) {
 			console.log(error);
 
