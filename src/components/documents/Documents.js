@@ -121,6 +121,7 @@ const Documents = () => {
 		if (resp.value) {
 
 			const newAspectList = [...(aspectList || [])]
+			
 			for (const aspect of newAspectList) {
 				aspect.customPropertyList = aspect.customPropertyList.filter(property => {
 					const value = get(values, property?.name, null)
