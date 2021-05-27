@@ -578,14 +578,27 @@ export const startEditDocumentLoading = (
 
 			}
 
-			await editForm(authUser, folderId, [fileId], aspectGroup, tags);
+			const response = await editForm(authUser, folderId, [fileId], aspectGroup, tags);
+			Swal.close();
 
+			const resp = await Swal.fire({
+				icon: 'success',
+				title: 'Documento modificado con éxito',
+				html: `<ul>${response.data.map(({ name, id }) => `<li><h6><b>${id}</b>    ${name}</h6></li>`)}</ul>
+				<br/><center>¿Desea regresar a la vista anterior?</center>`,
+				showConfirmButton: true,
+				showCloseButton: true,
+				showCancelButton: true,
+			})
+			console.log("resp", resp)
+			if (resp.value) {
+				callback && callback()
+			}
 			dispatch(saveFormFinish());
-			callback && callback()
+
+
 		} catch (error) {
 			console.log(error);
-		} finally {
-			Swal.close();
 		}
 
 	}
