@@ -24,6 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 
-
 # Exclude Jenkins
 Jenkinsfile
