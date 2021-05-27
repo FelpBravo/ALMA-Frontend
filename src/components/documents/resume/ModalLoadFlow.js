@@ -3,8 +3,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { makeStyles } from '@material-ui/core/styles';
-import React, { useEffect, useState } from 'react';
+import React, {  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TextField } from 'components/ui/Form';
@@ -14,28 +13,20 @@ import { SummaryDocument } from './SummaryDocument';
 import { SummaryInvolved } from './SummaryInvolved';
 import { startInitFlowsLoading } from 'actions/flowDocument';
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    width: "100%",
-  },
-
-}));
-
-
 const ModalLoadFlow = ({ data, close, open }) => {
 
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
- 
+
   const handleClose = () => {
     close()
   }
 
-  const handleInitFlow = () =>{
+  const handleInitFlow = () => {
     dispatch(startInitFlowsLoading(authUser, data))
     close()
-   }
-  
+  }
+
   return (
 
     <div>
@@ -48,7 +39,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
       >
         <DialogTitle id="form-dialog-title">
           <div style={{ fontFamily: 'Poppins', fontSize: "16px" }}>
-            <IntlMessages id="Resumen documento" />
+            <IntlMessages id="document.loadDocuments.request.summary.title" />
           </div>
         </DialogTitle>
 
@@ -57,14 +48,18 @@ const ModalLoadFlow = ({ data, close, open }) => {
 
           <Divider className="mt-3 mb-3" />
 
-          <h3>Involucrados</h3>
+          <h3>
+            <IntlMessages id="document.loadDocuments.request.summary.involved" />
+          </h3>
 
           <SummaryInvolved data={data?.approves} />
 
 
           <Divider className="mt-3 mb-3" />
 
-          <h3>Observaciones Generales</h3>
+          <h3>
+            <IntlMessages id="document.loadDocuments.request.summary.general.remarks" />
+          </h3>
 
           <Grid container item xs={12}>
             <TextField
@@ -89,7 +84,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
             variant="contained"
             color="primary"
           >
-            Cancelar
+            <IntlMessages id="document.loadDocuments.request.summary.button.cancel" />
           </Button>
 
           <Button
@@ -101,7 +96,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
             color="primary"
           // disabled={messageErrorName}
           >
-            Confirmar
+            <IntlMessages id="document.loadDocuments.request.summary.button.confirm" />
           </Button>
 
         </DialogActions>
