@@ -8,4 +8,13 @@ const getApproves = (authUser, flowName) => {
     });
 };
 
-export { getApproves }
+const postFlows = (authUser, flow, document, approves ,comment , startedBy) => {
+    return axiosInstance.post(`/flows/data`, {authUser, flow, document, approves ,comment, startedBy}, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
+export { getApproves,
+         postFlows, }
