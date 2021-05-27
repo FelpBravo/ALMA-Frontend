@@ -1,4 +1,4 @@
-import { getApproves } from 'services/flowDocumentService';
+import { getApproves, postFlows } from 'services/flowDocumentService';
 import { types } from 'types/types';
 
 export const startApprovesListLoading = ({ authUser, flowName }) => {
@@ -16,6 +16,21 @@ export const startApprovesListLoading = ({ authUser, flowName }) => {
 
     }
 };
+export const startInitFlowsLoading = ({ authUser, data }) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await postFlows(authUser, data);
+
+            //dispatch(flowsInitLoaded(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
 
 const approvesLoaded = (approvesList) => {
     return {
@@ -23,3 +38,10 @@ const approvesLoaded = (approvesList) => {
         payload: approvesList
     }
 };
+
+{/*const flowsInitLoaded = (flows) => {
+    return {
+        type: types.flowsLoaded,
+        payload: flows
+    }
+};*/}

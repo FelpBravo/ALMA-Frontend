@@ -12,6 +12,7 @@ import IntlMessages from 'util/IntlMessages';
 
 import { SummaryDocument } from './SummaryDocument';
 import { SummaryInvolved } from './SummaryInvolved';
+import { startInitFlowsLoading } from 'actions/flowDocument';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -22,14 +23,17 @@ const useStyles = makeStyles((theme) => ({
 
 
 const ModalLoadFlow = ({ data, close, open }) => {
-  console.log("modal", data)
-  console.log("modaldocument", data?.document)
 
-
+  const dispatch = useDispatch();
+ 
   const handleClose = () => {
     close()
   }
 
+  const handleInitFlow = () =>{
+    dispatch(startInitFlowsLoading(data))
+   }
+  
   return (
 
     <div>
@@ -90,7 +94,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
             style={{
               fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
             }}
-            //onClick={handleOnSave}
+            onClick={handleInitFlow}
             variant="contained"
             color="primary"
           // disabled={messageErrorName}

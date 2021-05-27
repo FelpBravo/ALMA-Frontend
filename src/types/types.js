@@ -159,5 +159,6 @@ export const types = {
 	actionsModuleSetValueField: "set field value from form",
 	actionsModuleClear: "Clear all values from action modules",
 
-	approvesListLoaded: "Approves list loaded"
+	approvesListLoaded: "Approves list loaded",
+	flowsLoaded: "Flows Loaded"
 }

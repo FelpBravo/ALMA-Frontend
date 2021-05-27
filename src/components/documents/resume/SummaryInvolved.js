@@ -12,7 +12,8 @@ import Swal from 'sweetalert2';
 import IntlMessages from 'util/IntlMessages';
 
 const SummaryInvolved = ({ data }) => {
-    console.log('approves', data)
+    
+    
     return (
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -22,17 +23,17 @@ const SummaryInvolved = ({ data }) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    <IntlMessages id="Nombre documento" />
+                                    <IntlMessages id="Rol" />
                                 </TableCell>
-                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
-                                    Nombre
-                            </TableCell>
-                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
-                                    Plazo
-                            </TableCell>
-                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
+                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+                                    Usuario
+                                </TableCell>
+                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+                                    Plazo de revisión
+                                </TableCell>
+                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
                                     Comentarios
-                            </TableCell>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

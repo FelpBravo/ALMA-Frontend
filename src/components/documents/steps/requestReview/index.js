@@ -66,7 +66,6 @@ export default function RequestStep() {
             "startedBy": "juan.suaza",
             ...values
         }
-        console.log("resumen",data)
         setFormData(data)
     };
 
