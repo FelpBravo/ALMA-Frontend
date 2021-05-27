@@ -33,15 +33,6 @@ pipeline {
                 }
             }
         }
-        stage ("Test") {
-            steps {
-                /*
-                nodejs(nodeJSInstallationName: 'Node') {
-                    sh 'yarn run test'
-                }
-                */
-            }
-        }
         stage('Deploy') {
             steps {
                 script {
