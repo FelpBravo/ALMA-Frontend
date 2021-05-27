@@ -1,4 +1,4 @@
-import { object, string, number, date } from 'yup';
+import { date, number, object, string } from 'yup';
 
 const schema = object().shape({
     // title: string().min(3, "Minimo 3 caracteres").required("Titulo Campo requerido"),

@@ -23,6 +23,7 @@ export default {
 		danger: 'orange',
 	},
 	typography: {
+		fontFamily: "Poppins",
 		button: {
 			fontWeight: 400,
 			textAlign: 'capitalize'
