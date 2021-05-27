@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'domain-dev'
+        label 'domain-qa'
     }
 
     options { 
