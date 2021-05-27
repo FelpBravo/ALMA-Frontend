@@ -26,7 +26,6 @@ export const startInitFlowsLoading = ( authUser, data,) => {
 
             const {flow, document, approves, comment, startedBy} = data
             const resp = await postFlows(authUser, flow, document, approves, comment, startedBy);
-            console.log(resp)
             Swal.fire({
 				icon: 'success',
 				width: 400,

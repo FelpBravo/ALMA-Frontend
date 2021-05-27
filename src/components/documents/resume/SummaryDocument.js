@@ -13,8 +13,7 @@ import IntlMessages from 'util/IntlMessages';
 const SummaryDocument = (props) => {
 
     const { data} = props
-    console.log("tablaaa",data)
-
+   
 	return (
         <div className="row">
         <div className="col-xl-12 col-lg-12 col-md-12 col-12">
