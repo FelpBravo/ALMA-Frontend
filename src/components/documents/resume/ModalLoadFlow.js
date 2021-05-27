@@ -25,13 +25,15 @@ const useStyles = makeStyles((theme) => ({
 const ModalLoadFlow = ({ data, close, open }) => {
 
   const dispatch = useDispatch();
+  const { authUser } = useSelector(state => state.auth);
  
   const handleClose = () => {
     close()
   }
 
   const handleInitFlow = () =>{
-    dispatch(startInitFlowsLoading(data))
+    dispatch(startInitFlowsLoading(authUser, data))
+    close()
    }
   
   return (

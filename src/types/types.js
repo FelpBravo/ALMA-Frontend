@@ -160,5 +160,6 @@ export const types = {
 	actionsModuleClear: "Clear all values from action modules",
 
 	approvesListLoaded: "Approves list loaded",
-	flowsLoaded: "Flows Loaded"
+	flowsLoaded: "Flows Loaded",
+	docsSaveFlowInit: "Docs Sabe Flow Init"
 }
