@@ -3,6 +3,7 @@ import { Button, Divider, Grid, Paper, Step, StepLabel, Stepper } from '@materia
 import { makeStyles } from '@material-ui/core/styles';
 import { isEmpty } from 'lodash-es';
 import get from 'lodash/get'
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
 import { object } from 'yup';
 
 import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
+import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
 import { createModeSchema, editModeSchema } from './Documents.schema';
@@ -123,7 +125,7 @@ const Documents = () => {
 				aspect.customPropertyList = aspect.customPropertyList.filter(property => {
 					const value = get(values, property?.name, null)
 					if (value) {
-						property.value = value
+						property.value = property.type === "DATE" ? moment(value).format(FORMAT_YYYY_MM_DD) : value
 						return property
 					}
 				})
