@@ -35,10 +35,6 @@ const useStyles = makeStyles((theme) => ({
 		zIndex: theme.zIndex.drawer + 1,
 		color: "#fff",
 	},
-	iconsHolder: {
-		display: "flex",
-		alignItems: "center",
-	},
 	iconos: {
 		cursor: "pointer",
 		color: "#2196f3",
@@ -54,6 +50,12 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '10px',
 		width: '100%',
 	},
+	textEllipsis: {
+		maxWidth: 240,
+		overflow: 'hidden',
+		whiteSpace: 'nowrap',
+		textOverflow: 'ellipsis'
+	}
 }));
 
 
@@ -146,9 +148,9 @@ const DataTableVersioning = () => {
 									<TableCell>{version}</TableCell>
 									<TableCell>{new Date(modifiedAt).toLocaleString()}</TableCell>
 									<TableCell>{modifiedByUser}</TableCell>
-									<TableCell>{comment}</TableCell>
-									<TableCell style={{ textAlign: 'center' }}>
-										<div className={classes.iconsHolder}>
+									<TableCell className={classes.textEllipsis}>{comment}</TableCell>
+									<TableCell align="center">
+										<Grid container alignItems="center" justify="center">
 
 											<TableActionButton
 												materialIcon={
@@ -183,7 +185,7 @@ const DataTableVersioning = () => {
 												}
 											/>
 
-										</div>
+										</Grid>
 									</TableCell>
 								</TableRow>
 
