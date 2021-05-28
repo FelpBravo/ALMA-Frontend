@@ -2,8 +2,10 @@ import { Button, Divider, Grid, makeStyles } from '@material-ui/core';
 import { Fab } from '@material-ui/core';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -37,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit }) {
     const [directorio, setDirectorio] = useState(false)
     const [openModal, setOpenModal] = useState(false);
+    const history = useHistory();
     const classes = useStyles();
 
     const {
@@ -162,8 +165,18 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         }
 
         <SelectTags />
-        <div className="row">
-            <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+        <Grid container className="mt-4">
+            <Grid item md>
+                <Button
+                    variant="text"
+                    size="large"
+                    onClick={() => history.goBack()}
+                >
+                    <KeyboardBackspaceIcon style={{marginRight: 10}} />
+                    <IntlMessages id="dashboard.button.cancel" />
+                </Button>
+            </Grid>
+            <Grid item md>
                 <Grid
                     container
                     justify="flex-end"
@@ -204,8 +217,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
 
                     </div>
                 </Grid>
-
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     </>
 }

@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { CircularProgress, DialogTitle, Divider, Grid, InputBase, Paper, Tooltip } from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import TextField from '@material-ui/core/TextField';
-import { useDispatch, useSelector } from 'react-redux';
-import IntlMessages from 'util/IntlMessages';
-import { CircularProgress, DialogTitle, Divider, Grid, InputBase, Paper, Tooltip } from '@material-ui/core';
-import Button from 'components/ui/Button';
 import IconButton from '@material-ui/core/IconButton';
-import { clearValues, sharedDocumentSetValue, startCreateSharedLink } from 'actions/sharedDocument';
 import { makeStyles } from '@material-ui/core/styles';
-import Checkbox from '@material-ui/core/Checkbox';
-import LinkIcon from '@material-ui/icons/Link';
+import TextField from '@material-ui/core/TextField';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
-import { AliceBlue } from 'helpers/themes/indigoTheme';
-import moment from 'moment';
+import LinkIcon from '@material-ui/icons/Link';
 import { get, isEmpty } from 'lodash-es';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { clearValues, sharedDocumentSetValue, startCreateSharedLink } from 'actions/sharedDocument';
+import Button from 'components/ui/Button';
+import { AliceBlue } from 'helpers/themes/indigoTheme';
+import IntlMessages from 'util/IntlMessages';
 
 const fieldName = <IntlMessages id="table.shared.dialog.field.password" />
 const fieldWithoutPassword = <IntlMessages id="table.shared.dialog.field.withoutPassword" />
@@ -66,7 +67,7 @@ const SharedDialog = ({ data, handleClose }) => {
   const [loading, setLoading] = useState(false)
   const [messageErrorName, setMessageErrorName] = useState(null);
   const [checked, setChecked] = React.useState(true);
-  const [select, setSelect] = useState("true")
+  const [finish, setFinish] = useState(true);
 
   const URL = `${window.location.protocol}//${window.location.hostname}${window.location.port && `:${window.location.port}`}`
   const SHARED_URL = `${URL}/download/${token}/`;
@@ -77,6 +78,7 @@ const SharedDialog = ({ data, handleClose }) => {
 
   useEffect(() => {
     dispatch(clearValues());
+    setFinish(false);
   }, [data])
 
   useEffect(() => {
@@ -97,7 +99,7 @@ const SharedDialog = ({ data, handleClose }) => {
 
   const handleOnSave = () => {
     setLoading(true)
-    dispatch(startCreateSharedLink(authUser, data?.id, fields?.password, fields?.expirationDate));
+    dispatch(startCreateSharedLink(authUser, data?.id, fields?.password, fields?.expirationDate, () => setFinish(true)));
   }
 
   return (
@@ -164,7 +166,7 @@ const SharedDialog = ({ data, handleClose }) => {
               <Paper className={classes.rootPaper}>
                 <LinkIcon color="primary" className={classes.margin} />
                 <InputBase
-                  inputProps={{ select: select }}
+                  inputProps={{ select: "true" }}
                   className={classes.input}
                   value={SHARED_URL}
                   readOnly
@@ -193,9 +195,14 @@ const SharedDialog = ({ data, handleClose }) => {
           variant="contained"
           color="secondary"
         >
-          <IntlMessages id="table.shared.dialog.field.cancelDocument" />
+          {!finish 
+          ?<IntlMessages id="table.shared.dialog.field.cancelDocument" />
+          : <IntlMessages id="table.shared.dialog.field.closeDocument" />
+          }
+
         </Button>
-        <Button
+        {
+          !finish &&<Button
           onClick={handleOnSave}
           variant="contained"
           color="primary"
@@ -205,6 +212,7 @@ const SharedDialog = ({ data, handleClose }) => {
           {loading && <CircularProgress size={14} />}
           <IntlMessages id="table.shared.dialog.field.createDocument" />
         </Button>
+      }
       </DialogActions>
     </Dialog>
   )

@@ -1,5 +1,5 @@
-import { types } from 'types/types';
 import { getFileStatus, postDownloadFile, postSharedFile } from 'services/sharedDocumentService';
+import { types } from 'types/types';
 
 export const sharedDocumentSetValue = (name, value) => {
 	return {
@@ -51,12 +51,13 @@ export const clearValues = () => {
 		payload: {}
 	}
 };
-export const startCreateSharedLink = (authUser, fileId, password, expirationDate) => {
+export const startCreateSharedLink = (authUser, fileId, password, expirationDate, callback) => {
 	return async (dispatch) => {
 
 		try {
 			const resp = await postSharedFile(authUser, fileId, password, expirationDate);
 			dispatch(saveSharedFile(resp.data, fileId));
+			callback && callback()
 		} catch (error) {
 			console.log(error);
 		}
