@@ -312,6 +312,7 @@
 	"table.shared.dialog.field.copyLink": "Copiar enlace",
 	"table.shared.dialog.field.createDocument": "Crear",
 	"table.shared.dialog.field.cancelDocument": "Cancelar",
+	"table.shared.dialog.field.closeDocument": "Aceptar",
 
 	"downloadFile.shared.dialog.button.send": "Enviar",
 	"downloadFile.shared.dialog.message.protected": "está protegido. Ingrese la contraseña para abrir el documento.",
