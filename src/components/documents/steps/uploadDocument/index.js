@@ -176,7 +176,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                     onClick={goBack}
                 >
                     <KeyboardBackspaceIcon color="primary" style={{marginRight: 10}} />
-                    <IntlMessages id="dashboard.button.cancel" />
+                    <IntlMessages id="dashboard.button.back" />
                 </Button>}
             </Grid>
             <Grid item md>
