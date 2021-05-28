@@ -79,6 +79,8 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         return () => handleClear();
     }, [dispatch, document]);
 
+    const goBack = () => history.goBack()
+
     const Directory = () => {
         if (directorio) {
             return <>
@@ -167,14 +169,15 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         <SelectTags />
         <Grid container className="mt-4">
             <Grid item md>
-                <Button
+                {!editMode && <Button
                     variant="text"
+                    color="primary"
                     size="large"
-                    onClick={() => history.goBack()}
+                    onClick={goBack}
                 >
-                    <KeyboardBackspaceIcon style={{marginRight: 10}} />
-                    <IntlMessages id="dashboard.button.cancel" />
-                </Button>
+                    <KeyboardBackspaceIcon color="primary" style={{marginRight: 10}} />
+                    <IntlMessages id="dashboard.button.back" />
+                </Button>}
             </Grid>
             <Grid item md>
                 <Grid
@@ -184,17 +187,22 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                     spacing={2}
                 >
                     <div className={classes.buttons}>
-                        <Button
+                        {<Button
                             style={{
                                 backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
                                 boxShadow: "none", height: '45px', width: '120px'
                             }}
                             type="button"
                             variant="contained"
-                            onClick={handleClear}
+                            onClick={editMode ? goBack :handleClear}
                         >
-                            <IntlMessages id="dashboard.advancedSearchClear" />
-                        </Button>
+                            {
+                            !editMode 
+                            ?<IntlMessages id="dashboard.advancedSearchClear" />
+                            :<IntlMessages id="dashboard.button.cancel" />
+                        }
+
+                        </Button>}
 
 
 
