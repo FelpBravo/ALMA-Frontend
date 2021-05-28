@@ -141,7 +141,10 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
             </div>
         }
         <DocumentContext.Provider value={{ setFiles }}>
-            <DropZoneDocument document={document} setFiles={setFiles} />
+            <DropZoneDocument 
+                controlledDocument={controlledDocument}
+                document={document} 
+                setFiles={setFiles} />
         </DocumentContext.Provider>
 
         <div className="row">

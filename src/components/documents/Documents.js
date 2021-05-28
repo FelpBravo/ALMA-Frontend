@@ -3,13 +3,16 @@ import { Button, Divider, Grid, Paper, Step, StepLabel, Stepper } from '@materia
 import { makeStyles } from '@material-ui/core/styles';
 import { isEmpty } from 'lodash-es';
 import get from 'lodash/get'
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { object } from 'yup';
 
-import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormLoading } from 'actions/documents';
+import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
+import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
 import { createModeSchema, editModeSchema } from './Documents.schema';
@@ -58,7 +61,6 @@ const Documents = () => {
 	const history = useHistory()
 	const dispatch = useDispatch();
 	const { id } = useParams()
-
 	const {
 		detailDocumentType = [],
 		fileIdLoaded = '',
@@ -68,11 +70,13 @@ const Documents = () => {
 	// ID DOCUMENTO URL
 	const document = id || ""
 	const EDIT_MODE = document.length !== 0
+	const [resolver, setResolver] = useState(EDIT_MODE ? editModeSchema : createModeSchema)
+
 	const methods = useForm({
 		mode: 'onTouched',
 		// name: 'documentForm',
 		defaultValues,
-		resolver: yupResolver(EDIT_MODE ? editModeSchema : createModeSchema),
+		resolver: yupResolver(object().shape(resolver)),
 	});
 	const { handleSubmit, reset, watch } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
@@ -117,11 +121,12 @@ const Documents = () => {
 		if (resp.value) {
 
 			const newAspectList = [...(aspectList || [])]
+			
 			for (const aspect of newAspectList) {
 				aspect.customPropertyList = aspect.customPropertyList.filter(property => {
 					const value = get(values, property?.name, null)
 					if (value) {
-						property.value = value
+						property.value = property.type === "DATE" ? moment(value).format(FORMAT_YYYY_MM_DD) : value
 						return property
 					}
 				})
@@ -131,8 +136,18 @@ const Documents = () => {
 			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
 			switch (true) {
 				case controlledDocument:
-					setActiveStep(activeStep + 1)
-					break;
+					const callback = () => setActiveStep(activeStep + 1)
+					return dispatch(
+						startSaveFormFlowLoading(
+							filesId,
+							folderId,
+							{ id: documentId, aspectList: newAspectList },
+							tagsField,
+							reset,
+							callback
+						)
+					);
+
 				case !EDIT_MODE:
 					return dispatch(
 						startSaveFormLoading(
@@ -176,7 +191,7 @@ const Documents = () => {
 		}
 	}, [files])
 
-	return (<FormProvider {...methods} >
+	return (<FormProvider {...{resolver,setResolver}} {...methods} >
 		<FlowContext.Provider value={{ ...flowStepsProvider }}>
 			<form onSubmit={handleSubmit(handleSaveForm)}>
 				<Grid container spacing={2}>

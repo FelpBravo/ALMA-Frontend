@@ -1,17 +1,20 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startApprovesListLoading } from 'actions/flowDocument';
+import ModalLoadFlow from 'components/documents/resume/ModalLoadFlow';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 
 import schema from './requestReview.schema';
 import RolItem from './RolItem';
+import jwt_decode from 'jwt-decode'
+import { get } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -42,7 +45,9 @@ export default function RequestStep() {
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList } = useSelector(state => state.flowDocument);
-
+    const { folderId, filesLoaded } = useSelector(state => state.documents);
+    const { user } = jwt_decode(authUser)
+    const [formData, setFormData] = useState(null)
     const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValues: {},
         mode: "onTouched",
@@ -56,15 +61,15 @@ export default function RequestStep() {
                 "name": flowName
             },
             "document": {
-                "uuid": "89b95882-8803-40ca-8ed1-63476bfbb9e1",
-                "name": "file1.jpg",
-                "author": "juan.suaza",
-                "folderId": 101
+                "uuid": get(filesLoaded, '0.fileIdLoaded', null),
+                "name": get(filesLoaded, '0.name', null),
+                "author": user?.userId,
+                folderId
             },
-            "startedBy": "juan.suaza",
+            "startedBy": user?.userId,
             ...values
         }
-        alert(JSON.stringify(data))
+        setFormData(data)
     };
 
     const commonProps = {
@@ -79,6 +84,9 @@ export default function RequestStep() {
         dispatch(startApprovesListLoading({ authUser, flowName }))
     }, [authUser])
 
+    const handleClose = () =>{
+        setFormData(null)
+	}
     return <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
             <Grid item md={12}>
@@ -139,6 +147,10 @@ export default function RequestStep() {
                 </Grid>
 
             </div>
+            <ModalLoadFlow 
+                data={formData} 
+                close={handleClose} 
+                open={Boolean(formData)} />
         </div>
 
     </form>

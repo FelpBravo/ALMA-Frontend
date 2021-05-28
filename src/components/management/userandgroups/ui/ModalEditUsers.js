@@ -33,7 +33,7 @@ const ModalEditUsers = (props) => {
 
   const [dataEdit, setDataEdit] = useState({});
 
-  const [validation, setValidation] = useState({ firstName: true, lastName: true, email: true })
+  const [validation, setValidation] = useState({ firstName: true, lastName: true, email: true, companyOther: true, departmentOther: true })
 
   const [stateCompany, setStateCompany] = useState({})
 
@@ -86,6 +86,12 @@ const ModalEditUsers = (props) => {
       case 'email':
         setValidation({ ...validation, ['email']: !correo.test(value) ? false : true })
         break;
+      case 'departmentOther':
+        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 ? false : true })
+        break
+      case 'companyOther':
+        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 ? false : true })
+        break
         case 'company':
         if(value === "Other"){  
           setStateCompany({ name:true, department:stateCompany.department})
@@ -223,6 +229,7 @@ const ModalEditUsers = (props) => {
                   type="text"
                   variant="outlined"
                   size="small"
+                  error={!validation.companyOther}
                 />
 
               </Grid>
@@ -257,7 +264,8 @@ const ModalEditUsers = (props) => {
                   name='departmentOther'
                   type="text"
                   variant="outlined"
-                  size="small"           
+                  size="small"    
+                  error={!validation.departmentOther}       
                 />
 
               </Grid>
@@ -288,7 +296,7 @@ const ModalEditUsers = (props) => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={validation.email && validation.firstName && validation.lastName ? false : true}
+            disabled={validation.email && validation.firstName && validation.lastName && (dataEdit.department === 'Other'? validation.departmentOther : true) && (dataEdit.company === 'Other'? validation.companyOther : true) ? false : true }
           >
             <IntlMessages id="button.text.edit" />
           </Button>

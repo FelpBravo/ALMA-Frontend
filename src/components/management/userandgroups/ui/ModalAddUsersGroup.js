@@ -102,7 +102,7 @@ const ModalAddUsersGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-          // disabled={messageErrorName}
+            disabled={nameUsersGroup.users &&  nameUsersGroup.users > 1}
           >
             Crear
           </Button>

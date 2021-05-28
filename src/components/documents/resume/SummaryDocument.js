@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Swal from 'sweetalert2';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,27 +7,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
-import TableActionButton from 'components/search/ui/TableActionButton';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { makeStyles } from '@material-ui/core/styles';
-import { deleteGroupLoading, groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
-import { useLocation } from 'react-router';
 
 
-const resumen = [
-    { rol: 'Owner', nombre: 'JUAN SUAZO', plazo: 30-30-2021, comentario:'como se ve'},
-    { rol: 'Owner', nombre: 'JUAN SUAZO', plazo: 30-30-2021, comentario:'como se ve'},
-    { rol: 'Owner', nombre: 'JUAN SUAZO', plazo: 30-30-2021, comentario:'como se ve'},
-    { rol: 'Owner', nombre: 'JUAN SUAZO', plazo: 30-30-2021, comentario:'como se ve'},
-    { rol: 'Owner', nombre: 'JUAN SUAZO', plazo: 30-30-2021, comentario:'como se ve'},
-    { rol: 'Owner', nombre: 'JUAN SUAZO', plazo: 30-30-2021, comentario:'como se ve'},
-];
 
+const SummaryDocument = (props) => {
 
-const SummaryInvolved = () => {
-
-
+    const { data} = props
+   
 	return (
         <div className="row">
         <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -41,35 +26,57 @@ const SummaryInvolved = () => {
                                 <IntlMessages id="Nombre documento" />
                             </TableCell>
                             <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
-                                Nombre
+                                Tipo
                             </TableCell>
                             <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
-                               Plazo
+                                ID
                             </TableCell>
                             <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
-                                Comentarios
+                                Creación
                             </TableCell>
+                            <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
+                                Responsable
+                            </TableCell>
+                            <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
+                               Versión
+                            </TableCell>
+                            <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
+                                Etiquetas
+                            </TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
 
-                        {resumen.map(({ rol, nombre, plazo, comentario }, index) => {
+                        
 
-                            return <TableRow key={index} >
-                                <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400}}>
-                                {rol}
+                            <TableRow>
+                                <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor:'pointer' }}
+                                    
+                                >
+                                {data?.name}
                                 </TableCell>
                                 <TableCell>
-                                {nombre}
+                                tipo
                                 </TableCell>
                                 <TableCell>
-                               {plazo}
+                                {data?.folderId}
                                 </TableCell>
                                 <TableCell>
-                                {comentario}
+                                creacion
                                 </TableCell>
+                                <TableCell>
+                                {data?.author}
+                                </TableCell> 
+                                <TableCell>
+                                version
+                                </TableCell>
+                                <TableCell>
+                                Etiquetas
+                                </TableCell>
+
                             </TableRow>
-                        })}
+                      
 
                     </TableBody>
                 </Table>
@@ -80,4 +87,4 @@ const SummaryInvolved = () => {
 	)
 }
 
-export { SummaryInvolved }
+export { SummaryDocument }

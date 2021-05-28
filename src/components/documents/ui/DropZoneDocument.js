@@ -1,34 +1,25 @@
 import { Grid } from '@material-ui/core';
 import { chunk, remove } from 'lodash-es';
-import get from 'lodash/get';
-import queryString from 'query-string';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-import { startDocumentByIdVisibility, startDropFileLoading, startThumbnailLoading } from 'actions/documents';
+import { startDropFileLoading } from 'actions/documents';
 import DocumentLoaded from 'components/ui/components/DocumentLoaded';
 import IntlMessages from 'util/IntlMessages';
 
 import { documentRemoveFile } from '../../../actions/documents';
-import ThumbnailPreview from '../../ThumbnailPreview/ThumbnailPreview.js';
-import { DocumentContext } from '../helpers/DocumentContext';
 import DialogPreview from './DialogPreview';
 import { ThumbnailItem } from './ThumbnailItem';
 
-export function DropZoneDocument( {document, setFiles} ){
+export function DropZoneDocument({ document, setFiles, controlledDocument }){
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const [dataDialogPreview, setDataDialogPreview] = useState(null);
-
 	// ID DOCUMENTO URL	
-	const MAX_FILES = document.length === 0 ? 20 : 1;
-	// const { thumbnail = null,
-	// 	thumbnailGenerated = false,
-	// 	name = '',
-	// 	fileIdLoaded = '', } = useSelector(state => state.documents);
+	const MAX_FILES = controlledDocument ? 1 :(document.length === 0 ? 20 : 1);
 
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	const nDocuments = documentsList?.length;
@@ -159,51 +150,8 @@ export function DropZoneDocument( {document, setFiles} ){
 
 						</div>
 					</div>}
-				{/* {
-					documentsList.map(({ fileIdLoaded, thumbnailGenerated, thumbnail }) =>
-						<ThumbnailItem fileIdLoaded={fileIdLoaded} thumbnailGenerated={thumbnailGenerated} thumbnail={thumbnail} name="test"/>
-					)
-
-				} */}
 				{nDocuments > 0 && <h4 style={{ marginTop: 20 }}>{<IntlMessages id="document.documentsLoad" />}</h4>}
 				{getPreviewList(nDocuments)}
-
-				{/* {
-
-					acceptedFiles
-					&&
-					fileIdLoaded
-					&&
-					acceptedFiles.length > 0
-					&&
-					<Paper style={{ padding: 30 }}>
-						{shouldDisplayThumbnail && thumbnail ? (
-							<ThumbnailPreview
-								thumbnail={thumbnail}
-								remove={() => setShouldDisplayThumbnail(false)}
-								name={acceptedFiles.map((file) => {
-									return (
-										<>{file.path}</>
-
-									)
-								})
-								}
-
-							/>
-						) : (
-							<div></div>
-						)}
-					</Paper>
-				}
-				{acceptedFiles.length === 0 && thumbnail && shouldDisplayThumbnail &&
-					<Paper style={{ padding: 30 }}>
-						<ThumbnailPreview
-							thumbnail={thumbnail}
-							name={name.slice(0, 50) + '...pdf'}
-						/>
-						<div></div>
-					</Paper>
-				} */}
 			</div>
 		</div>
 		<DialogPreview data={dataDialogPreview} handleClose={onCloseDialogPreview} />
