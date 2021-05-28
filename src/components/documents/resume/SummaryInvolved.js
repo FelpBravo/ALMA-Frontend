@@ -5,9 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { get } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
-import Swal from 'sweetalert2';
+import React, {  } from 'react';
 
 import IntlMessages from 'util/IntlMessages';
 
@@ -49,7 +47,7 @@ const SummaryInvolved = ({ data }) => {
                                                 {userId}
                                             </TableCell>
                                             <TableCell>
-                                                {maxDays}
+                                                {maxDays} días
                                             </TableCell>
                                             <TableCell>
                                                 {comment}
