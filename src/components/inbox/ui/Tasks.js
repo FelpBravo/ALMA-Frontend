@@ -14,6 +14,9 @@ import TableActionButton from 'components/search/ui/TableActionButton';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { INBOX_STATUS } from 'constants/constUtil';
+import { startActiveTasksInit } from 'actions/flowDocument';
+
 
 
 
@@ -41,8 +44,13 @@ const Tasks = () => {
 	const isMounted = useRef(true);
 
 	const history = useHistory();
-	
+	const dispatch = useDispatch();
 
+	const { authUser } = useSelector(state => state.auth);
+	const { tasksList} = useSelector(state => state.flowDocument);
+	const page = 1
+	const pageSize = 10
+  
 
 	useEffect(() => {
 		return () => {
@@ -50,12 +58,26 @@ const Tasks = () => {
 		}
 	}, [])
 
+	
+	useEffect(() => {
+
+
+		dispatch(startActiveTasksInit(authUser , page , pageSize,  INBOX_STATUS ))
+	
+	  }, [dispatch])
+	
+
 	const handleManage = () => {
-		console.log("Holaaaa")
 		//dispatch(addBreadcrumbs(name, `/document/${id}/version`))
 		history.push(`/manage`);
 
 	};
+	const handleOnChange = ({ target }) => {
+		const { name, value} = target;
+	
+		dispatch(startActiveTasksInit(authUser , page , pageSize, value));
+	
+	  }
 
 	return (
 		<div className="row">          
@@ -66,12 +88,16 @@ const Tasks = () => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  name="profile"
-                  //onChange={handleOnChangeName}
-                  label="Perfiles"
+                  name="currentstatus"
+                  onChange={handleOnChange}
+                  label="Estado"
                 >
                  
-                <MenuItem value='1'>Owner</MenuItem>
+				 {INBOX_STATUS.map((sta) => {
+                  return(
+				  <MenuItem value={sta}>{sta}</MenuItem>)
+                 
+                  })}
                 </Select>
               </FormControl>
             </Grid>
@@ -89,14 +115,22 @@ const Tasks = () => {
 									<IntlMessages id="Rol" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="Estado" />
+								</TableCell>
+								
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="Fecha de creación" />
+								</TableCell>
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="Id asignado" />
+								</TableCell>
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Autor" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Plazo de revision" />
 								</TableCell>
-								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Estado" />
-								</TableCell>
+								
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="Gestionar" />
 								</TableCell>
@@ -104,7 +138,10 @@ const Tasks = () => {
 						</TableHead>
 						<TableBody >
 
-							 <TableRow >
+						{tasksList.map(({ status, createdOn, author, instanceId }, index) => {
+
+                                    return <TableRow key={index} >
+
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
 									Plantilla-contrato
 									</TableCell>
@@ -112,15 +149,20 @@ const Tasks = () => {
 									Owner
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									Nadia Gallardo
+									{status}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									30-03-2021
+									{createdOn.substr(0, 10)}
 									</TableCell>
-                                    <TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									En revisión
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									{instanceId}
 									</TableCell>
-									
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									{author}
+									</TableCell>
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									23 días
+									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
 									
 											<div className={classes.iconsHolder}>
@@ -137,6 +179,7 @@ const Tasks = () => {
 									</TableCell>
 
 								</TableRow>
+						})}
 
 							
 							{/*{!userdata || userdata.length == 0 &&

@@ -6,8 +6,9 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Divider, Grid } from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { SummaryDocument } from 'components/documents/ui/SummaryDocument';
-import { SummaryInvolved } from 'components/documents/ui/SummaryInvolved';
+import { SummaryDocument } from 'components/documents/resume/SummaryDocument';
+import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
+
 
 
 
