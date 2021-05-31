@@ -159,7 +159,7 @@ export const startSaveSearchLoading = (authUser, filters) => {
 			
 				},
 				allowOutsideClick: () => !Swal.isLoading()
-			}).then(result => dispatch(savedSearchAdd(result?.value?.data)))
+			}).then(result => result?.value && dispatch(savedSearchAdd(result?.value?.data)))
 		} catch (error) {
 			console.log(error);
 		}
