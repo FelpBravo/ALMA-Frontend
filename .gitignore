@@ -25,4 +25,5 @@ yarn-error.log*
 yarn.lock
 
 # Exclude Jenkins
-Jenkinsfile
+jenkinsfile
+dockerfile
