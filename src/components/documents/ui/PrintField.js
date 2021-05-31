@@ -70,6 +70,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				name={name}
 				required={mandatory}
 				label={label}
+				disabled={name === "mc:alma_doc_number"}
 				{...commonProps}
 			/>);
 
