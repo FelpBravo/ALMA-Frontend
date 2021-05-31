@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'domain-dev'
+        label 'domain-qa'
     }
     
     options { 
@@ -30,21 +30,6 @@ pipeline {
             steps {
                 nodejs(nodeJSInstallationName: 'Node') {
                     sh 'yarn run build-dev'
-                }
-            }
-        }
-        stage ("Test") {
-            steps {
-                /*
-                nodejs(nodeJSInstallationName: 'Node') {
-                    sh 'yarn run test'
-                }
-                */
-                script {
-                    def scannerHome = tool 'sonarqube-scanner'
-                    withSonarQubeEnv(credentialsId: 'sonar-token') {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
                 }
             }
         }
