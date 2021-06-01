@@ -5,6 +5,7 @@ import AttachFileOutlinedIcon from '@material-ui/icons/AttachFileOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 import NearMeOutlinedIcon from '@material-ui/icons/NearMeOutlined';
+import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -195,7 +196,10 @@ const Comments = (props) => {
                             />
                         </Grid>
                         <Grid item xs={1} >
-                            <IconButton style={{ background: "#3699FF", width: 35, height: 35, marginLeft: 15, marginTop:2}} onClick={handleSubmit}>
+                            <IconButton 
+                                style={{ background: isEmpty(text) ? "#E0E0E0" : "#3699FF", width: 35, height: 35, marginLeft: 15, marginTop:2}}
+                                disabled={isEmpty(text)}
+                                onClick={handleSubmit}>
                                 <NearMeOutlinedIcon style={{ color: "white", fontSize: 22 }} />
                             </IconButton>
                         </Grid>
@@ -229,7 +233,7 @@ const Comments = (props) => {
         <div>
             <NewComment />
             <Divider className="mt-1" style={{ height: 1, background: "rgba(0, 0, 0, 0.12)" }} />
-            <div style={{ maxHeight: '650px', overflow: 'auto' }}>
+            <div style={{ marginTop: '16px', maxHeight: '650px', overflow: 'auto' }}>
                 {comments.length > 0 && comments.map(({ author, content, createdOn, id, totalReplies, attachments }) => {
                     return (
                         <>
