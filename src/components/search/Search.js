@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom';
 import queryString from 'query-string';
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
+
+import { searchClearAllFilters, startSearchLoading } from '../../actions/search';
 import { EditTextSearch } from './ui/EditTextSearch';
 import { TableSearch } from './ui/TableSearch';
-import { startSearchLoading } from '../../actions/search';
 
 const Search = () => {
 
@@ -35,6 +36,10 @@ const Search = () => {
 		dispatch(startSearchLoading(authUser, undefined, undefined, id,page_url));
 
 	}, [dispatch, id, authUser]); 
+
+	useEffect(() => {
+		return () => dispatch(searchClearAllFilters());
+	}, [])
 
 	return (
 		<div>

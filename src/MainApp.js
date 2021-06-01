@@ -1,11 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { setLocale } from 'yup';
+
+import { startUserSingOut } from 'actions/auth';
+import { axiosInstance } from 'config/axios-instance';
+import { FORBIDDEN, UNAUTHORIZED } from 'constants/constUtil';
+import { MainRouter } from 'routers/MainRouter';
+import { locale } from 'util/errorsYup';
+
 import { store } from './store/store';
 
-import { MainRouter } from 'routers/MainRouter';
-import { axiosInstance } from 'config/axios-instance';
-import { startUserSingOut } from 'actions/auth';
-import { FORBIDDEN, UNAUTHORIZED } from 'constants/constUtil';
+setLocale(locale);
 
 const MainApp = () =>
 	<Provider store={store}>

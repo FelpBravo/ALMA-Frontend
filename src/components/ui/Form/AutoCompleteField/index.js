@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/styles";
 import get from 'lodash/get'
 import React, { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
+import IntlMessages from "util/IntlMessages";
 
 const Autocomplete = withStyles ({
     paper: {
@@ -66,7 +67,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                         <TextField
                             {...params}
                             {...rest}
-                            helperText={errorMessage}
+                            helperText={errorMessage && <IntlMessages id={errorMessage} />}
                             error={Boolean(errorMessage)}
                             label={label}
                             InputProps={{

@@ -751,5 +751,12 @@
 	"document.loadDocuments.request.summary.involved":"Involucrados",
 	"document.loadDocuments.request.summary.general.remarks":"Observaciones Generales",
 	"document.loadDocuments.request.summary.button.cancel":"Cancelar",
-	"document.loadDocuments.request.summary.button.confirm":"Confirmar"
+	"document.loadDocuments.request.summary.button.confirm":"Confirmar",
+
+	"forms.errors.validation.mixed.required": "Campo requerido",
+	"forms.errors.validation.mixed.type.default": "Campo inválido",
+	"forms.errors.validation.mixed.type.integer": "Campo requerido",
+	"forms.errors.validation.mixed.type.string": "Texto inválido",
+	"forms.errors.validation.integer.positive": "Debe ser un número positivo"
+	
 }
