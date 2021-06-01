@@ -156,7 +156,7 @@ const Index = (props) => {
 							<DropdownMenu right>
 								<CardHeader styleName="align-items-center"
 									heading={<IntlMessages id="appNotification.title" />} />
-								<AppNotification />
+								<AppNotification isOpen={appNotification} />
 							</DropdownMenu>
 						</Dropdown>
 					</li>

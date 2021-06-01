@@ -9,7 +9,6 @@ export const startNotificationsLoading = ({ authUser, page, size }) => {
         try {
 
             const resp = await getNotifications(authUser, page, size);
-
             dispatch(notificationsLoaded(resp.data));
 
         } catch (error) {
