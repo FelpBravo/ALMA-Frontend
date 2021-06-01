@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function AliveFile({ handleGetFile, file, loading }) {
     const { fields, fileName, passwordNeeded } = useSelector(state => state.sharedDocument);
-    const classes = useStyles()
+    const classes = useStyles();
     const downloadDisabled = passwordNeeded && (!file || !fields?.password)
 
     return <>
