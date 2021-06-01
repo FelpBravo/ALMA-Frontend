@@ -4,12 +4,17 @@ import NotificationItem from './NotificationItem';
 import { notifications } from './data';
 import CustomScrollbars from 'util/CustomScrollbars';
 import { CircularProgress, Grid } from '@material-ui/core';
+import { startNotificationsLoading } from 'actions/notifications';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AppNotification = () => {
-  const loader = useRef(null);
-  const [page, setPage] = useState(0)
-  const [data, setData] = useState(notifications)
+  const dispatch = useDispatch();
+  const { authUser } = useSelector(state => state.auth);
 
+  const loader = useRef(null);
+  const [page, setPage] = useState(1)
+  const [data, setData] = useState(notifications)
+  
   const handleObserver = (entities) => {
     const target = entities[0];
     if (target.isIntersecting) {
@@ -31,9 +36,10 @@ const AppNotification = () => {
   }, []);
 
   useEffect(() => {
+    dispatch(startNotificationsLoading({authUser, page, size:5}))
     const newList = data.concat(notifications);
     setTimeout(() => setData([...newList]), 2000)
-  }, [page])
+  }, [authUser,page])
 
   return (
     <CustomScrollbars className="messages-list scrollbar" style={{ height: 380 }}>
