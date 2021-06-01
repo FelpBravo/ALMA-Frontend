@@ -153,13 +153,13 @@ export const startSaveSearchLoading = (authUser, filters) => {
 					}
 					else{
 						Swal.showValidationMessage(
-							'No puede estar el campo vacio'
+							'Debe ingresar más de 3 carácteres'
 						)
 					}
 			
 				},
 				allowOutsideClick: () => !Swal.isLoading()
-			}).then(result => dispatch(savedSearchAdd(result?.value?.data)))
+			}).then(result => result?.value && dispatch(savedSearchAdd(result?.value?.data)))
 		} catch (error) {
 			console.log(error);
 		}
