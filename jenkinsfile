@@ -29,7 +29,7 @@ pipeline {
         stage ("Build") {
             steps {
                 nodejs(nodeJSInstallationName: 'Node') {
-                    sh 'yarn run build-dev'
+                    sh 'yarn run build-qa'
                 }
             }
         }
