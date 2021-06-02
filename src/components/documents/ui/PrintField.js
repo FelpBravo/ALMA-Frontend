@@ -1,13 +1,24 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { date } from 'yup';
 
-import { AutoCompleteField, TextField } from 'components/ui/Form';
+import { AutoCompleteField, DateField, TextField } from 'components/ui/Form';
 import { DATE, LIST, NUMERIC } from 'constants/constUtil';
 
 export const PrintField = ({ sectionId, name, label, type, value, propertyItemList, mandatory }) => {
-	const { register, control, formState: { errors } } = useFormContext();
+	const { register, control, formState: { errors }, resolver, setResolver, setValue } = useFormContext();
+
+	useEffect(() => {
+		if (type === DATE){
+
+			setResolver({
+				...resolver,
+				[name]: date().required().min("1900-01-01").max("2100-01-01"),
+			})
+			setValue(name, null)
+		}
+	}, [type, name])
 
 	const commonProps = {
 		register,
@@ -20,15 +31,11 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 	switch (type) {
 		case DATE:
 			return (
-				<TextField
+				<DateField
 					key={name}
-					type="date"
 					label={label}
 					name={name}
 					required={mandatory}
-					InputLabelProps={{
-						shrink: true,
-					}}
 					{...commonProps}
 				/>
 			);
@@ -63,6 +70,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				name={name}
 				required={mandatory}
 				label={label}
+				disabled={name === "mc:alma_doc_number"}
 				{...commonProps}
 			/>);
 

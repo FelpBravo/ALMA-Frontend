@@ -143,7 +143,7 @@ const SideBarContent = () => {
 	
 
 	return (
-		<CustomScrollbars className="scrollbar">
+		<CustomScrollbars style={{overflowX: 'hidden'}} className="scrollbar">
 			<SideBarContext.Provider value={{}}>
 				<Navigation menuItems={fixedFolders} privileges={authorities} />
 				<TreeView

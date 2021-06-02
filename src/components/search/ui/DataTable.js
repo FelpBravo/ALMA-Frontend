@@ -153,6 +153,10 @@ const DataTable = () => {
 
 	const [editOnline, setEditOnline] = useState(null)
 
+	const [selectedRow, setSelectedRow] = useState (null)
+
+
+
 	let page_url = 1
 	if (page) {
 		page_url = page.trim() ? page.replace(/[a-zA-Z ]/g, '') : 1
@@ -258,8 +262,9 @@ const DataTable = () => {
 	}
  
   
-	const handleClick = (event) => {
-	  setAnchorEl(event.currentTarget);
+	const handleClick = (e, id, name ) => {
+	  setAnchorEl(e.currentTarget);
+	  setSelectedRow({'id': id, 'name':name})
 	};
   
 	const handleClose = () => {
@@ -412,7 +417,7 @@ const DataTable = () => {
 												/>
 												<MoreVert
 													className={classes.iconos}
-													onClick={handleClick}
+													onClick={(e) => handleClick(e, id, name)}
 											    />
 												<StyledMenu
 													id="customized-menu"
@@ -421,14 +426,14 @@ const DataTable = () => {
 													open={Boolean(anchorEl)}
 													onClose={handleClose}
 												>
-													<StyledMenuItem onClick={() => setEditOnline({id, name})}>
+													<StyledMenuItem onClick={() => setEditOnline(selectedRow)}>
 													        <RateReviewOutlinedIcon
 																className={classes.iconos}	
 															/>{` `}
 													<span className={classes.menu}>Editar en linea</span>	
 													</StyledMenuItem>
 
-													<StyledMenuItem onClick={() => handleDelete(id)} >
+													<StyledMenuItem onClick={() => handleDelete(selectedRow.id)} >
 													{(ROLE_FILE_DELETE || DELETE) &&
 												
 															<DeleteOutlinedIcon
@@ -438,7 +443,7 @@ const DataTable = () => {
 													}<span className={classes.menu}>Eliminar</span>	
 													</StyledMenuItem>
 													
-													<StyledMenuItem onClick={() => setDataSharedDialog({ id, name })} >
+													<StyledMenuItem onClick={() => setDataSharedDialog(selectedRow)} >
 													        <ShareIcon
 																className={classes.iconos}	
 															/>{` `}

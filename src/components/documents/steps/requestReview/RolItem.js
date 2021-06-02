@@ -12,6 +12,7 @@ import { getUsersFilter } from 'services/usersService';
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
         margin: theme.spacing(0, 1),
+        textTransform: "capitalize"
     },
     rolSubTitle: {
         color: "gray",
@@ -93,18 +94,18 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                         </Grid>
                         <Grid item md={1}>
                             {
-                                (mandatory && fields.length === 1) 
-                                ? null
-                                : <IconButton onClick={() => remove(index)} aria-label="delete">
-                                    <DeleteIcon color="primary" fontSize="small" />
-                                </IconButton>
+                                (mandatory && fields.length === 1)
+                                    ? null
+                                    : <IconButton onClick={() => remove(index)} aria-label="delete">
+                                        <DeleteIcon color="primary" fontSize="small" />
+                                    </IconButton>
                             }
                         </Grid>
                     </Grid>
                 ))
             }
         </Grid>
-        <Grid item md={12} alignItems="center">
+        <Grid item md={12}>
             <Divider />
         </Grid>
     </Grid>)

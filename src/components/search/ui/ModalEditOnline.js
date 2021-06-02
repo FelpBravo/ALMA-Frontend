@@ -10,7 +10,7 @@ import { DialogTitle, Divider} from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { startDocumentsOfficeLoading } from 'actions/documents';
-
+import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,29 +28,17 @@ const ModalEditOnline = ({ data, handleClose }) => {
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
   const { documentsOffice } = useSelector(state => state.documents);
-  const [state, setState] = React.useState({
-    checkedA: false,
-    checkedB: false,
-  });
- 
  
 
   useEffect(() => {
-
-  }, [dispatch]);
+    if(data?.id !== null){
+      dispatch(startDocumentsOfficeLoading(authUser, data?.id))}
+  }, [data?.id]);
 
  
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    dispatch(startDocumentsOfficeLoading(authUser,data?.id))
-  };  
 
-  const handleChange1 = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  
-  };  
-
-  const handleOnSave = () => {
+  const handleOnSave = () => { 
+    dispatch(startDocumentsOfficeLoading(authUser, data?.id))
     documentsOffice ? window.location.replace(documentsOffice) : dispatch(console.log("funciono"))
     handleClose()
   }
@@ -71,30 +59,10 @@ const ModalEditOnline = ({ data, handleClose }) => {
         </DialogTitle>
 
         <DialogContent>
-            <h3></h3>
-        <FormControlLabel
-            control={
-                <Checkbox 
-                //checked={state.checkedA} 
-                //onChange={handleChange1} 
-                disabled
-                name="checkedA" 
-                color="primary"
-                />
-            }
-            label="Documento controlado"
-        />
-        <FormControlLabel
-            control={
-            <Checkbox
-                checked={state.checkedB}
-                onChange={handleChange}
-                name="checkedB"
-                color="primary"
-            />
-            }
-            label="Documento no controlado"
-        />
+        <Alert severity="info" style={{fontFamily:"Poppins", color:"#3699FF", fontSize:"12px"}} className="mt-3">
+            Solo se puede editar en linea documentos del tipo no controlados
+          </Alert>
+        
             
           <Divider className="mt-3"/>
         
@@ -121,8 +89,7 @@ const ModalEditOnline = ({ data, handleClose }) => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-           // disabled={messageErrorName}
-          >
+           >
            Editar
           </Button>
 

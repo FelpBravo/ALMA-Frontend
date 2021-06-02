@@ -1,4 +1,4 @@
-import { object, string, number, date, array } from 'yup';
+import { array, number, object, string } from 'yup';
 
 const schema = object().shape({
     approves: array().of(

@@ -312,6 +312,7 @@
 	"table.shared.dialog.field.copyLink": "Copiar enlace",
 	"table.shared.dialog.field.createDocument": "Crear",
 	"table.shared.dialog.field.cancelDocument": "Cancelar",
+	"table.shared.dialog.field.closeDocument": "Aceptar",
 
 	"downloadFile.shared.dialog.button.send": "Enviar",
 	"downloadFile.shared.dialog.message.protected": "está protegido. Ingrese la contraseña para abrir el documento.",
@@ -328,6 +329,8 @@
 	"todo.labels": "Etiquetas",
 	"dashboard.advancedSearchText": "Buscar",
 	"dashboard.advancedSearchClear": "Limpiar",
+	"dashboard.button.back": "Volver",
+	"dashboard.button.cancel": "Cancelar",
 	"dashboard.advancedSearch": "Búsqueda Avanzada",
 	"dashboard.listSearch": "Mis búsquedas guardadas",
 	"dashboard.saveSearch": "Guardar búsqueda",
@@ -742,5 +745,18 @@
 	"changePassword.passwordPolicy.rule.one": "8 caracteres alfanuméricos",
 	"changePassword.passwordPolicy.rule.two": "2 dígitos",
 	"changePassword.passwordPolicy.rule.three": "1 letra mayúscula",
-	"changePassword.passwordPolicy.rule.four": "1 carácter especial"
+	"changePassword.passwordPolicy.rule.four": "1 carácter especial",
+
+	"document.loadDocuments.request.summary.title":"Resumen documento",
+	"document.loadDocuments.request.summary.involved":"Involucrados",
+	"document.loadDocuments.request.summary.general.remarks":"Observaciones Generales",
+	"document.loadDocuments.request.summary.button.cancel":"Cancelar",
+	"document.loadDocuments.request.summary.button.confirm":"Confirmar",
+
+	"forms.errors.validation.mixed.required": "Campo requerido",
+	"forms.errors.validation.mixed.type.default": "Campo inválido",
+	"forms.errors.validation.mixed.type.integer": "Campo requerido",
+	"forms.errors.validation.mixed.type.string": "Texto inválido",
+	"forms.errors.validation.integer.positive": "Debe ser un número positivo"
+	
 }

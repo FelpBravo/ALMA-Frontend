@@ -1,8 +1,8 @@
 pipeline {
     agent {
-        label 'dev-node-1'
+        label 'domain-dev'
     }
-
+    
     options { 
         disableConcurrentBuilds() 
     }
