@@ -6,6 +6,9 @@ import { MainRouter } from 'routers/MainRouter';
 import { axiosInstance } from 'config/axios-instance';
 import { startUserSingOut } from 'actions/auth';
 import { FORBIDDEN, UNAUTHORIZED } from 'constants/constUtil';
+import moment from 'moment';
+import 'moment/locale/es';
+moment.locale('es');
 
 const MainApp = () =>
 	<Provider store={store}>

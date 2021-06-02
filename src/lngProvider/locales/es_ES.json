@@ -742,5 +742,10 @@
 	"changePassword.passwordPolicy.rule.one": "8 caracteres alfanuméricos",
 	"changePassword.passwordPolicy.rule.two": "2 dígitos",
 	"changePassword.passwordPolicy.rule.three": "1 letra mayúscula",
-	"changePassword.passwordPolicy.rule.four": "1 carácter especial"
+	"changePassword.passwordPolicy.rule.four": "1 carácter especial",
+
+	"flow.created": "Se ha agregado un nuevo flujo No. {FlowID}",
+	"flow.newTask": "Se te ha asignado una nueva tarea ({TaskID}) pendiente de revisión para el flujo No. {FlowID}",
+	"flow.approved": "Se ha aprobado el flujo {FlowID} exitosamente.",
+	"flow.decclined": "Se ha rechazado el flujo {FlowID}."
 }
