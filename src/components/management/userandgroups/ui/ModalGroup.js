@@ -57,6 +57,7 @@ const ModalGroup = () => {
     }
   }
   const handleClose = () => {
+    setNameGroup({dependencie: "", profile: "" , fullnamegroup: "", users:[] })
     dispatch(closeModalGroup());
   }
   const handleOnSave =() =>{
