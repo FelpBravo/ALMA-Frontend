@@ -50,16 +50,8 @@ const Tasks = () => {
 	const { tasksList ={}} = useSelector(state => state.flowDocument);
 	const { data = [], totalItems = 0 } = tasksList;
 	//const [tasksdata, setTasksdata] = useState([])
-	const [page, setPage] = useState(1)
-	console.log(page)
+	const [page, setPage] = useState(0)
 
-
-	useEffect(() => {
-		if(page === 1){
-			dispatch(startActiveTasksInit(authUser, page, INBOX_STATUS ))
-		}
-	  }, [dispatch])
-	
 
 
 	const handleManage = () => {
@@ -76,14 +68,10 @@ const Tasks = () => {
 	}*/}
 
 	const handleChangePage = (event, page) => {
-		
-		history.push(page != 1? `/inbox/${page}`: `/inbox`);
-		if(page != 1){
 			dispatch(startActiveTasksInit(authUser , page , INBOX_STATUS ))
 			setPage(page);
-		}
+		
 	}
-  
 
 	return (
 		<div className="row">          
@@ -211,7 +199,6 @@ const Tasks = () => {
 					>
 					<Pagination 
 						style={{color: '#369bff'}}
-						page={page}
 						count={Math.ceil(totalItems/10)} 
 						color="primary" 
 						shape="rounded" 

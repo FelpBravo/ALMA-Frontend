@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import { Tasks } from './ui/Tasks';
 import { Manage } from './ui/Manage';
 import { Tracing } from './ui/Tracing';
+import { INBOX_STATUS } from 'constants/constUtil';
+import { startActiveTasksInit } from 'actions/flowDocument';
 
 
 
@@ -58,11 +60,22 @@ const Inbox = () => {
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
 	const classes = useStyles();
-	const [value, setValue] = React.useState(0);
+	const [value, setValue] = useState(0);
+	const page = 1
+	const [openTracing, setOpenTracing] = useState(null)
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
+
+    useEffect(() => {
+		
+		setOpenTracing(null)
+
+    }, [value])
+
+	useEffect(() => {
+		
+			dispatch(startActiveTasksInit(authUser, page, INBOX_STATUS ))
+		
+	  }, [dispatch])
 
 	useEffect(() => {
 
@@ -72,6 +85,10 @@ const Inbox = () => {
 
 	}, [dispatch, authUser]);
 
+	
+	const handleChange = (event, newValue) => {
+		setValue(newValue);
+	};
 
 
 	return (
@@ -104,14 +121,13 @@ const Inbox = () => {
 									<Tasks/>
 								</TabPanel>
 								<TabPanel value={value} index={1}>
-									<Manage/>
-									<Tracing/>
+									<Manage setOpenTracing={setOpenTracing}/>
 								</TabPanel>
 							</div>
 						</div>
 					</div>
 				</div>
-				
+				{ Boolean(openTracing) && <Tracing/>}
 			</div>
 		</div>
 	)

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Manage = () => {
+const Manage = ({setOpenTracing}) => {
 
 	const classes = useStyles();
 
@@ -90,8 +90,8 @@ const Manage = () => {
 													materialIcon={
 														<PersonPinCircleIcon
 															className={classes.iconos}
-															//onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department,companyOther, departmentOther, search)}
-														/>
+															onClick={() => setOpenTracing({id: 3})}
+													    />
 													}
 												/>
 

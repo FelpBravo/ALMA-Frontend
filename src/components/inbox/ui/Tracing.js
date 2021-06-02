@@ -14,28 +14,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 
-const QontoConnector = withStyles({
-    alternativeLabel: {
-      top: 10,
-      left: 'calc(-50% + 16px)',
-      right: 'calc(50% + 16px)',
-    },
-    active: {
-      '& $line': {
-        borderColor: '#784af4',
-      },
-    },
-    completed: {
-      '& $line': {
-        borderColor: '#784af4',
-      },
-    },
-    line: {
-      borderColor: '#eaeaf0',
-      borderTopWidth: 3,
-      borderRadius: 1,
-    },
-  })(StepConnector);
   
   const useQontoStepIconStyles = makeStyles({
     root: {
@@ -179,17 +157,23 @@ const QontoConnector = withStyles({
   }));
   
   function getSteps() {
-    return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+    return ['Owner','Co-creador','Stakeholder','Reviewed', 'Approved', 'Released'];
   }
   
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return 'Select campaign settings...';
+        return 'Owner';
       case 1:
-        return 'What is an ad group anyways?';
+        return 'Co-creador';
       case 2:
-        return 'This is the bit I really care about!';
+        return 'Stakeholder';
+      case 3:
+        return 'Reviewed';
+      case 4:
+        return 'Approved';
+      case 5:
+        return 'Released';
       default:
         return 'Unknown step';
     }
