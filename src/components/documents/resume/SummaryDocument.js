@@ -26,7 +26,7 @@ const SummaryDocument = (props) => {
                                 <IntlMessages id="Nombre documento" />
                             </TableCell>
                             <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
-                                Tipo
+                             Ubicación
                             </TableCell>
                             <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
                                 ID
@@ -57,7 +57,7 @@ const SummaryDocument = (props) => {
                                 {data?.name}
                                 </TableCell>
                                 <TableCell>
-                                tipo
+                                Ubicacion
                                 </TableCell>
                                 <TableCell>
                                 {data?.folderId}
