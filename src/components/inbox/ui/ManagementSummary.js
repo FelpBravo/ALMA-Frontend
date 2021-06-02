@@ -8,6 +8,12 @@ import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import { SummaryDocument } from 'components/documents/resume/SummaryDocument';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
 
 
 
@@ -64,7 +70,10 @@ const ManagementSummary = () => {
                     <Divider className="mt-3 mb-3"/>
                     <h3>Solicitud de revisión</h3>
 
+					<p>Nombre te ha solicitado revisar este documento, en el rol ...</p>
+					<p>El plazo de esta solicitud vence el....</p>
 
+				
 					<Grid container 
                     //onClick={handleBackGo}
                     >

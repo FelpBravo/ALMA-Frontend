@@ -17,8 +17,7 @@ const postFlows = (authUser, flow, document, approves ,comment , startedBy) => {
 };
 
 const getActiveTasks = (authUser, page, pageSize, status) => {
-    return axiosInstance.post(`/flows/data/activeTasks`, 
-    { page, pageSize, status },{
+    return axiosInstance.post(`/flows/data/activeTasks`, { page, pageSize, status },{
         headers: {
             Authorization: `Bearer ${authUser}`,
         },

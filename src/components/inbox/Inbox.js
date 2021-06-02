@@ -11,6 +11,8 @@ import AppBar from '@material-ui/core/AppBar';
 import PropTypes from 'prop-types';
 import { Tasks } from './ui/Tasks';
 import { Manage } from './ui/Manage';
+import { Tracing } from './ui/Tracing';
+
 
 
 function TabPanel(props) {
@@ -103,6 +105,7 @@ const Inbox = () => {
 								</TabPanel>
 								<TabPanel value={value} index={1}>
 									<Manage/>
+									<Tracing/>
 								</TabPanel>
 							</div>
 						</div>

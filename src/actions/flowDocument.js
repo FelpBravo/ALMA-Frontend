@@ -52,11 +52,11 @@ export const startInitFlowsLoading = ( authUser, data,) => {
 	}
 };
 
-export const startActiveTasksInit = ( authUser, page, pageSize, status) => {
+export const startActiveTasksInit = ( authUser, page, status) => {
     return async (dispatch) => {
 
         try {
-            const resp = await getActiveTasks(authUser, page, pageSize, status);
+            const resp = await getActiveTasks(authUser, page, 10, status);
 
             dispatch(listActiveTasks(resp.data));
 

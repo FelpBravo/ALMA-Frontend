@@ -47,37 +47,43 @@ const Tasks = () => {
 	const dispatch = useDispatch();
 
 	const { authUser } = useSelector(state => state.auth);
-	const { tasksList} = useSelector(state => state.flowDocument);
-	const page = 1
-	const pageSize = 10
-  
+	const { tasksList ={}} = useSelector(state => state.flowDocument);
+	const { data = [], totalItems = 0 } = tasksList;
+	//const [tasksdata, setTasksdata] = useState([])
+	const [page, setPage] = useState(1)
+	console.log(page)
+
 
 	useEffect(() => {
-		return () => {
-			isMounted.current = false
+		if(page === 1){
+			dispatch(startActiveTasksInit(authUser, page, INBOX_STATUS ))
 		}
-	}, [])
-
-	
-	useEffect(() => {
-
-
-		dispatch(startActiveTasksInit(authUser , page , pageSize,  INBOX_STATUS ))
-	
 	  }, [dispatch])
 	
+
 
 	const handleManage = () => {
 		//dispatch(addBreadcrumbs(name, `/document/${id}/version`))
 		history.push(`/manage`);
 
 	};
-	const handleOnChange = ({ target }) => {
+
+	{/*{const handleOnChange = ({ target }) => {
 		const { name, value} = target;
 	
-		dispatch(startActiveTasksInit(authUser , page , pageSize, value));
+		dispatch(startActiveTasksInit(authUser , page, value));
 	
-	  }
+	}*/}
+
+	const handleChangePage = (event, page) => {
+		
+		history.push(page != 1? `/inbox/${page}`: `/inbox`);
+		if(page != 1){
+			dispatch(startActiveTasksInit(authUser , page , INBOX_STATUS ))
+			setPage(page);
+		}
+	}
+  
 
 	return (
 		<div className="row">          
@@ -89,7 +95,7 @@ const Tasks = () => {
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   name="currentstatus"
-                  onChange={handleOnChange}
+                  //onChange={handleOnChange}
                   label="Estado"
                 >
                  
@@ -138,15 +144,15 @@ const Tasks = () => {
 						</TableHead>
 						<TableBody >
 
-						{tasksList.map(({ status, createdOn, author, instanceId }, index) => {
+						{data.map(({ fileName, role, status, createdOn, author, instanceId }, index) => {
 
                                     return <TableRow key={index} >
 
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
-									Plantilla-contrato
+									{fileName}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									Owner
+								    {role}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
 									{status}
@@ -182,17 +188,17 @@ const Tasks = () => {
 						})}
 
 							
-							{/*{!userdata || userdata.length == 0 &&
+							{!data || data.length == 0 &&
 								<TableRow>
 									<TableCell
 										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
 										colSpan='5'
 									>
-										<IntlMessages id="users.nousers" />
+										<IntlMessages id="No hay tareas por hacer" />
 									</TableCell>
 								</TableRow>
 
-							}*/}
+							}
 
 						</TableBody>
 					</Table>
@@ -203,14 +209,14 @@ const Tasks = () => {
 						alignItems="flex-end"
 
 					>
-						<Pagination 
-									style={{color: '#369bff'}}
-									//defaultPage={parseInt(page_url)}
-									//count={Math.ceil(totalItems/10)} 
-									color="primary" 
-									shape="rounded" 
-									//total={totalItems} 
-									//onChange={handleChangePage}
+					<Pagination 
+						style={{color: '#369bff'}}
+						page={page}
+						count={Math.ceil(totalItems/10)} 
+						color="primary" 
+						shape="rounded" 
+						total={totalItems} 
+						onChange={handleChangePage}
 						/> 
 					</Grid>
 			</div>
