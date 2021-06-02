@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import IconButton from '@material-ui/core/IconButton'
 import CardMenu from '../CardMenu';
+import SyncIcon from '@material-ui/icons/Sync';
 
 const CardHeader = (props) => {
 
@@ -27,11 +28,11 @@ const CardHeader = (props) => {
         {subHeading && <p className="sub-heading">{subHeading}</p>}
       </div>
 
-      <IconButton className="icon-btn text-dark" onClick={onOptionMenuSelect}>
-        <i className="zmdi zmdi-chevron-down"/>
+      <IconButton className="icon-btn text-dark">
+        <SyncIcon />
       </IconButton>
-      <CardMenu menuState={menuState} anchorEl={anchorE1}
-                handleRequestClose={handleRequestClose}/>
+      {/* <CardMenu menuState={menuState} anchorEl={anchorE1}
+                handleRequestClose={handleRequestClose}/> */}
     </div>
   )
 };

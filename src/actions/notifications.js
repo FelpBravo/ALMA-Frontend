@@ -24,3 +24,9 @@ const notificationsLoaded = (notificationsList) => {
         payload: notificationsList
     }
 };
+
+export const notificationsInitialLoad = () => {
+    return {
+        type: types.notificationsInitialLoad,
+    }
+};

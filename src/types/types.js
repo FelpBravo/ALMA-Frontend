@@ -162,4 +162,5 @@ export const types = {
 	approvesListLoaded: "Approves list loaded",
 
 	notificationsLoaded: "Notifications loaded",
+	notificationsInitialLoad: "notifications Initial Load",
 }
