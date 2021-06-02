@@ -13,7 +13,6 @@ const Search = () => {
 	const location = useLocation();
 
 	const { id, page, savedSearchId } = useParams()
-
 	const { folderId } = queryString.parse(location.search);
 	
 	let page_url = '1'
@@ -21,11 +20,8 @@ const Search = () => {
 	if(page){
 		page_url = page.trim() || page? page.replace(/[a-zA-Z ]/g,''): 1
 	}
-	
-
 
 	const { authUser } = useSelector(state => state.auth);
-
 
 	
 	useEffect(() => {
@@ -38,8 +34,8 @@ const Search = () => {
 	}, [dispatch, id, authUser]); 
 
 	useEffect(() => {
-		return () => dispatch(searchClearAllFilters());
-	}, [])
+		if(id) dispatch(searchClearAllFilters());
+	}, [id])
 
 	return (
 		<div>
