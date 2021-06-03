@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startThumbnailLoading } from 'actions/documents';
+import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startFoldersLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 
@@ -41,6 +41,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
     const [openModal, setOpenModal] = useState(false);
     const history = useHistory();
     const classes = useStyles();
+    const { authUser } = useSelector(state => state.auth);
 
     const {
         path = '',
@@ -76,8 +77,11 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         dispatch(startDocumentByIdLoading(document));
 
         dispatch(startThumbnailLoading(document));
+        dispatch(startFoldersLoading(authUser))
+
         return () => handleClear();
-    }, [dispatch, document]);
+    }, [dispatch, document, authUser]);
+
 
     const goBack = () => history.goBack()
 
