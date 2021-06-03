@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import { makeStyles } from '@material-ui/core/styles';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
+import { startFlowsAllInit } from 'actions/flowDocument';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,8 +35,12 @@ const Manage = ({setOpenTracing}) => {
 	const classes = useStyles();
 
 	const isMounted = useRef(true)
+	const dispatch = useDispatch();
 	
-
+	const { authUser } = useSelector(state => state.auth);
+	const { flowList ={}} = useSelector(state => state.flowDocument);
+	const { data = [], totalItems = 0 } = flowList;
+	const [page, setPage] = useState(0)
 
 	useEffect(() => {
 		return () => {
@@ -42,7 +48,11 @@ const Manage = ({setOpenTracing}) => {
 		}
 	}, [])
 
-
+    const handleChangePage = (event, page) => {
+		dispatch(startFlowsAllInit(authUser , page ))
+		setPage(page);
+	
+}
 
 	return (
 		<div className="row">
@@ -69,19 +79,22 @@ const Manage = ({setOpenTracing}) => {
 							</TableRow>
 						</TableHead>
 						<TableBody >
+						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskName }, index) => {
 
-							 <TableRow >
+                                return <TableRow key={index} >
+							 
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
-									Plantilla-contrato
+								    {fileName}
+									</TableCell>                                  
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>									
+									{taskName}
 									</TableCell>
-                                    
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									Creación
+									{createdOn}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									30-03-2021
-									</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>En revisión</TableCell>								
+									{status}
+									</TableCell>								
 									
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
 									
@@ -100,8 +113,7 @@ const Manage = ({setOpenTracing}) => {
 									</TableCell>
 
 								</TableRow>
-
-							
+                            })}
 							{/*{!userdata || userdata.length == 0 &&
 								<TableRow>
 									<TableCell
@@ -126,11 +138,11 @@ const Manage = ({setOpenTracing}) => {
 						<Pagination 
 									style={{color: '#369bff'}}
 									//defaultPage={parseInt(page_url)}
-									//count={Math.ceil(totalItems/10)} 
+									count={Math.ceil(totalItems/10)} 
 									color="primary" 
 									shape="rounded" 
-									//total={totalItems} 
-									//onChange={handleChangePage}
+									total={totalItems} 
+									onChange={handleChangePage}
 						/> 
 					</Grid>
 			</div>

@@ -6,9 +6,6 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Check from '@material-ui/icons/Check';
-import SettingsIcon from '@material-ui/icons/Settings';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -102,12 +99,12 @@ import Typography from '@material-ui/core/Typography';
     },
     active: {
       backgroundImage:
-        'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+        'linear-gradient( 136deg, #E1F0FF 0%, #E1F0FF 50%, #E1F0FF 100%)',
       boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     },
     completed: {
       backgroundImage:
-        'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+      'linear-gradient( 136deg, #E1F0FF 0%, #E1F0FF 50%, #E1F0FF 100%)',
     },
   });
   
@@ -202,9 +199,10 @@ const Tracing = () => {
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+        
         <div className={classes.root}>
-      
-     
+ 
+       
       <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
         {steps.map((label) => (
           <Step key={label}>
@@ -212,6 +210,7 @@ const Tracing = () => {
           </Step>
         ))}
       </Stepper>
+    
       <div>
         {activeStep === steps.length ? (
           <div>

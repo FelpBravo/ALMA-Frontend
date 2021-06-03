@@ -1,4 +1,4 @@
-import { getActiveTasks, getApproves, postFlows } from 'services/flowDocumentService';
+import { getActiveTasks, getApproves, postFlowAll, postFlows } from 'services/flowDocumentService';
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
 import { GENERAL_ERROR } from '../constants/constUtil';
@@ -67,6 +67,21 @@ export const startActiveTasksInit = ( authUser, page, status) => {
     }
 };
 
+export const startFlowsAllInit = ( authUser, page ) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await postFlowAll(authUser, page, 10);
+
+            dispatch(listFlows(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
 const saveFlowInit = () => {
 	return {
 		type: types.docsSaveFlowInit,
@@ -91,5 +106,12 @@ const listActiveTasks = (tasksList) => {
     return {
         type: types.tasksListLoaded,
         payload: tasksList
+    }
+};
+
+const listFlows = (flowList) => {
+    return {
+        type: types.flowListLoaded,
+        payload: flowList
     }
 };
