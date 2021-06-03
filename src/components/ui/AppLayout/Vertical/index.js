@@ -1,12 +1,14 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { isIOS, isMobile } from "react-device-detect";
 import { useSelector } from "react-redux";
-import Header from "./Header/index";
-import SideBar from "components/ui/SideBar";
+import { withRouter } from "react-router-dom";
+
 import Footer from "components/ui/components/Footer";
 import Tour from "components/ui/components/Tour";
+import SideBar from "components/ui/SideBar";
 import { COLLAPSED_DRAWER, FIXED_DRAWER } from "constants/ActionTypes";
-import { isIOS, isMobile } from "react-device-detect";
+
+import Header from "./Header/index";
 
 const Vertical = (props) => {
 
@@ -22,7 +24,7 @@ const Vertical = (props) => {
 
 	return (
 		<div className={`app-container ${drawerStyle}`}>
-			<Tour />
+			{/* <Tour /> */}
 
 			<SideBar />
 

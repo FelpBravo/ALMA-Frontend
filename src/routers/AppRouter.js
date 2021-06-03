@@ -18,6 +18,8 @@ import { applyTheme } from 'helpers/applyTheme';
 import DownloadFilePage from 'components/downloadFile';
 import ChangePasswordPage from 'components/changePassword';
 import FormTestPage from 'components/formTest';
+import moment from 'moment';
+import 'moment/locale/es';
 
 const App = (props) => {
 
@@ -60,6 +62,10 @@ const App = (props) => {
 
 	const currentAppLocale = AppLocale[locale.locale];
 
+	useEffect(() => {
+		currentAppLocale && moment.locale(currentAppLocale?.locale);
+	}, [currentAppLocale])
+	
 	return (
 		<ThemeProvider theme={applyTheme(isDarkTheme, darkTheme, themeColor, isDirectionRTL)}>
 			<MuiPickersUtilsProvider utils={MomentUtils}>

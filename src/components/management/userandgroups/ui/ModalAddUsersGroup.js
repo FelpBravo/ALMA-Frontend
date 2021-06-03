@@ -23,15 +23,29 @@ const ModalAddUsersGroup = () => {
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
 
-  const { usersAll = {}, nameGroup, idGroup, openModal2} = useSelector(state => state.adminUsers);
+  const { usersAll = {}, nameGroup , idGroup, openModal2} = useSelector(state => state.adminUsers);
  
   const { data = [] } = usersAll
 
   const [nameUsersGroup, setNameUsersGroup] = useState({ users:[] })
+
+  const [messageErrorName, setMessageErrorName] = useState(null);
  
    useEffect(() => {
     dispatch(usersInitLoading(authUser));
   }, [dispatch]);
+
+  useEffect(() => {
+
+    if (!nameGroup || nameGroup.length < 3 && nameUsersGroup.users > 1 ) {
+
+      setMessageErrorName('Este campo debe tener mínimo 3 letras');
+
+    } else {
+        setMessageErrorName(null);
+      }
+
+  }, [nameGroup, nameUsersGroup.users, setMessageErrorName]);
 
   
   const handleClose = () => {
@@ -102,7 +116,7 @@ const ModalAddUsersGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={nameUsersGroup.users &&  nameUsersGroup.users > 1}
+            disabled={messageErrorName}
           >
             Crear
           </Button>

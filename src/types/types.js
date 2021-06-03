@@ -160,9 +160,12 @@ export const types = {
 	actionsModuleClear: "Clear all values from action modules",
 
 	approvesListLoaded: "Approves list loaded",
+	flowsLoaded: "Flows Loaded",
+	docsSaveFlowInit: "Docs Sabe Flow Init",
 
 	notificationsLoaded: "Notifications loaded",
 	notificationsInitialLoad: "notifications Initial Load",
 	notificationsChangeState: "Change notification state",
-	notificationsReset: "Notifications reset initial values"
+	notificationsReset: "Notifications reset initial values",
+
 }

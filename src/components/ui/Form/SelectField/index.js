@@ -7,6 +7,7 @@ import get from 'lodash/get'
 import PropTypes from "prop-types";
 import React from "react";
 import { Controller } from "react-hook-form";
+import IntlMessages from "util/IntlMessages";
 
 const useStyles = makeStyles((theme) => ({
     fullWidth: {
@@ -69,7 +70,7 @@ const SelectField = (props) => {
                 )}
             />
 
-            {errorMessage && <FormHelperText>{errorMessage}</FormHelperText>}
+            {errorMessage && <FormHelperText>{errorMessage && <IntlMessages id={errorMessage} />}</FormHelperText>}
         </FormControl>
     );
 };

@@ -23,6 +23,7 @@
   @include display-flex(flex, column, nowrap);
   width: 100%;
   overflow: hidden;
+  min-height: 100vh;
 }
 
 .app-header {

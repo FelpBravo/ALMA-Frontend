@@ -10,7 +10,6 @@ const AppLayout = () => {
 
 	const horizontalNavPosition = useSelector(({ settings }) => settings.horizontalNavPosition);
 	const navigationStyle = useSelector(({ settings }) => settings.navigationStyle);
-	console.log("navigationStyle", navigationStyle)
 	const Layout =
 		AppLayouts[navigationStyle === "vertical_navigation"
 			? "Vertical"

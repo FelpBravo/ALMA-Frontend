@@ -2,8 +2,10 @@ import { Button, Divider, Grid, makeStyles } from '@material-ui/core';
 import { Fab } from '@material-ui/core';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
 import EditIcon from '@material-ui/icons/Edit';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -37,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit }) {
     const [directorio, setDirectorio] = useState(false)
     const [openModal, setOpenModal] = useState(false);
+    const history = useHistory();
     const classes = useStyles();
 
     const {
@@ -75,6 +78,8 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         dispatch(startThumbnailLoading(document));
         return () => handleClear();
     }, [dispatch, document]);
+
+    const goBack = () => history.goBack()
 
     const Directory = () => {
         if (directorio) {
@@ -162,8 +167,19 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         }
 
         <SelectTags />
-        <div className="row">
-            <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
+        <Grid container className="mt-4">
+            <Grid item md>
+                {!editMode && <Button
+                    variant="text"
+                    color="primary"
+                    size="large"
+                    onClick={goBack}
+                >
+                    <KeyboardBackspaceIcon color="primary" style={{marginRight: 10}} />
+                    <IntlMessages id="dashboard.button.back" />
+                </Button>}
+            </Grid>
+            <Grid item md>
                 <Grid
                     container
                     justify="flex-end"
@@ -171,17 +187,22 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                     spacing={2}
                 >
                     <div className={classes.buttons}>
-                        <Button
+                        {<Button
                             style={{
                                 backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 600, border: "none",
                                 boxShadow: "none", height: '45px', width: '120px'
                             }}
                             type="button"
                             variant="contained"
-                            onClick={handleClear}
+                            onClick={editMode ? goBack :handleClear}
                         >
-                            <IntlMessages id="dashboard.advancedSearchClear" />
-                        </Button>
+                            {
+                            !editMode 
+                            ?<IntlMessages id="dashboard.advancedSearchClear" />
+                            :<IntlMessages id="dashboard.button.cancel" />
+                        }
+
+                        </Button>}
 
 
 
@@ -204,8 +225,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
 
                     </div>
                 </Grid>
-
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     </>
 }
