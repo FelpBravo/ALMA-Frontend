@@ -36,8 +36,10 @@ const ModalUsers = () => {
   const [nameUser, setNameUser] = useState({ group:[] })
 
   const [dataCreate, setDataCreate] = useState({});
+  
+  const {company, department}= dataCreate
 
-  const [validation, setValidation] = useState({ firstName: false, lastName: false, email: false, department: false, company: false, id: false})
+  const [validation, setValidation] = useState({ firstName: false, lastName: false, email: false, department: false, company: false, id: false, departmentOther: false, companyOther: false})
   
   const letra = /^[a-zñ ]+$/i
 
@@ -320,7 +322,7 @@ const ModalUsers = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={validation.email && validation.firstName && validation.lastName && validation.department && validation.company && validation.id ? false : true}
+            disabled={validation.email && validation.firstName && validation.lastName && validation.department && validation.company && validation.id && (department === 'Other' ? validation.departmentOther : true) && (company === 'Other'? validation.companyOther : true) ? false : true}
         
           >
            Crear

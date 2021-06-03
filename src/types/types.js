@@ -161,5 +161,11 @@ export const types = {
 
 	approvesListLoaded: "Approves list loaded",
 	flowsLoaded: "Flows Loaded",
-	docsSaveFlowInit: "Docs Sabe Flow Init"
+	docsSaveFlowInit: "Docs Sabe Flow Init",
+
+	notificationsLoaded: "Notifications loaded",
+	notificationsInitialLoad: "notifications Initial Load",
+	notificationsChangeState: "Change notification state",
+	notificationsReset: "Notifications reset initial values",
+
 }

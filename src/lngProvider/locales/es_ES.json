@@ -757,6 +757,10 @@
 	"forms.errors.validation.mixed.type.default": "Campo inválido",
 	"forms.errors.validation.mixed.type.integer": "Campo requerido",
 	"forms.errors.validation.mixed.type.string": "Texto inválido",
-	"forms.errors.validation.integer.positive": "Debe ser un número positivo"
+	"forms.errors.validation.integer.positive": "Debe ser un número positivo",
 	
+	"flow.created": "Se ha agregado un nuevo flujo No. {FlowID}",
+	"flow.newTask": "Se te ha asignado una nueva tarea ({TaskID}) pendiente de revisión para el flujo No. {FlowID}",
+	"flow.approved": "Se ha aprobado el flujo {FlowID} exitosamente.",
+	"flow.decclined": "Se ha rechazado el flujo {FlowID}."
 }
