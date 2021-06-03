@@ -21,7 +21,6 @@ const DateField = ({ control, name, label, errors, ...props }) => {
                     label={label}
                     inputVariant="outlined"
                     fullWidth
-                    clearable
                     format={FORMAT_YYYY_MM_DD}
                     error={Boolean(errorMessage)}
                     helperText={errorMessage && <IntlMessages id={errorMessage} />}
