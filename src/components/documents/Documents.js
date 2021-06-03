@@ -74,7 +74,7 @@ const Documents = () => {
 
 	const methods = useForm({
 		mode: 'onTouched',
-		// name: 'documentForm',
+		name: 'documentForm',
 		defaultValues,
 		resolver: yupResolver(object().shape(resolver)),
 	});
