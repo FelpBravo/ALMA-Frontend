@@ -1,6 +1,6 @@
 import { types } from 'types/types';
 
-const initialState = {
+export const initialState = {
     currentPage: 1,
     data: [],
     totalItems: 0,
@@ -8,12 +8,6 @@ const initialState = {
     isInitialLoad: true,
 }
 
-// const mergeData = (arr1, arr2) => {
-//     const arr3 = arr1;
-//     arr2.map( e => 
-//         )
-// }
-// const exist = 
 export const notificationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.notificationsLoaded:
@@ -28,6 +22,16 @@ export const notificationsReducer = (state = initialState, action) => {
                 isInitialLoad: false
             }
 
+        case types.notificationsChangeState:
+            return {
+                ...state,
+                ...action.payload
+            }
+
+        case types.notificationsReset:
+            return {
+                ...initialState,
+            }
 
         default:
             return state;

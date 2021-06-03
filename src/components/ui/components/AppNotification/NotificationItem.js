@@ -1,17 +1,20 @@
-import React from 'react';
+import { Grid, makeStyles } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button';
-import { Grid, makeStyles } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
 import clsx from 'clsx';
 import moment from 'moment';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { startNotificationsViewedLoading } from 'actions/notifications';
 import IntlMessages from 'util/IntlMessages';
-import Icon from '@material-ui/core/Icon';
 
 const useStyles = makeStyles(theme => ({
-  avatar:{
+  avatar: {
     backgroundColor: "#e1f0ff"
   },
-  boldText:{
+  boldText: {
     fontWeight: 600
   },
   normalText: {
@@ -26,19 +29,30 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NotificationItem = ({ notification }) => {
-  const { icon = "info_outlined", values = {}, messageId, createdAt, viewed } = notification;
+  const { id, icon = "info_outlined", values = {}, messageId, createdAt, viewed } = notification;
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const { authUser } = useSelector(state => state.auth);
+  const { data } = useSelector(state => state.notifications);
+
+  const handleChangeState = () => {
+    const newState = data.map(e => e.id !== id ? e : {
+      ...e,
+      viewed: true,
+    })
+    dispatch(startNotificationsViewedLoading({ authUser, id, newState }));
+  }
 
   return (
-    <li className={clsx(classes.media, "media")}>
+    <li onClick={handleChangeState} className={clsx(classes.media, "media")}>
       <Avatar variant="rounded" className={clsx(classes.avatar, "mr-2")}>
         <Icon color="primary">
           {icon}
-          </Icon>
-        </Avatar>
+        </Icon>
+      </Avatar>
       <div className="media-body align-self-center">
         <p className={clsx(!viewed ? classes.boldText : classes.normalText, "sub-heading mb-0")}>
-          <IntlMessages id={messageId} values={values}/>
+          <IntlMessages id={messageId} values={values} />
         </p>
         <Grid container alignItems="center">
           <i className={`zmdi ${'zmdi-calendar-alt text-info'} zmdi-hc-fw`} />

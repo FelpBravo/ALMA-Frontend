@@ -20,8 +20,11 @@ const Index = (props) => {
 	const dispatch = useDispatch();
 	const { navCollapsed } = useSelector(({ common }) => common);
 	const { drawerType, locale } = useSelector(({ settings }) => settings);
-	const [ langSwitcher, setLangSwitcher ] = useState(false);
+	const [langSwitcher, setLangSwitcher] = useState(false);
 	const [appNotification, setAppNotification] = useState(false);
+	const { data } = useSelector(state => state.notifications);
+
+	const hasNotifications = Boolean(data?.find(({ viewed }) => viewed === false))
 
 	const onAppNotificationSelect = () => {
 		setAppNotification(!appNotification);
@@ -48,7 +51,7 @@ const Index = (props) => {
 
 	return (
 		<AppBar className="app-main-header">
-			
+
 			<Toolbar className="app-toolbar" disableGutters={false}>
 
 				<IconButton className={`jr-menu-icon mr-3 ${drawerStyle}`} aria-label="Menu"
@@ -56,66 +59,9 @@ const Index = (props) => {
 					<span className="menu-icon" />
 				</IconButton>
 
-				{/*
-				<Link className="app-logo mr-2 d-none d-sm-block" to="/">
-					<img src={require("assets/images/logo.png")} alt="Jambo" title="Jambo" />
-				</Link>
-				*/}
-
-				{/*<SearchBox styleName="d-none d-lg-block" placeholder=""
-					onChange={updateSearchText}
-					value={searchText} />*/}
-
 				<ul className="header-notifications list-inline ml-auto">
-					{/*<li className="list-inline-item">
-						<Dropdown
-							className="quick-menu app-notification"
-							isOpen={apps}
-							toggle={onAppsSelect}>
-
-							<DropdownToggle
-								className="d-inline-block"
-								tag="span"
-								data-toggle="dropdown">
-								<span className="app-notification-menu">
-									<i className="zmdi zmdi-apps zmdi-hc-fw zmdi-hc-lg" />
-									<span>Apps</span>
-								</span>
-							</DropdownToggle>
-
-							<DropdownMenu>
-								{Apps()}
-							</DropdownMenu>
-						</Dropdown>
-					</li>*/}
-
-					{/*
-					<li className="d-inline-block d-lg-none list-inline-item">
-						<Dropdown
-							className="quick-menu nav-searchbox"
-							isOpen={searchBox}
-							toggle={onSearchBoxSelect}>
-
-							<DropdownToggle
-								className="d-inline-block"
-								tag="span"
-								data-toggle="dropdown">
-								<IconButton className="icon-btn">
-									<i className="zmdi zmdi-search zmdi-hc-fw" />
-								</IconButton>
-							</DropdownToggle>
-
-							<DropdownMenu right className="p-0">
-								<SearchBox styleName="search-dropdown" placeholder=""
-									onChange={updateSearchText}
-									value={searchText} />
-							</DropdownMenu>
-						</Dropdown>
-					</li>
-					*/}
-
 					<li className="list-inline-item">
-						
+
 						<Dropdown
 							className="quick-menu"
 							isOpen={langSwitcher}
@@ -149,7 +95,7 @@ const Index = (props) => {
 								tag="span"
 								data-toggle="dropdown">
 								<IconButton className="icon-btn">
-									<i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" />
+									<i className={`zmdi zmdi-notifications-none ${hasNotifications && 'icon-alert animated infinite wobble'}`} />
 								</IconButton>
 							</DropdownToggle>
 
@@ -163,60 +109,11 @@ const Index = (props) => {
 
 
 					<li className="list-inline-item">
-						
+
 						<UserInfo />
 
 					</li>
-
-					{/*<li className="list-inline-item app-tour">
-						<Dropdown
-							className="quick-menu"
-							isOpen={appNotification}
-							toggle={onAppNotificationSelect}>
-
-							<DropdownToggle
-								className="d-inline-block"
-								tag="span"
-								data-toggle="dropdown">
-								<IconButton className="icon-btn">
-									<i className="zmdi zmdi-notifications-none icon-alert animated infinite wobble" />
-								</IconButton>
-							</DropdownToggle>
-
-							<DropdownMenu right>
-								<CardHeader styleName="align-items-center"
-									heading={<IntlMessages id="appNotification.title" />} />
-								<AppNotification />
-							</DropdownMenu>
-						</Dropdown>
-					</li>
-					<li className="list-inline-item mail-tour">
-						<Dropdown
-							className="quick-menu"
-							isOpen={mailNotification}
-							toggle={onMailNotificationSelect}
-						>
-							<DropdownToggle
-								className="d-inline-block"
-								tag="span"
-								data-toggle="dropdown">
-
-								<IconButton className="icon-btn">
-									<i className="zmdi zmdi-comment-alt-text zmdi-hc-fw" />
-								</IconButton>
-							</DropdownToggle>
-
-
-							<DropdownMenu right>
-								<CardHeader styleName="align-items-center"
-									heading={<IntlMessages id="mailNotification.title" />} />
-								<MailNotification />
-							</DropdownMenu>
-						</Dropdown>
-					</li>*/}
-
 				</ul>
-
 				<div className="ellipse-shape" />
 			</Toolbar>
 		</AppBar >

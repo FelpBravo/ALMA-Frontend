@@ -163,4 +163,6 @@ export const types = {
 
 	notificationsLoaded: "Notifications loaded",
 	notificationsInitialLoad: "notifications Initial Load",
+	notificationsChangeState: "Change notification state",
+	notificationsReset: "Notifications reset initial values"
 }

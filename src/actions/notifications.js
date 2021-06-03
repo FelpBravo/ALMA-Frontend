@@ -1,7 +1,5 @@
-import { getNotifications } from 'services/notificationService';
+import { getNotifications, putViewedNotification } from 'services/notificationService';
 import { types } from 'types/types';
-import Swal from 'sweetalert2';
-import { GENERAL_ERROR } from '../constants/constUtil';
 
 export const startNotificationsLoading = ({ authUser, page, size }) => {
     return async (dispatch) => {
@@ -25,8 +23,36 @@ const notificationsLoaded = (notificationsList) => {
     }
 };
 
+export const notificationsChangeState = (payload) => {
+    return {
+        type: types.notificationsChangeState,
+        payload
+    }
+};
+
 export const notificationsInitialLoad = () => {
     return {
         type: types.notificationsInitialLoad,
+    }
+};
+
+export const notificationsReset = () => {
+    return {
+        type: types.notificationsReset,
+    }
+};
+
+export const startNotificationsViewedLoading = ({ authUser, id, newState }) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await putViewedNotification(authUser, id);
+            dispatch(notificationsChangeState({data: newState}));
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 };

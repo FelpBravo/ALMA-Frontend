@@ -8,4 +8,12 @@ const getNotifications = (authUser, page = 1, size = 5) => {
     });
 };
 
-export { getNotifications };
+const putViewedNotification = (authUser, id) => {
+    return axiosInstance.put(`notifications/viewed/${id}`,{}, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
+export { getNotifications, putViewedNotification };

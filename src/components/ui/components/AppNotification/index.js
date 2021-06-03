@@ -2,12 +2,10 @@ import { CircularProgress, Grid } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { notificationsInitialLoad, startNotificationsLoading } from 'actions/notifications';
+import { notificationsReset, notificationsInitialLoad, startNotificationsLoading } from 'actions/notifications';
 import CustomScrollbars from 'util/CustomScrollbars';
 
-import { notifications } from './data';
 import NotificationItem from './NotificationItem';
-import { isEmpty } from 'lodash';
 
 const SIZE = 5;
 
@@ -42,17 +40,24 @@ const AppNotification = ({ isOpen = false }) => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!isOpen){
+      dispatch(notificationsReset())
+      setPage(1)
+    }
+  }, [isOpen])
+
   const loadData = page => dispatch(startNotificationsLoading({ authUser, page, size: SIZE }))
 
   useEffect(() => {
     if (page > 1)
-      currentPage !== page && loadData(page);
-  }, [authUser, page, currentPage])
+       loadData(page);
+  }, [authUser, page])
 
   useEffect(() => {
     if (isInitialLoad){
-      dispatch(notificationsInitialLoad())
       loadData(1)
+      dispatch(notificationsInitialLoad())
     }
   }, [isInitialLoad])
 
