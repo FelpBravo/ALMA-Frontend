@@ -83,7 +83,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                             required={required}
                         />
                     )}
-                    onChange={(_, data) => field.onChange(get(data, optionsValue, null))}
+                    onChange={(_, data) => field?.onChange(get(data, optionsValue, null))}
                     {...props}
                 />
             )}
