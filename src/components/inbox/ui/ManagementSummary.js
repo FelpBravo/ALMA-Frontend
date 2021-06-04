@@ -25,6 +25,7 @@ const ManagementSummary = () => {
 	const dispatch = useDispatch();
 	const { id } = useParams()
 	const { authUser } = useSelector(state => state.auth);
+	const { involved } = useSelector(state => state.flowDocument);
 
 	const [value, setValue] = React.useState(null);
 	
@@ -65,7 +66,7 @@ const ManagementSummary = () => {
                     <Divider className="mt-3 mb-3"/>
                     <h3>Involucrados</h3> 
 
-                    <SummaryInvolved/>
+                    <SummaryInvolved data={involved}/>
 
 
                     <Divider className="mt-3 mb-3"/>

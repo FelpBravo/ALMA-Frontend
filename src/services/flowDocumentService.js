@@ -32,8 +32,17 @@ const postFlowAll= (authUser, page, pageSize) => {
     });
 };
 
+const getInvolved = (authUser, instanceId) => {
+    return axiosInstance.get(`/flows/data/${instanceId}/startFlowData`, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
 export { getApproves,
          postFlows,
          getActiveTasks,
          postFlowAll,
+         getInvolved,
          }

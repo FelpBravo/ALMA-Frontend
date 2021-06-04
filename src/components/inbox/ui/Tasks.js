@@ -15,7 +15,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { INBOX_STATUS } from 'constants/constUtil';
-import { startActiveTasksInit } from 'actions/flowDocument';
+import { startActiveTasksInit, startInvolvedLoading } from 'actions/flowDocument';
 
 
 
@@ -49,13 +49,14 @@ const Tasks = () => {
 	const { authUser } = useSelector(state => state.auth);
 	const { tasksList ={}} = useSelector(state => state.flowDocument);
 	const { data = [], totalItems = 0 } = tasksList;
-	//const [tasksdata, setTasksdata] = useState([])
+	
 	const [page, setPage] = useState(0)
 
 
 
-	const handleManage = () => {
+	const handleManage = (instanceId) => {
 		//dispatch(addBreadcrumbs(name, `/document/${id}/version`))
+		dispatch(startInvolvedLoading(authUser,instanceId))
 		history.push(`/manage`);
 
 	};
@@ -132,7 +133,7 @@ const Tasks = () => {
 						</TableHead>
 						<TableBody >
 
-						{data.map(({ fileName, role, status, createdOn, author, instanceId }, index) => {
+						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskId }, index) => {
 
                                     return <TableRow key={index} >
 
@@ -149,7 +150,7 @@ const Tasks = () => {
 									{createdOn.substr(0, 10)}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									{instanceId}
+									{taskId}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
 									{author}
@@ -164,7 +165,7 @@ const Tasks = () => {
 													materialIcon={
 														<DescriptionOutlinedIcon
 															className={classes.iconos}
-															onClick={handleManage}
+															onClick={()=> handleManage(instanceId)}
 														/>
 													}
 												/>

@@ -123,6 +123,7 @@ const Inbox = () => {
 								</TabPanel>
 								<TabPanel value={value} index={1}>
 									<Manage setOpenTracing={setOpenTracing}/>
+									<Tracing/>
 								</TabPanel>
 							</div>
 						</div>

@@ -164,5 +164,6 @@ export const types = {
 	docsSaveFlowInit: "Docs Sabe Flow Init",
 
 	tasksListLoaded: "Tasks List Loaded",
-	flowListLoaded: "Flow List Loaded"
+	flowListLoaded: "Flow List Loaded",
+	involvedListLoaded: "Involved List Loaded"
 }
