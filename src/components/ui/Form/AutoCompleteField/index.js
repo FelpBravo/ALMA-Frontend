@@ -8,8 +8,14 @@ import { Controller, useWatch } from "react-hook-form";
 import IntlMessages from "util/IntlMessages";
 
 const Autocomplete = withStyles ({
-    paper: {
-        backgroundColor: 'white',
+    option: {
+        '&[aria-selected="true"]': {
+            backgroundColor: 'transparent',
+        },
+        "&:hover": {
+            color: "#3699FF",
+            backgroundColor: "rgba(0, 0, 0, 0.04)"
+        }
     },
 })(AutocompleteBase);
 
@@ -42,7 +48,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
 
     return (
         <Controller
-            render={({ field }) => (
+            render={({ field = {} }) => (
                 <Autocomplete
                     {...field}
                     autoHighlight
@@ -54,12 +60,12 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                             option[optionsLabel]
                     ))}
                     getOptionSelected={(option, value) =>
-                        value === undefined || value === "" || option.id === value.id
+                        (value === undefined || value === "" || option?.id === value?.id)
                     }
                     value={
-                        field.value
+                        field?.value
                             ? data.find(
-                                (item) => item[optionsValue] === field.value
+                                (item) => item[optionsValue] === field?.value
                             )
                             : ""
                     }
@@ -83,7 +89,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                             required={required}
                         />
                     )}
-                    onChange={(_, data) => field?.onChange(get(data, optionsValue, null))}
+                    onChange={(_, data) => field?.onChange && field?.onChange(get(data, optionsValue, null))}
                     {...props}
                 />
             )}
