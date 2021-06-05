@@ -1,5 +1,6 @@
 import { Button, Divider, Grid, makeStyles } from '@material-ui/core';
 import { Fab } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import BackspaceSharpIcon from '@material-ui/icons/BackspaceSharp';
 import EditIcon from '@material-ui/icons/Edit';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
@@ -36,12 +37,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit }) {
+export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit, handleSaveForm, handleSubmit }) {
     const [directorio, setDirectorio] = useState(false)
     const [openModal, setOpenModal] = useState(false);
     const history = useHistory();
     const classes = useStyles();
     const { authUser } = useSelector(state => state.auth);
+    const [loading, setLoading] = useState(editMode)
 
     const {
         path = '',
@@ -74,14 +76,14 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
             return;
         }
 
-        dispatch(startDocumentByIdLoading(document));
+        dispatch(startDocumentByIdLoading(document, () => setLoading(false)));
 
         dispatch(startThumbnailLoading(document));
         dispatch(startFoldersLoading(authUser))
+        return () => dispatch(documentsClear());
 
-        return () => handleClear();
+
     }, [dispatch, document, authUser]);
-
 
     const goBack = () => history.goBack()
 
@@ -118,7 +120,11 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         </>
     }
 
-    return <>
+    if (loading) return <Grid container alignItems="center" justify="center">
+        <CircularProgress />
+    </Grid>
+
+    return <form onSubmit={handleSubmit(handleSaveForm)}>
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
                 {
@@ -150,9 +156,9 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
             </div>
         }
         <DocumentContext.Provider value={{ setFiles }}>
-            <DropZoneDocument 
+            <DropZoneDocument
                 controlledDocument={controlledDocument}
-                document={document} 
+                document={document}
                 setFiles={setFiles} />
         </DocumentContext.Provider>
 
@@ -179,7 +185,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                     size="large"
                     onClick={goBack}
                 >
-                    <KeyboardBackspaceIcon color="primary" style={{marginRight: 10}} />
+                    <KeyboardBackspaceIcon color="primary" style={{ marginRight: 10 }} />
                     <IntlMessages id="dashboard.button.back" />
                 </Button>}
             </Grid>
@@ -198,13 +204,13 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                             }}
                             type="button"
                             variant="contained"
-                            onClick={editMode ? goBack :handleClear}
+                            onClick={editMode ? goBack : handleClear}
                         >
                             {
-                            !editMode 
-                            ?<IntlMessages id="dashboard.advancedSearchClear" />
-                            :<IntlMessages id="dashboard.button.cancel" />
-                        }
+                                !editMode
+                                    ? <IntlMessages id="dashboard.advancedSearchClear" />
+                                    : <IntlMessages id="dashboard.button.cancel" />
+                            }
 
                         </Button>}
 
@@ -231,5 +237,6 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                 </Grid>
             </Grid>
         </Grid>
-    </>
+    </form>
+
 }
