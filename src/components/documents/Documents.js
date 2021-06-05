@@ -88,13 +88,6 @@ const Documents = () => {
 		reset(defaultValues)
 	}
 
-	// useEffect(() => {
-	// 	return () =>{ 
-	// 		console.log("Dismount apiux form")
-	// 		reset();
-	// 	 }
-	// }, [defaultValues, reset])
-
 	const controlledDocument = watch('controlled_document', false);
 
 	useEffect(() => {
