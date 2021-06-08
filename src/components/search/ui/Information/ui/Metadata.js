@@ -39,7 +39,7 @@ const Metadata = () => {
                                                 {isNaN(Date.parse(p.value)) ? p.value : new Date(p.value).toLocaleDateString()}
                                             </div>
                                             }
-                                        {p.type != "DATE" &&
+                                        {p.type !== "DATE" &&
                                             <div style={{ fontSize: "13px", fontFamily: "Poppins" }} className='ml-1'>
                                                 {p.value}
                                             </div>
