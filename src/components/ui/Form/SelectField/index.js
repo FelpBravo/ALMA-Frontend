@@ -67,9 +67,6 @@ const SelectField = (props) => {
                             renderValue={renderValue}
                             MenuProps={MenuProps}
                             {...field}
-                            value={multiple
-                                ? field.value !== "object" ? [] : field.value
-                                : field.value}
                         >
                             {children}
                         </Select>

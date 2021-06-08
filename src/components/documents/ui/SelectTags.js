@@ -32,9 +32,7 @@ export const SelectTags = () => {
     const { tags = [] } = useSelector(state => state.documents);
     const { authUser } = useSelector(state => state.auth);
     const { control, watch } = useFormContext();
-    const watchTags = watch('tagsField')
-    console.log("watchTags", watchTags)
-    const tagsSelected = typeof watchTags === "object" ? watchTags : [];
+    const tagsSelected = watch('tagsField', [])
 
     useEffect(() => {
 
@@ -101,7 +99,7 @@ export const SelectTags = () => {
         }
 
     }
-    console.log("tagsSelected felipe", tagsSelected)
+
     return (
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">

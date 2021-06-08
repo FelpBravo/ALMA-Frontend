@@ -80,7 +80,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
 
         dispatch(startThumbnailLoading(document));
         dispatch(startFoldersLoading(authUser))
-        // return () => dispatch(documentsClear());
+        return () => dispatch(documentsClear());
 
 
     }, [dispatch, document, authUser]);

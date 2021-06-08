@@ -456,7 +456,6 @@ export const startTagsLoading = (authUser) => {
 		try {
 
 			const resp = await getTags(authUser);
-			console.log("Resp felipe", resp)
 			dispatch(tagsLoaded(resp.data));
 
 		} catch (error) {
