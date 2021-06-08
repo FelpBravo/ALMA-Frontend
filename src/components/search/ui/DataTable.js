@@ -341,27 +341,33 @@ const DataTable = () => {
 												{(ROLE_FILE_PREVIEW || READ )&&
 													<TableActionButton
 														materialIcon={
+															<Tooltip color="primary" title={<IntlMessages id="Previsualización" />}>
 															<VisibilityOutlinedIcon
 																className={classes.iconos}
 																onClick={() => handleVisibility(id, name)}
 															/>
+															</Tooltip>
 														}
 													/>}
 												<TableActionButton
 													materialIcon={
+														<Tooltip color="primary" title={<IntlMessages id="Descarga" />}>
 														<SaveAltOutlinedIcon
 															className={classes.iconos}
 															onClick={() => handleDownload(id, name)}
 														/>
-													}
+														</Tooltip>
+														}
 												/>
 												{(ROLE_FILE_UPDATE || EDIT )&&
 													<TableActionButton
 														materialIcon={
+															<Tooltip color="primary" title={<IntlMessages id="Edición" />}>
 															<BorderColorOutlinedIcon
 																className={classes.iconos}
 																onClick={() => handleEdit(id)}
 															/>
+															</Tooltip>
 														}
 													/>}
 												{/*{(ROLE_FILE_DELETE || DELETE) &&
@@ -409,10 +415,12 @@ const DataTable = () => {
 												/>*/}
 												<TableActionButton
 													materialIcon={
+														<Tooltip color="primary" title={<IntlMessages id="Versionamiento" />}>
 														<LoopOutlinedIcon
 															className={classes.iconos}
 															onClick={() => handleVersioning(id, name)}
 														/>
+														</Tooltip>
 													}
 												/>
 												<MoreVert

@@ -20,7 +20,8 @@ const initialState = {
 		position: 0,
 		state: true,
 	},
-	typeFolders: []
+	typeFolders: [],
+	foldersName: false,
 };
 
 export const adminFoldersReducer = (state = initialState, action) => {
@@ -190,7 +191,12 @@ export const adminFoldersReducer = (state = initialState, action) => {
 					folders: [...action.payload.currentFolders.folders],
 				}
 			}
-
+		case types.foldersValidateName:
+			return {
+				...state,
+				foldersName: action.payload,
+			}
+			
 		default:
 			return state;
 	}
