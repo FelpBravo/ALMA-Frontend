@@ -32,7 +32,8 @@ export const SelectTags = () => {
     const { tags = [] } = useSelector(state => state.documents);
     const { authUser } = useSelector(state => state.auth);
     const { control, watch } = useFormContext();
-    const watchTags = watch('tagsField', [])
+    const watchTags = watch('tagsField')
+    console.log("watchTags", watchTags)
     const tagsSelected = typeof watchTags === "object" ? watchTags : [];
 
     useEffect(() => {
