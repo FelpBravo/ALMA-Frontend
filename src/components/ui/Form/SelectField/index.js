@@ -55,9 +55,7 @@ const SelectField = (props) => {
                 control={control}
                 defaultValue={defaultValue || ""}
                 rules={rules}
-                render={({ field, fieldState, formState }) => {
-                    multiple && console.log("field felipe", field)
-                    return (
+                render={({ field, fieldState, formState }) => (
                         <Select
                             name={name}
                             labelId={labelId}
@@ -71,7 +69,7 @@ const SelectField = (props) => {
                             {children}
                         </Select>
                     )
-                }}
+                }
             />
 
             {errorMessage && <FormHelperText>{errorMessage && <IntlMessages id={errorMessage} />}</FormHelperText>}
