@@ -449,6 +449,11 @@ const documentVisibility = (docs) => {
 	}
 }
 
+export const clearDocumentVisibility = () => {
+	return {
+		type: types.clearDocsDocumentByIdVisibility,
+	}
+}
 
 export const startTagsLoading = (authUser) => {
 	return async (dispatch) => {

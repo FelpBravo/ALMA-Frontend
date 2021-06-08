@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, useLocation , useParams} from 'react-router-dom';
 import { Grid, Paper} from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
-import { startDocumentByIdVisibility } from 'actions/documents';
+import { startDocumentByIdVisibility, clearDocumentVisibility } from 'actions/documents';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types';
@@ -85,17 +85,11 @@ const Information = () => {
 	};
 
 
-	useEffect(() => {
-
-		if (!authUser) {
-			return;
-		}
-
-	}, [dispatch, authUser]);
-
 	useEffect(()=>{
 		dispatch(startDocumentByIdVisibility(id));
-	},[])
+
+		return () => dispatch(clearDocumentVisibility())
+	}, [id])
 	
 	return (
 	
