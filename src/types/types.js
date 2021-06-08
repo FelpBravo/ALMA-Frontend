@@ -83,6 +83,7 @@ export const types = {
 	docsAddAndRemoveTag: 'Documents Add and Remove tag',
 	docsLoadingModalFolder: 'Documents Loading modal folder',
 	docsDocumentByIdVisibility: 'Documents Visibility',
+	clearDocsDocumentByIdVisibility: 'Clear DocsDocument visibility',
 	docsDocumentsOfficeLoaded: 'Documents Office Loaded',
 
 

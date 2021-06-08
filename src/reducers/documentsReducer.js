@@ -255,6 +255,12 @@ export const documentsReducer = (state = initialState, action) => {
 				docs: action.payload,
 			}
 
+		case types.clearDocsDocumentByIdVisibility:
+			return {
+				...state,
+				docs: {},
+			}
+
 		case types.docsTagsLoaded:
 			return {
 				...state,
