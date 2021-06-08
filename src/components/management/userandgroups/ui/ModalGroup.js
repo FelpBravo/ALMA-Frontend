@@ -61,14 +61,15 @@ const ModalGroup = () => {
     dispatch(closeModalGroup());
   }
   const handleOnSave =() =>{
+  setNameGroup({dependencie: "", profile: "" , fullnamegroup: "", users:[] })
    dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup, nameGroup.users))
   }
 
   useEffect(() => {
 
-    if (!nameGroup.fullnamegroup || nameGroup.fullnamegroup.length < 3) {
+    if (!nameGroup.fullnamegroup || nameGroup.fullnamegroup.length < 10) {
 
-      setMessageErrorName('Este campo debe tener mínimo 3 letras');
+      setMessageErrorName('Este campo debe tener mínimo 6 letras');
 
     } else
      {
@@ -166,7 +167,7 @@ const ModalGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={messageErrorName || messageErrorGroup}
+            disabled={messageErrorName}
           >
             Crear
           </Button>
