@@ -7,6 +7,7 @@ import get from 'lodash/get'
 import PropTypes from "prop-types";
 import React from "react";
 import { Controller } from "react-hook-form";
+
 import IntlMessages from "util/IntlMessages";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,19 +56,20 @@ const SelectField = (props) => {
                 defaultValue={defaultValue || ""}
                 rules={rules}
                 render={({ field, fieldState, formState }) => (
-                    <Select
-                        name={name}
-                        labelId={labelId}
-                        label={label}
-                        defaultValue={defaultValue || ""}
-                        multiple={multiple}
-                        renderValue={renderValue}
-                        MenuProps={MenuProps}
-                        {...field}
-                    >
-                        {children}
-                    </Select>
-                )}
+                        <Select
+                            name={name}
+                            labelId={labelId}
+                            label={label}
+                            defaultValue={defaultValue || ""}
+                            multiple={multiple}
+                            renderValue={renderValue}
+                            MenuProps={MenuProps}
+                            {...field}
+                        >
+                            {children}
+                        </Select>
+                    )
+                }
             />
 
             {errorMessage && <FormHelperText>{errorMessage && <IntlMessages id={errorMessage} />}</FormHelperText>}

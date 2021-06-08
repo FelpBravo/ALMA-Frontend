@@ -32,7 +32,7 @@ export const SelectTags = () => {
     const { tags = [] } = useSelector(state => state.documents);
     const { authUser } = useSelector(state => state.auth);
     const { control, watch } = useFormContext();
-    const tagsSelected = watch('tagsField', []);
+    const tagsSelected = watch('tagsField', [])
 
     useEffect(() => {
 
@@ -137,7 +137,7 @@ export const SelectTags = () => {
                                         >
                                             <Checkbox
                                                 color="primary"
-                                                checked={tagsSelected.find(x => x === id) ? true : false}
+                                                checked={tagsSelected?.find(x => x === id) ? true : false}
                                             />
 
                                             <ListItemText
