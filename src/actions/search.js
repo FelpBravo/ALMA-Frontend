@@ -202,7 +202,7 @@ export const startDeleteDocument = (id) => {
 	}
 };
 
-export const startDownloadDocument = (id, name) => {
+export const startDownloadDocument = (id, name, version) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
@@ -220,7 +220,7 @@ export const startDownloadDocument = (id, name) => {
 
 			Swal.showLoading();
 
-			const { data } = await downloadDocument(authUser, id);
+			const { data } = await downloadDocument(authUser, id, version);
 
 			Swal.close();
 
