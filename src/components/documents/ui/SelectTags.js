@@ -99,7 +99,7 @@ export const SelectTags = () => {
         }
 
     }
-
+    console.log("tagsSelected felipe", tagsSelected)
     return (
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12 mt-3">
