@@ -1,7 +1,7 @@
 import { GENERAL_ERROR, INIT_FOLDER } from 'constants/constUtil';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { removeFolder } from 'helpers/removeFolder';
-import { create, edit, getFoldersAdmin, getFoldersAdminById, remove, getTypesFolders } from 'services/foldersService';
+import { create, edit, getFoldersAdmin, getFoldersAdminById, remove, getTypesFolders, getValidateFolders } from 'services/foldersService';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 
@@ -395,6 +395,24 @@ export const startDeleteFolderLoading = (authUser, folderId,parentId) => {
 	}
 };
 
+export const validateFolders = (authUser, folder_name) => {
+	return async (dispatch) => {
+		try {
+			const resp = await getValidateFolders(authUser, folder_name)
+			dispatch(foldersValidate(resp.data.exists))
+		} catch (error) {
+			console.log(error);
+		}
+	}
+};
+
+export const foldersValidate = (foldersName) => {
+	return {
+		type: types.foldersValidateName,
+		payload: foldersName,
+	}
+};
+
 export const deleteFolderLoaded = (folders, currentFolders) => {
 	return {
 		type: types.adminFoldersDeleteFolderLoaded,
@@ -429,4 +447,5 @@ export const foldersTypesLoaded = (foldersTypes) => {
 		payload: foldersTypes,
 	}
 };
+
 

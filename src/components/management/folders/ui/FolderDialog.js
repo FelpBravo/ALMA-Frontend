@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFolder, startEditFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading } from 'actions/adminFolders';
+import { closeModalFolder, foldersValidate, startEditFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading, validateFolders } from 'actions/adminFolders';
 import { startFoldersInitLoading } from 'actions/folders'
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
@@ -21,7 +21,7 @@ const FolderDialog = () => {
 
 	const { authUser } = useSelector(state => state.auth);
 
-	const { openModal, folder, actionModal, currentFolders, typeFolders = [] , historyFolders = []} = useSelector(state => state.adminFolders);
+	const { openModal, folder, actionModal, currentFolders, typeFolders = [] , historyFolders = [], foldersName} = useSelector(state => state.adminFolders);
 
 	const { id } = currentFolders
 
@@ -42,13 +42,13 @@ const FolderDialog = () => {
 
 	useEffect(() => {
 		
-		if (!name || name.length < 3) {
-
-			setMessageErrorName('Este campo debe tener mínimo 3 letras');
-
-		} else {
-
+		if (!name || name.length > 3) {
+			dispatch(validateFolders(authUser,name))
 			setMessageErrorName(null);
+			
+		} else {
+			dispatch(foldersValidate(false))
+			setMessageErrorName('Este campo debe tener mínimo 3 letras');		
 
 		}
 
@@ -157,16 +157,15 @@ const FolderDialog = () => {
 								value={name}
 								autoFocus
 								label={fieldName}
+								error={foldersName|| messageErrorName ? true : false}
 								type="text"
 								variant="outlined"
 								size="small"
 								fullWidth
 								onChange={handleOnChange}
+								helperText={!foldersName? (messageErrorName? messageErrorName : '' ): 'Usuario ya existe'}
 							/>
 
-						<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-							<span className="text-danger text-error">{messageErrorName}</span>
-						</div>
 					</div>
 					
 				</DialogContent>

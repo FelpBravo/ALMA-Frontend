@@ -308,6 +308,13 @@
 	"table.shared.dialog.field.password": "Contraseña",
 	"table.shared.dialog.field.withoutPassword": "Sin contraseña",
 	"table.shared.dialog.tooltip.title": "Compartir",
+	"table.shared.dialog.tooltip.upload": "Descargar",
+	"table.shared.dialog.tooltip.preview": "Previsualización",
+	"table.shared.dialog.tooltip.edit": "Edición",
+	"table.shared.dialog.tooltip.versioning": "Versionamiento",
+	"table.shared.dialog.tooltip.editonline": "Editar en linea",
+	"table.shared.dialog.tooltip.remove": "Eliminar",
+	
 	"table.shared.dialog.field.expirationDate": "Fecha de vencimiento",
 	"table.shared.dialog.field.copyLink": "Copiar enlace",
 	"table.shared.dialog.field.createDocument": "Crear",

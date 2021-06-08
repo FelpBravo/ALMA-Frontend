@@ -341,27 +341,33 @@ const DataTable = () => {
 												{(ROLE_FILE_PREVIEW || READ )&&
 													<TableActionButton
 														materialIcon={
+															<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.preview" />}>
 															<VisibilityOutlinedIcon
 																className={classes.iconos}
 																onClick={() => handleVisibility(id, name)}
 															/>
+															</Tooltip>
 														}
 													/>}
 												<TableActionButton
 													materialIcon={
+														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
 														<SaveAltOutlinedIcon
 															className={classes.iconos}
 															onClick={() => handleDownload(id, name)}
 														/>
-													}
+														</Tooltip>
+														}
 												/>
 												{(ROLE_FILE_UPDATE || EDIT )&&
 													<TableActionButton
 														materialIcon={
+															<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.edit" />}>
 															<BorderColorOutlinedIcon
 																className={classes.iconos}
 																onClick={() => handleEdit(id)}
 															/>
+															</Tooltip>
 														}
 													/>}
 												{/*{(ROLE_FILE_DELETE || DELETE) &&
@@ -409,10 +415,12 @@ const DataTable = () => {
 												/>*/}
 												<TableActionButton
 													materialIcon={
+														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.versioning" />}>
 														<LoopOutlinedIcon
 															className={classes.iconos}
 															onClick={() => handleVersioning(id, name)}
 														/>
+														</Tooltip>
 													}
 												/>
 												<MoreVert
@@ -430,7 +438,7 @@ const DataTable = () => {
 													        <RateReviewOutlinedIcon
 																className={classes.iconos}	
 															/>{` `}
-													<span className={classes.menu}>Editar en linea</span>	
+													<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.editonline"/></span>	
 													</StyledMenuItem>
 
 													<StyledMenuItem onClick={() => handleDelete(selectedRow.id)} >
@@ -440,14 +448,14 @@ const DataTable = () => {
 																className={classes.iconos}
 															/>
 															
-													}<span className={classes.menu}>Eliminar</span>	
+													}<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.remove"/></span>	
 													</StyledMenuItem>
 													
 													<StyledMenuItem onClick={() => setDataSharedDialog(selectedRow)} >
 													        <ShareIcon
 																className={classes.iconos}	
 															/>{` `}
-													<span className={classes.menu}>Compartir</span>		
+													<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.title"/></span>		
 													</StyledMenuItem>
 												</StyledMenu>
 											</div>
