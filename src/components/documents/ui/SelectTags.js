@@ -137,7 +137,7 @@ export const SelectTags = () => {
                                         >
                                             <Checkbox
                                                 color="primary"
-                                                checked={tagsSelected.find(x => x === id) ? true : false}
+                                                checked={tagsSelected?.find(x => x === id) ? true : false}
                                             />
 
                                             <ListItemText
