@@ -367,26 +367,17 @@ export const documentsClear = () => {
 	}
 };
 
-export const startDocumentByIdLoading = (fileId) => {
+export const startDocumentByIdLoading = (fileId, callBack) => {
 	return async (dispatch, getState) => {
 		const { authUser } = getState().auth;
 
 		try {
 
-			Swal.fire({
-				title: 'Cargando...',
-				text: 'Por favor espere...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
-
-			Swal.showLoading();
-
 			const resp = await getDocumentById(authUser, fileId);
-
 			Swal.close();
 
 			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));
+			callBack()
 		} catch (error) {
 			Swal.close();
 			console.log(error);

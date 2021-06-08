@@ -77,6 +77,7 @@ const Documents = () => {
 		name: 'documentForm',
 		defaultValues,
 		resolver: yupResolver(object().shape(resolver)),
+		shouldUnregister: true,
 	});
 	const { handleSubmit, reset, watch } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
@@ -102,12 +103,6 @@ const Documents = () => {
 		aspectList.length === 0 ||
 		folderId.length === 0)
 
-	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit })
-	const { flowSteps,
-		Component,
-		activeStep,
-		setActiveStep } = flowStepsProvider
-		
 	const handleSaveForm = async (values) => {
 
 		const resp = await Swal.fire({
@@ -121,7 +116,7 @@ const Documents = () => {
 		if (resp.value) {
 
 			const newAspectList = [...(aspectList || [])]
-			
+
 			for (const aspect of newAspectList) {
 				aspect.customPropertyList = aspect.customPropertyList.filter(property => {
 					const value = get(values, property?.name, null)
@@ -180,6 +175,13 @@ const Documents = () => {
 
 	}
 
+
+	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit })
+	const { flowSteps,
+		Component,
+		activeStep,
+		setActiveStep } = flowStepsProvider
+
 	useEffect(() => {
 		if (files) {
 			dispatch(saveFileIdLoaded(
@@ -193,7 +195,6 @@ const Documents = () => {
 
 	return (<FormProvider {...{resolver,setResolver}} {...methods} >
 		<FlowContext.Provider value={{ ...flowStepsProvider }}>
-			<form onSubmit={handleSubmit(handleSaveForm)}>
 				<Grid container spacing={2}>
 					<Grid item md={12}>
 						<Paper className={classes.container}>
@@ -214,7 +215,6 @@ const Documents = () => {
 						</Paper>
 					</Grid>
 				</Grid>
-			</form>
 		</FlowContext.Provider>
 	</FormProvider>
 	)
