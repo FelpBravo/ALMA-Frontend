@@ -16,7 +16,7 @@ export const PrintField = ({ sectionId, name, label, type, value, propertyItemLi
 				...resolver,
 				[name]: date().required().min("1900-01-01").max("2100-01-01"),
 			})
-			setValue(name, null)
+			setValue(name, value || null)
 		}
 	}, [type, name])
 
