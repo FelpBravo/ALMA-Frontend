@@ -204,7 +204,7 @@ const Documents = () => {
 				<Grid item md={12}>
 					<Paper className={classes.container}>
 						{
-							controlledDocument && <>
+							(controlledDocument || activeStep > 0) && <>
 								<Stepper alternativeLabel activeStep={activeStep}>
 									{
 										Object.keys(flowSteps).map((name, index) => <Step key={index}>
