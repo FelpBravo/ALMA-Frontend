@@ -118,7 +118,7 @@ const SharedDialog = ({ data, handleClose }) => {
       <DialogContent>
         <Grid container spacing={2}>
 
-          <Grid item md={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <TextField
               autoFocus
               label={<IntlMessages id="table.shared.dialog.field.expirationDate" />}
@@ -135,8 +135,8 @@ const SharedDialog = ({ data, handleClose }) => {
               onChange={handleOnChange}
             />
           </Grid>
-          <Grid item md={12} container wrap="nowrap">
-            <Grid item md={1}>
+          <Grid item xs={12} sm={12} md={12} container wrap="nowrap">
+            <Grid item xs={1} sm={1} md={1}>
               <Checkbox
                 checked={checked}
                 onChange={handleChange}
@@ -144,7 +144,7 @@ const SharedDialog = ({ data, handleClose }) => {
                 color="primary"
               />
             </Grid>
-            <Grid item md={11}>
+            <Grid item xs={11} sm={11} md={11}>
               <TextField
                 name="password"
                 label={!checked ? fieldWithoutPassword : fieldName}
