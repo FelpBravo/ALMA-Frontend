@@ -1,28 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IntlMessages from 'util/IntlMessages';
-import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { openModalVisibility, startDownloadDocument, startVersioningLoading } from '../../../../../actions/search'
-import Pagination from '@material-ui/lab/Pagination';
-import Grid from '@material-ui/core/Grid';
-import TableActionButton from '../../../ui/TableActionButton';
-import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import BeenhereRoundedIcon from '@material-ui/icons/BeenhereRounded';
 import BeenhereOutlinedIcon from '@material-ui/icons/BeenhereOutlined';
-
-import ShareIcon from '@material-ui/icons/Share';
-import { makeStyles } from '@material-ui/core';
-import { startDocumentByIdVisibility } from '../../../../../actions/documents';
-import Swal from 'sweetalert2';
+import BeenhereRoundedIcon from '@material-ui/icons/BeenhereRounded';
 import CompareArrowsOutlinedIcon from '@material-ui/icons/CompareArrowsOutlined';
+import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
+import ShareIcon from '@material-ui/icons/Share';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import Pagination from '@material-ui/lab/Pagination';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import Swal from 'sweetalert2';
+
+import IntlMessages from 'util/IntlMessages';
+
+import { startDocumentByIdVisibility } from '../../../../../actions/documents';
+import { openModalVisibility, startDownloadDocument, startVersioningLoading } from '../../../../../actions/search'
+import TableActionButton from '../../../ui/TableActionButton';
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -94,7 +95,7 @@ const DataTableVersioning = () => {
 		dispatch(startDocumentByIdVisibility(id, name));
 	};
 
-	const handleDownload = async (id, name) => {
+	const handleDownload = async (id, name, version) => {
 
 		if (ROLE_FILE_DOWNLOAD) {
 			const resp = await Swal.fire({
@@ -106,7 +107,7 @@ const DataTableVersioning = () => {
 				heightAuto: false,
 			});
 			if (resp.value) {
-				dispatch(startDownloadDocument(id, name))
+				dispatch(startDownloadDocument(id, name, version))
 			}
 		}
 
@@ -164,7 +165,7 @@ const DataTableVersioning = () => {
 												materialIcon={
 													<SaveAltOutlinedIcon
 														className={classes.iconos}
-														onClick={() => handleDownload(id, name)}
+														onClick={() => handleDownload(id, name, version)}
 													/>
 												}
 											/>

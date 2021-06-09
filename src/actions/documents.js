@@ -449,6 +449,11 @@ const documentVisibility = (docs) => {
 	}
 }
 
+export const clearDocumentVisibility = () => {
+	return {
+		type: types.clearDocsDocumentByIdVisibility,
+	}
+}
 
 export const startTagsLoading = (authUser) => {
 	return async (dispatch) => {
@@ -456,7 +461,6 @@ export const startTagsLoading = (authUser) => {
 		try {
 
 			const resp = await getTags(authUser);
-
 			dispatch(tagsLoaded(resp.data));
 
 		} catch (error) {

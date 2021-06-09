@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
@@ -41,39 +41,41 @@ import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ModalEditOnline from './ModalEditOnline';
- 
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
+
+const MAX_CHARACTERS = 60;
 
 const StyledMenu = withStyles({
 	paper: {
-	  border: '1px solid #d3d4d5',
+		border: '1px solid #d3d4d5',
 	},
-  })((props) => (
+})((props) => (
 	<Menu
-	  elevation={0}
-	  getContentAnchorEl={null}
-	  anchorOrigin={{
-		vertical: 'bottom',
-		horizontal: 'center',
-	  }}
-	  transformOrigin={{
-		vertical: 'top',
-		horizontal: 'center',
-	  }}
-	  {...props}
+		elevation={0}
+		getContentAnchorEl={null}
+		anchorOrigin={{
+			vertical: 'bottom',
+			horizontal: 'center',
+		}}
+		transformOrigin={{
+			vertical: 'top',
+			horizontal: 'center',
+		}}
+		{...props}
 	/>
-  ));
-  
-  const StyledMenuItem = withStyles((theme) => ({
+));
+
+const StyledMenuItem = withStyles((theme) => ({
 	root: {
-	  '&:focus': {
-		backgroundColor: theme.palette.primary.main,
-		'& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-		  color: theme.palette.common.white,
+		'&:focus': {
+			backgroundColor: theme.palette.primary.main,
+			'& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+				color: theme.palette.common.white,
+			},
 		},
-	  },
 	},
-  }))(MenuItem);
-  
+}))(MenuItem);
+
 
 const useStyles = makeStyles((theme) => ({
 	table: {
@@ -105,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: '10px',
 		width: '100%',
 	},
-	menu:{
+	menu: {
 		fontFamily: "Poppins",
 		fontSize: 12,
 		fontWeight: 400,
@@ -145,7 +147,7 @@ const DataTable = () => {
 
 	const [editOnline, setEditOnline] = useState(null)
 
-	const [selectedRow, setSelectedRow] = useState (null)
+	const [selectedRow, setSelectedRow] = useState(null)
 
 	const [editActive, setEditActive] = useState(false)
 
@@ -254,15 +256,15 @@ const DataTable = () => {
 	const handleSubscribe = (id) => {
 		dispatch(startSubscribeDocument(id));
 	}
- 
-  
-	const handleClick = (e, id, name ) => {
-	  setAnchorEl(e.currentTarget);
-	  setSelectedRow({'id': id, 'name':name})
+
+
+	const handleClick = (e, id, name) => {
+		setAnchorEl(e.currentTarget);
+		setSelectedRow({ 'id': id, 'name': name })
 	};
-  
+
 	const handleClose = () => {
-	  setAnchorEl(null);
+		setAnchorEl(null);
 	};
 
 	const handleOpenEditUsers = () => {
@@ -273,6 +275,17 @@ const DataTable = () => {
 		setEditActive(false) 
 	}
 
+	const getName = name =>
+		name.length <= MAX_CHARACTERS
+			? <Typography variant="body2" color="primary">{name}</Typography>
+			: <Tooltip
+				title={name}
+				aria-label={name}
+				placement="bottom"
+
+			>
+				<Typography variant="body2" color="primary">{name?.slice(0, MAX_CHARACTERS)}...</Typography>
+			</Tooltip>
 
 	return (
 		<div className="row mt-3">
@@ -301,15 +314,18 @@ const DataTable = () => {
 								const READ = permissions.find(rol => rol === 'READ')
 								const EDIT = permissions.find(rol => rol === 'EDIT')
 								const DELETE = permissions.find(rol => rol === 'DELETE')
-							
+
 								return (
 									<TableRow
 										hover
 										tabIndex={-1}
 										key={id}
 									>
-										<TableCell style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400 }}>
-											<span style={{ color: "#2196f3" }}><i className="far fa-file custom-link-dash"></i>{` `} {name}</span>
+										<TableCell style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, }}>
+											<div style={{ display: 'flex' }}>
+												<InsertDriveFileOutlinedIcon fontSize="small" color="primary" />
+												{getName(name)}
+											</div>
 										</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{`${createdByUser}`}</TableCell>
 										<TableCell style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }}>{createdAt.substr(0, 10)}</TableCell>
@@ -340,35 +356,35 @@ const DataTable = () => {
 										<TableCell></TableCell>
 										<TableCell>
 											<div className={classes.iconsHolder}>
-												{(ROLE_FILE_PREVIEW || READ )&&
+												{(ROLE_FILE_PREVIEW || READ) &&
 													<TableActionButton
 														materialIcon={
 															<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.preview" />}>
-															<VisibilityOutlinedIcon
-																className={classes.iconos}
-																onClick={() => handleVisibility(id, name)}
-															/>
+																<VisibilityOutlinedIcon
+																	className={classes.iconos}
+																	onClick={() => handleVisibility(id, name)}
+																/>
 															</Tooltip>
 														}
 													/>}
 												<TableActionButton
 													materialIcon={
 														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
-														<SaveAltOutlinedIcon
-															className={classes.iconos}
-															onClick={() => handleDownload(id, name)}
-														/>
+															<SaveAltOutlinedIcon
+																className={classes.iconos}
+																onClick={() => handleDownload(id, name)}
+															/>
 														</Tooltip>
-														}
+													}
 												/>
-												{(ROLE_FILE_UPDATE || EDIT )&&
+												{(ROLE_FILE_UPDATE || EDIT) &&
 													<TableActionButton
 														materialIcon={
 															<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.edit" />}>
-															<BorderColorOutlinedIcon
-																className={classes.iconos}
-																onClick={() => handleEdit(id)}
-															/>
+																<BorderColorOutlinedIcon
+																	className={classes.iconos}
+																	onClick={() => handleEdit(id)}
+																/>
 															</Tooltip>
 														}
 													/>}
@@ -418,17 +434,17 @@ const DataTable = () => {
 												<TableActionButton
 													materialIcon={
 														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.versioning" />}>
-														<LoopOutlinedIcon
-															className={classes.iconos}
-															onClick={() => handleVersioning(id, name)}
-														/>
+															<LoopOutlinedIcon
+																className={classes.iconos}
+																onClick={() => handleVersioning(id, name)}
+															/>
 														</Tooltip>
 													}
 												/>
 												<MoreVert
 													className={classes.iconos}
 													onClick={(e) => handleClick(e, id, name)}
-											    />
+												/>
 												<StyledMenu
 													id="customized-menu"
 													anchorEl={anchorEl}
@@ -444,20 +460,20 @@ const DataTable = () => {
 													</StyledMenuItem>
 
 													<StyledMenuItem onClick={() => handleDelete(selectedRow.id)} >
-													{(ROLE_FILE_DELETE || DELETE) &&
-												
+														{(ROLE_FILE_DELETE || DELETE) &&
+
 															<DeleteOutlinedIcon
 																className={classes.iconos}
 															/>
-															
-													}<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.remove"/></span>	
+
+														}<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.remove" /></span>
 													</StyledMenuItem>
-													
+
 													<StyledMenuItem onClick={() => setDataSharedDialog(selectedRow)} >
-													        <ShareIcon
-																className={classes.iconos}	
-															/>{` `}
-													<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.title"/></span>		
+														<ShareIcon
+															className={classes.iconos}
+														/>{` `}
+														<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.title" /></span>
 													</StyledMenuItem>
 												</StyledMenu>
 											</div>

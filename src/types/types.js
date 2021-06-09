@@ -83,7 +83,10 @@ export const types = {
 	docsAddAndRemoveTag: 'Documents Add and Remove tag',
 	docsLoadingModalFolder: 'Documents Loading modal folder',
 	docsDocumentByIdVisibility: 'Documents Visibility',
-	
+	clearDocsDocumentByIdVisibility: 'Clear DocsDocument visibility',
+	docsDocumentsOfficeLoaded: 'Documents Office Loaded',
+
+
 	adminFoldersLoaded: 'Admin Folders loaded',
 	adminFoldersSubFoldersLoaded: 'Admin Folders sub folders loaded',
 	adminFoldersSaveHistory: 'Admin Folders save history',
@@ -162,6 +165,9 @@ export const types = {
 	flowsLoaded: "Flows Loaded",
 	docsSaveFlowInit: "Docs Sabe Flow Init",
 
+	tasksListLoaded: "Tasks List Loaded",
+	flowListLoaded: "Flow List Loaded",
+	involvedListLoaded: "Involved List Loaded",
 	notificationsLoaded: "Notifications loaded",
 	notificationsInitialLoad: "notifications Initial Load",
 	notificationsChangeState: "Change notification state",
