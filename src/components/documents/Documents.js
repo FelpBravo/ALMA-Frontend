@@ -18,7 +18,6 @@ import IntlMessages from 'util/IntlMessages';
 import { createModeSchema, editModeSchema } from './Documents.schema';
 import { useFlowSteps } from './flow';
 import { FlowContext } from './helpers/FlowContext';
-import clone from 'lodash/clone'
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
