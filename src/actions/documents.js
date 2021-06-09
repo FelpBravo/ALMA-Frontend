@@ -748,25 +748,34 @@ const addAndRemoveTagLoaded = (tags) => {
 	}
 }
 
-export const startDocumentsOfficeLoading = (authUser, fileId) => {
+export const startDocumentsOfficeLoading = (authUser, fileId, onClose) => {
 	return async (dispatch) => {
 
 		try {
+			
 
 			const resp = await getOffice(authUser, fileId);
-
-			dispatch(documentsOfficeLoaded(resp.data));
+			window.location.replace(resp.data)
+			
+			
+			//dispatch(documentsOfficeLoaded(resp.data));
 
 		} catch (error) {
 			console.log(error);
+			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
+		} finally{
+			onClose()
 		}
+	
 
 	}
 };
 
-const documentsOfficeLoaded = (documentsOffice) => {
-	return {
-		type: types.docsDocumentsOfficeLoaded,
-		payload: documentsOffice
-	}
-};
+
+

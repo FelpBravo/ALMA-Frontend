@@ -26,8 +26,6 @@ const Versioning = () => {
 	const location = useLocation();
 	const history = useHistory();
 
-
-
 	useEffect(() => {
 
 		if (!authUser) {

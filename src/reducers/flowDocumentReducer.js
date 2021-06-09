@@ -39,6 +39,9 @@ const initialState = {
             "mandatory": true
         }
     ],
+    tasksList: [],
+    flowList: [],
+    involved: [],
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -49,12 +52,21 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 ...state,
                 approvesList: payload
             }
-        case types.flowsLoaded:
+        case types.tasksListLoaded:
             return {
                 ...state,
-                flows: payload
+                tasksList: payload
                 }    
-                
+        case types.flowListLoaded:
+            return {
+                ...state,
+                flowList: payload
+                }    
+        case types.involvedListLoaded:
+            return {
+                ...state,
+                involved: payload
+                }        
         default:
             return state;
     }

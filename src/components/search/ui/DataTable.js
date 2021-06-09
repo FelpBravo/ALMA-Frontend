@@ -26,7 +26,6 @@ import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import TableActionButton from './TableActionButton';
-import ModalFirm from './ModalFirm';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
@@ -39,14 +38,8 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import { MoreVert } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import ModalEditOnline from './ModalEditOnline';
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 
@@ -155,6 +148,8 @@ const DataTable = () => {
 	const [editOnline, setEditOnline] = useState(null)
 
 	const [selectedRow, setSelectedRow] = useState(null)
+
+	const [editActive, setEditActive] = useState(false)
 
 
 
@@ -272,6 +267,14 @@ const DataTable = () => {
 		setAnchorEl(null);
 	};
 
+	const handleOpenEditUsers = () => {
+		//dispatch(startDocumentsOfficeLoading(authUser, selectedRow.id))
+		setEditActive(true)
+	}
+	const handleCloseEditUsers = () =>{	
+		setEditActive(false) 
+	}
+
 	const getName = name =>
 		name.length <= MAX_CHARACTERS
 			? <Typography variant="body2" color="primary">{name}</Typography>
@@ -287,7 +290,7 @@ const DataTable = () => {
 	return (
 		<div className="row mt-3">
 			<SharedDialog handleClose={() => setDataSharedDialog(null)} data={dataSharedDialog} />
-			<ModalEditOnline handleClose={() => setEditOnline(null)} data={editOnline} />
+			<ModalEditOnline  data={selectedRow} close={handleCloseEditUsers} open={editActive} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<TableContainer component={Paper}>
@@ -449,11 +452,11 @@ const DataTable = () => {
 													open={Boolean(anchorEl)}
 													onClose={handleClose}
 												>
-													<StyledMenuItem onClick={() => setEditOnline(selectedRow)}>
-														<RateReviewOutlinedIcon
-															className={classes.iconos}
-														/>{` `}
-														<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.editonline" /></span>
+													<StyledMenuItem onClick={() => handleOpenEditUsers(selectedRow.id)}>
+													        <RateReviewOutlinedIcon
+																className={classes.iconos}	
+															/>{` `}
+													<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.editonline"/></span>	
 													</StyledMenuItem>
 
 													<StyledMenuItem onClick={() => handleDelete(selectedRow.id)} >

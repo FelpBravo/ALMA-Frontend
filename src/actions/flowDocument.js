@@ -1,4 +1,4 @@
-import { getApproves, postFlows } from 'services/flowDocumentService';
+import { getActiveTasks, getApproves, getInvolved, postFlowAll, postFlows } from 'services/flowDocumentService';
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
 import { GENERAL_ERROR } from '../constants/constUtil';
@@ -53,6 +53,53 @@ export const startInitFlowsLoading = ( authUser, data, callback) => {
 	}
 };
 
+export const startActiveTasksInit = ( authUser, page, status) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await getActiveTasks(authUser, page, 10, status);
+
+            dispatch(listActiveTasks(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+export const startFlowsAllInit = ( authUser, page ) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await postFlowAll(authUser, page, 10);
+
+            dispatch(listFlows(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+export const startInvolvedLoading = ({ authUser, instanceId}) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await getInvolved(authUser, instanceId);
+            console.log("involved", resp)
+
+            dispatch(involvedLoaded(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
 const saveFlowInit = () => {
 	return {
 		type: types.docsSaveFlowInit,
@@ -70,5 +117,25 @@ const flowsInitLoaded = (flows) => {
     return {
         type: types.flowsLoaded,
         payload: flows
+    }
+};
+
+const listActiveTasks = (tasksList) => {
+    return {
+        type: types.tasksListLoaded,
+        payload: tasksList
+    }
+};
+
+const listFlows = (flowList) => {
+    return {
+        type: types.flowListLoaded,
+        payload: flowList
+    }
+};
+const involvedLoaded = (involved) => {
+    return {
+        type: types.involvedListLoaded,
+        payload: involved
     }
 };

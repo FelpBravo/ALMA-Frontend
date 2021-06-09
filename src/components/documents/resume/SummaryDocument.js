@@ -16,15 +16,15 @@ const SummaryDocument = ({ data }) => {
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
-                <TableContainer component={Paper}>
-                    <Table size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    <IntlMessages id="Nombre documento" />
-                                </TableCell>
-                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    Tipo
+            <TableContainer component={Paper}>
+                <Table size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+                                <IntlMessages id="Nombre documento" />
+                            </TableCell>
+                            <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400}} >
+                             Ubicación
                             </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
                                     ID
@@ -55,7 +55,7 @@ const SummaryDocument = ({ data }) => {
                                     {data?.name}
                                 </TableCell>
                                 <TableCell>
-                                    tipo
+                                Ubicacion
                                 </TableCell>
                                 <TableCell>
                                     {data?.folderId}

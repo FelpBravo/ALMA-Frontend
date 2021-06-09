@@ -3,19 +3,17 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import { useHistory, useParams,useRouteMatch ,useLocation } from 'react-router-dom';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
 import TableActionButton from 'components/search/ui/TableActionButton';
-import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-
+import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
+import { startFlowsAllInit } from 'actions/flowDocument';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,13 +30,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Manage = () => {
+const Manage = ({setOpenTracing}) => {
 
 	const classes = useStyles();
 
 	const isMounted = useRef(true)
+	const dispatch = useDispatch();
 	
-
+	const { authUser } = useSelector(state => state.auth);
+	const { flowList ={}} = useSelector(state => state.flowDocument);
+	const { data = [], totalItems = 0 } = flowList;
+	const [page, setPage] = useState(0)
 
 	useEffect(() => {
 		return () => {
@@ -46,7 +48,11 @@ const Manage = () => {
 		}
 	}, [])
 
-
+    const handleChangePage = (event, page) => {
+		dispatch(startFlowsAllInit(authUser , page ))
+		setPage(page);
+	
+}
 
 	return (
 		<div className="row">
@@ -56,71 +62,58 @@ const Manage = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="users.table.column1" />
+									<IntlMessages id="Nombre del documento" />
+								</TableCell>
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="Tipo de flujo" />
+								</TableCell>
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="Fecha de creación" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Estado" />
 								</TableCell>
-								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Autor" />
-								</TableCell>
-								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Plazo de revision" />
-								</TableCell>
-								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Rol" />
-								</TableCell>
-								
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="users.table.column5" />
+									<IntlMessages id="Seguimiento" />
 								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody >
+						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskName }, index) => {
 
-							 <TableRow >
+                                return <TableRow key={index} >
+							 
 									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
-									Plantilla-contrato
-										
-									</TableCell>
-                                    <TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>En revisión</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>Nadia Gallardo</TableCell>
-									
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									30-03-2021
+								    {fileName}
+									</TableCell>                                  
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>									
+									{taskName}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									Owner
+									{createdOn}
 									</TableCell>
-				
+									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
+									{status}
+									</TableCell>								
 									
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
 									
 											<div className={classes.iconsHolder}>
 												<TableActionButton
 													materialIcon={
-														<BorderColorOutlinedIcon
+														<PersonPinCircleIcon
 															className={classes.iconos}
-															//onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department,companyOther, departmentOther, search)}
-														/>
+															onClick={() => setOpenTracing({id: 3})}
+													    />
 													}
 												/>
 
-												{/*<TableActionButton
-													materialIcon={
-														<DeleteOutlinedIcon
-															className={classes.iconos}
-														//onClick={() => handleSelectActionTags(3)}
-														/>
-													}
-												/>*/}
 											</div>
 
 									</TableCell>
 
 								</TableRow>
-
-							
+                            })}
 							{/*{!userdata || userdata.length == 0 &&
 								<TableRow>
 									<TableCell
@@ -145,11 +138,11 @@ const Manage = () => {
 						<Pagination 
 									style={{color: '#369bff'}}
 									//defaultPage={parseInt(page_url)}
-									//count={Math.ceil(totalItems/10)} 
+									count={Math.ceil(totalItems/10)} 
 									color="primary" 
 									shape="rounded" 
-									//total={totalItems} 
-									//onChange={handleChangePage}
+									total={totalItems} 
+									onChange={handleChangePage}
 						/> 
 					</Grid>
 			</div>
