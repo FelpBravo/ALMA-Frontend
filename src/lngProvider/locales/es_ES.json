@@ -308,10 +308,18 @@
 	"table.shared.dialog.field.password": "Contraseña",
 	"table.shared.dialog.field.withoutPassword": "Sin contraseña",
 	"table.shared.dialog.tooltip.title": "Compartir",
+	"table.shared.dialog.tooltip.upload": "Descargar",
+	"table.shared.dialog.tooltip.preview": "Previsualización",
+	"table.shared.dialog.tooltip.edit": "Edición",
+	"table.shared.dialog.tooltip.versioning": "Versionamiento",
+	"table.shared.dialog.tooltip.editonline": "Editar en linea",
+	"table.shared.dialog.tooltip.remove": "Eliminar",
+	
 	"table.shared.dialog.field.expirationDate": "Fecha de vencimiento",
 	"table.shared.dialog.field.copyLink": "Copiar enlace",
 	"table.shared.dialog.field.createDocument": "Crear",
 	"table.shared.dialog.field.cancelDocument": "Cancelar",
+	"table.shared.dialog.field.closeDocument": "Aceptar",
 
 	"downloadFile.shared.dialog.button.send": "Enviar",
 	"downloadFile.shared.dialog.message.protected": "está protegido. Ingrese la contraseña para abrir el documento.",
@@ -328,6 +336,8 @@
 	"todo.labels": "Etiquetas",
 	"dashboard.advancedSearchText": "Buscar",
 	"dashboard.advancedSearchClear": "Limpiar",
+	"dashboard.button.back": "Volver",
+	"dashboard.button.cancel": "Cancelar",
 	"dashboard.advancedSearch": "Búsqueda Avanzada",
 	"dashboard.listSearch": "Mis búsquedas guardadas",
 	"dashboard.saveSearch": "Guardar búsqueda",
@@ -748,5 +758,16 @@
 	"document.loadDocuments.request.summary.involved":"Involucrados",
 	"document.loadDocuments.request.summary.general.remarks":"Observaciones Generales",
 	"document.loadDocuments.request.summary.button.cancel":"Cancelar",
-	"document.loadDocuments.request.summary.button.confirm":"Confirmar"
+	"document.loadDocuments.request.summary.button.confirm":"Confirmar",
+
+	"forms.errors.validation.mixed.required": "Campo requerido",
+	"forms.errors.validation.mixed.type.default": "Campo inválido",
+	"forms.errors.validation.mixed.type.integer": "Campo requerido",
+	"forms.errors.validation.mixed.type.string": "Texto inválido",
+	"forms.errors.validation.integer.positive": "Debe ser un número positivo",
+	
+	"flow.created": "Se ha agregado un nuevo flujo No. {FlowID}",
+	"flow.newTask": "Se te ha asignado una nueva tarea ({TaskID}) pendiente de revisión para el flujo No. {FlowID}",
+	"flow.approved": "Se ha aprobado el flujo {FlowID} exitosamente.",
+	"flow.decclined": "Se ha rechazado el flujo {FlowID}."
 }

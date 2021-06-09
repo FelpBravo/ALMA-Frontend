@@ -5,6 +5,7 @@ import { Controller } from "react-hook-form";
 
 import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import moment from "moment";
+import IntlMessages from "util/IntlMessages";
 
 const DateField = ({ control, name, label, errors, ...props }) => {
     const errorMessage = get(errors, `${name}.message`, '');
@@ -20,10 +21,9 @@ const DateField = ({ control, name, label, errors, ...props }) => {
                     label={label}
                     inputVariant="outlined"
                     fullWidth
-                    clearable
                     format={FORMAT_YYYY_MM_DD}
                     error={Boolean(errorMessage)}
-                    helperText={errorMessage}
+                    helperText={errorMessage && <IntlMessages id={errorMessage} />}
                     KeyboardButtonProps={{
                         "aria-label": "change date"
                     }}

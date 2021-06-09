@@ -12,18 +12,20 @@ import IntlMessages from 'util/IntlMessages';
 import { SummaryDocument } from './SummaryDocument';
 import { SummaryInvolved } from './SummaryInvolved';
 import { startInitFlowsLoading } from 'actions/flowDocument';
+import { useHistory } from 'react-router';
 
 const ModalLoadFlow = ({ data, close, open }) => {
 
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
+  const history = useHistory();
 
   const handleClose = () => {
     close()
   }
 
   const handleInitFlow = () => {
-    dispatch(startInitFlowsLoading(authUser, data))
+    dispatch(startInitFlowsLoading(authUser, data, () => history.push('/inbox')))
     close()
   }
 
@@ -35,7 +37,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullWidth
-        maxWidth={'md'}
+        maxWidth="lg"
       >
         <DialogTitle id="form-dialog-title">
           <div style={{ fontFamily: 'Poppins', fontSize: "16px" }}>

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { get, isEmpty } from 'lodash-es';
 import PropTypes from 'prop-types';
 import React from 'react'
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,7 +45,7 @@ const TextField = ({
     });
 
     const textFieldProps = {
-        helperText: errorMessage,
+        helperText: errorMessage && <IntlMessages id={errorMessage} />,
         error: Boolean(errorMessage),
         id: id || name,
         inputRef: ref,

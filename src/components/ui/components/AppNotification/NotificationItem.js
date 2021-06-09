@@ -1,21 +1,65 @@
-import React from 'react';
+import { Grid, makeStyles } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import clsx from 'clsx';
+import moment from 'moment';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { startNotificationsViewedLoading } from 'actions/notifications';
+import IntlMessages from 'util/IntlMessages';
 
-const NotificationItem = ({notification}) => {
-  const {icon, image, title, time} = notification;
+const useStyles = makeStyles(theme => ({
+  avatar: {
+    backgroundColor: "#e1f0ff"
+  },
+  boldText: {
+    fontWeight: 600
+  },
+  normalText: {
+    fontWeight: 400
+  },
+  media: {
+    cursor: 'pointer',
+    "&:hover": {
+      background: "#f4f5f7",
+    },
+  },
+}));
+
+const NotificationItem = ({ notification }) => {
+  const { id, icon = "info_outlined", values = {}, messageId, createdAt, viewed } = notification;
+  const classes = useStyles();
+  const dispatch = useDispatch()
+  const { authUser } = useSelector(state => state.auth);
+  const { data } = useSelector(state => state.notifications);
+
+  const handleChangeState = () => {
+    const newState = data.map(e => e.id !== id ? e : {
+      ...e,
+      viewed: true,
+    })
+    dispatch(startNotificationsViewedLoading({ authUser, id, newState }));
+  }
+
   return (
-    <li className="media">
-      <Avatar
-        alt={image}
-        src={image}
-        className=" mr-2"
-      />
+    <li onClick={handleChangeState} className={clsx(classes.media, "media")}>
+      <Avatar variant="rounded" className={clsx(classes.avatar, "mr-2")}>
+        <Icon color="primary">
+          {icon}
+        </Icon>
+      </Avatar>
       <div className="media-body align-self-center">
-        <p className="sub-heading mb-0">{title}</p>
-        <Button size="small" className="jr-btn jr-btn-xs mb-0"><i
-          className={`zmdi ${icon} zmdi-hc-fw`}/></Button> <span className="meta-date"><small>{time}</small></span>
+        <p className={clsx(!viewed ? classes.boldText : classes.normalText, "sub-heading mb-0")}>
+          <IntlMessages id={messageId} values={values} />
+        </p>
+        <Grid container alignItems="center">
+          <i className={`zmdi ${'zmdi-calendar-alt text-info'} zmdi-hc-fw`} />
+          <span className="meta-date">
+            <small className={!viewed ? classes.boldText : classes.normalText}>{moment(createdAt).fromNow()}</small>
+          </span>
+        </Grid>
       </div>
     </li>
   );

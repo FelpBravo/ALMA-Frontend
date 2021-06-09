@@ -367,26 +367,17 @@ export const documentsClear = () => {
 	}
 };
 
-export const startDocumentByIdLoading = (fileId) => {
+export const startDocumentByIdLoading = (fileId, callBack) => {
 	return async (dispatch, getState) => {
 		const { authUser } = getState().auth;
 
 		try {
 
-			Swal.fire({
-				title: 'Cargando...',
-				text: 'Por favor espere...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
-
-			Swal.showLoading();
-
 			const resp = await getDocumentById(authUser, fileId);
-
 			Swal.close();
 
 			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));
+			callBack()
 		} catch (error) {
 			Swal.close();
 			console.log(error);
@@ -458,6 +449,11 @@ const documentVisibility = (docs) => {
 	}
 }
 
+export const clearDocumentVisibility = () => {
+	return {
+		type: types.clearDocsDocumentByIdVisibility,
+	}
+}
 
 export const startTagsLoading = (authUser) => {
 	return async (dispatch) => {
@@ -465,7 +461,6 @@ export const startTagsLoading = (authUser) => {
 		try {
 
 			const resp = await getTags(authUser);
-
 			dispatch(tagsLoaded(resp.data));
 
 		} catch (error) {

@@ -153,13 +153,13 @@ export const startSaveSearchLoading = (authUser, filters) => {
 					}
 					else{
 						Swal.showValidationMessage(
-							'No puede estar el campo vacio'
+							'Debe ingresar más de 3 carácteres'
 						)
 					}
 			
 				},
 				allowOutsideClick: () => !Swal.isLoading()
-			}).then(result => dispatch(savedSearchAdd(result?.value?.data)))
+			}).then(result => result?.value && dispatch(savedSearchAdd(result?.value?.data)))
 		} catch (error) {
 			console.log(error);
 		}
@@ -202,7 +202,7 @@ export const startDeleteDocument = (id) => {
 	}
 };
 
-export const startDownloadDocument = (id, name) => {
+export const startDownloadDocument = (id, name, version) => {
 	return async (dispatch, getState) => {
 
 		const { authUser } = getState().auth;
@@ -220,7 +220,7 @@ export const startDownloadDocument = (id, name) => {
 
 			Swal.showLoading();
 
-			const { data } = await downloadDocument(authUser, id);
+			const { data } = await downloadDocument(authUser, id, version);
 
 			Swal.close();
 

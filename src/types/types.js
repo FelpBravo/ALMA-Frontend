@@ -17,6 +17,7 @@ export const types = {
 	foldersRemoveAll: 'Folders Remove All',
 	pathFolderName:'Folders Name Path',
 	clearFolderIdOrigin:'Folders Clear folderId',
+	foldersValidateName: "Folders Validate Name",
 
 	auditDataLoaded: 'Audit Data Loaded',
 	auditRemoveAll: 'Audit Remove All',
@@ -82,6 +83,7 @@ export const types = {
 	docsAddAndRemoveTag: 'Documents Add and Remove tag',
 	docsLoadingModalFolder: 'Documents Loading modal folder',
 	docsDocumentByIdVisibility: 'Documents Visibility',
+	clearDocsDocumentByIdVisibility: 'Clear DocsDocument visibility',
 	docsDocumentsOfficeLoaded: 'Documents Office Loaded',
 
 
@@ -165,5 +167,10 @@ export const types = {
 
 	tasksListLoaded: "Tasks List Loaded",
 	flowListLoaded: "Flow List Loaded",
-	involvedListLoaded: "Involved List Loaded"
+	involvedListLoaded: "Involved List Loaded",
+	notificationsLoaded: "Notifications loaded",
+	notificationsInitialLoad: "notifications Initial Load",
+	notificationsChangeState: "Change notification state",
+	notificationsReset: "Notifications reset initial values",
+
 }

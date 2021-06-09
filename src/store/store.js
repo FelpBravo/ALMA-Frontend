@@ -24,6 +24,7 @@ import { sharedDocumentReducer } from 'reducers/sharedDocumentReducer';
 import { tagsReducer } from 'reducers/tagsReducer';
 import { uiAuditReducer } from 'reducers/uiAuditReducer';
 import { uiAuthReducer } from 'reducers/uiAuthReducer';
+import { notificationsReducer } from 'reducers/notificationsReducer';
 
 export const history = createBrowserHistory();
 
@@ -54,6 +55,7 @@ const rootReducer = (history) => combineReducers({
 	restorePassword: restorePasswordReducer,
 	modulePermissions: modulePermissionsReducer,
 	flowDocument: flowDocumentReducer,
+	notifications: notificationsReducer,
 });
 
 export const store = createStore(

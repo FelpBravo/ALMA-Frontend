@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Button, InputBase, Grid, makeStyles, Paper } from '@material-ui/core';
+import { Button, Grid, InputBase, makeStyles, Paper } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import IntlMessages from 'util/IntlMessages';
+
 import { searchSetText, startSearchLoading } from '../../../actions/search';
 import { AdvancedSearch } from './AdvancedSearch/AdvancedSearch';
-import SearchIcon from '@material-ui/icons/Search';
-
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -42,7 +43,7 @@ export const EditTextSearch = ({ savedSearchId }) => {
 
 	const { textSearch = '', fields } = useSelector(state => state.searchs);
 
-	const { maxTermLength = 20, minTermLength = 3 } = fields;
+	const { maxTermLength = 150, minTermLength = 3 } = fields;
 
 	const dispatch = useDispatch();
 

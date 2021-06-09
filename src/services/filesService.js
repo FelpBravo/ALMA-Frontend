@@ -1,7 +1,7 @@
 import { axiosInstance } from '../config/axios-instance';
 
-const downloadDocument = (authUser, id) => {
-	return axiosInstance.get(`/files/${id}/download`, {
+const downloadDocument = (authUser, id, version) => {
+	return axiosInstance.get(`/files/${id}/download${!version ? '' :`?version=${version}`}`, {
 		responseType: 'blob',
 		headers: {
 			Authorization: `Bearer ${authUser}`,
