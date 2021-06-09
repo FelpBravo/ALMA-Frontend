@@ -16,5 +16,33 @@ const postFlows = (authUser, flow, document, approves ,comment , startedBy) => {
     });
 };
 
+const getActiveTasks = (authUser, page, pageSize, status) => {
+    return axiosInstance.post(`/flows/data/activeTasks`, { page, pageSize, status },{
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
+const postFlowAll= (authUser, page, pageSize) => {
+    return axiosInstance.post(`/flows/data/all`, { page, pageSize },{
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
+const getInvolved = (authUser, instanceId) => {
+    return axiosInstance.get(`/flows/data/${instanceId}/startFlowData`, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
 export { getApproves,
-         postFlows, }
+         postFlows,
+         getActiveTasks,
+         postFlowAll,
+         getInvolved,
+         }

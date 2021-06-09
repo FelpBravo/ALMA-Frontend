@@ -32,3 +32,17 @@ export const SUCCESS_MESSAGE = 'Operación completada con éxito';
 // HTTP STATUS
 export const UNAUTHORIZED = 401;
 export const FORBIDDEN = 403;
+
+// BANDEJA DE ENTRADA
+
+export const INBOX_STATUS = [
+    "Created",
+    "Ready",
+    "Reserved",
+    "InProgress",
+    "Suspended",
+    "Completed",
+    "Failed",
+    "Error",
+    "Exited",
+    "Obsolete"]
