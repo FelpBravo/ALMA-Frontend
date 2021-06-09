@@ -13,7 +13,6 @@ import Pagination from '@material-ui/lab/Pagination';
 import Grid from '@material-ui/core/Grid';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { startUsersInitLoading, editUserStatus,userSearchLoading } from 'actions/adminUsersAndGroup';
