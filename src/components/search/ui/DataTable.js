@@ -155,6 +155,8 @@ const DataTable = () => {
 
 	const [selectedRow, setSelectedRow] = useState (null)
 
+	const [editActive, setEditActive] = useState(false)
+
 
 
 	let page_url = 1
@@ -271,11 +273,20 @@ const DataTable = () => {
 	  setAnchorEl(null);
 	};
 
+	const handleOpenEditUsers = () => {
+		dispatch(startDocumentsOfficeLoading(authUser, selectedRow.id))
+		setEditActive(true)
+	}
+	const handleCloseEditUsers = () =>{
+		
+		setEditActive(false) 
+	}
+
 
 	return (
 		<div className="row mt-3">
 			<SharedDialog handleClose={() => setDataSharedDialog(null)} data={dataSharedDialog} />
-			<ModalEditOnline handleClose={() => setEditOnline(null)} data={editOnline} />
+			<ModalEditOnline close={handleCloseEditUsers} open={editActive} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<TableContainer component={Paper}>
@@ -434,7 +445,7 @@ const DataTable = () => {
 													open={Boolean(anchorEl)}
 													onClose={handleClose}
 												>
-													<StyledMenuItem onClick={() => setEditOnline(selectedRow)}>
+													<StyledMenuItem onClick={() => handleOpenEditUsers(selectedRow.id)}>
 													        <RateReviewOutlinedIcon
 																className={classes.iconos}	
 															/>{` `}

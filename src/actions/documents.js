@@ -748,13 +748,30 @@ export const startDocumentsOfficeLoading = (authUser, fileId) => {
 	return async (dispatch) => {
 
 		try {
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
 
 			const resp = await getOffice(authUser, fileId);
 
+			Swal.close();
+			
 			dispatch(documentsOfficeLoaded(resp.data));
 
 		} catch (error) {
 			console.log(error);
+			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
 		}
 
 	}
@@ -766,3 +783,4 @@ const documentsOfficeLoaded = (documentsOffice) => {
 		payload: documentsOffice
 	}
 };
+

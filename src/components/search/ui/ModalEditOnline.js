@@ -21,25 +21,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ModalEditOnline = ({ data, handleClose }) => {
+const ModalEditOnline = ({ data }) => {
 
   const classes = useStyles();
-  const open = data !== null
+ 
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
   const { documentsOffice } = useSelector(state => state.documents);
  
 
-  useEffect(() => {
-    if(data?.id !== null){
+ useEffect(() => {
+    if(data?.id){
       dispatch(startDocumentsOfficeLoading(authUser, data?.id))}
-  }, [data?.id]);
+  }, [data?.id])
 
  
 
   const handleOnSave = () => { 
     dispatch(startDocumentsOfficeLoading(authUser, data?.id))
-    documentsOffice ? window.location.replace(documentsOffice) : dispatch(console.log("funciono"))
+    documentsOffice ? window.location.replace(documentsOffice) : dispatch(handleClose())
     handleClose()
   }
 
