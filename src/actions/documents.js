@@ -190,7 +190,7 @@ export const startSaveFormFlowLoading = (fileId, folderId, aspectGroup, tags, re
 	}
 };
 
-const saveFormFinish = () => {
+export const saveFormFinish = () => {
 	return {
 		type: types.docsSaveFormFinish,
 	}
@@ -584,13 +584,13 @@ export const startEditDocumentLoading = (
 				showConfirmButton: true,
 				showCloseButton: true,
 				showCancelButton: true,
+				confirmButtonText: 'Sí, regresar',
+				cancelButtonText: 'No',
 			})
-			console.log("resp", resp)
+
 			if (resp.value) {
 				callback && callback()
 			}
-			dispatch(saveFormFinish());
-
 
 		} catch (error) {
 			console.log(error);
