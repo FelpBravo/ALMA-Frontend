@@ -744,24 +744,17 @@ const addAndRemoveTagLoaded = (tags) => {
 	}
 }
 
-export const startDocumentsOfficeLoading = (authUser, fileId) => {
+export const startDocumentsOfficeLoading = (authUser, fileId, onClose) => {
 	return async (dispatch) => {
 
 		try {
-			Swal.fire({
-				title: 'Cargando...',
-				text: 'Por favor espere...',
-				allowOutsideClick: false,
-				heightAuto: false,
-			});
-
-			Swal.showLoading();
+			
 
 			const resp = await getOffice(authUser, fileId);
-
-			Swal.close();
+			window.location.replace(resp.data)
 			
-			dispatch(documentsOfficeLoaded(resp.data));
+			
+			//dispatch(documentsOfficeLoaded(resp.data));
 
 		} catch (error) {
 			console.log(error);
@@ -772,15 +765,13 @@ export const startDocumentsOfficeLoading = (authUser, fileId) => {
 			Swal.fire({
 				title: 'Error', text: message, icon: 'error', heightAuto: false
 			});
+		} finally{
+			onClose()
 		}
+	
 
 	}
 };
 
-const documentsOfficeLoaded = (documentsOffice) => {
-	return {
-		type: types.docsDocumentsOfficeLoaded,
-		payload: documentsOffice
-	}
-};
+
 

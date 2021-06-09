@@ -26,7 +26,6 @@ import Grid from '@material-ui/core/Grid';
 import { columnsDocuments } from 'helpers/columnsDocuments';
 import { DataTableHead } from './DataTableHead';
 import TableActionButton from './TableActionButton';
-import ModalFirm from './ModalFirm';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import ShareIcon from '@material-ui/icons/Share';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
@@ -39,16 +38,9 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import { MoreVert } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import ModalEditOnline from './ModalEditOnline';
-import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
  
 
 const StyledMenu = withStyles({
@@ -274,11 +266,10 @@ const DataTable = () => {
 	};
 
 	const handleOpenEditUsers = () => {
-		dispatch(startDocumentsOfficeLoading(authUser, selectedRow.id))
+		//dispatch(startDocumentsOfficeLoading(authUser, selectedRow.id))
 		setEditActive(true)
 	}
-	const handleCloseEditUsers = () =>{
-		
+	const handleCloseEditUsers = () =>{	
 		setEditActive(false) 
 	}
 
@@ -286,7 +277,7 @@ const DataTable = () => {
 	return (
 		<div className="row mt-3">
 			<SharedDialog handleClose={() => setDataSharedDialog(null)} data={dataSharedDialog} />
-			<ModalEditOnline close={handleCloseEditUsers} open={editActive} />
+			<ModalEditOnline  data={selectedRow} close={handleCloseEditUsers} open={editActive} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<TableContainer component={Paper}>
