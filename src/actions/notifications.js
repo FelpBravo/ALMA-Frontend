@@ -3,7 +3,6 @@ import { types } from 'types/types';
 
 export const startNotificationsLoading = ({ authUser, page, size }) => {
     return async (dispatch) => {
-
         try {
 
             const resp = await getNotifications(authUser, page, size);
