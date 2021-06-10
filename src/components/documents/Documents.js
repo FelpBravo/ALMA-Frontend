@@ -11,7 +11,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { object } from 'yup';
 
-import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
+import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading, saveFormFinish } from 'actions/documents';
 import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
@@ -115,17 +115,17 @@ const Documents = () => {
 		});
 		if (resp.value) {
 
-			const newAspectList = [...(aspectList || [])]
-
-			for (const aspect of newAspectList) {
-				aspect.customPropertyList = aspect.customPropertyList.filter(property => {
+			const newAspectList = aspectList.map(aspect => ({
+				...aspect,
+				customPropertyList: aspect.customPropertyList.filter(property => {
 					const value = get(values, property?.name, null)
 					if (value) {
 						property.value = property.type === "DATE" ? moment(value).format(FORMAT_YYYY_MM_DD) : value
 						return property
 					}
 				})
-			}
+			})
+			)
 
 			const { tagsField } = values
 			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
@@ -154,6 +154,10 @@ const Documents = () => {
 						)
 					);
 				case EDIT_MODE:
+					const callBack = () => {
+						history.goBack();
+						dispatch(saveFormFinish());
+					}
 					return dispatch(
 						startEditDocumentLoading(
 							folderId,
@@ -163,7 +167,7 @@ const Documents = () => {
 							values?.versioningComments,
 							{ id: documentId, aspectList: newAspectList },
 							tagsField,
-							() => history.goBack() // CallBack
+							callBack
 						)
 					);
 
@@ -193,28 +197,28 @@ const Documents = () => {
 		}
 	}, [files])
 
-	return (<FormProvider {...{resolver,setResolver}} {...methods} >
+	return (<FormProvider {...{ resolver, setResolver }} {...methods} >
 		<FlowContext.Provider value={{ ...flowStepsProvider }}>
-				<Grid container spacing={2}>
-					<Grid item md={12}>
-						<Paper className={classes.container}>
-							{
-								controlledDocument && <>
-									<Stepper alternativeLabel activeStep={activeStep}>
-										{
-											Object.keys(flowSteps).map((name, index) => <Step key={index}>
-												<StepLabel>{name}</StepLabel>
-											</Step>)
-										}
-									</Stepper>
-									<Divider className={classes.margin} />
-								</>
-							}
+			<Grid container spacing={2}>
+				<Grid item md={12}>
+					<Paper className={classes.container}>
+						{
+							(controlledDocument || activeStep > 0) && <>
+								<Stepper alternativeLabel activeStep={activeStep}>
+									{
+										Object.keys(flowSteps).map((name, index) => <Step key={index}>
+											<StepLabel>{name}</StepLabel>
+										</Step>)
+									}
+								</Stepper>
+								<Divider className={classes.margin} />
+							</>
+						}
 
-							{Component}
-						</Paper>
-					</Grid>
+						{Component}
+					</Paper>
 				</Grid>
+			</Grid>
 		</FlowContext.Provider>
 	</FormProvider>
 	)
