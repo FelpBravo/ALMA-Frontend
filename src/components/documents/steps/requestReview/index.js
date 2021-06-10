@@ -1,6 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import jwt_decode from 'jwt-decode'
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,8 +15,6 @@ import IntlMessages from 'util/IntlMessages';
 
 import schema from './requestReview.schema';
 import RolItem from './RolItem';
-import jwt_decode from 'jwt-decode'
-import { get } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -40,12 +40,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function RequestStep() {
+export default function RequestStep({ tagsField }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList } = useSelector(state => state.flowDocument);
-    const { folderId, filesLoaded } = useSelector(state => state.documents);
+    const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const [formData, setFormData] = useState(null)
     const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
@@ -64,7 +64,9 @@ export default function RequestStep() {
                 "uuid": get(filesLoaded, '0.fileIdLoaded', null),
                 "name": get(filesLoaded, '0.name', null),
                 "author": user?.userId,
-                folderId
+                pathFolderName,
+                folderId,
+                tagsField: tagsField.length
             },
             "startedBy": user?.userId,
             ...values

@@ -1,17 +1,17 @@
+import { Button, Grid } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import AddIcon from '@material-ui/icons/Add';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Grid } from '@material-ui/core';
 
-import IntlMessages from 'util/IntlMessages';
-import {
-	openModalFolder, setActionModal, setFolder, startFoldersLoading, startSaveCurrentFolder,startFoldersTypesLoading, adminFoldersremoveAll
-} from 'actions/adminFolders';
-import { DataTableFolders } from './ui/DataTableFolders';
+import { adminFoldersremoveAll, openModalFolder, setActionModal, setFolder, startFoldersLoading, startFoldersTypesLoading, startSaveCurrentFolder } from 'actions/adminFolders';
 import SimpleBreadcrumbs from 'components/ui/SimpleBreadcrumbs';
-import FolderDialog from './ui/FolderDialog';
 import { ACTION_CREATE } from 'constants/constUtil';
-import AddIcon from '@material-ui/icons/Add';
-import Link from '@material-ui/core/Link';
+import { hasAuthority } from 'util/authorities';
+import IntlMessages from 'util/IntlMessages';
+
+import { DataTableFolders } from './ui/DataTableFolders';
+import FolderDialog from './ui/FolderDialog';
 
 const Folders = () => {
 
@@ -20,6 +20,7 @@ const Folders = () => {
 	const { folders = [], currentFolders, historyFolders = [],folder } = useSelector(state => state.adminFolders);
 
 	const { authUser, authorities } = useSelector(state => state.auth);
+	const canCreateFolder = useSelector(hasAuthority('ROLE_FOLDER_CREATE'));
 
 	useEffect(() => {
 			dispatch(adminFoldersremoveAll())
@@ -93,10 +94,13 @@ const Folders = () => {
 									</Grid>
 
 									<Grid item xs={2}>
-									<Link component="button" variant="body2" onClick={handleNewFolder} >
+									{
+										canCreateFolder &&
+										<Link component="button" variant="body2" onClick={handleNewFolder} >
 																		<AddIcon color='primary' />
 																			Crear nuevo directorio
 									</Link>
+									}
 									</Grid>
 								</Grid>
 

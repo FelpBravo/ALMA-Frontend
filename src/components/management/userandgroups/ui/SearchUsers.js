@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Button, InputBase, Grid, makeStyles, Paper, OutlinedInput } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory,useLocation } from 'react-router-dom';
-import IntlMessages from 'util/IntlMessages';
-import SearchIcon from '@material-ui/icons/Search';
-import AddIcon from '@material-ui/icons/Add';
+import { Button, Grid, InputBase, makeStyles, OutlinedInput, Paper } from '@material-ui/core';
 import Link from '@material-ui/core/Link';
-import { openModalUsers } from 'actions/adminUsersAndGroup';
-import ModalUsers from './ModalUsers';
+import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
+import { openModalUsers } from 'actions/adminUsersAndGroup';
+import { hasAuthority } from 'util/authorities';
+import IntlMessages from 'util/IntlMessages';
+
+import ModalUsers from './ModalUsers';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -53,51 +55,53 @@ const SearchUsers = () => {
 
 	const [messageError, setMessageError] = useState('');
 
-	const [ searchText, setSearchText ] = useState('')
+	const [searchText, setSearchText] = useState('')
 
-	useEffect(()=>{
+	const canCreateUsers = useSelector(hasAuthority('ROLE_USERS_CREATE'));
+
+
+	useEffect(() => {
 		setSearchText(search)
-	},[search])
+	}, [search])
 
-	const handleOnChange = ({target}) =>{
+	const handleOnChange = ({ target }) => {
 		const { value } = target
-		if(value.length > 1){
+		if (value.length > 1) {
 			setDisabledButton(false)
 			setMessageError('')
 		}
-		else
-		{
+		else {
 			setDisabledButton(true)
 			setMessageError('Tiene que tener 3 caracteres como minimo')
 		}
 		setSearchText(value)
 	}
 
-	const handleOnSearch = ()=>{
+	const handleOnSearch = () => {
 		history.push(`/management/usersandgroups?search=${searchText}`);
 	}
 
 	const handleSelectNew = () => {
-		dispatch(openModalUsers());	
+		dispatch(openModalUsers());
 	}
 
 	return (
 		<div className="row">
-		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-					<form onSubmit={handleOnSearch}>
+			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+				<form onSubmit={handleOnSearch}>
 					<Grid container spacing={1}>
 						<Grid item xs={6}>
-						<OutlinedInput
-						    style={{height: 41, fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
-							value={searchText}
-							name="inputSearch"
-							fullWidth
-							placeholder="Buscar usuario"
-							onChange={handleOnChange}
-							required
-							startAdornment={<SearchIcon color="primary" />}
-							
-						/>
+							<OutlinedInput
+								style={{ height: 41, fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
+								value={searchText}
+								name="inputSearch"
+								fullWidth
+								placeholder="Buscar usuario"
+								onChange={handleOnChange}
+								required
+								startAdornment={<SearchIcon color="primary" />}
+
+							/>
 							<span className="text-danger text-error">{messageError}</span>
 						</Grid>
 
@@ -113,33 +117,33 @@ const SearchUsers = () => {
 								<IntlMessages id="dashboard.searchTextButton" />
 							</Button>
 						</Grid>
-					
-						<Grid xs={3} container 
-						//justify="flex-end"
-						>
-							<Link 
-							component="button"
-							variant="body2" 
-							onClick={() => handleSelectNew()}
-							style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, marginLeft:10}}
-							>
-							    <AddIcon style={{fontSize:30, color:"#3699FF", marginLeft:10}}/>
+
+						{
+							canCreateUsers && <Grid xs={3} container>
+								<Link
+									component="button"
+									variant="body2"
+									onClick={() => handleSelectNew()}
+									style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, marginLeft: 10 }}
+								>
+									<AddIcon style={{ fontSize: 30, color: "#3699FF", marginLeft: 10 }} />
 							    Crear nuevo usuario
-							</Link>			
-									
-						</Grid>
+							</Link>
+
+							</Grid>
+						}
 
 					</Grid>
-					</form>
-			
-				
-			
+				</form>
+
+
+
+			</div>
+			<ModalUsers />
 		</div>
-		<ModalUsers/>
-	</div>
 
 
-					
+
 
 	)
 }
