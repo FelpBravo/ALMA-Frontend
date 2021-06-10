@@ -37,7 +37,7 @@ const SummaryDocument = ({ data }) => {
                                     Versión
                             </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    Etiquetas
+                                    No. Etiquetas
                             </TableCell>
 
                             </TableRow>
@@ -65,7 +65,7 @@ const SummaryDocument = ({ data }) => {
                                     1.0
                                 </TableCell>
                                 <TableCell>
-                                    Etiquetas
+                                    {data?.tagsField}
                                 </TableCell>
 
                             </TableRow>

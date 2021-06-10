@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function RequestStep({ otherProps }) {
-    console.log("otherProps", otherProps)
+export default function RequestStep({ tagsField }) {
+    console.log("tagsField", tagsField)
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
@@ -66,7 +66,8 @@ export default function RequestStep({ otherProps }) {
                 "name": get(filesLoaded, '0.name', null),
                 "author": user?.userId,
                 pathFolderName,
-                folderId
+                folderId,
+                tagsField: tagsField.length
             },
             "startedBy": user?.userId,
             ...values
