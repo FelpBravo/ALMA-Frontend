@@ -55,8 +55,7 @@ const Tasks = () => {
 
 
 	const handleManage = (instanceId) => {
-		//dispatch(addBreadcrumbs(name, `/document/${id}/version`))
-		dispatch(startInvolvedLoading(authUser,instanceId))
+		dispatch(startInvolvedLoading(authUser, instanceId))
 		history.push(`/manage`);
 
 	};
@@ -133,7 +132,7 @@ const Tasks = () => {
 						</TableHead>
 						<TableBody >
 
-						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskId }, index) => {
+						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId }, index) => {
 
                                     return <TableRow key={index} >
 

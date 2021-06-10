@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import queryString from 'query-string';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Button, Divider, Grid } from '@material-ui/core';
+import { Divider, Grid } from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import { SummaryDocument } from 'components/documents/resume/SummaryDocument';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
 import Radio from '@material-ui/core/Radio';
@@ -14,24 +11,19 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { DocManagement } from './DocManagement';
 
-const useStyles = makeStyles({
-	root: {
-		flexGrow: 1,
-	},
-});
 
 const ManagementSummary = () => {
 	const dispatch = useDispatch();
 	const { id } = useParams()
 	const { authUser } = useSelector(state => state.auth);
 	const { involved } = useSelector(state => state.flowDocument);
+	const {comment } = involved
 
 	const [value, setValue] = React.useState(null);
-	
-	const classes = useStyles();
-	const location = useLocation();
 	const history = useHistory();
+	
 
 	useEffect(() => {
 
@@ -44,6 +36,10 @@ const ManagementSummary = () => {
 	const handleChange = (event) => {
 		setValue(event.target.value);
 	  };
+
+	const handleBackGo = () => {
+		history.goBack()
+	}
 
 
 	return (
@@ -61,12 +57,12 @@ const ManagementSummary = () => {
 						</Grid>
 					</Grid>
 
-                    <SummaryDocument/>
+                    <DocManagement/>
 
                     <Divider className="mt-3 mb-3"/>
                     <h3>Involucrados</h3> 
 
-                    <SummaryInvolved data={involved}/>
+                    <SummaryInvolved/>
 
 
                     <Divider className="mt-3 mb-3"/>
@@ -78,7 +74,8 @@ const ManagementSummary = () => {
 						label="Comentario"
 						multiline
 						rows={3}
-						//value={data?.comment}
+						value={comment}
+						disabled
 						/>
 					</Grid>
 
@@ -105,14 +102,14 @@ const ManagementSummary = () => {
 						label="Comentario"
 						multiline
 						rows={3}
-						//value={data?.comment}
+						
 						/>
 					</Grid>
 
 				
 					<Grid container 
 					className="mt-3 mb-3"
-                    //onClick={handleBackGo}
+                    onClick={handleBackGo}
                     >
 						<KeyboardBackspaceIcon
 							color='primary' />
