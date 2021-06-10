@@ -149,6 +149,8 @@ const DataTable = () => {
 
 	const [selectedRow, setSelectedRow] = useState(null)
 
+	const [editActive, setEditActive] = useState(false)
+
 
 
 	let page_url = 1
@@ -265,6 +267,14 @@ const DataTable = () => {
 		setAnchorEl(null);
 	};
 
+	const handleOpenEditUsers = () => {
+		//dispatch(startDocumentsOfficeLoading(authUser, selectedRow.id))
+		setEditActive(true)
+	}
+	const handleCloseEditUsers = () =>{	
+		setEditActive(false) 
+	}
+
 	const getName = name =>
 		name.length <= MAX_CHARACTERS
 			? <Typography variant="body2" color="primary">{name}</Typography>
@@ -280,7 +290,7 @@ const DataTable = () => {
 	return (
 		<div className="row mt-3">
 			<SharedDialog handleClose={() => setDataSharedDialog(null)} data={dataSharedDialog} />
-			<ModalEditOnline handleClose={() => setEditOnline(null)} data={editOnline} />
+			<ModalEditOnline  data={selectedRow} close={handleCloseEditUsers} open={editActive} />
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 
 				<TableContainer component={Paper}>
@@ -442,11 +452,11 @@ const DataTable = () => {
 													open={Boolean(anchorEl)}
 													onClose={handleClose}
 												>
-													<StyledMenuItem onClick={() => setEditOnline(selectedRow)}>
-														<RateReviewOutlinedIcon
-															className={classes.iconos}
-														/>{` `}
-														<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.editonline" /></span>
+													<StyledMenuItem onClick={() => handleOpenEditUsers(selectedRow.id)}>
+													        <RateReviewOutlinedIcon
+																className={classes.iconos}	
+															/>{` `}
+													<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.editonline"/></span>	
 													</StyledMenuItem>
 
 													<StyledMenuItem onClick={() => handleDelete(selectedRow.id)} >

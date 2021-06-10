@@ -190,7 +190,7 @@ export const startSaveFormFlowLoading = (fileId, folderId, aspectGroup, tags, re
 	}
 };
 
-const saveFormFinish = () => {
+export const saveFormFinish = () => {
 	return {
 		type: types.docsSaveFormFinish,
 	}
@@ -584,13 +584,13 @@ export const startEditDocumentLoading = (
 				showConfirmButton: true,
 				showCloseButton: true,
 				showCancelButton: true,
+				confirmButtonText: 'Sí, regresar',
+				cancelButtonText: 'No',
 			})
-			console.log("resp", resp)
+
 			if (resp.value) {
 				callback && callback()
 			}
-			dispatch(saveFormFinish());
-
 
 		} catch (error) {
 			console.log(error);
@@ -748,25 +748,34 @@ const addAndRemoveTagLoaded = (tags) => {
 	}
 }
 
-export const startDocumentsOfficeLoading = (authUser, fileId) => {
+export const startDocumentsOfficeLoading = (authUser, fileId, onClose) => {
 	return async (dispatch) => {
 
 		try {
+			
 
 			const resp = await getOffice(authUser, fileId);
-
-			dispatch(documentsOfficeLoaded(resp.data));
+			window.location.replace(resp.data)
+			
+			
+			//dispatch(documentsOfficeLoaded(resp.data));
 
 		} catch (error) {
 			console.log(error);
+			Swal.close();
+
+			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+			Swal.fire({
+				title: 'Error', text: message, icon: 'error', heightAuto: false
+			});
+		} finally{
+			onClose()
 		}
+	
 
 	}
 };
 
-const documentsOfficeLoaded = (documentsOffice) => {
-	return {
-		type: types.docsDocumentsOfficeLoaded,
-		payload: documentsOffice
-	}
-};
+
+
