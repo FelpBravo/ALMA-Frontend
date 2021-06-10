@@ -30,7 +30,7 @@ export const startInitFlowsLoading = ( authUser, data, callback) => {
 				icon: 'success',
 				width: 400,
 				title: '<h4>Solicitud enviada</h4>',
-				html: `<ul>ID Asignado: ${resp.data.id}</ul>`,
+				html: `<ul>ID Asignado: ${resp.data}</ul>`,
 				showConfirmButton: true,
 			})
             
