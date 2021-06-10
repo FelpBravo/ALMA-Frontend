@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RequestStep({ tagsField }) {
-    console.log("tagsField", tagsField)
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
