@@ -1,24 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import { useHistory, useParams,useRouteMatch ,useLocation } from 'react-router-dom';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
-import Pagination from '@material-ui/lab/Pagination';
-import Grid from '@material-ui/core/Grid';
-import TableActionButton from 'components/search/ui/TableActionButton';
-import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import { makeStyles } from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
-import { startUsersInitLoading, editUserStatus,userSearchLoading } from 'actions/adminUsersAndGroup';
-import ModalEditUsers from './ModalEditUsers';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import Pagination from '@material-ui/lab/Pagination';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 
+import { editUserStatus, startUsersInitLoading, userSearchLoading } from 'actions/adminUsersAndGroup';
+import TableActionButton from 'components/search/ui/TableActionButton';
+import { hasAuthority } from 'util/authorities';
+import IntlMessages from 'util/IntlMessages';
+
+import ModalEditUsers from './ModalEditUsers';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -55,15 +57,15 @@ const DataTableUsers = () => {
 
 	let page_url = 1
 
-	if(page){
-		page_url = page.trim()? page.replace(/[a-zA-Z ]/g,'') : 1
+	if (page) {
+		page_url = page.trim() ? page.replace(/[a-zA-Z ]/g, '') : 1
 	}
 
 	const { authUser } = useSelector(state => state.auth)
 
 	const { userslist = {}, } = useSelector(state => state.adminUsers);
 
-	const { data = [], totalItems = 0} = userslist
+	const { data = [], totalItems = 0 } = userslist
 
 	const [userdata, setUserdata] = useState([])
 
@@ -71,20 +73,20 @@ const DataTableUsers = () => {
 
 	const [editActive, setEditActive] = useState(false)
 
-	
+	const canUpdateUsers = useSelector(hasAuthority('ROLE_USERS_UPDATE'));
+
 
 	useEffect(() => {
-		if(search){
-			dispatch(userSearchLoading(authUser,search,page_url))
+		if (search) {
+			dispatch(userSearchLoading(authUser, search, page_url))
 		}
-		else
-		{
-			dispatch(startUsersInitLoading(authUser,page_url));
+		else {
+			dispatch(startUsersInitLoading(authUser, page_url));
 
 		}
-		
 
-	}, [dispatch,authUser]);
+
+	}, [dispatch, authUser]);
 
 	useEffect(() => {
 		setUserdata(data)
@@ -98,8 +100,8 @@ const DataTableUsers = () => {
 		const findUser = userdata.find(user => user.id === id)
 		findUser.enabled = checked
 		setUserdata([...userdata])
-		search?	dispatch(editUserStatus(authUser, id, checked,page_url,search)) : dispatch(editUserStatus(authUser, id, checked,page_url))
-		
+		search ? dispatch(editUserStatus(authUser, id, checked, page_url, search)) : dispatch(editUserStatus(authUser, id, checked, page_url))
+
 	};
 
 
@@ -110,24 +112,23 @@ const DataTableUsers = () => {
 	}, [])
 
 	const handleOpenEditUsers = (id, firstName, lastName, email, company, department, companyOther, departmentOther, search) => {
-		setUserEditData({ id, firstName, lastName, email, company, department,companyOther, departmentOther, search })
+		setUserEditData({ id, firstName, lastName, email, company, department, companyOther, departmentOther, search })
 		setEditActive(true)
 	}
 
-	const handleCloseEditUsers = () =>{
+	const handleCloseEditUsers = () => {
 		setUserEditData({})
-		setEditActive(false) 
+		setEditActive(false)
 	}
 
 	const handleChangePage = (event, page) => {
-		if(search){
-			history.push(page != 1? `/management/usersandgroups/${page}?search=${search}`: `/management/usersandgroups?search=${search}`);
+		if (search) {
+			history.push(page != 1 ? `/management/usersandgroups/${page}?search=${search}` : `/management/usersandgroups?search=${search}`);
 		}
-		else
-		{
-			history.push(page != 1? `/management/usersandgroups/${page}`: `/management/usersandgroups`);
-		}	
-	
+		else {
+			history.push(page != 1 ? `/management/usersandgroups/${page}` : `/management/usersandgroups`);
+		}
+
 	}
 
 
@@ -153,57 +154,64 @@ const DataTableUsers = () => {
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="users.table.column7" />
 								</TableCell>
-								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="users.table.column4" />
-								</TableCell>
-								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="users.table.column5" />
-								</TableCell>
+								{
+									canUpdateUsers &&
+									<>
+										<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+											<IntlMessages id="users.table.column4" />
+										</TableCell>
+										<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+											<IntlMessages id="users.table.column5" />
+										</TableCell>
+									</>
+								}
 							</TableRow>
 						</TableHead>
 						<TableBody >
 
-							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external, company, department, companyOther, departmentOther}, index) => {
+							{userdata.length > 0 && userdata.map(({ id, firstName, lastName, email, enabled, external, company, department, companyOther, departmentOther }, index) => {
 								return <TableRow key={index} >
-									<TableCell style={{fontFamily:"Poppins", fontSize:"13px"}}>
-										<AccountCircleOutlinedIcon className="mr-1"/>
+									<TableCell style={{ fontFamily: "Poppins", fontSize: "13px" }}>
+										<AccountCircleOutlinedIcon className="mr-1" />
 										{id}
 									</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{firstName}{` `}{lastName}</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>{email}</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-									{ company === 'Other'? (companyOther.length > 8 ? companyOther.substring(0,6) + "..." : companyOther) : company}
+									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>{firstName}{` `}{lastName}</TableCell>
+									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>{email}</TableCell>
+									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
+										{company === 'Other' ? (companyOther.length > 8 ? companyOther.substring(0, 6) + "..." : companyOther) : company}
 									</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-											{ department === 'Other'? (departmentOther.length > 8 ? departmentOther.substring(0,6) + "..." : departmentOther) : department}
+									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
+										{department === 'Other' ? (departmentOther.length > 8 ? departmentOther.substring(0, 6) + "..." : departmentOther) : department}
 									</TableCell>
-				
-									
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
-											<Switch
-												checked={enabled}
-												onChange={handleChange}
-												color="primary"
-												id={id}
-												disabled={!external}
-												inputProps={{ 'aria-label': 'primary checkbox' }}
-											/>
-										
 
-									</TableCell>
-									<TableCell style={{fontFamily:"Poppins", textAlign:"center"}}>
-										{external &&
-											<div className={classes.iconsHolder}>
-												<TableActionButton
-													materialIcon={
-														<BorderColorOutlinedIcon
-															className={classes.iconos}
-															onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department,companyOther, departmentOther, search)}
-														/>
-													}
+									{
+										canUpdateUsers &&
+										<>
+											<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
+												<Switch
+													checked={enabled}
+													onChange={handleChange}
+													color="primary"
+													id={id}
+													disabled={!external}
+													inputProps={{ 'aria-label': 'primary checkbox' }}
 												/>
 
-												{/*<TableActionButton
+
+											</TableCell>
+											<TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
+												{external &&
+													<div className={classes.iconsHolder}>
+														<TableActionButton
+															materialIcon={
+																<BorderColorOutlinedIcon
+																	className={classes.iconos}
+																	onClick={(event) => handleOpenEditUsers(id, firstName, lastName, email, company, department, companyOther, departmentOther, search)}
+																/>
+															}
+														/>
+
+														{/*<TableActionButton
 													materialIcon={
 														<DeleteOutlinedIcon
 															className={classes.iconos}
@@ -211,14 +219,15 @@ const DataTableUsers = () => {
 														/>
 													}
 												/>*/}
-											</div>
-										}
+													</div>
+												}
 
-										{!external &&
-											<span style={{fontFamily: "Poppins", fontStyle:'oblique', textAlign:"center"}}>Active Directory</span>
-										}
-									</TableCell>
-
+												{!external &&
+													<span style={{ fontFamily: "Poppins", fontStyle: 'oblique', textAlign: "center" }}>Active Directory</span>
+												}
+											</TableCell>
+										</>
+									}
 								</TableRow>
 
 							})
@@ -240,21 +249,21 @@ const DataTableUsers = () => {
 					</Table>
 				</TableContainer>
 				<Grid className="mt-3 mb-3 mr-3"
-						container
-						justify="flex-end"
-						alignItems="flex-end"
+					container
+					justify="flex-end"
+					alignItems="flex-end"
 
-					>
-						<Pagination 
-									style={{color: '#369bff'}}
-									defaultPage={parseInt(page_url)}
-									count={Math.ceil(totalItems/10)} 
-									color="primary" 
-									shape="rounded" 
-									total={totalItems} 
-									onChange={handleChangePage}
-						/> 
-					</Grid>
+				>
+					<Pagination
+						style={{ color: '#369bff' }}
+						defaultPage={parseInt(page_url)}
+						count={Math.ceil(totalItems / 10)}
+						color="primary"
+						shape="rounded"
+						total={totalItems}
+						onChange={handleChangePage}
+					/>
+				</Grid>
 				<ModalEditUsers data={userEditData} close={handleCloseEditUsers} open={editActive} />
 			</div>
 		</div>
