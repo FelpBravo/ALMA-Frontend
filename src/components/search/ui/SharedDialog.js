@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import LinkIcon from '@material-ui/icons/Link';
+import { KeyboardDatePicker } from "@material-ui/pickers";
 import { get, isEmpty } from 'lodash-es';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -69,6 +70,10 @@ const SharedDialog = ({ data, handleClose }) => {
   const [checked, setChecked] = React.useState(true);
   const [finish, setFinish] = useState(true);
 
+  const startDate = moment().format('YYYY-MM-DD'),
+    endDate = moment('2100-01-01').format('YYYY-MM-DD'),
+    range = date => (startDate <= date && date <= endDate)
+
   const URL = `${window.location.protocol}//${window.location.hostname}${window.location.port && `:${window.location.port}`}`
   const SHARED_URL = `${URL}/download/${token}/`;
 
@@ -119,20 +124,22 @@ const SharedDialog = ({ data, handleClose }) => {
         <Grid container spacing={2}>
 
           <Grid item xs={12} sm={12} md={12}>
-            <TextField
+            <KeyboardDatePicker
               autoFocus
               label={<IntlMessages id="table.shared.dialog.field.expirationDate" />}
               name='expirationDate'
               fullWidth
-              type="date"
-              variant="outlined"
+              format='YYYY-MM-DD'
+              inputVariant="outlined"
               size="small"
+              disablePast
               InputProps={{ inputProps: { min: moment().add(1, 'days').format('YYYY-MM-DD') } }}
               InputLabelProps={{
                 shrink: true,
               }}
               color="primary"
-              onChange={handleOnChange}
+              value={get(fields, 'expirationDate', null)}
+              onChange={value => handleOnChange({ target: { name: 'expirationDate', value } })}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} container wrap="nowrap">
@@ -154,7 +161,7 @@ const SharedDialog = ({ data, handleClose }) => {
                 disabled={!checked}
                 size="small"
                 type="password"
-                value={get(fields,'password','')}
+                value={get(fields, 'password', '')}
                 onChange={handleOnChange}
               />
             </Grid>
@@ -195,24 +202,24 @@ const SharedDialog = ({ data, handleClose }) => {
           variant="contained"
           color="secondary"
         >
-          {!finish 
-          ?<IntlMessages id="table.shared.dialog.field.cancelDocument" />
-          : <IntlMessages id="table.shared.dialog.field.closeDocument" />
+          {!finish
+            ? <IntlMessages id="table.shared.dialog.field.cancelDocument" />
+            : <IntlMessages id="table.shared.dialog.field.closeDocument" />
           }
 
         </Button>
         {
-          !finish &&<Button
-          onClick={handleOnSave}
-          variant="contained"
-          color="primary"
-          autoFocus
-          disabled={loading || !fields?.expirationDate || (checked && isEmpty(fields.password))}
-        >
-          {loading && <CircularProgress size={14} />}
-          <IntlMessages id="table.shared.dialog.field.createDocument" />
-        </Button>
-      }
+          !finish && <Button
+            onClick={handleOnSave}
+            variant="contained"
+            color="primary"
+            autoFocus
+            disabled={loading || !range(moment(fields?.expirationDate).format('YYYY-MM-DD')) || !fields?.expirationDate || (checked && isEmpty(fields.password))}
+          >
+            {loading && <CircularProgress size={14} />}
+            <IntlMessages id="table.shared.dialog.field.createDocument" />
+          </Button>
+        }
       </DialogActions>
     </Dialog>
   )
