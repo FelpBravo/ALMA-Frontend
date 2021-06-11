@@ -196,7 +196,6 @@ const DataTable = () => {
 	};
 
 	const handleChangePage = (event, page) => {
-		console.log("handleChangePage", page, "path", path)
 		if (path === '/search/:page' || path === '/search') {
 			const existsFilters = filters.filter(filter => filter.value);
 			dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page));
