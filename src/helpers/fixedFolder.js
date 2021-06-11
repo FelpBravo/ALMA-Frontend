@@ -75,7 +75,7 @@ export const fixedFolders = [
 						name: 'sidebar.permissions',
 						type: 'item',
 						link: '/group-permissions',
-						auth: 'ROLE_DASHBOARD_MENU',
+						auth: ['ROLE_PERMISSIONS_UPDATE'],
 						bd: false,
 					},
 				],

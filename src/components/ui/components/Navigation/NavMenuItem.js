@@ -3,9 +3,15 @@ import { List } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 
 import IntlMessages from "../../../../util/IntlMessages";
+import { hasAllAuthorities, hasAuthority, includesAuthority } from 'util/authorities';
+import { get, isArray, isEmpty, isString } from 'lodash';
+import { useSelector } from 'react-redux';
 
 const NavMenuItem = props => {
-	const { name, icon, link, bd } = props;
+	const { name, icon, link, bd, auth } = props;
+	const isVisible = useSelector(hasAllAuthorities(isArray(auth) ? auth : [auth]))
+
+	if (!isEmpty(auth) && !isVisible) return null
 
 	return (
 		<List component="div" className='nav-menu-item'>
