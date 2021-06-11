@@ -9,6 +9,7 @@ import IntlMessages from 'util/IntlMessages';
 
 import LoadingView from './loadingView';
 import Tags from './tags'
+import { hasAuthority } from 'util/authorities';
 
 const useStyles = makeStyles(theme => ({
     divider: {
@@ -78,6 +79,10 @@ export default function GroupPermissions() {
     }
 
     const getActionsByModuleId = id => get(actionsModuleList.find((e) => e.id === id), 'actions', [])
+
+    const canUpdatePermissions = useSelector(hasAuthority('ROLE_PERMISSIONS_UPDATE'));
+
+    if (!canUpdatePermissions) return null
 
     return <Grid container alignItems="center" justify="center">
         <Paper className={classes.card}>
