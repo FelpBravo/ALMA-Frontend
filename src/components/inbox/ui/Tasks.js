@@ -55,8 +55,7 @@ const Tasks = () => {
 
 
 	const handleManage = (instanceId) => {
-		//dispatch(addBreadcrumbs(name, `/document/${id}/version`))
-		dispatch(startInvolvedLoading(authUser,instanceId))
+		dispatch(startInvolvedLoading(authUser, instanceId))
 		history.push(`/manage`);
 
 	};
@@ -104,36 +103,36 @@ const Tasks = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Nombre de documento" />
+									<IntlMessages id="tasks.table.column1" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Rol" />
+									<IntlMessages id="tasks.table.column2" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Estado" />
+									<IntlMessages id="tasks.table.column3" />
 								</TableCell>
 								
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Fecha de creación" />
+									<IntlMessages id="tasks.table.column4" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Id asignado" />
+									<IntlMessages id="tasks.table.column5" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Autor" />
+									<IntlMessages id="tasks.table.column6" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Plazo de revision" />
+									<IntlMessages id="tasks.table.column7" />
 								</TableCell>
 								
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="Gestionar" />
+									<IntlMessages id="tasks.table.column8" />
 								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody >
 
-						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskId }, index) => {
+						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId }, index) => {
 
                                     return <TableRow key={index} >
 
