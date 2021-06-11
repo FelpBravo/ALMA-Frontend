@@ -13,6 +13,11 @@ export const hasAllAuthorities = authorityList => createSelector(
     authorities => authorities && authorities.some(r => authorityList.includes(r)),
 );
 
+export const hasSomeAuthorities = authorityList => createSelector(
+    selectAuthUserAuthorities,
+    authorities => authorities && authorityList.some(r => authorities.includes(r)),
+);
+
 // const existAuthority = (list, authority) => 
 //     isArray(authority)
 //     ? list.some(r => authority.includes(r))

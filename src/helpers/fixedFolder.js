@@ -61,6 +61,7 @@ export const fixedFolders = [
 						name: 'sidebar.tags.folders',
 						type: 'item',
 						link: '/management/folders',
+						auth: ['ROLE_FOLDER_MENU'],
 						bd: false,
 					},
 					{
@@ -68,6 +69,8 @@ export const fixedFolders = [
 						name: 'sidebar.tags.usersandgroup',
 						type: 'item',
 						link: '/management/usersandgroups',
+						auth: ['ROLE_USERS_CREATE', 'ROLE_USERS_UPDATE', 'ROLE_GROUPS_CREATE', 'ROLE_GROUPS_UPDATE', 'ROLE_GROUPS_DELETE'],
+						hasAll: false,
 						bd: false,
 					},
 					{
@@ -76,6 +79,7 @@ export const fixedFolders = [
 						type: 'item',
 						link: '/group-permissions',
 						auth: ['ROLE_PERMISSIONS_UPDATE'],
+						hasAll: true,
 						bd: false,
 					},
 				],

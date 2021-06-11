@@ -3,13 +3,15 @@ import { List } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 
 import IntlMessages from "../../../../util/IntlMessages";
-import { hasAllAuthorities, hasAuthority, includesAuthority } from 'util/authorities';
+import { hasAllAuthorities, hasAuthority, hasSomeAuthorities } from 'util/authorities';
 import { get, isArray, isEmpty, isString } from 'lodash';
 import { useSelector } from 'react-redux';
 
 const NavMenuItem = props => {
-	const { name, icon, link, bd, auth } = props;
-	const isVisible = useSelector(hasAllAuthorities(isArray(auth) ? auth : [auth]))
+	const { name, icon, link, bd, auth, hasAll} = props;
+	const has = (list, hasAll) => hasAll ? hasAllAuthorities(list) : hasSomeAuthorities(list)
+	const isVisible = useSelector(has(isArray(auth) ? auth : [auth], hasAll))
+
 
 	if (!isEmpty(auth) && !isVisible) return null
 
