@@ -7,6 +7,7 @@ import Footer from "components/ui/components/Footer";
 import Tour from "components/ui/components/Tour";
 import SideBar from "components/ui/SideBar";
 import { COLLAPSED_DRAWER, FIXED_DRAWER } from "constants/ActionTypes";
+import Swal from 'sweetalert2';
 
 import Header from "./Header/index";
 
@@ -26,9 +27,9 @@ const Vertical = (props) => {
 		<div className={`app-container ${drawerStyle}`}>
 			{/* <Tour /> */}
 
-			<SideBar />
+			<SideBar onClick={() => Swal.close()}  />
 
-			<div className="app-main-container">
+			<div onClick={() => Swal.close()}  className="app-main-container">
 				<div className="app-header">
 					<Header />
 				</div>
