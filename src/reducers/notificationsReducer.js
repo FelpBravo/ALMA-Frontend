@@ -8,12 +8,17 @@ export const initialState = {
     isInitialLoad: true,
 }
 
+const addData = (newData, oldData) => [
+    ...oldData, 
+    ...newData.filter( e => !oldData.some( ({id}) => e.id === id) && e )
+]
+
 export const notificationsReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.notificationsLoaded:
             return {
                 ...action.payload,
-                data: [ ...state.data, ...action.payload.data ]
+                data: addData(state.data, action.payload.data)
             }
         
         case types.notificationsInitialLoad:

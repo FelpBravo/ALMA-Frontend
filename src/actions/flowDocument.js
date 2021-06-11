@@ -1,6 +1,8 @@
+import Swal from 'sweetalert2';
+
 import { getActiveTasks, getApproves, getInvolved, postFlowAll, postFlows } from 'services/flowDocumentService';
 import { types } from 'types/types';
-import Swal from 'sweetalert2';
+
 import { GENERAL_ERROR } from '../constants/constUtil';
 
 export const startApprovesListLoading = ({ authUser, flowName }) => {
@@ -30,7 +32,7 @@ export const startInitFlowsLoading = ( authUser, data, callback) => {
 				icon: 'success',
 				width: 400,
 				title: '<h4>Solicitud enviada</h4>',
-				html: `<ul>ID Asignado: ${resp.data.id}</ul>`,
+				html: `<ul>ID Asignado: ${resp.data}</ul>`,
 				showConfirmButton: true,
 			})
             

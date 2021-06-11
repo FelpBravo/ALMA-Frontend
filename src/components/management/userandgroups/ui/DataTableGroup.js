@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Swal from 'sweetalert2';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
-import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { makeStyles } from '@material-ui/core/styles';
-import { deleteGroupLoading, groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
+import Swal from 'sweetalert2';
 
-
+import { deleteGroupLoading, groupSearchLoading, membersGroupInitLoading, startGroupInitLoading } from 'actions/adminUsersAndGroup';
+import TableActionButton from 'components/search/ui/TableActionButton';
+import { hasAuthority } from 'util/authorities';
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -48,6 +48,7 @@ const DataTableGroup = () => {
 	let query = useQuery();
 
 	const searchGroup = query.get("searchGroup")
+	const canDeleteGroups = useSelector(hasAuthority('ROLE_GROUPS_DELETE'));
 
 	useEffect(() => {
 		if (searchGroup) {
@@ -70,7 +71,7 @@ const DataTableGroup = () => {
 	}
 
 	const handleDelete = async (id) => {
-		const resp =  await Swal.fire({
+		const resp = await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Estas seguro que quiere eliminar al usuario de este grupo?",
 			icon: "question",
@@ -82,7 +83,7 @@ const DataTableGroup = () => {
 		if (resp.value) {
 			dispatch(deleteGroupLoading(authUser, id));
 		}
-		
+
 	}
 
 
@@ -97,8 +98,12 @@ const DataTableGroup = () => {
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Grupos" />
 								</TableCell>
-								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} >
-								</TableCell>
+								{
+									canDeleteGroups &&
+									<TableCell
+										className='mr-3'
+										style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end' }} />
+								}
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -106,26 +111,29 @@ const DataTableGroup = () => {
 							{grouplist.map(({ id, name }, index) => {
 
 								return <TableRow key={index} >
-									<TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor:'pointer' }}
+									<TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}
 										onClick={() => handleSelectName(id, name)}
 									>
 
 										{/*<img src={require("assets/images/group.png")}/>*/}
 										{name}
 									</TableCell>
-									<TableCell>
-										<div className={classes.iconsHolder}>
-											<TableActionButton
-												materialIcon={
-													<DeleteOutlinedIcon
-													className={classes.iconos}
-													onClick={() => handleDelete(id)}
-													/>
-												}
-											/>
-										</div>
+									{
+										canDeleteGroups &&
+										<TableCell>
+											<div className={classes.iconsHolder}>
+												<TableActionButton
+													materialIcon={
+														<DeleteOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleDelete(id)}
+														/>
+													}
+												/>
+											</div>
 
-									</TableCell>
+										</TableCell>
+									}
 
 								</TableRow>
 							})}

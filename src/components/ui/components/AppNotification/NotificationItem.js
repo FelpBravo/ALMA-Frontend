@@ -21,6 +21,8 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400
   },
   media: {
+    display:'flex',
+    alignItems: 'center',
     cursor: 'pointer',
     "&:hover": {
       background: "#f4f5f7",
@@ -45,11 +47,9 @@ const NotificationItem = ({ notification }) => {
 
   return (
     <li onClick={handleChangeState} className={clsx(classes.media, "media")}>
-      <Avatar variant="rounded" className={clsx(classes.avatar, "mr-2")}>
-        <Icon color="primary">
+      <Icon className="mr-2" color="primary">
           {icon}
         </Icon>
-      </Avatar>
       <div className="media-body align-self-center">
         <p className={clsx(!viewed ? classes.boldText : classes.normalText, "sub-heading mb-0")}>
           <IntlMessages id={messageId} values={values} />

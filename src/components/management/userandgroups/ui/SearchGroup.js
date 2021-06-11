@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
 import { Button, Grid, OutlinedInput } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import IntlMessages from 'util/IntlMessages';
-import { searchSetText, startSearchLoading } from 'actions/search';
-import SearchIcon from '@material-ui/icons/Search';
-import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
-import ModalGroup from './ModalGroup';
-import { openModalGroup } from 'actions/adminUsersAndGroup';
-import { useHistory,useLocation } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
+import { openModalGroup } from 'actions/adminUsersAndGroup';
+import { searchSetText, startSearchLoading } from 'actions/search';
+import { hasAuthority } from 'util/authorities';
+import IntlMessages from 'util/IntlMessages';
+
+import ModalGroup from './ModalGroup';
 
 const SearchGroup = () => {
 
@@ -30,6 +32,8 @@ const SearchGroup = () => {
 	const [messageError, setMessageError] = useState('');
 
 	const [ searchText, setSearchText ] = useState('')
+
+	const canCreateGroups = useSelector(hasAuthority('ROLE_GROUPS_CREATE'));
 
 	useEffect(()=>{
 		setSearchText(searchGroup)
@@ -91,10 +95,9 @@ const SearchGroup = () => {
 								<IntlMessages id="dashboard.searchTextButton" />
 							</Button>
 						</Grid>
-					
-						<Grid xs={3} container 
-						//justify="flex-end"
-						>
+					{
+							canCreateGroups &&
+						<Grid xs={3} container>
 							<Link 
 							component="button"
 							variant="body2" 
@@ -106,6 +109,7 @@ const SearchGroup = () => {
 							</Link>			
 									
 						</Grid>
+						}
 
 					</Grid>
 					</form>
