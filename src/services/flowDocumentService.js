@@ -40,9 +40,18 @@ const getInvolved = (authUser, instanceId) => {
     });
 };
 
+const postAcceptTask = (authUser, taskId, approve, comment, role) => {
+    return axiosInstance.post(`/flows/data/completeTask`, { taskId, approve, comment, role },{
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
 export { getApproves,
          postFlows,
          getActiveTasks,
          postFlowAll,
          getInvolved,
+         postAcceptTask
          }

@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { INBOX_STATUS } from 'constants/constUtil';
 import { startActiveTasksInit, startInvolvedLoading } from 'actions/flowDocument';
+import ManagementSummary from './ManagementSummary';
 
 
 
@@ -54,8 +55,8 @@ const Tasks = () => {
 
 
 
-	const handleManage = (instanceId) => {
-		dispatch(startInvolvedLoading(authUser, instanceId))
+	const handleManage = (instanceId, taskId, role, author) => {
+		dispatch(startInvolvedLoading(authUser, instanceId,taskId, role, author ))
 		history.push(`/manage`);
 
 	};
@@ -74,7 +75,7 @@ const Tasks = () => {
 	}
 
 	return (
-		<div className="row">          
+		<div className="row">     
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
             <Grid item xs={3}>
               <FormControl size="small" variant="outlined" className={classes.formControl}>
@@ -164,7 +165,7 @@ const Tasks = () => {
 													materialIcon={
 														<DescriptionOutlinedIcon
 															className={classes.iconos}
-															onClick={()=> handleManage(instanceId)}
+															onClick={()=> handleManage(instanceId, taskId, role, author)}
 														/>
 													}
 												/>
@@ -206,7 +207,7 @@ const Tasks = () => {
 						onChange={handleChangePage}
 						/> 
 					</Grid>
-			</div>
+			</div> 
 		</div>
 	)
 }

@@ -42,6 +42,9 @@ const initialState = {
     tasksList: [],
     flowList: [],
     involved: [],
+    dataId: [],
+    role: [],
+    author: [],
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -65,7 +68,11 @@ export const flowDocumentReducer = (state = initialState, action) => {
         case types.involvedListLoaded:
             return {
                 ...state,
-                involved: payload
+                involved: action.payload.involved,
+                taskId: action.payload.taskId,
+                role: action.payload.role,
+                author: action.payload.author,
+
                 }        
         default:
             return state;

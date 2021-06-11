@@ -12,34 +12,42 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { DocManagement } from './DocManagement';
+import { startAcceptTasksInit } from 'actions/flowDocument';
 
 
 const ManagementSummary = () => {
+    
 	const dispatch = useDispatch();
-	const { id } = useParams()
+	//const { id } = useParams()
 	const { authUser } = useSelector(state => state.auth);
-	const { involved } = useSelector(state => state.flowDocument);
+	const { involved, taskId, role, author  } = useSelector(state => state.flowDocument);
 	const {comment } = involved
+	
+	
 
 	const [value, setValue] = React.useState(null);
+	console.log(value)
 	const history = useHistory();
 	
 
 	useEffect(() => {
 
-		if (!authUser) {
+		if (value !== null) {
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
 			return;
 		}
 
-	}, [dispatch, authUser]);
+	}, [dispatch, value, authUser]);
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
+		//dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
 	  };
 
 	const handleBackGo = () => {
 		history.goBack()
 	}
+
 
 
 	return (
@@ -82,14 +90,14 @@ const ManagementSummary = () => {
                     <Divider className="mt-3 mb-3"/>
                     <h3>Solicitud de revisión</h3>
 					
-					<p>Nombre te ha solicitado revisar este documento, en el rol ...</p>
+					<p>{author} te ha solicitado revisar este documento, en el rol {role}</p>
 					<p>El plazo de esta solicitud vence el....</p>
 
 					<FormControl>
 						<FormLabel>Revisión OK</FormLabel>
-						<RadioGroup value={value} onChange={handleChange}>
-							<FormControlLabel  value="Si" control={<Radio color="primary" /> } label="Si" />
-							<FormControlLabel value="No" control={<Radio color="primary"/>} label="No" />
+						<RadioGroup value={String(value)} onChange={handleChange}>
+							<FormControlLabel  value="true" control={<Radio color="primary" /> } label="Si" />
+							<FormControlLabel value="false" control={<Radio color="primary"/>} label="No" />
 						</RadioGroup>
                     </FormControl>					
 
