@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +13,8 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import moment from 'moment';
 import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import TableActionButton from 'components/search/ui/TableActionButton';
+import ModalAcceptDate from './ModalAcceptDate';
+import { startDocumentByIdVisibility } from 'actions/documents';
 
 const useStyles = makeStyles((theme) => ({
     iconsHolder: {
@@ -29,11 +32,18 @@ const useStyles = makeStyles((theme) => ({
 const DocManagement = () => {
 
     const classes = useStyles();
+    const { fileId } = useSelector(state => state.flowDocument);
+    const [dateActive, setDateActive] = useState(false)
+    const dispatch = useDispatch();
 
+    const handleOpenDate = () => {
+        dispatch(startDocumentByIdVisibility(fileId));
+		setDateActive(true)
+	}
 
-    //const handleVisibility = (id, name) => {
-
-    //};    
+	const handleCloseDate = () => {
+		setDateActive(false)
+	}
 
     return (
         <div className="row">
@@ -102,7 +112,7 @@ const DocManagement = () => {
                                             materialIcon={
                                                 <VisibilityOutlinedIcon
                                                     className={classes.iconos}
-                                                //onClick={() => handleVisibility(id, name)}
+                                                    onClick={() => handleOpenDate(fileId)}
                                                 />
                                             }
                                         />
@@ -117,6 +127,7 @@ const DocManagement = () => {
                 </TableContainer>
 
             </div>
+            <ModalAcceptDate close={handleCloseDate} open={dateActive}/>
         </div>
     )
 }

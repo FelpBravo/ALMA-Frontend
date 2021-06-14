@@ -45,6 +45,7 @@ const initialState = {
     dataId: [],
     role: [],
     author: [],
+    fileId: [],
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -72,6 +73,7 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 taskId: action.payload.taskId,
                 role: action.payload.role,
                 author: action.payload.author,
+                fileId: action.payload.fileId,
 
                 }        
         default:

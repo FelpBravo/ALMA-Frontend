@@ -20,7 +20,7 @@ const ManagementSummary = () => {
 	const dispatch = useDispatch();
 	//const { id } = useParams()
 	const { authUser } = useSelector(state => state.auth);
-	const { involved, taskId, role, author  } = useSelector(state => state.flowDocument);
+	const { involved, taskId, role, author} = useSelector(state => state.flowDocument);
 	const {comment } = involved
 	
 	

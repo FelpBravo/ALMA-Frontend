@@ -85,14 +85,14 @@ export const startFlowsAllInit = ( authUser, page ) => {
     }
 };
 
-export const startInvolvedLoading = (authUser, instanceId, taskId, role, author) => {
+export const startInvolvedLoading = (authUser, instanceId, taskId, role, author, fileId) => {
     return async (dispatch) => {
 
         try {
 
             const resp = await getInvolved(authUser, instanceId);
          
-            dispatch(involvedLoaded(resp.data, taskId, role, author));
+            dispatch(involvedLoaded(resp.data, taskId, role, author, fileId));
           
         } catch (error) {
             console.log(error);
@@ -149,7 +149,7 @@ const listFlows = (flowList) => {
         payload: flowList
     }
 };
-const involvedLoaded = (involved, taskId, role, author) => {
+const involvedLoaded = (involved, taskId, role, author, fileId) => {
     return {
         type: types.involvedListLoaded,
         payload: {
@@ -157,6 +157,7 @@ const involvedLoaded = (involved, taskId, role, author) => {
             taskId: taskId,
             role: role,
             author: author,
+            fileId: fileId,
         }
                 
     }

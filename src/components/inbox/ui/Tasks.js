@@ -55,8 +55,8 @@ const Tasks = () => {
 
 
 
-	const handleManage = (instanceId, taskId, role, author) => {
-		dispatch(startInvolvedLoading(authUser, instanceId,taskId, role, author ))
+	const handleManage = (instanceId, taskId, role, author, fileId) => {
+		dispatch(startInvolvedLoading(authUser, instanceId,taskId, role, author, fileId ))
 		history.push(`/manage`);
 
 	};
@@ -165,7 +165,7 @@ const Tasks = () => {
 													materialIcon={
 														<DescriptionOutlinedIcon
 															className={classes.iconos}
-															onClick={()=> handleManage(instanceId, taskId, role, author)}
+															onClick={()=> handleManage(instanceId, taskId, role, author, fileId)}
 														/>
 													}
 												/>
