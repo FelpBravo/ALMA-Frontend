@@ -8,7 +8,7 @@ import { COLLAPSED_DRAWER, FIXED_DRAWER } from 'constants/ActionTypes';
 
 import SideBarContent from "./SideBarContent";
 
-const SideBar = () => {
+const SideBar = ({onClick}) => {
 	const dispatch = useDispatch();
 	const { drawerType } = useSelector(({ settings }) => settings);
 	const { navCollapsed } = useSelector(({ common }) => common);
@@ -30,7 +30,7 @@ const SideBar = () => {
 	}, [])
 
 	return (
-		<div className={`app-sidebar d-none ${drawerStyle}`}>
+		<div onClick={onClick} className={`app-sidebar d-none ${drawerStyle}`}>
 			<Drawer className="app-sidebar-content"
 				variant={type}
 				open={type.includes('temporary') ? navCollapsed : true}

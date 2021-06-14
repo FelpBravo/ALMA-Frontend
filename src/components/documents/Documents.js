@@ -109,9 +109,9 @@ const Documents = () => {
 			title: 'Carga de documento',
 			text: "¿Estás seguro de realizar la carga de archivos?",
 			icon: "question",
-			showCancelButton: true,
 			focusConfirm: true,
 			heightAuto: false,
+			showCancelButton: true,
 		});
 		if (resp.value) {
 
