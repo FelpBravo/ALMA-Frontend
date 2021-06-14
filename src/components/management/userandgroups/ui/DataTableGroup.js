@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DataTableGroup = () => {
+const DataTableGroup = ({ setOpenUserFromGroup }) => {
 
 	const classes = useStyles();
 
@@ -67,7 +67,9 @@ const DataTableGroup = () => {
 	}, [])
 
 	const handleSelectName = (id, name) => {
+		setOpenUserFromGroup(true)
 		dispatch(membersGroupInitLoading(authUser, id, name));
+
 	}
 
 	const handleDelete = async (id) => {
@@ -96,7 +98,7 @@ const DataTableGroup = () => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Grupos" />
+									<IntlMessages id="title.groups" />
 								</TableCell>
 								{
 									canDeleteGroups &&
@@ -114,8 +116,6 @@ const DataTableGroup = () => {
 									<TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}
 										onClick={() => handleSelectName(id, name)}
 									>
-
-										{/*<img src={require("assets/images/group.png")}/>*/}
 										{name}
 									</TableCell>
 									{
@@ -137,7 +137,13 @@ const DataTableGroup = () => {
 
 								</TableRow>
 							})}
-
+							{grouplist.length === 0 &&
+								<TableRow key='1' >
+									<TableCell>
+										Grupo no existente
+									</TableCell>
+								</TableRow>
+							}
 						</TableBody>
 					</Table>
 				</TableContainer>

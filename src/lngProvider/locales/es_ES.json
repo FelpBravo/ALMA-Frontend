@@ -787,7 +787,9 @@
 	"doc.table.column5": "Responsable",
 	"doc.table.column6": "Versión",
 	"doc.table.column7": "Etiquetas",
-	"doc.table.column8": "Visualización"
+	"doc.table.column8": "Visualización",
+
+	"title.groups": "Grupos"
 
 
 }
