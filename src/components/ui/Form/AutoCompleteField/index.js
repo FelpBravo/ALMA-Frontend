@@ -2,6 +2,7 @@ import { CircularProgress } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import AutocompleteBase from "@material-ui/lab/Autocomplete";
 import { withStyles } from "@material-ui/styles";
+import { isEmpty } from "lodash";
 import get from 'lodash/get'
 import React, { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
@@ -46,12 +47,18 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
         };
     }, [value, setLoading, isAsync]);
 
+    const onClose = (onChange, data) => {
+        if(isEmpty(data)){
+            onChange(null)
+        }
+    }  
+
     return (
         <Controller
             render={({ field = {} }) => (
                 <Autocomplete
                     {...field}
-                    autoHighlight
+                    onClose={() => onClose(field?.onChange, data)}
                     className={className}
                     options={data}
                     loading={loading}
