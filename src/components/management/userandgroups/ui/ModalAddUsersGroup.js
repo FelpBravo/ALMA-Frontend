@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
-import { closeModalUsersGroup, createUsersGroupLoading, startGroupInitLoading, usersInitLoading } from 'actions/adminUsersAndGroup';
+import { closeModalUsersGroup, createUsersGroupLoading, nameGroupValidate, startGroupInitLoading, usersInitLoading } from 'actions/adminUsersAndGroup';
 import SelectAndChips from 'components/ui/SelectAndChips';
 import { DialogTitle, Divider, Grid} from '@material-ui/core';
 
@@ -28,6 +28,7 @@ const ModalAddUsersGroup = () => {
   const { data = [] } = usersAll
 
   const [nameUsersGroup, setNameUsersGroup] = useState({ users:[] })
+  console.log("usuarios",nameUsersGroup)
 
   const [messageErrorName, setMessageErrorName] = useState(null);
  
@@ -45,7 +46,7 @@ const ModalAddUsersGroup = () => {
         setMessageErrorName(null);
       }
 
-  }, [nameGroup, nameUsersGroup.users, setMessageErrorName]);
+  }, [nameGroup, setMessageErrorName]);
 
   
   const handleClose = () => {
@@ -117,7 +118,7 @@ const ModalAddUsersGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={!nameUsersGroup.users ? false: true}
+            disabled={nameUsersGroup.users.length === 0 }
           >
             Crear
           </Button>
