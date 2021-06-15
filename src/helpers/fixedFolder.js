@@ -9,7 +9,7 @@ export const fixedFolders = [
 				icon: 'view-dashboard',
 				type: 'item',
 				link: '/dashboard',
-				auth:'ROLE_DASHBOARD_MENU',
+				auth: '',
 				bd: false,
 			},
 			{
@@ -84,15 +84,15 @@ export const fixedFolders = [
 					},
 				],
 			},
-			{
-				id: -5,
-				name: 'sidebar.tags.report',
-				icon: 'chart',
-				type: 'item',
-				link: '/reports',
-				//auth: 'ROLE_REPORT_MENU',
-				bd: false,
-			},
+			// {
+			// 	id: -5,
+			// 	name: 'sidebar.tags.report',
+			// 	icon: 'chart',
+			// 	type: 'item',
+			// 	link: '/reports',
+			// 	//auth: 'ROLE_REPORT_MENU',
+			// 	bd: false,
+			// },
 			
 		],
 	},
