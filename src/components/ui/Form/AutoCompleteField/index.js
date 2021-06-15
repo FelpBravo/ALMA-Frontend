@@ -47,13 +47,10 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
         };
     }, [value, setLoading, isAsync]);
 
-    const onClose = (onChange, value, data) => {
-        console.log("data", data, "value", value)
+    const onClose = (onChange, data) => {
         if(isEmpty(data)){
             onChange(null)
         }
-        // const newValue = get(data, optionsValue, null)
-        // onChange(newValue);
     }  
 
     return (
@@ -61,7 +58,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
             render={({ field = {} }) => (
                 <Autocomplete
                     {...field}
-                    onClose={() => onClose(field?.onChange, field?.value, data)}
+                    onClose={() => onClose(field?.onChange, data)}
                     className={className}
                     options={data}
                     loading={loading}
