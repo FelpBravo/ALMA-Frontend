@@ -28,8 +28,7 @@ const ModalAddUsersGroup = () => {
   const { data = [] } = usersAll
 
   const [nameUsersGroup, setNameUsersGroup] = useState({ users:[] })
-  console.log("usuarios",nameUsersGroup)
-
+ 
   const [messageErrorName, setMessageErrorName] = useState(null);
  
    useEffect(() => {
