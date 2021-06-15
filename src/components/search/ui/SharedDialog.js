@@ -139,7 +139,7 @@ const SharedDialog = ({ data, handleClose }) => {
               }}
               color="primary"
               value={get(fields, 'expirationDate', null)}
-              onChange={value => handleOnChange({ target: { name: 'expirationDate', value } })}
+              onChange={value => handleOnChange({ target: { name: 'expirationDate', value: moment(value).format('YYYY-MM-DD') } })}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} container wrap="nowrap">
