@@ -6,6 +6,7 @@ import NavCollapse from "./NavCollapse";
 
 const Navigation = props => {
   const {menuItems, privileges } = props;
+
   return (
     <List component="nav" disablePadding className='side-nav-menu'>
       {

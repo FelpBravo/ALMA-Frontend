@@ -12,7 +12,6 @@ const NavMenuItem = props => {
 	const has = (list, hasAll) => hasAll ? hasAllAuthorities(list) : hasSomeAuthorities(list)
 	const isVisible = useSelector(has(isArray(auth) ? auth : [auth], hasAll))
 
-
 	if (!isEmpty(auth) && !isVisible) return null
 
 	return (
