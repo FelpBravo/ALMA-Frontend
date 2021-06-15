@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IntlMessages from 'util/IntlMessages';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DataTableUserFromGroup = () => {
+const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 
 	const classes = useStyles();
 

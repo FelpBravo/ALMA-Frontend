@@ -72,7 +72,6 @@ const addUsersGroup = (authUser, id, users = []) => {
 };
 
 const removeUsersGroup = (authUser, id, userId) => {
-	console.log(authUser)
 	return axiosInstance.put(`/groups/members/${id}/remove/${userId}`, null,
 		{
 			headers: {

@@ -1,6 +1,5 @@
-import React from 'react';
+import React , { useState }from 'react';
 import IntlMessages from 'util/IntlMessages';
-import { useSelector } from 'react-redux'
 import { DataTableGroup } from './DataTableGroup';
 import Grid from '@material-ui/core/Grid';
 import { DataTableUserFromGroup } from './DataTableUserFromGroup';
@@ -8,6 +7,8 @@ import { DataTableUserFromGroup } from './DataTableUserFromGroup';
 
 
 export const TableSearchGroup = () => {
+
+	const [openUserFromGroup, setOpenUserFromGroup] = useState(false)
 
 		return (
 			<div className="row">
@@ -17,7 +18,7 @@ export const TableSearchGroup = () => {
 						<div className="jr-card-header d-flex align-items-center">
 							<div>
 							<h3 className="mb-0">
-								<IntlMessages id="Grupos" />
+								<IntlMessages id="title.groups" />
 							</h3>
 							</div>
 							<div style={{color: '#FFA800'}} className="row ml-auto">		
@@ -25,10 +26,11 @@ export const TableSearchGroup = () => {
 						</div>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
-                        <DataTableGroup/>
+                        <DataTableGroup setOpenUserFromGroup={setOpenUserFromGroup}/>
                         </Grid>
                         <Grid item xs={8}>
-                        <DataTableUserFromGroup/>
+						{ Boolean(openUserFromGroup) &&  <DataTableUserFromGroup setOpenUserFromGroup={setOpenUserFromGroup}/>}
+                       
                         </Grid>
                     </Grid>
 					

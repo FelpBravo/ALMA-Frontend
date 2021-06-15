@@ -72,7 +72,7 @@ const SearchUsers = () => {
 		}
 		else {
 			setDisabledButton(true)
-			setMessageError('Tiene que tener 3 caracteres como minimo')
+			setMessageError('Tiene que tener 2 caracteres como minimo')
 		}
 		setSearchText(value)
 	}

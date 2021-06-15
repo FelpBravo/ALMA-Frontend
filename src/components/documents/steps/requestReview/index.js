@@ -66,7 +66,7 @@ export default function RequestStep({ tagsField }) {
                 "author": user?.userId,
                 pathFolderName,
                 folderId,
-                tagsField: tagsField.length
+                tagsField: tagsField?.length
             },
             "startedBy": user?.userId,
             ...values
