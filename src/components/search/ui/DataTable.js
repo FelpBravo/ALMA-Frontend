@@ -267,7 +267,9 @@ const DataTable = () => {
 
 	const handleOpenEditUsers = () => {
 		//dispatch(startDocumentsOfficeLoading(authUser, selectedRow.id))
+		setAnchorEl(null);
 		setEditActive(true)
+		
 	}
 	const handleCloseEditUsers = () =>{	
 		setEditActive(false) 
