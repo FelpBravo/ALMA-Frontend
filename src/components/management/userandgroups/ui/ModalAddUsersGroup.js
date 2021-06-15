@@ -37,9 +37,9 @@ const ModalAddUsersGroup = () => {
 
   useEffect(() => {
 
-    if (!nameGroup || nameGroup.length < 3 && nameUsersGroup.users > 1 ) {
+    if (!nameGroup || nameGroup.length < 3) {
 
-      setMessageErrorName('Este campo debe tener mínimo 3 letras');
+      setMessageErrorName('Este campo debe tener un grupo selecionado');
 
     } else {
         setMessageErrorName(null);
@@ -117,7 +117,7 @@ const ModalAddUsersGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={messageErrorName}
+            disabled={!nameUsersGroup.users ? false: true}
           >
             Crear
           </Button>
