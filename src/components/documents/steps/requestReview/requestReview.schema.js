@@ -7,7 +7,7 @@ const schema = object().shape({
             users: array().of(
                 object().shape({
                     userId: string().required(),
-                    maxDays: number().required().positive().integer(),
+                    maxDays: number().required().positive().max(99).integer(),
                 })
             )
         })
