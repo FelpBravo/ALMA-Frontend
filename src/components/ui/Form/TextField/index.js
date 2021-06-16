@@ -45,7 +45,7 @@ const TextField = ({
     });
 
     const textFieldProps = {
-        helperText: errorMessage && <IntlMessages id={errorMessage} />,
+        helperText: errorMessage && <IntlMessages id={errorMessage?.key ?? errorMessage} values={get(errorMessage, 'values', {})} />,
         error: Boolean(errorMessage),
         id: id || name,
         inputRef: ref,

@@ -16,5 +16,6 @@ export const locale = {
     },
     number: {
         positive: 'forms.errors.validation.integer.positive',
+        max: ({ max }) => ({ key: 'forms.errors.validation.integer.max', values: { max } }),
     },
 }
