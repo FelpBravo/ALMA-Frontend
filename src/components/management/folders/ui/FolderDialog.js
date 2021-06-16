@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,6 +10,8 @@ import { startFoldersInitLoading } from 'actions/folders'
 import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 import { MenuItem } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
+import { AutoCompleteField, CheckField, DateField, RadioGroupField, SelectField, TextField } from 'components/ui/Form';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
@@ -21,7 +22,7 @@ const FolderDialog = () => {
 
 	const { authUser } = useSelector(state => state.auth);
 
-	const { openModal, folder, actionModal, currentFolders, typeFolders = [] , historyFolders = [], foldersName} = useSelector(state => state.adminFolders);
+	const { openModal, folder, actionModal, currentFolders, typeFolders = [], historyFolders = [], foldersName } = useSelector(state => state.adminFolders);
 
 	const { id } = currentFolders
 
@@ -29,44 +30,33 @@ const FolderDialog = () => {
 
 	const { name, type, state, parentId, parentName } = formValues;
 
-	const [messageErrorTypes, setMessageErrorTypes] = useState(null);
-
 	const [messageErrorName, setMessageErrorName] = useState(null)
 
+	const { register, handleSubmit, control, watch, formState: { errors } } = useForm({
+		mode: 'onTouched',
+		name: 'folderForm',
+		defaultValues: {},
+		shouldUnregister: true,
+	});
+
+	const workSpaceName = watch('name', null)
 
 	useEffect(() => {
 		setFormValues({ ...folder });
-		dispatch(startFoldersTypesLoading(authUser,id <0? 0 : id))
-		
+		dispatch(startFoldersTypesLoading(authUser, id < 0 ? 0 : id))
+
 	}, [folder, setFormValues]);
 
 	useEffect(() => {
-		
-		if (!name || name.length > 3) {
-			dispatch(validateFolders(authUser,name))
-			setMessageErrorName(null);
-			
-		} else {
-			dispatch(foldersValidate(false))
-			setMessageErrorName('Este campo debe tener mínimo 3 letras');		
-
+		console.log("workSpaceName", )
+		if (workSpaceName) {
+			if (workSpaceName?.length > 3){
+				dispatch(validateFolders(authUser, workSpaceName))
+				setMessageErrorName(null);
+			}
 		}
 
-	}, [name, setMessageErrorName])
-
-	useEffect(() => {
-
-		if (!type) {
-
-			setMessageErrorTypes('Este debe seleccionar un tipo de carpeta');
-
-		} else {
-
-			setMessageErrorTypes(null);
-
-		}
-
-	}, [type, setMessageErrorTypes])
+	}, [workSpaceName])
 
 	const handleClose = () => {
 
@@ -74,40 +64,55 @@ const FolderDialog = () => {
 
 	}
 
-	const handleOnChange = ({ target }) => {
-		const { name, value } = target;
-		setFormValues({
-			...formValues,
-			[name]: value
-		});
-
-	}
-
-	const handleOnSave = () => {
+	const handleOnSave = values => {
 		const data = {
-			...formValues,
-			type: type,
-			position:1,
+			...values,
+			position: 1,
 			state: String(formValues.state) === 'true',
 			company: 1
 		};
-			data.name = data.name.trim()
+		data.name = data.name.trim()
+
+		console.log("data to send", data)
+
 		if (actionModal === ACTION_CREATE) {
-			dispatch(startUpdateFolderLoading(authUser,data,id,parentId))
+			dispatch(startUpdateFolderLoading(authUser, data, id, parentId))
 			dispatch(closeModalFolder());
-			
+
 
 		} else {
 			dispatch(startEditFolderLoading(authUser, data, parentId, parentName));
 			dispatch(closeModalFolder());
 
 		}
-		setTimeout(()=>{
+		setTimeout(() => {
 			dispatch(startFoldersInitLoading(authUser));
-		},300)
-		
+		}, 300)
 
 	}
+
+	const commonProps = {
+		register,
+		errors,
+		control,
+		shrink: true,
+		size: "small",
+	}
+
+	const nameProps = {
+		name: "name",
+		label: fieldName,
+		...commonProps,
+		// helperText = {!foldersName ? (messageErrorName ? messageErrorName : '') : 'Usuario ya existe'
+	}
+
+	const workSpaceTypeProps = {
+		name: "type",
+		label: "Tipo de espacio de trabajo",
+		...commonProps,
+		// helperText = {!foldersName ? (messageErrorName ? messageErrorName : '') : 'Usuario ya existe'
+	}
+
 
 	return (
 		<div>
@@ -120,75 +125,47 @@ const FolderDialog = () => {
 				<DialogTitle>
 					{
 						actionModal === ACTION_CREATE
-							? <IntlMessages id="folders.modal.title.create" style={{fontSize:16, fontFamily: "Poppins"}}/>
+							? <IntlMessages id="folders.modal.title.create" style={{ fontSize: 16, fontFamily: "Poppins" }} />
 							: <IntlMessages id="folders.modal.title.edit" />
 					}
 				</DialogTitle>
+				<form onSubmit={handleSubmit(handleOnSave)}>
+					<DialogContent>
+						{actionModal === ACTION_CREATE &&
+							<SelectField {...workSpaceTypeProps}>
+								{typeFolders && typeFolders.map((data, index) =>
+									<MenuItem value={data} key={index}>{data.name}</MenuItem>
+								)
+								}
+							</SelectField>
+						}
 
-				<DialogContent>
-				{actionModal === ACTION_CREATE &&
-							<TextField
-								select
-								label="Tipo de espacio de trabajo"
-								variant="outlined"
-								fullWidth
-								size="small"
-								name="type"
-								onChange={handleOnChange}
-							>
-							{typeFolders && typeFolders.map((data,index)=>{
-								return <MenuItem value={data} key={index}>{data.name}</MenuItem>
-							})	
-							}
-							</TextField>
-				}
-					
+						<div className="mt-2">
+							<TextField {...nameProps} />
+						</div>
 
-					<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-						<span className="text-danger text-error">{messageErrorTypes}</span>
-					</div>
+					</DialogContent>
 
-				
-
-					<div className="mt-2">
-	
-							<TextField
-								name="name"
-								value={name}
-								autoFocus
-								label={fieldName}
-								error={foldersName|| messageErrorName ? true : false}
-								type="text"
-								variant="outlined"
-								size="small"
-								fullWidth
-								onChange={handleOnChange}
-								helperText={!foldersName? (messageErrorName? messageErrorName : '' ): 'Usuario ya existe'}
-							/>
-
-					</div>
-					
-				</DialogContent>
-
-				<DialogActions style={{ margin:20 }}>
-					<Button
-						onClick={handleClose}
-						variant="contained"
-						style={{ backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", border: "none",boxShadow: "none" }}
+					<DialogActions style={{ margin: 20 }}>
+						<Button
+							onClick={handleClose}
+							variant="contained"
+							style={{ backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", border: "none", boxShadow: "none" }}
 						>
-						<IntlMessages id="button.text.cancel" />
-					</Button>
+							<IntlMessages id="button.text.cancel" />
+						</Button>
 
-					<Button
-						disabled={(name && name.length > 3) && type ? false : true}
-						onClick={handleOnSave}
-						variant="contained"
-						color="primary"
-					>
-						<IntlMessages id="button.text.save" />
-					</Button>
-				</DialogActions>
-
+						<Button
+							// disabled={(name && name.length > 3) && type ? false : true}
+							// onClick={handleOnSave}
+							type="submit"
+							variant="contained"
+							color="primary"
+						>
+							<IntlMessages id="button.text.save" />
+						</Button>
+					</DialogActions>
+				</form>
 			</Dialog>
 		</div>
 	);
