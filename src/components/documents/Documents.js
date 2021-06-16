@@ -11,7 +11,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { object } from 'yup';
 
-import { documentsClear, saveFileIdLoaded, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading, saveFormFinish } from 'actions/documents';
+import { documentsClear, saveFileIdLoaded, saveFormFinish, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
 import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
@@ -109,9 +109,9 @@ const Documents = () => {
 			title: 'Carga de documento',
 			text: "¿Estás seguro de realizar la carga de archivos?",
 			icon: "question",
-			showCancelButton: true,
 			focusConfirm: true,
 			heightAuto: false,
+			showCancelButton: true,
 		});
 		if (resp.value) {
 
@@ -128,6 +128,7 @@ const Documents = () => {
 			)
 
 			const { tagsField } = values
+			setOtherProps({tagsField})
 			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
 			switch (true) {
 				case controlledDocument:
@@ -184,7 +185,8 @@ const Documents = () => {
 	const { flowSteps,
 		Component,
 		activeStep,
-		setActiveStep } = flowStepsProvider
+		setActiveStep,
+		setOtherProps } = flowStepsProvider
 
 	useEffect(() => {
 		if (files) {

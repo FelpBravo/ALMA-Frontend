@@ -59,7 +59,7 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
         <Grid item md={12} container spacing={1} alignItems="center">
             {
                 fields.map((field, index) => (
-                    <Grid item md={12} container spacing={1} key={field}>
+                    <Grid item md={12} container spacing={1} key={field.id}>
                         <TextField
                             name={`${name}[${index}].order`}
                             label="Plazo en días"

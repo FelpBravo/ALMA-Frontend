@@ -6,10 +6,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import React, {  } from 'react';
+import { useSelector } from 'react-redux';
 
 import IntlMessages from 'util/IntlMessages';
 
 const SummaryInvolved = ({ data }) => {
+
+    const { involved } = useSelector(state => state.flowDocument);
+    const { users } =involved
     
     
     return (
@@ -55,7 +59,22 @@ const SummaryInvolved = ({ data }) => {
                                         </TableRow>
                                     }))
                             }
-
+                                    {users && users.map(({ userId, comment, expiresAt, role }, index) => {
+                                            return <TableRow key={index} >
+                                            <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}>
+                                                {role}
+                                            </TableCell>
+                                            <TableCell>
+                                                {userId}
+                                            </TableCell>
+                                            <TableCell>
+                                                {expiresAt} días
+                                            </TableCell>
+                                            <TableCell>
+                                                {comment}
+                                            </TableCell>
+                                        </TableRow>
+                                        })}
                         </TableBody>
                     </Table>
                 </TableContainer>

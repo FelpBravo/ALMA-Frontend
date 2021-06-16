@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from 'react-redux';
 import IntlMessages from 'util/IntlMessages';
-import { closeModalUsersGroup, createUsersGroupLoading, usersInitLoading } from 'actions/adminUsersAndGroup';
+import { closeModalUsersGroup, createUsersGroupLoading, nameGroupValidate, startGroupInitLoading, usersInitLoading } from 'actions/adminUsersAndGroup';
 import SelectAndChips from 'components/ui/SelectAndChips';
 import { DialogTitle, Divider, Grid} from '@material-ui/core';
 
@@ -24,11 +24,11 @@ const ModalAddUsersGroup = () => {
   const { authUser } = useSelector(state => state.auth);
 
   const { usersAll = {}, nameGroup , idGroup, openModal2} = useSelector(state => state.adminUsers);
- 
+
   const { data = [] } = usersAll
 
   const [nameUsersGroup, setNameUsersGroup] = useState({ users:[] })
-
+ 
   const [messageErrorName, setMessageErrorName] = useState(null);
  
    useEffect(() => {
@@ -37,25 +37,26 @@ const ModalAddUsersGroup = () => {
 
   useEffect(() => {
 
-    if (!nameGroup || nameGroup.length < 3 && nameUsersGroup.users > 1 ) {
+    if (!nameGroup || nameGroup.length < 3) {
 
-      setMessageErrorName('Este campo debe tener mínimo 3 letras');
+      setMessageErrorName('Este campo debe tener un grupo selecionado');
 
     } else {
         setMessageErrorName(null);
       }
 
-  }, [nameGroup, nameUsersGroup.users, setMessageErrorName]);
+  }, [nameGroup, setMessageErrorName]);
 
   
   const handleClose = () => {
     dispatch(closeModalUsersGroup());
+    
   }
   
   const handleOnSave =() =>{
-    dispatch(createUsersGroupLoading(authUser, idGroup, nameUsersGroup.users))
+    dispatch(createUsersGroupLoading(authUser, idGroup, nameUsersGroup.users, nameGroup))
     dispatch(closeModalUsersGroup());
-    
+
   }
 
   return (
@@ -116,7 +117,7 @@ const ModalAddUsersGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={messageErrorName}
+            disabled={nameUsersGroup.users.length === 0 }
           >
             Crear
           </Button>

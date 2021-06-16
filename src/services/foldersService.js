@@ -67,7 +67,7 @@ const remove = (authUser, id) => {
 };
 
 const getValidateFolders = (authUser, folder_name) => {
-	return axiosInstance.get(`/folders/validate/${folder_name}`, {
+	return axiosInstance.get(`/folders/admin/validate/${folder_name}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},

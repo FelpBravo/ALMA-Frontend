@@ -196,11 +196,9 @@ const DataTable = () => {
 	};
 
 	const handleChangePage = (event, page) => {
-
 		if (path === '/search/:page' || path === '/search') {
 			const existsFilters = filters.filter(filter => filter.value);
-
-			dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page_url));
+			dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page));
 		}
 		else {
 			if (page === 1) {
@@ -240,6 +238,7 @@ const DataTable = () => {
 	}
 
 	const handleDelete = async (id) => {
+		setAnchorEl(null)
 		const resp = await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Está seguro que quiere eliminar el documento?",
@@ -269,7 +268,9 @@ const DataTable = () => {
 
 	const handleOpenEditUsers = () => {
 		//dispatch(startDocumentsOfficeLoading(authUser, selectedRow.id))
+		setAnchorEl(null);
 		setEditActive(true)
+		
 	}
 	const handleCloseEditUsers = () =>{	
 		setEditActive(false) 

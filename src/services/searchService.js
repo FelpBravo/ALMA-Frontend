@@ -50,10 +50,12 @@ const getSavedSearches = (authUser) => {
 	);
 }
 
+
+
 export {
 	getSearchFields,
 	search,
 	saveSearch,
 	getSavedSearches,
-	getSavedSearchById
+	getSavedSearchById,
 }

@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
 import { Button, Grid, OutlinedInput } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import IntlMessages from 'util/IntlMessages';
-import { searchSetText, startSearchLoading } from 'actions/search';
-import SearchIcon from '@material-ui/icons/Search';
-import AddIcon from '@material-ui/icons/Add';
 import Link from '@material-ui/core/Link';
-import ModalGroup from './ModalGroup';
-import { openModalGroup } from 'actions/adminUsersAndGroup';
-import { useHistory,useLocation } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
+import SearchIcon from '@material-ui/icons/Search';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
 
+import { openModalGroup } from 'actions/adminUsersAndGroup';
+import { searchSetText, startSearchLoading } from 'actions/search';
+import { hasAuthority } from 'util/authorities';
+import IntlMessages from 'util/IntlMessages';
+
+import ModalGroup from './ModalGroup';
 
 const SearchGroup = () => {
 
@@ -29,30 +31,31 @@ const SearchGroup = () => {
 
 	const [messageError, setMessageError] = useState('');
 
-	const [ searchText, setSearchText ] = useState('')
+	const [searchText, setSearchText] = useState('')
 
-	useEffect(()=>{
+	const canCreateGroups = useSelector(hasAuthority('ROLE_GROUPS_CREATE'));
+
+	useEffect(() => {
 		setSearchText(searchGroup)
-	},[searchGroup])
+	}, [searchGroup])
 
-	const handleOnChange = ({target}) =>{
+	const handleOnChange = ({ target }) => {
 		const { value } = target
-		if(value.length > 1){
+		if (value.length > 1) {
 			setDisabledButton(false)
 			setMessageError('')
 		}
-		else
-		{
+		else {
 			setDisabledButton(true)
-			setMessageError('Tiene que tener 3 caracteres como minimo')
+			setMessageError('Tiene que tener 2 caracteres como minimo')
 		}
 		setSearchText(value)
 	}
 
-	const handleOnSearch = ()=>{
+	const handleOnSearch = () => {
 		history.push(`/management/usersandgroups/group/?searchGroup=${searchText}`);
 	}
-	
+
 	const handleSelectNew = () => {
 		dispatch(openModalGroup());
 	}
@@ -60,22 +63,22 @@ const SearchGroup = () => {
 
 	return (
 		<div className="row">
-		<div className="col-xl-12 col-lg-12 col-md-12 col-12">
+			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<form onSubmit={handleOnSearch}
 				>
 					<Grid container spacing={1}>
 						<Grid item xs={6}>
-						<OutlinedInput
-						    style={{height: 41, fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
-							value={searchText}
-							name="inputSearch"
-							fullWidth
-							placeholder="Buscar grupo"
-							onChange={handleOnChange}
-							required
-							startAdornment={<SearchIcon color="primary" />}
-							
-						/>
+							<OutlinedInput
+								style={{ height: 41, fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
+								value={searchText}
+								name="inputSearch"
+								fullWidth
+								placeholder="Buscar grupo"
+								onChange={handleOnChange}
+								required
+								startAdornment={<SearchIcon color="primary" />}
+
+							/>
 							<span className="text-danger text-error">{messageError}</span>
 						</Grid>
 
@@ -91,31 +94,31 @@ const SearchGroup = () => {
 								<IntlMessages id="dashboard.searchTextButton" />
 							</Button>
 						</Grid>
-					
-						<Grid xs={3} container 
-						//justify="flex-end"
-						>
-							<Link 
-							component="button"
-							variant="body2" 
-							onClick={() => handleSelectNew()}
-							style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, marginLeft:10}}
-							>
-							    <AddIcon style={{fontSize:30, color:"#3699FF", marginLeft:10}}/>
+						{
+							canCreateGroups &&
+							<Grid xs={3} container>
+								<Link
+									component="button"
+									variant="body2"
+									onClick={() => handleSelectNew()}
+									style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, marginLeft: 10 }}
+								>
+									<AddIcon style={{ fontSize: 30, color: "#3699FF", marginLeft: 10 }} />
 							    Crear nuevo grupo
-							</Link>			
-									
-						</Grid>
+							</Link>
+
+							</Grid>
+						}
 
 					</Grid>
-					</form>
-				
-			<ModalGroup/>
+				</form>
+
+				<ModalGroup />
+			</div>
 		</div>
-	</div>
 
 
-					
+
 
 	)
 }

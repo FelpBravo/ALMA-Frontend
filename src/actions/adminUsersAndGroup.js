@@ -359,7 +359,7 @@ export const membersGroupInitLoading = (authUser, idGroup, nameGroup) => {
 	}
 };
 
-export const createUsersGroupLoading = (authUser, idGroup, nameGroup) => {
+export const createUsersGroupLoading = (authUser, idGroup, users, nameGroup) => {
 	return async (dispatch) => {
 
 		try {
@@ -373,7 +373,7 @@ export const createUsersGroupLoading = (authUser, idGroup, nameGroup) => {
 
 			Swal.showLoading();
 
-			await addUsersGroup(authUser, idGroup, nameGroup);
+			await addUsersGroup(authUser, idGroup, users);
 
 			const resp = await membersGroup(authUser, idGroup);
 			console.log(idGroup)
@@ -381,7 +381,7 @@ export const createUsersGroupLoading = (authUser, idGroup, nameGroup) => {
 			Swal.close();
 
 			dispatch(saveUsersGroupLoaded());
-			dispatch(membersInitLoaded(resp.data));
+			dispatch(membersInitLoaded(resp.data, idGroup, nameGroup));
 
 		} catch (error) {
 			Swal.close();
