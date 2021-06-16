@@ -14,7 +14,7 @@ import TableActionButton from 'components/search/ui/TableActionButton';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { INBOX_STATUS } from 'constants/constUtil';
+import { INBOX_STATUS, STATUS } from 'constants/constUtil';
 import { startActiveTasksInit, startInvolvedLoading } from 'actions/flowDocument';
 import ManagementSummary from './ManagementSummary';
 
@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
       },
 }));
 
-
 const Tasks = () => {
 
 	const classes = useStyles();
@@ -56,7 +55,7 @@ const Tasks = () => {
 
 
 	const handleManage = (instanceId, taskId, role, author, fileId) => {
-		dispatch(startInvolvedLoading(authUser, instanceId,taskId, role, author, fileId ))
+		dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId ))
 		history.push(`/manage`);
 
 	};
@@ -69,7 +68,7 @@ const Tasks = () => {
 	}*/}
 
 	const handleChangePage = (event, page) => {
-			dispatch(startActiveTasksInit(authUser , page , INBOX_STATUS ))
+			dispatch(startActiveTasksInit(authUser , page , STATUS ))
 			setPage(page);
 		
 	}
@@ -77,7 +76,7 @@ const Tasks = () => {
 	return (
 		<div className="row">     
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
-            <Grid item xs={3}>
+            {/*<Grid item xs={3}>
               <FormControl size="small" variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">Estado</InputLabel>
                 <Select
@@ -97,7 +96,7 @@ const Tasks = () => {
               </FormControl>
             </Grid>
 
-             <Divider className='mt-3 mb-3'/> 
+             <Divider className='mt-3 mb-3'/> */}
 
 				<TableContainer component={Paper}>
 					<Table size="small" aria-label="a dense table">
