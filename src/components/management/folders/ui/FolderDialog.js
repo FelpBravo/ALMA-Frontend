@@ -12,6 +12,10 @@ import IntlMessages from 'util/IntlMessages';
 import { MenuItem } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import { AutoCompleteField, CheckField, DateField, RadioGroupField, SelectField, TextField } from 'components/ui/Form';
+import schema from './FolderDialog.schema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { isEmpty } from 'lodash';
+
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
@@ -30,12 +34,11 @@ const FolderDialog = () => {
 
 	const { name, type, state, parentId, parentName } = formValues;
 
-	const [messageErrorName, setMessageErrorName] = useState(null)
-
-	const { register, handleSubmit, control, watch, formState: { errors } } = useForm({
+	const { register, handleSubmit, control, watch, setError,  formState: { errors } } = useForm({
 		mode: 'onTouched',
 		name: 'folderForm',
 		defaultValues: {},
+		resolver: yupResolver(schema),
 		shouldUnregister: true,
 	});
 
@@ -48,21 +51,24 @@ const FolderDialog = () => {
 	}, [folder, setFormValues]);
 
 	useEffect(() => {
-		console.log("workSpaceName", )
-		if (workSpaceName) {
-			if (workSpaceName?.length > 3){
+		if (workSpaceName) 
+			if (workSpaceName?.length > 3)
 				dispatch(validateFolders(authUser, workSpaceName))
-				setMessageErrorName(null);
-			}
-		}
-
 	}, [workSpaceName])
+
+	useEffect(() => {
+		if (foldersName){
+			setError('name', { type: 'manual', message: 'folders.modal.title.errors.name' })
+		}
+	}, [foldersName])
 
 	const handleClose = () => {
 
 		dispatch(closeModalFolder());
 
 	}
+
+	console.log("errors", errors)
 
 	const handleOnSave = values => {
 		const data = {
@@ -156,8 +162,7 @@ const FolderDialog = () => {
 						</Button>
 
 						<Button
-							// disabled={(name && name.length > 3) && type ? false : true}
-							// onClick={handleOnSave}
+							disabled={!isEmpty(errors)}
 							type="submit"
 							variant="contained"
 							color="primary"

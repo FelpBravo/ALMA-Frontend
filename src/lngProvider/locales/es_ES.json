@@ -671,6 +671,7 @@
 	"folders.table.column5": "Tipo",
 	"folders.modal.title.create": "Crear nuevo espacio de trabajo",
 	"folders.modal.title.edit": "Editar espacio de trabajo",
+	"folders.modal.title.errors.name": "Este nombre ya existe",
 	"folders.modal.field.name": "Nombre",
 	"folders.modal.field.state": "Estado",
 	"folders.modal.field.position": "Posición",
