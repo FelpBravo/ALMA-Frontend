@@ -163,7 +163,7 @@ const FolderDialog = () => {
 								size="small"
 								fullWidth
 								onChange={handleOnChange}
-								helperText={!foldersName? (messageErrorName? messageErrorName : '' ): 'Usuario ya existe'}
+								helperText={!foldersName? (messageErrorName? messageErrorName : '' ): 'Nombre de espacio de trabajo existe'}
 							/>
 
 					</div>
