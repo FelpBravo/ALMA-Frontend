@@ -30,25 +30,20 @@ const FolderDialog = () => {
 
 	const { id } = currentFolders
 
-	const [formValues, setFormValues] = useState({});
-
-	const { name, type, state, parentId, parentName } = formValues;
-
 	const { register, handleSubmit, control, watch, setError,  formState: { errors } } = useForm({
 		mode: 'onTouched',
 		name: 'folderForm',
 		defaultValues: {},
 		resolver: yupResolver(schema),
-		shouldUnregister: true,
 	});
 
 	const workSpaceName = watch('name', null)
+	const { parentId, parentName } = folder;
 
 	useEffect(() => {
-		setFormValues({ ...folder });
 		dispatch(startFoldersTypesLoading(authUser, id < 0 ? 0 : id))
 
-	}, [folder, setFormValues]);
+	}, [folder]);
 
 	useEffect(() => {
 		if (workSpaceName) 
@@ -68,18 +63,15 @@ const FolderDialog = () => {
 
 	}
 
-	console.log("errors", errors)
 
 	const handleOnSave = values => {
+
 		const data = {
 			...values,
-			position: 1,
-			state: String(formValues.state) === 'true',
-			company: 1
+			parentId,
+			company: 1,
 		};
 		data.name = data.name.trim()
-
-		console.log("data to send", data)
 
 		if (actionModal === ACTION_CREATE) {
 			dispatch(startUpdateFolderLoading(authUser, data, id, parentId))
