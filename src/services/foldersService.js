@@ -74,6 +74,14 @@ const getValidateFolders = (authUser, folder_name) => {
 	});
 };
 
+const getGroups = (authUser) => {
+	return axiosInstance.get(`/groups`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
 export {
 	getFolders,
 	getFoldersById,
@@ -84,4 +92,5 @@ export {
 	edit,
 	remove,
 	getValidateFolders,
+	getGroups,
 }

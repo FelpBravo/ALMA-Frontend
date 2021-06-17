@@ -22,6 +22,7 @@ const initialState = {
 	},
 	typeFolders: [],
 	foldersName: false,
+	groupList: null,
 };
 
 export const adminFoldersReducer = (state = initialState, action) => {
@@ -195,6 +196,12 @@ export const adminFoldersReducer = (state = initialState, action) => {
 			return {
 				...state,
 				foldersName: action.payload,
+			}
+		
+		case types.adminfoldersGroupListLoaded:
+			return {
+				...state,
+				groupList: action.payload,
 			}
 			
 		default:

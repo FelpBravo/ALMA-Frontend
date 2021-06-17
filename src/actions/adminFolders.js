@@ -1,8 +1,9 @@
+import Swal from 'sweetalert2';
+
 import { GENERAL_ERROR, INIT_FOLDER } from 'constants/constUtil';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { removeFolder } from 'helpers/removeFolder';
-import { create, edit, getFoldersAdmin, getFoldersAdminById, remove, getTypesFolders, getValidateFolders } from 'services/foldersService';
-import Swal from 'sweetalert2';
+import { create, edit, getFoldersAdmin, getFoldersAdminById, getGroups, getTypesFolders, getValidateFolders, remove } from 'services/foldersService';
 import { types } from 'types/types';
 
 export const startFoldersLoading = (authUser) => {
@@ -441,10 +442,33 @@ export const startFoldersTypesLoading = (authUser, id) => {
 	}
 };
 
+export const startGroupsListLoading = (authUser) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getGroups(authUser);
+
+			dispatch(groupListLoaded(resp.data));
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
 export const foldersTypesLoaded = (foldersTypes) => {
 	return {
 		type: types.adminfoldersTypesLoaded,
 		payload: foldersTypes,
+	}
+};
+
+export const groupListLoaded = (groupList) => {
+	return {
+		type: types.adminfoldersGroupListLoaded,
+		payload: groupList,
 	}
 };
 

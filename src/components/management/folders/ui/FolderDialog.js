@@ -1,44 +1,80 @@
-import React, { useEffect, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Checkbox, Chip, ListItemText, MenuItem } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useDispatch, useSelector } from 'react-redux';
-import { closeModalFolder, foldersValidate, startEditFolderLoading, startFoldersTypesLoading, startUpdateFolderLoading, validateFolders } from 'actions/adminFolders';
-import { startFoldersInitLoading } from 'actions/folders'
+import GroupIcon from '@material-ui/icons/Group';
+import { makeStyles } from '@material-ui/styles';
+import { closeModalFolder, startEditFolderLoading, startFoldersTypesLoading, startGroupsListLoading, startUpdateFolderLoading, validateFolders } from 'actions/adminFolders';
+import { startFoldersInitLoading } from 'actions/folders';
+import { SelectField, TextField } from 'components/ui/Form';
 import { ACTION_CREATE } from 'constants/constUtil';
-import IntlMessages from 'util/IntlMessages';
-import { MenuItem } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
-import { AutoCompleteField, CheckField, DateField, RadioGroupField, SelectField, TextField } from 'components/ui/Form';
-import schema from './FolderDialog.schema';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { isEmpty } from 'lodash';
-
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import IntlMessages from 'util/IntlMessages';
+import schema from './FolderDialog.schema';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+			width: 150,
+		},
+	},
+};
+
+
+const useStyles = makeStyles((theme) => ({
+	rootChips: {
+		display: 'flex',
+		marginTop: theme.spacing(1),
+		flexWrap: 'wrap',
+		'& > *': {
+			margin: theme.spacing(0.5),
+		},
+	},
+}));
+
 const FolderDialog = () => {
 
 	const dispatch = useDispatch();
+	const classes = useStyles();
 
 	const { authUser } = useSelector(state => state.auth);
 
-	const { openModal, folder, actionModal, currentFolders, typeFolders = [], historyFolders = [], foldersName } = useSelector(state => state.adminFolders);
+	const { openModal, folder, actionModal, currentFolders, typeFolders = [], groupList, foldersName } = useSelector(state => state.adminFolders);
 
 	const { id } = currentFolders
 
-	const { register, handleSubmit, control, watch, setError,  formState: { errors } } = useForm({
+	const { register, setValue, handleSubmit, control, watch, setError, formState: { errors } } = useForm({
 		mode: 'onTouched',
 		name: 'folderForm',
-		defaultValues: {},
+		defaultValues: {
+			groups: []
+		},
 		resolver: yupResolver(schema),
 	});
 
 	const workSpaceName = watch('name', null)
+	const groupSelected = watch('groups', null)
+	console.log("groupSelected", groupSelected)
+	console.log("groupList", groupList)
 	const { parentId, parentName } = folder;
+
+	useEffect(() => {
+		if (openModal && groupList === null)
+			dispatch(startGroupsListLoading(authUser))
+
+	}, [openModal, groupList])
 
 	useEffect(() => {
 		dispatch(startFoldersTypesLoading(authUser, id < 0 ? 0 : id))
@@ -46,13 +82,13 @@ const FolderDialog = () => {
 	}, [folder]);
 
 	useEffect(() => {
-		if (workSpaceName) 
+		if (workSpaceName)
 			if (workSpaceName?.length > 3)
 				dispatch(validateFolders(authUser, workSpaceName))
 	}, [workSpaceName])
 
 	useEffect(() => {
-		if (foldersName){
+		if (foldersName) {
 			setError('name', { type: 'manual', message: 'folders.modal.title.errors.name' })
 		}
 	}, [foldersName])
@@ -62,7 +98,6 @@ const FolderDialog = () => {
 		dispatch(closeModalFolder());
 
 	}
-
 
 	const handleOnSave = values => {
 
@@ -111,6 +146,16 @@ const FolderDialog = () => {
 		// helperText = {!foldersName ? (messageErrorName ? messageErrorName : '') : 'Usuario ya existe'
 	}
 
+	const handleRenderGroups = () => groupSelected?.length > 0 && <div className={classes.rootChips}>
+		{groupSelected.map(name => <Chip
+			size="small"
+			variant="outlined"
+			key={name}
+			icon={<GroupIcon style={{ marginLeft: 5 }} />}
+			onDelete={() => setValue('groups', groupSelected.filter(e => e !== name))}
+			label={name}
+			color="primary" />)}
+	</div>
 
 	return (
 		<div>
@@ -119,6 +164,7 @@ const FolderDialog = () => {
 				onClose={handleClose}
 				aria-labelledby="form-dialog-title"
 				fullWidth={true}
+				maxWidth='md'
 			>
 				<DialogTitle>
 					{
@@ -141,7 +187,36 @@ const FolderDialog = () => {
 						<div className="mt-2">
 							<TextField {...nameProps} />
 						</div>
-
+						<div className="mt-2">
+							<SelectField
+								id="demo-mutiple-checkbox"
+								multiple
+								name="groups"
+								label="Seleccionar grupos"
+								control={control}
+								size="small"
+								renderValue={selected => `${selected?.length ?? 0} grupos seleccionados`}
+								MenuProps={MenuProps}
+							>
+								{
+									(groupList || [])?.map(({ id, name }) => (
+										<MenuItem
+											key={id}
+											value={name}
+										>
+											<Checkbox
+												color="primary"
+												checked={(groupSelected || [])?.find(x => x === name) ? true : false}
+											/>
+											<ListItemText
+												primary={name}
+											/>
+										</MenuItem>
+									))
+								}
+							</SelectField>
+							{handleRenderGroups()}
+						</div>
 					</DialogContent>
 
 					<DialogActions style={{ margin: 20 }}>
