@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Checkbox, Chip, ListItemText, MenuItem } from '@material-ui/core';
+import { Checkbox, Chip, Divider, Grid, ListItemText, MenuItem, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -7,21 +7,24 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import GroupIcon from '@material-ui/icons/Group';
 import { makeStyles } from '@material-ui/styles';
-import { closeModalFolder, startEditFolderLoading, startFoldersTypesLoading, startGroupsListLoading, startUpdateFolderLoading, validateFolders } from 'actions/adminFolders';
-import { startFoldersInitLoading } from 'actions/folders';
-import { SelectField, TextField } from 'components/ui/Form';
-import { ACTION_CREATE } from 'constants/constUtil';
+import clsx from 'clsx';
 import { isEmpty } from 'lodash';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { closeModalFolder, startEditFolderLoading, startFoldersTypesLoading, startGroupsListLoading, startUpdateFolderLoading, validateFolders } from 'actions/adminFolders';
+import { startFoldersInitLoading } from 'actions/folders';
+import { CheckField, SelectField, TextField } from 'components/ui/Form';
+import { ACTION_CREATE } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
+
 import schema from './FolderDialog.schema';
 
 const fieldName = <IntlMessages id="folders.modal.field.name" />
 const fieldPosition = <IntlMessages id="folders.modal.field.position" />
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 78;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
 	PaperProps: {
@@ -42,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
 			margin: theme.spacing(0.5),
 		},
 	},
+	sectionT: {
+		marginTop: theme.spacing(2)
+	},
+	sectionB: {
+		marginBottom: theme.spacing(2)
+	}
 }));
 
 const FolderDialog = () => {
@@ -135,6 +144,7 @@ const FolderDialog = () => {
 	const nameProps = {
 		name: "name",
 		label: fieldName,
+		required: true,
 		...commonProps,
 		// helperText = {!foldersName ? (messageErrorName ? messageErrorName : '') : 'Usuario ya existe'
 	}
@@ -142,9 +152,25 @@ const FolderDialog = () => {
 	const workSpaceTypeProps = {
 		name: "type",
 		label: "Tipo de espacio de trabajo",
+		required: true,
 		...commonProps,
 		// helperText = {!foldersName ? (messageErrorName ? messageErrorName : '') : 'Usuario ya existe'
 	}
+
+	const groupsProps = {
+		name: "groups",
+		label: "Seleccionar grupos",
+		multiple: true,
+		renderValue: selected => `${selected?.length ?? 0} grupos seleccionados`,
+		MenuProps,
+		...commonProps,
+	}
+
+	const isAnonymousProps = {
+		name: 'is_anonymous',
+		label: 'Heredar permisos',
+		...commonProps,
+	};
 
 	const handleRenderGroups = () => groupSelected?.length > 0 && <div className={classes.rootChips}>
 		{groupSelected.map(name => <Chip
@@ -175,47 +201,54 @@ const FolderDialog = () => {
 				</DialogTitle>
 				<form onSubmit={handleSubmit(handleOnSave)}>
 					<DialogContent>
-						{actionModal === ACTION_CREATE &&
-							<SelectField {...workSpaceTypeProps}>
-								{typeFolders && typeFolders.map((data, index) =>
-									<MenuItem value={data} key={index}>{data.name}</MenuItem>
-								)
-								}
-							</SelectField>
-						}
-
-						<div className="mt-2">
-							<TextField {...nameProps} />
+						<div className={classes.sectionB}>
+							<Grid container spacing={2}>
+								<Grid item md={6}>
+									{actionModal === ACTION_CREATE &&
+										<SelectField {...workSpaceTypeProps}>
+											{typeFolders && typeFolders.map((data, index) =>
+												<MenuItem value={data} key={index}>{data.name}</MenuItem>
+											)
+											}
+										</SelectField>
+									}
+								</Grid>
+								<Grid item md={6}>
+									<TextField {...nameProps} />
+								</Grid>
+							</Grid>
 						</div>
-						<div className="mt-2">
-							<SelectField
-								id="demo-mutiple-checkbox"
-								multiple
-								name="groups"
-								label="Seleccionar grupos"
-								control={control}
-								size="small"
-								renderValue={selected => `${selected?.length ?? 0} grupos seleccionados`}
-								MenuProps={MenuProps}
-							>
-								{
-									(groupList || [])?.map(({ id, name }) => (
-										<MenuItem
-											key={id}
-											value={name}
-										>
-											<Checkbox
-												color="primary"
-												checked={(groupSelected || [])?.find(x => x === name) ? true : false}
-											/>
-											<ListItemText
-												primary={name}
-											/>
-										</MenuItem>
-									))
-								}
-							</SelectField>
-							{handleRenderGroups()}
+						<Divider />
+						<div className={clsx(classes.sectionB, classes.sectionT)}>
+							<h4>
+								Permisos de grupo
+							</h4>
+							<CheckField {...isAnonymousProps} />
+
+							<div className="mt-2">
+								<SelectField
+									id="groups-checkbox"
+									{...groupsProps}
+								>
+									{
+										(groupList || [])?.map(({ id, name }) => (
+											<MenuItem
+												key={id}
+												value={name}
+											>
+												<Checkbox
+													color="primary"
+													checked={(groupSelected || [])?.find(x => x === name) ? true : false}
+												/>
+												<Typography variant="body2">
+													{name}
+												</Typography>
+											</MenuItem>
+										))
+									}
+								</SelectField>
+								{handleRenderGroups()}
+							</div>
 						</div>
 					</DialogContent>
 
