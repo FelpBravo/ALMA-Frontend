@@ -767,6 +767,8 @@
 	"forms.errors.validation.mixed.type.string": "Texto inválido",
 	"forms.errors.validation.integer.positive": "Debe ser un número positivo",
 	"forms.errors.validation.integer.max": "Debe ser menor o igual a {max}",
+	"forms.errors.validation.string.noMatch": "Este nombre ya está en uso, por favor usa otro.",
+	"forms.errors.validation.string.min": "Debe contener al menos {min} carácteres",
 
 	"flow.created": "Se ha agregado un nuevo flujo No. {FlowID}",
 	"flow.newTask": "Se te ha asignado una nueva tarea ({TaskID}) pendiente de revisión para el flujo No. {FlowID}",

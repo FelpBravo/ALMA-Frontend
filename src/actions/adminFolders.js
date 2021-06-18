@@ -324,7 +324,7 @@ export const startEditFolderLoading = (authUser, data, folderId, name) => {
 
 			Swal.showLoading();
 
-			await edit(authUser, data);
+			await edit(authUser, data, folderId);
 
 			dispatch(updateLoaded(data));
 			dispatch(saveFolderLoaded());

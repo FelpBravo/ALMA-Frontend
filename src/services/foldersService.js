@@ -50,8 +50,8 @@ const create = (authUser, data) => {
 	});
 };
 
-const edit = (authUser, data) => {
-	return axiosInstance.put('/folders/admin', data, {
+const edit = (authUser, data, folderId) => {
+	return axiosInstance.put(`/folders/admin/${folderId}`, data, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -66,12 +66,8 @@ const remove = (authUser, id) => {
 	});
 };
 
-const getValidateFolders = (authUser, folder_name) => {
-	return axiosInstance.get(`/folders/admin/validate/${folder_name}`, {
-		headers: {
-			Authorization: `Bearer ${authUser}`,
-		},
-	});
+const getValidateFolders = (folder_name) => {
+	return axiosInstance.get(`/folders/admin/validate/${folder_name}`);
 };
 
 const getGroups = (authUser) => {

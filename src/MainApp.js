@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useStore } from 'react-redux';
 import { setLocale } from 'yup';
 
 import { startUserSingOut } from 'actions/auth';
@@ -17,31 +17,33 @@ const MainApp = () =>
 		<MainRouter />
 	</Provider>;
 
-const { dispatch } = store;
+const { dispatch, getState } = store;
 
 axiosInstance.interceptors.response.use(
-	response => response
-	,
+	response => response,
 	error => {
 		try {
 			const { status } = error?.response;
 			if (status === UNAUTHORIZED || status === FORBIDDEN) {
-			
+
 				dispatch(startUserSingOut());
-	
+
 			}
-	
+
 			return Promise.reject(error);
 
 		} catch (e) {
-			
-			console.log("error",e);
+
+			console.log("error", e);
 		}
 
-		
-
-		
-
 	});
+
+axiosInstance.interceptors.request.use(function (config) {
+	const token = getState().auth?.authUser;
+	if (token)
+		config.headers.Authorization = `Bearer ${token}`;
+	return config;
+});
 
 export default MainApp;
