@@ -35,6 +35,7 @@ const SelectField = (props) => {
         multiple,
         renderValue,
         MenuProps,
+        required,
     } = props;
 
     const labelId = `${name}-label`;
@@ -46,6 +47,7 @@ const SelectField = (props) => {
             error={Boolean(errorMessage)}
             disabled={disabled}
             size={size}
+            required={required}
             className={`${className} ${classes.fullWidth}`}
         >
             <InputLabel id={labelId}>{label}</InputLabel>

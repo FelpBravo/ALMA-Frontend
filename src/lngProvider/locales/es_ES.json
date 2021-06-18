@@ -671,6 +671,7 @@
 	"folders.table.column5": "Tipo",
 	"folders.modal.title.create": "Crear nuevo espacio de trabajo",
 	"folders.modal.title.edit": "Editar espacio de trabajo",
+	"folders.modal.title.errors.name": "Este nombre ya existe",
 	"folders.modal.field.name": "Nombre",
 	"folders.modal.field.state": "Estado",
 	"folders.modal.field.position": "Posición",
@@ -766,6 +767,8 @@
 	"forms.errors.validation.mixed.type.string": "Texto inválido",
 	"forms.errors.validation.integer.positive": "Debe ser un número positivo",
 	"forms.errors.validation.integer.max": "Debe ser menor o igual a {max}",
+	"forms.errors.validation.string.noMatch": "Este nombre ya está en uso, por favor usa otro.",
+	"forms.errors.validation.string.min": "Debe contener al menos {min} carácteres",
 
 	"flow.created": "Se ha agregado un nuevo flujo No. {FlowID}",
 	"flow.newTask": "Se te ha asignado una nueva tarea ({TaskID}) pendiente de revisión para el flujo No. {FlowID}",

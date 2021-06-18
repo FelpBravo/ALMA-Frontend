@@ -13,6 +13,7 @@ export const locale = {
         }
     },
     string: {
+        min: ({ min }) => ({ key: 'forms.errors.validation.string.min', values: { min } }),
     },
     number: {
         positive: 'forms.errors.validation.integer.positive',
