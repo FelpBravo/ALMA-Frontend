@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, Chip, Divider, Grid, ListItemText, MenuItem, Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import Button from 'components/ui/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	sectionB: {
 		marginBottom: theme.spacing(2)
+	},
+	actions:{
+		margin: theme.spacing(0,2)
 	}
 }));
 
@@ -87,11 +90,8 @@ const FolderDialog = () => {
 	
 	}, [folder, actionModal]);
 
-	const handleClose = () => {
 
-		dispatch(closeModalFolder());
-
-	}
+	const handleClose = () => dispatch(closeModalFolder());
 
 	const handleOnSave = values => {
 
@@ -144,6 +144,7 @@ const FolderDialog = () => {
 		name: "groups",
 		label: "Seleccionar grupos",
 		multiple: true,
+		defaultValue: [],
 		renderValue: selected => `${selected?.length ?? 0} grupos seleccionados`,
 		MenuProps,
 		...commonProps,
@@ -151,7 +152,7 @@ const FolderDialog = () => {
 
 	const isAnonymousProps = {
 		name: 'inheritPermissions',
-		label: 'Heredar permisos de Carpeta padre',
+		label: 'Heredar permisos de carpeta padre',
 		...commonProps,
 	};
 
@@ -224,11 +225,11 @@ const FolderDialog = () => {
 						</div>
 					</DialogContent>
 
-					<DialogActions style={{ margin: 20 }}>
+					<DialogActions className={classes.actions}>
 						<Button
 							onClick={handleClose}
 							variant="contained"
-							style={{ backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", border: "none", boxShadow: "none" }}
+							color="secondary"
 						>
 							<IntlMessages id="button.text.cancel" />
 						</Button>

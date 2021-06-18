@@ -145,13 +145,13 @@ export const adminFoldersReducer = (state = initialState, action) => {
 				...state,
 				currentFolders: {
 					...state.currentFolders,
-					name: action.payload.name,
+					...action.payload,
 				},
 				folders: state.folders.map((folder => {
 
-					const { id, name, state, position } = action.payload;
+					const { id, name, state, position, groups, inheritPermissions } = action.payload;
 
-					updatePropertiesAfterEdit(id, name, state, position, folder);
+					updatePropertiesAfterEdit(id, name, state, position, folder, groups, inheritPermissions);
 
 					return folder;
 
