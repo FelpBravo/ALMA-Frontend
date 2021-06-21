@@ -76,6 +76,9 @@ const ManagementSummary = () => {
 							multiline
 							rows={3}
 							value={comment}
+							InputLabelProps={{
+								shrink: true,
+							}}
 							InputProps={{
 								readOnly: true
 							}}

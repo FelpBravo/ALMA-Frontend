@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IntlMessages from 'util/IntlMessages';
-import Pagination from '@material-ui/lab/Pagination';
-import Grid from '@material-ui/core/Grid';
-import TableActionButton from 'components/search/ui/TableActionButton';
-import { makeStyles } from '@material-ui/core/styles';
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle';
-import { startFlowsAllInit } from 'actions/flowDocument';
+import Pagination from '@material-ui/lab/Pagination';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { startFlowsAllInit } from 'actions/flowDocument';
+import TableActionButton from 'components/search/ui/TableActionButton';
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -79,7 +79,7 @@ const Manage = ({setOpenTracing}) => {
 							</TableRow>
 						</TableHead>
 						<TableBody >
-						{data.map(({ fileName, role, status, createdOn, author, instanceId, taskName }, index) => {
+							{data.map(({ fileName, role, status, createdOn, author, instanceId, flowName }, index) => {
 
                                 return <TableRow key={index} >
 							 
@@ -87,7 +87,7 @@ const Manage = ({setOpenTracing}) => {
 								    {fileName}
 									</TableCell>                                  
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>									
-									{taskName}
+									{flowName}
 									</TableCell>
 									<TableCell style={{fontFamily:"Poppins", textAlign:"center", fontSize:"13px"}}>
 									{createdOn}
