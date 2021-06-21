@@ -1,10 +1,10 @@
 import { Divider, Grid, Hidden, IconButton, makeStyles } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { countries } from 'components/formTest/countries';
 import Button from 'components/ui/Button';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
 import { getUsersFilter } from 'services/usersService';
@@ -51,6 +51,7 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                 <Button
                     variant="contained"
                     color="secondary"
+                    startIcon={<AddIcon />}
                     onClick={addField}>
                     Agregar
             </Button>
@@ -62,12 +63,11 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                     <Grid item md={12} container spacing={1} key={field.id}>
                         <TextField
                             name={`${name}[${index}].order`}
-                            label="Plazo en días"
                             value={parseInt(index + 1)}
                             type="number"
                             style={{ display: 'none' }}
                             {...commonProps} />
-                        <Grid item md={3}>
+                        <Grid item md={4} sm={6} xs={6}>
                             <AutoCompleteField
                                 name={`${name}[${index}].userId`}
                                 label="Seleccionar nombre"
@@ -79,14 +79,14 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                                 optionsValue="id"
                                 {...commonProps} />
                         </Grid>
-                        <Grid item md={2}>
+                        <Grid item md={2} sm={6} xs={6}>
                             <TextField
                                 name={`${name}[${index}].maxDays`}
                                 label="Plazo en días"
                                 type="number"
                                 {...commonProps} />
                         </Grid>
-                        <Grid item md>
+                        <Grid item md={6} sm={12} xs={12}>
                             <TextField
                                 name={`${name}[${index}].comment`}
                                 label="Comentario"
