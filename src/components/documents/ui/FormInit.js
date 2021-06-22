@@ -1,4 +1,4 @@
-import { FormControl, MenuItem } from '@material-ui/core';
+import { FormControl, Grid, MenuItem } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -29,7 +29,7 @@ export const FormInit = () => {
 	const { authUser } = useSelector(state => state.auth);
 
 	useEffect(() => {
-		if (controlledDocument && documentsList.length > 1){
+		if (controlledDocument && documentsList.length > 1) {
 			Swal.fire({
 				title: 'Oops...',
 				html: 'Solo puedes seleccionar 1 archivo para documento controlado.',
@@ -64,11 +64,11 @@ export const FormInit = () => {
 	const isControlledDocument = {
 		name: 'controlled_document',
 		label: 'Documento controlado',
-		control, 
+		control,
 	};
 
 	return (<>
-		<div className="row">
+		<Grid container spacing={2}>
 
 			{
 				(
@@ -77,13 +77,13 @@ export const FormInit = () => {
 					folders.length === 0
 				)
 				&&
-				<div className="col-xl-4 col-lg-4 col-md-4 col-4">
+				<Grid item lg={4} md={4} sm={4} xs={4}>
 					<Skeleton variant="circle" width={40} height={40} />
 					<Skeleton
 						variant="text"
 						height={40}
 						style={{ width: '100%' }} />
-				</div>
+				</Grid>
 			}
 
 			{
@@ -92,13 +92,13 @@ export const FormInit = () => {
 				folders.length > 0
 				&&
 				<>
-					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
+					<Grid item lg={4} md={4} sm={12} xs={12}>
 
 						<SelectFolder />
 
-					</div>
+					</Grid>
 
-					<div className="col-xl-4 col-lg-4 col-md-4 col-4">
+					<Grid item lg={4} md={6} sm={12} xs={12}>
 
 						<FormControl fullWidth>
 							<SelectField
@@ -115,15 +115,15 @@ export const FormInit = () => {
 								}
 							</SelectField>
 						</FormControl>
-					</div>
+					</Grid>
 				</>
 			}
-		</div>
-		<div className="row">
-			<div className="col-xl-4 mt-3 col-lg-4 col-md-4 col-4">
+		</Grid>
+		<Grid container style={{ marginTop: 10 }}>
+			<Grid item xl={4} lg={4} md={4} sm={12}>
 				<CheckField {...isControlledDocument} />
-			</div>
-		</div>
+			</Grid>
+		</Grid>
 	</>
 	)
 }

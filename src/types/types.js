@@ -104,7 +104,8 @@ export const types = {
 	adminfoldersTypesLoaded:'Admin Folders Types Loaded',
 	adminfoldersTypesClear: 'Admin Folders Type Clear',
 	adminFoldersUpdateCurrentFolders: 'Admin Folders Update Current Folders',
-	
+	adminfoldersGroupListLoaded: 'Admin Folders group list loaded',
+
 	tagsInitLoaded: 'Tags List',
 	tagsAdd: 'Tags New',
 	tagsEdit: 'Tags Edit',

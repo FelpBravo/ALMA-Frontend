@@ -238,6 +238,7 @@ const DataTable = () => {
 	}
 
 	const handleDelete = async (id) => {
+		setAnchorEl(null)
 		const resp = await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Está seguro que quiere eliminar el documento?",

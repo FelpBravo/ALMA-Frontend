@@ -17,15 +17,15 @@ const postFlows = (authUser, flow, document, approves ,comment , startedBy) => {
 };
 
 const getActiveTasks = (authUser, page, pageSize, status) => {
-    return axiosInstance.post(`/flows/data/activeTasks`, { page, pageSize, status },{
+    return axiosInstance.post(`/flows/data/tasks?page=${page}&pageSize=${pageSize}`, { status },{
         headers: {
             Authorization: `Bearer ${authUser}`,
         },
     });
 };
 
-const postFlowAll= (authUser, page, pageSize) => {
-    return axiosInstance.post(`/flows/data/all`, { page, pageSize },{
+const postFlowAll = (authUser, page, pageSize) => {
+    return axiosInstance.get(`/flows/data?page=${page}&pageSize=${pageSize}`,{
         headers: {
             Authorization: `Bearer ${authUser}`,
         },
@@ -33,7 +33,7 @@ const postFlowAll= (authUser, page, pageSize) => {
 };
 
 const getInvolved = (authUser, instanceId) => {
-    return axiosInstance.get(`/flows/data/${instanceId}/startFlowData`, {
+    return axiosInstance.get(`/flows/data/${instanceId}`, {
         headers: {
             Authorization: `Bearer ${authUser}`,
         },

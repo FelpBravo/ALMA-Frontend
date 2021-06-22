@@ -23,14 +23,21 @@ const Vertical = (props) => {
 		document.body.classList.remove("ios-mobile-view-height");
 	}
 
+	const onCloseSwal = () => {
+		const isVisible = Swal.isVisible();
+		if (isVisible){
+			Swal.close();
+		}
+	}
+
 	return (
 		<div className={`app-container ${drawerStyle}`}>
 			{/* <Tour /> */}
 
-			<SideBar onClick={() => Swal.close()}  />
+			<SideBar onClick={onCloseSwal}  />
 
-			<div onClick={() => Swal.close()}  className="app-main-container">
-				<div className="app-header">
+			<div className="app-main-container">
+				<div onClick={onCloseSwal} className="app-header">
 					<Header />
 				</div>
 

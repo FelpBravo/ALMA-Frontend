@@ -17,13 +17,16 @@ export const setFolders = (folderId, folders, currentFolder) => {
 
 }
 
-export const updatePropertiesAfterEdit = (folderId, name, state, position, currentFolder) => {
+export const updatePropertiesAfterEdit = (folderId, name, state, position, currentFolder, groups, inheritPermissions) => {
 
 	if (currentFolder.id == folderId) {
 
 		currentFolder.name = name;
 		currentFolder.state = state;
 		currentFolder.position = position;
+		currentFolder.groups = groups;
+		currentFolder.inheritPermissions = inheritPermissions;
+
 
 	} else if (Array.isArray(currentFolder.children)) {
 

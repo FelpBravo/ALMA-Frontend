@@ -1,19 +1,17 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles, TableCell, TableRow } from '@material-ui/core';
-
-import {
-	openModalFolder, setActionModal, setFolder, startDeleteFolderLoading, startSubFoldersLoading
-} from 'actions/adminFolders';
-import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
-import Swal from 'sweetalert2';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import TableActionButton from 'components/search/ui/TableActionButton';
-import FolderSharedOutlinedIcon from '@material-ui/icons/FolderSharedOutlined';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
+import FolderSharedOutlinedIcon from '@material-ui/icons/FolderSharedOutlined';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+
+import { openModalFolder, setActionModal, setFolder, startDeleteFolderLoading, startSubFoldersLoading } from 'actions/adminFolders';
 import { startFoldersInitLoading } from 'actions/folders'
+import TableActionButton from 'components/search/ui/TableActionButton';
+import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 
 const useStyles = makeStyles((theme) => ({
 	iconos: {
@@ -28,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	
   }));
 
-export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges, type }) => {
+export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, position, privileges, type, inheritPermissions, groups }) => {
 	const dispatch = useDispatch();
 	
 	const classes = useStyles();
@@ -56,6 +54,8 @@ export const TableBodyCell = ({ id, name, hashSubFolders, state, parentId, posit
 					state,
 					type,
 					icon: '',
+					inheritPermissions,
+					groups
 				}));
 				dispatch(startFoldersInitLoading(authUser));
 				break;

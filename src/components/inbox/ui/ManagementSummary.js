@@ -4,6 +4,10 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Divider, Grid } from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
 import Radio from '@material-ui/core/Radio';
@@ -13,7 +17,9 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { DocManagement } from './DocManagement';
 import { startAcceptTasksInit } from 'actions/flowDocument';
+import IntlMessages from 'util/IntlMessages';
 
+import { DocManagement } from './DocManagement';
 
 const ManagementSummary = () => {
 
@@ -41,7 +47,6 @@ const ManagementSummary = () => {
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
-		//dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
 	};
 
 	const handleBackGo = () => {
@@ -83,7 +88,12 @@ const ManagementSummary = () => {
 							multiline
 							rows={3}
 							value={comment}
-							disabled
+							InputLabelProps={{
+								shrink: true,
+							}}
+							InputProps={{
+								readOnly: true
+							}}
 						/>
 					</Grid>
 
