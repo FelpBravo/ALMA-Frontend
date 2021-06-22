@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Divider, Grid } from '@material-ui/core';
+import { Button, Divider, Grid } from '@material-ui/core';
 import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
@@ -16,19 +16,19 @@ import { startAcceptTasksInit } from 'actions/flowDocument';
 
 
 const ManagementSummary = () => {
-    
+
 	const dispatch = useDispatch();
 	//const { id } = useParams()
 	const { authUser } = useSelector(state => state.auth);
-	const { involved, taskId, role, author} = useSelector(state => state.flowDocument);
-	const {comment } = involved
-	
-	
+	const { involved, taskId, role, author } = useSelector(state => state.flowDocument);
+	const { comment } = involved
+
+
 
 	const [value, setValue] = React.useState(null);
 	console.log(value)
 	const history = useHistory();
-	
+
 
 	useEffect(() => {
 
@@ -42,7 +42,7 @@ const ManagementSummary = () => {
 	const handleChange = (event) => {
 		setValue(event.target.value);
 		//dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
-	  };
+	};
 
 	const handleBackGo = () => {
 		history.goBack()
@@ -65,65 +65,96 @@ const ManagementSummary = () => {
 						</Grid>
 					</Grid>
 
-                    <DocManagement/>
+					<DocManagement />
 
-                    <Divider className="mt-3 mb-3"/>
-                    <h3>Involucrados</h3> 
+					<Divider className="mt-3 mb-3" />
+					<h3>Involucrados</h3>
 
-                    <SummaryInvolved/>
+					<SummaryInvolved />
 
 
-                    <Divider className="mt-3 mb-3"/>
-                    <h3>Observaciones Generales</h3>
+					<Divider className="mt-3 mb-3" />
+					<h3>Observaciones Generales</h3>
 
 					<Grid container item xs={12}>
 						<TextField
-						name="comment"
-						label="Comentario"
-						multiline
-						rows={3}
-						value={comment}
-						disabled
+							name="comment"
+							label="Comentario"
+							multiline
+							rows={3}
+							value={comment}
+							disabled
 						/>
 					</Grid>
 
-                    <Divider className="mt-3 mb-3"/>
-                    <h3>Solicitud de revisión</h3>
-					
+					<Divider className="mt-3 mb-3" />
+					<h3>Solicitud de revisión</h3>
+
 					<p>{author} te ha solicitado revisar este documento, en el rol {role}</p>
 					<p>El plazo de esta solicitud vence el....</p>
 
 					<FormControl>
 						<FormLabel>Revisión OK</FormLabel>
 						<RadioGroup value={String(value)} onChange={handleChange}>
-							<FormControlLabel  value="true" control={<Radio color="primary" /> } label="Si" />
-							<FormControlLabel value="false" control={<Radio color="primary"/>} label="No" />
+							<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
+							<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
 						</RadioGroup>
-                    </FormControl>					
+					</FormControl>
 
-					<Divider className="mt-3 mb-3"/>
-                    <h3>Observaciones</h3>
+					<Divider className="mt-3 mb-3" />
+					<h3>Observaciones</h3>
 
 					<Grid container item xs={12}>
 						<TextField
-						name="comment"
-						label="Comentario"
-						multiline
-						rows={3}
-						
+							name="comment"
+							label="Comentario"
+							multiline
+							rows={3}
+
 						/>
 					</Grid>
 
-				
-					<Grid container 
-					className="mt-3 mb-3"
-                    onClick={handleBackGo}
-                    >
-						<KeyboardBackspaceIcon
-							color='primary' />
-						<span style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop: 2 }}	>
-							Volver
+					<Divider className="mt-3 mb-3" />
+					<Grid container
+						className="mt-3 mb-3"
+						onClick={handleBackGo}
+					>
+						<Grid item md>
+							<KeyboardBackspaceIcon
+								color='primary' />
+							<span style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop: 2 }}	>
+								Volver
 						</span>
+						</Grid>
+						<Grid item xs>
+							<Grid
+								container
+								justify="flex-end"
+								alignItems="flex-end"
+								spacing={2}
+							>
+								<Button
+								className="ml-3"
+									style={{
+										backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+										boxShadow: "none", height: '45px', width: '120px'
+									}}
+									//onClick={}
+									variant="contained"
+									color="primary"
+								>Editar</Button>
+								<Button
+									style={{
+										fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
+									}}
+									//onClick={}
+									variant="contained"
+									color="primary">
+
+									Completar tarea</Button>
+
+							</Grid>
+						</Grid>
 					</Grid>
 				</div>
 
