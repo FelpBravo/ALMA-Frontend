@@ -5,14 +5,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import React, {  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
+import { startInitFlowsLoading } from 'actions/flowDocument';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
 
 import { SummaryDocument } from './SummaryDocument';
 import { SummaryInvolved } from './SummaryInvolved';
-import { startInitFlowsLoading } from 'actions/flowDocument';
-import { useHistory } from 'react-router';
 
 const ModalLoadFlow = ({ data, close, open }) => {
 
@@ -70,6 +70,9 @@ const ModalLoadFlow = ({ data, close, open }) => {
               multiline
               rows={3}
               value={data?.comment}
+              InputProps={{
+                readOnly: true
+              }}
             />
           </Grid>
 
