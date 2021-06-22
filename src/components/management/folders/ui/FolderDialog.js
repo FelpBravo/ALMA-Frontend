@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox, Chip, Divider, Grid, ListItemText, MenuItem, Typography } from '@material-ui/core';
-import Button from 'components/ui/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { closeModalFolder, startEditFolderLoading, startFoldersTypesLoading, startGroupsListLoading, startUpdateFolderLoading, validateFolders } from 'actions/adminFolders';
 import { startFoldersInitLoading } from 'actions/folders';
+import Button from 'components/ui/Button';
 import { CheckField, SelectField, TextField } from 'components/ui/Form';
 import { ACTION_CREATE, ACTION_EDIT } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
@@ -85,7 +85,7 @@ const FolderDialog = () => {
 
 	useEffect(() => {
 		actionModal === ACTION_EDIT 
-		? reset({...folder, originalName: folder?.name})
+		? reset({ groups: [], ...folder, originalName: folder?.name})
 		: reset({ groups: []})
 	
 	}, [folder, actionModal]);
