@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { actionsModuleClear, actionsModuleSetValueField, startGetActionsByModuleByPolicy, startGetPolicies, startGetProfiles, startPermissionsModuleLoading, startSaveActionsModuleByPolicy } from 'actions/permissions';
 import Button from 'components/ui/Button'
+import { hasAuthority } from 'util/authorities';
 import IntlMessages from 'util/IntlMessages';
 
 import LoadingView from './loadingView';
 import Tags from './tags'
-import { hasAuthority } from 'util/authorities';
 
 const useStyles = makeStyles(theme => ({
     divider: {
@@ -86,8 +86,8 @@ export default function GroupPermissions() {
 
     return <Grid container alignItems="center" justify="center">
         <Paper className={classes.card}>
-            <Grid item container md={12}>
-                <Grid item md={5}>
+            <Grid item container md={12} xs={12} sm={12}>
+                <Grid item md={5} xs={12} sm={12}>
                     <h3>
                         <IntlMessages id="groupPermissions.title" />
                     </h3>
@@ -114,7 +114,7 @@ export default function GroupPermissions() {
 
         {(loading || actionsModuleList) &&
             <Paper className={classes.card}>
-                <Grid item container md={12}>
+            <Grid item container md={12} xs={12} sm={12}>
                     {
                         loading && <LoadingView />
                     }
@@ -122,7 +122,7 @@ export default function GroupPermissions() {
                         actionsModuleList && <>
                             {
                                 !loading && actionsModule && actionsModule.map(({ id, name, actions }) =>
-                                    <Grid item md={12} key={id}>
+                                    <Grid item md={12} xs={12} sm={12} key={id}>
                                         <h4>{name}</h4>
                                         <Tags
                                             moduleId={id}
@@ -134,7 +134,7 @@ export default function GroupPermissions() {
                                     </Grid>
                                 )
                             }
-                            <Grid item md={12} container justify="flex-end">
+                        <Grid item md={12} xs={12} sm={12} container justify="flex-end">
                                 <Button
                                     disabled={loadingSubmit}
                                     size="large"

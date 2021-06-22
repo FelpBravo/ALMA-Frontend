@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	container: {
+		width:'100%',
 		padding: theme.spacing(3, 4)
 	},
 	margin: {
@@ -202,7 +203,7 @@ const Documents = () => {
 	return (<FormProvider {...{ resolver, setResolver }} {...methods} >
 		<FlowContext.Provider value={{ ...flowStepsProvider }}>
 			<Grid container spacing={2}>
-				<Grid item md={12}>
+				<Grid item md={12} xs={12} sm={12}>
 					<Paper className={classes.container}>
 						{
 							(controlledDocument || activeStep > 0) && <>

@@ -1,5 +1,8 @@
+import { Grid } from '@material-ui/core';
 import React from 'react'
+
 import { getRows } from 'helpers/getRows';
+
 import { PrintField } from './PrintField';
 
 export const SubDetailDocumentType = ({ id, name, label, customPropertyList = [] }) => {
@@ -16,7 +19,7 @@ export const SubDetailDocumentType = ({ id, name, label, customPropertyList = []
 		return [...Array(rows)].map((row, i) => {
 
 			return (
-				<div className="row" key={i}>
+				<Grid container spacing={4} key={i}>
 					{
 						customPropertyList
 							.slice(
@@ -25,19 +28,23 @@ export const SubDetailDocumentType = ({ id, name, label, customPropertyList = []
 							)
 							.map((item) => {
 								return (
-									<div
+									<Grid
 										key={item.name}
-										className="col-xl-4 col-lg-4 col-md-6 col-6 mb-3"
+										item
+										md={4}
+										lg={4}
+										sm={12}
+										xs={12}
 									>
 										<PrintField
 											sectionId={id}
 											{...item}
 										/>
-									</div>
+									</Grid>
 								)
 							})
 					}
-				</div>
+				</Grid>
 			);
 
 		});
