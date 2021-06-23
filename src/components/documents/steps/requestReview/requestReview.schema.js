@@ -1,13 +1,13 @@
-import { array, number, object, string } from 'yup';
+import * as yup from 'yup';
 
-const schema = object().shape({
-    approves: array().of(
-        object().shape({
-            role: string().required(),
-            users: array().of(
-                object().shape({
-                    userId: string().required(),
-                    maxDays: number().required().positive().max(99).integer(),
+const schema = yup.object().shape({
+    approves: yup.array().of(
+        yup.object().shape({
+            role: yup.string().required(),
+            users: yup.array().of(
+                yup.object().shape({
+                    userId: yup.string().required(),
+                    maxDays: yup.number().required().positive().max(99).integer(),
                 })
             )
         })
