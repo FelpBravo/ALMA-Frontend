@@ -2,9 +2,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import jwt_decode from 'jwt-decode'
-import { get } from 'lodash';
+import { filter, get, includes } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startApprovesListLoading } from 'actions/flowDocument';
@@ -48,30 +48,48 @@ export default function RequestStep({ tagsField }) {
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const [formData, setFormData] = useState(null)
-    const { control, register, handleSubmit, formState: { errors }, setValue } = useForm({
+    const { control, register, handleSubmit, formState: { errors }, setValue, setError } = useForm({
         defaultValues: {},
         mode: "onTouched",
+        shouldFocusError: true,
         resolver: yupResolver(schema),
     });
     const flowName = "GENERAL";
 
+    const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)
+
     const onSubmit = values => {
-        const data = { // TODO: Esta es la variable para enviar por props en el modal informativo.
-            "flow": {
-                "name": flowName
-            },
-            "document": {
-                "uuid": get(filesLoaded, '0.fileIdLoaded', null),
-                "name": get(filesLoaded, '0.name', null),
-                "author": user?.userId,
-                pathFolderName,
-                folderId,
-                tagsField: tagsField?.length
-            },
-            "startedBy": user?.userId,
-            ...values
+        let canOpenModal = true;
+        const { approves } = values;
+        const set = [...new Set(approves.map(x => get(x, 'users').map(({ userId }) => userId)))];
+        const allList = set.map(arr => filter(arr, (val, i, iteratee) => includes(iteratee, val, i + 1)))
+        allList.forEach((arr, index) => arr?.forEach(
+            userId => {
+                canOpenModal = false;
+                setError(`approves[${index}].users[${getIndex(get(approves, `${index}.users`, []), userId)}].userId`, {
+                    type: "focus",
+                    message: "forms.errors.validation.string.unique.flows",
+                }, { shouldFocus: true })
+            }
+        ))
+        if (canOpenModal) {
+            const data = { // TODO: Esta es la variable para enviar por props en el modal informativo.
+                "flow": {
+                    "name": flowName
+                },
+                "document": {
+                    "uuid": get(filesLoaded, '0.fileIdLoaded', null),
+                    "name": get(filesLoaded, '0.name', null),
+                    "author": user?.userId,
+                    pathFolderName,
+                    folderId,
+                    tagsField: tagsField?.length
+                },
+                "startedBy": user?.userId,
+                ...values
+            }
+            setFormData(data)
         }
-        setFormData(data)
     };
 
     const commonProps = {
@@ -86,9 +104,9 @@ export default function RequestStep({ tagsField }) {
         dispatch(startApprovesListLoading({ authUser, flowName }))
     }, [authUser])
 
-    const handleClose = () =>{
+    const handleClose = () => {
         setFormData(null)
-	}
+    }
     return <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
             <Grid item md={12}>
@@ -96,7 +114,7 @@ export default function RequestStep({ tagsField }) {
             </Grid>
             <Grid item md={12}>
                 <Alert severity="info">
-                    <p style={{margin:0}}>
+                    <p style={{ margin: 0 }}>
                         <IntlMessages id="document.loadDocuments.info.message" />
                     </p>
                 </Alert>
@@ -111,6 +129,7 @@ export default function RequestStep({ tagsField }) {
                             name={`approves[${index}].users`}
                             commonProps={commonProps}
                             control={control}
+                            setError={setError}
                             {...rest} />
                     </Grid>)
             }
@@ -149,9 +168,9 @@ export default function RequestStep({ tagsField }) {
                 </Grid>
 
             </div>
-            <ModalLoadFlow 
-                data={formData} 
-                close={handleClose} 
+            <ModalLoadFlow
+                data={formData}
+                close={handleClose}
                 open={Boolean(formData)} />
         </div>
 
