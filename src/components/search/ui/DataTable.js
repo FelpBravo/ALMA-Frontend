@@ -1,47 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
-import {
-	startDeleteDocument,
-	startSearchLoading,
-	startSubscribeDocument,
-	openModalFirm,
-	startDownloadDocument,
-} from '../../../actions/search';
-import { startDocumentByIdVisibility } from '../../../actions/documents';
+import { makeStyles, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import TableContainer from '@material-ui/core/TableContainer';
-import queryString from 'query-string';
-import Swal from 'sweetalert2';
-import Paper from '@material-ui/core/Paper';
-import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
+import TableRow from '@material-ui/core/TableRow';
+import Tooltip from '@material-ui/core/Tooltip';
+import { MoreVert } from '@material-ui/icons';
 import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import { makeStyles, Typography } from '@material-ui/core';
-import Pagination from '@material-ui/lab/Pagination';
-import Grid from '@material-ui/core/Grid';
-import { columnsDocuments } from 'helpers/columnsDocuments';
-import { DataTableHead } from './DataTableHead';
-import TableActionButton from './TableActionButton';
-import ModalVersioning from './Versioning/ui/ModalVersioning';
-import ShareIcon from '@material-ui/icons/Share';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
 import LoopOutlinedIcon from '@material-ui/icons/LoopOutlined';
+import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
+import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
+import ShareIcon from '@material-ui/icons/Share';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import Pagination from '@material-ui/lab/Pagination';
+import queryString from 'query-string';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 import { addBreadcrumbs } from 'actions/breadcrumbs'
 import { informationRemoveAll } from 'actions/information'
-import Tooltip from '@material-ui/core/Tooltip';
-import SharedDialog from './SharedDialog';
+import { columnsDocuments } from 'helpers/columnsDocuments';
 import IntlMessages from 'util/IntlMessages';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
-import { MoreVert } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+
+import { startDocumentByIdVisibility } from '../../../actions/documents';
+import { openModalFirm, startDeleteDocument, startDownloadDocument, startSearchLoading, startSubscribeDocument } from '../../../actions/search';
+import { DataTableHead } from './DataTableHead';
 import ModalEditOnline from './ModalEditOnline';
-import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined';
+import SharedDialog from './SharedDialog';
+import TableActionButton from './TableActionButton';
+import ModalVersioning from './Versioning/ui/ModalVersioning';
 
 const MAX_CHARACTERS = 60;
 
@@ -198,6 +194,7 @@ const DataTable = () => {
 	const handleChangePage = (event, page) => {
 		if (path === '/search/:page' || path === '/search') {
 			const existsFilters = filters.filter(filter => filter.value);
+			history.replace(`/search/p${page}`)
 			dispatch(startSearchLoading(authUser, textSearch, existsFilters, folderId2, page));
 		}
 		else {

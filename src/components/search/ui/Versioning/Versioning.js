@@ -1,15 +1,16 @@
+import { Button, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import queryString from 'query-string';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import queryString from 'query-string';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { Button, Grid } from '@material-ui/core';
-import { startVersioningLoading, versioningRemove } from '../../../../actions/search';
-import { TableVersioning } from './ui/TableVersioning';
-import IntlMessages from 'util/IntlMessages';
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import BreadCrumbs from '../../../ui/Breadcrumbs'
 
+import IntlMessages from 'util/IntlMessages';
+
+import { startVersioningLoading, versioningRemove } from '../../../../actions/search';
+import BreadCrumbs from '../../../ui/Breadcrumbs'
+import { TableVersioning } from './ui/TableVersioning';
 
 const useStyles = makeStyles({
 	root: {
@@ -67,7 +68,7 @@ const Versioning = () => {
 					<BreadCrumbs/>
 
 					<TableVersioning />
-					<Grid container onClick={handleBackGo}>
+					<Grid style={{ cursor: 'pointer'}} container onClick={handleBackGo}>
 						<KeyboardBackspaceIcon
 							color='primary' />
 						<span style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop: 2 }}	>
