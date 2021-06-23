@@ -2,11 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Divider, Grid } from '@material-ui/core';
-import IntlMessages from 'util/IntlMessages';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
 
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
@@ -19,31 +15,26 @@ import { DocManagement } from './DocManagement';
 import { startAcceptTasksInit } from 'actions/flowDocument';
 import IntlMessages from 'util/IntlMessages';
 
-import { DocManagement } from './DocManagement';
-
 const ManagementSummary = () => {
 
 	const dispatch = useDispatch();
-	//const { id } = useParams()
 	const { authUser } = useSelector(state => state.auth);
-	const { involved, taskId, role, author } = useSelector(state => state.flowDocument);
+	const { involved, taskId, role, author, expiresAt } = useSelector(state => state.flowDocument);
 	const { comment } = involved
 
-
-
 	const [value, setValue] = React.useState(null);
-	console.log(value)
+
 	const history = useHistory();
 
 
-	useEffect(() => {
+	{/*useEffect(() => {
 
 		if (value !== null) {
 			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
 			return;
 		}
 
-	}, [dispatch, value, authUser]);
+	}, [dispatch, value, authUser]);*/}
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
@@ -52,8 +43,10 @@ const ManagementSummary = () => {
 	const handleBackGo = () => {
 		history.goBack()
 	}
-
-
+	const handleAcceptTask = () => {
+		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
+	}
+	
 
 	return (
 
@@ -73,38 +66,44 @@ const ManagementSummary = () => {
 					<DocManagement />
 
 					<Divider className="mt-3 mb-3" />
-					<h3>Involucrados</h3>
-
-					<SummaryInvolved />
-
-
-					<Divider className="mt-3 mb-3" />
-					<h3>Observaciones Generales</h3>
+					<h3>Información general del flujo</h3>
 
 					<Grid container item xs={12}>
 						<TextField
 							name="comment"
-							label="Comentario"
 							multiline
 							rows={3}
 							value={comment}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							InputProps={{
-								readOnly: true
-							}}
+							disabled
 						/>
 					</Grid>
+					{role === "owner" &&
+						<div>
+							<Divider className="mt-3 mb-3" />
+							<h3>Involucrados</h3>
+
+							<SummaryInvolved />
+						</div>
+					}
+
+
+
+
 
 					<Divider className="mt-3 mb-3" />
 					<h3>Solicitud de revisión</h3>
-
-					<p>{author} te ha solicitado revisar este documento, en el rol {role}</p>
-					<p>El plazo de esta solicitud vence el....</p>
-
+					<p className="user-description">
+								<span className="owner-most-viewed-documents">{author}</span>
+								{` te ha solicitado revisar este documento, en el rol `}
+								<span className="owner-most-viewed-documents">{role}</span>
+					</p>
+					<p className="user-description">
+					{`El plazo de esta solicitud vence el `}
+								<span className="owner-most-viewed-documents">{expiresAt}</span>
+					</p>
+				
 					<FormControl>
-						<FormLabel>Revisión OK</FormLabel>
+						<FormLabel color="primary" >Aprobar Tarea</FormLabel>
 						<RadioGroup value={String(value)} onChange={handleChange}>
 							<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
 							<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
@@ -142,22 +141,24 @@ const ManagementSummary = () => {
 								justify="flex-end"
 								alignItems="flex-end"
 								spacing={2}
-							>
-								<Button
-								className="ml-3"
-									style={{
-										backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
-										boxShadow: "none", height: '45px', width: '120px'
-									}}
-									//onClick={}
-									variant="contained"
-									color="primary"
-								>Editar</Button>
+							>""
+								{value === "false" &&
+									<Button
+										className="mr-3"
+										style={{
+											backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+											boxShadow: "none", height: '45px', width: '120px'
+										}}
+										//onClick={}
+										variant="contained"
+										color="primary"
+									>Editar</Button>}
+
 								<Button
 									style={{
 										fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
 									}}
-									//onClick={}
+								    onClick={handleAcceptTask}
 									variant="contained"
 									color="primary">
 

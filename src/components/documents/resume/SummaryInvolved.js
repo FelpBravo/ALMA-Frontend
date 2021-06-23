@@ -13,7 +13,7 @@ import IntlMessages from 'util/IntlMessages';
 const SummaryInvolved = ({ data }) => {
 
     const { involved } = useSelector(state => state.flowDocument);
-    const { users } =involved
+    const { users } = involved
     
     
     return (
