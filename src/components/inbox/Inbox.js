@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import { Tasks } from './ui/Tasks';
 import { Manage } from './ui/Manage';
 import { Tracing } from './ui/Tracing';
-import { INBOX_STATUS } from 'constants/constUtil';
+import { INBOX_STATUS, STATUS } from 'constants/constUtil';
 import { startActiveTasksInit, startFlowsAllInit } from 'actions/flowDocument';
 
 
@@ -73,7 +73,7 @@ const Inbox = () => {
 
 	useEffect(() => {
 		
-			dispatch(startActiveTasksInit(authUser, page, INBOX_STATUS ))
+			dispatch(startActiveTasksInit(authUser, page, STATUS ))
 			dispatch(startFlowsAllInit(authUser, page))
 		
 	  }, [dispatch])

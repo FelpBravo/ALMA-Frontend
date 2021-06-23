@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-import { getActiveTasks, getApproves, getInvolved, postFlowAll, postFlows } from 'services/flowDocumentService';
+import { getActiveTasks, getApproves, getInvolved, postAcceptTask, postFlowAll, postFlows } from 'services/flowDocumentService';
 import { types } from 'types/types';
 
 import { GENERAL_ERROR } from '../constants/constUtil';
@@ -85,15 +85,30 @@ export const startFlowsAllInit = ( authUser, page ) => {
     }
 };
 
-export const startInvolvedLoading = (authUser, instanceId) => {
+export const startInvolvedLoading = (authUser, instanceId, taskId, role, author, fileId, expiresAt) => {
     return async (dispatch) => {
 
         try {
 
             const resp = await getInvolved(authUser, instanceId);
          
-            dispatch(involvedLoaded(resp.data));
+            dispatch(involvedLoaded(resp.data, taskId, role, author, fileId, expiresAt));
           
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+export const startAcceptTasksInit = ( authUser, taskId, approve, comment, role) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await postAcceptTask(authUser,taskId, approve, comment, role);
+
+            dispatch(respAcceptTask(resp));
+
         } catch (error) {
             console.log(error);
         }
@@ -134,10 +149,24 @@ const listFlows = (flowList) => {
         payload: flowList
     }
 };
-const involvedLoaded = (involved) => {
+const involvedLoaded = (involved, taskId, role, author, fileId, expiresAt) => {
     return {
         type: types.involvedListLoaded,
-        payload: involved,
+        payload: {
+            involved: involved,
+            taskId: taskId,
+            role: role,
+            author: author,
+            fileId: fileId,
+            expiresAt: expiresAt,
+        }
                 
+    }
+};
+
+const respAcceptTask = (resptask) => {
+    return {
+        type: types.taskResp,
+        payload: resptask
     }
 };

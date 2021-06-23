@@ -46,3 +46,7 @@ export const INBOX_STATUS = [
     "Error",
     "Exited",
     "Obsolete"]
+
+export const STATUS = [
+        "Reserved",
+       ]    
