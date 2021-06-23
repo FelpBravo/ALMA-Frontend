@@ -32,7 +32,7 @@ export const updatePropertiesAfterEdit = (folderId, name, state, position, curre
 
 		for (const folder of currentFolder.children) {
 
-			updatePropertiesAfterEdit(folderId, name, state, position, folder);
+			updatePropertiesAfterEdit(folderId, name, state, position, folder, groups, inheritPermissions);
 
 		}
 	}
