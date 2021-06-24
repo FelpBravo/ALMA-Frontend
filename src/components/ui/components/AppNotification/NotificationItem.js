@@ -75,7 +75,7 @@ const NotificationItem = ({ notification }) => {
       </div>
       {
       !viewed &&
-        <Tooltip title="Marcar como leída" placement="left">
+        <Tooltip title={<IntlMessages id="appNotification.markasread" />} placement="left">
           <IconButton onClick={handleUnRead} className={classes.iconButton} size="small" aria-label="delete" >
             <FiberManualRecordIcon style={{ fontSize: 14, }} color="primary" />
           </IconButton>

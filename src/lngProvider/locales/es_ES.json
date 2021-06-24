@@ -599,6 +599,7 @@
 	"pages.samplePage.description": "Comience a construir su aplicación. Feliz Codificación!",
 	"mailNotification.title": "Mensajes",
 	"appNotification.title": "Notificaciones",
+	"appNotification.markasread": "Marcar como leída",
 	"mailNotification.message": "¡No hay mensajes nuevos a partir de ahora!",
 	"appNotification.message": "Sin notificaciones a partir de ahora!",
 	"popup.profile": "Perfil",
