@@ -75,12 +75,11 @@ const Documents = () => {
 
 	const methods = useForm({
 		mode: 'onTouched',
-		name: 'documentForm',
+		name: 'documentForms',
 		defaultValues,
 		resolver: yupResolver(object().shape(resolver)),
-		shouldUnregister: true,
 	});
-	const { handleSubmit, reset, watch } = methods
+	const { handleSubmit, reset, watch, formState: { errors } } = methods
 	const { id: documentId = '', aspectList = [] } = detailDocumentType;
 	const [files, setFiles] = useState(null);
 
@@ -102,6 +101,7 @@ const Documents = () => {
 		detailDocumentType.length === 0 ||
 		documentId.length === 0 ||
 		aspectList.length === 0 ||
+		!isEmpty(errors) ||
 		folderId.length === 0)
 
 	const handleSaveForm = async (values) => {

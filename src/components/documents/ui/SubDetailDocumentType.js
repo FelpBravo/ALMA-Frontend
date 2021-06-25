@@ -1,11 +1,39 @@
 import { Grid } from '@material-ui/core';
 import React from 'react'
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { date, string } from 'yup';
 
+import { DATE, TEXT } from 'constants/constUtil';
 import { getRows } from 'helpers/getRows';
 
 import { PrintField } from './PrintField';
 
 export const SubDetailDocumentType = ({ id, name, label, customPropertyList = [] }) => {
+	const { setResolver } = useFormContext();
+
+	const getValidation = type => {
+		switch (type) {
+			case DATE:
+				return date().required().min("1900-01-01").max("2100-01-01");
+
+			case TEXT:
+				return string().max(100);
+
+			default:
+				break;
+		}
+	}
+
+	useEffect(() => {
+		const object = customPropertyList.reduce((obj, item) => ({
+			...obj,
+			[item?.name]: getValidation(item.type),
+		}), {});
+
+		setResolver(resolver => ({ ...resolver, ...object }))
+	}, [customPropertyList, setResolver])
+
 
 	const handleRenderFields = () => {
 
