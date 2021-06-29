@@ -108,8 +108,12 @@ const Tasks = () => {
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="tasks.table.column2" />
 								</TableCell>
+								
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="tasks.table.column3" />
+								</TableCell>
+								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+									<IntlMessages id="tasks.table.column9" />
 								</TableCell>
 
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
@@ -144,6 +148,9 @@ const Tasks = () => {
 									</TableCell>
 									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
 										{status}
+									</TableCell>
+									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
+										{instanceId}
 									</TableCell>
 									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
 										{createdOn.substr(0, 10)}
