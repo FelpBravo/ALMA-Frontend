@@ -784,6 +784,7 @@
 	"tasks.table.column6": "Autor",
 	"tasks.table.column7": "Plazo revisión",
 	"tasks.table.column8": "Gestionar",
+	"tasks.table.column9": "Id flujo",
 
 	"doc.table.column1": "Nombre de documento",
 	"doc.table.column2": "Ubicación",
