@@ -14,6 +14,7 @@ export const locale = {
     },
     string: {
         min: ({ min }) => ({ key: 'forms.errors.validation.string.min', values: { min } }),
+        max: ({ max }) => ({ key: 'forms.errors.validation.string.max', values: { max } }),
     },
     number: {
         positive: 'forms.errors.validation.integer.positive',

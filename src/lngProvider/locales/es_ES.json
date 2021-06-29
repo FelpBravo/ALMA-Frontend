@@ -599,6 +599,7 @@
 	"pages.samplePage.description": "Comience a construir su aplicación. Feliz Codificación!",
 	"mailNotification.title": "Mensajes",
 	"appNotification.title": "Notificaciones",
+	"appNotification.markasread": "Marcar como leída",
 	"mailNotification.message": "¡No hay mensajes nuevos a partir de ahora!",
 	"appNotification.message": "Sin notificaciones a partir de ahora!",
 	"popup.profile": "Perfil",
@@ -769,6 +770,7 @@
 	"forms.errors.validation.integer.max": "Debe ser menor o igual a {max}",
 	"forms.errors.validation.string.noMatch": "Este nombre ya está en uso, por favor usa otro.",
 	"forms.errors.validation.string.min": "Debe contener al menos {min} carácteres",
+	"forms.errors.validation.string.max": "Máximo {max} carácteres",
 	"forms.errors.validation.string.unique.flows": "Ya existe el usuario en este rol",
 
 	"flow.created": "Se ha agregado un nuevo flujo No. {FlowID}",

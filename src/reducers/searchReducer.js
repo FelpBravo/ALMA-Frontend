@@ -90,7 +90,7 @@ export const searchReducer = (state = initialState, action) => {
 		case types.versioningRemove:
 			return {
 				...state,
-				documents: {},
+				// documents: {},
 				versioning: {
 					data: []
 				},
