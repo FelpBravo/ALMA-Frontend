@@ -78,19 +78,19 @@ const ModalEditUsers = (props) => {
     const { name, value } = target
     switch (name) {
       case 'firstName':
-        setValidation({ ...validation, ['firstName']: !letra.test(value) || value.length < 3 ? false : true })
+        setValidation({ ...validation, ['firstName']: !letra.test(value) || value.length < 1 || value.length > 50 ? false : true })
         break;
       case 'lastName':
-        setValidation({ ...validation, ['lastName']: !letra.test(value) || value.length < 3 ? false : true })
+        setValidation({ ...validation, ['lastName']: !letra.test(value) || value.length < 1 || value.length > 50 ? false : true })
         break;
       case 'email':
         setValidation({ ...validation, ['email']: !correo.test(value) ? false : true })
         break;
       case 'departmentOther':
-        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 ? false : true })
+        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
         break
       case 'companyOther':
-        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 ? false : true })
+        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
         break
         case 'company':
         if(value === "Other"){  
