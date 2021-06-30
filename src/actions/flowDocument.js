@@ -170,3 +170,25 @@ const respAcceptTask = (resptask) => {
         payload: resptask
     }
 };
+
+export const startGetInvolvedLoading = (flowId) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await getInvolved(flowId);
+            dispatch(initalApprovesLoaded(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+const initalApprovesLoaded = (approvesList) => {
+    return {
+        type: types.initialApproversLoaded,
+        payload: approvesList
+    }
+};

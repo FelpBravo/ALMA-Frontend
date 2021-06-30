@@ -1,44 +1,7 @@
 import { types } from 'types/types';
 
 const initialState = {
-    approvesList: [
-        {
-            "role": "owner",
-            "label": "FLOW.OWNER.NAME",
-            "order": 1,
-            "mandatory": true
-        },
-        {
-            "role": "co-author",
-            "label": "FLOW.COAUTHOR.NAME",
-            "order": 2,
-            "mandatory": false
-        },
-        {
-            "role": "stakeholder",
-            "label": "FLOW.STAKEHOLDER.NAME",
-            "order": 3,
-            "mandatory": false
-        },
-        {
-            "role": "reviewed",
-            "label": "FLOW.REVIEWED.NAME",
-            "order": 4,
-            "mandatory": false
-        },
-        {
-            "role": "approved",
-            "label": "FLOW.APPROVED.NAME",
-            "order": 5,
-            "mandatory": false
-        },
-        {
-            "role": "released",
-            "label": "FLOW.RELEASED.NAME",
-            "order": 6,
-            "mandatory": true
-        }
-    ],
+    approvesList: [],
     tasksList: [],
     flowList: [],
     involved: [],
@@ -47,6 +10,7 @@ const initialState = {
     author: [],
     fileId: [],
     expiresAt: [],
+    initialApprovers: [],
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -76,8 +40,13 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 author: action.payload.author,
                 fileId: action.payload.fileId,
                 expiresAt: action.payload.expiresAt,
-
-                }        
+                }
+  
+        case types.initialApproversLoaded:
+            return {
+                ...state,
+                initialApprovers: payload
+            }
         default:
             return state;
     }

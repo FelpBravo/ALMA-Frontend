@@ -170,6 +170,7 @@ export const types = {
 	tasksListLoaded: "Tasks List Loaded",
 	flowListLoaded: "Flow List Loaded",
 	involvedListLoaded: "Involved List Loaded",
+	initialApproversLoaded:"initial approvers loaded",
 	notificationsLoaded: "Notifications loaded",
 	notificationsInitialLoad: "notifications Initial Load",
 	notificationsChangeState: "Change notification state",

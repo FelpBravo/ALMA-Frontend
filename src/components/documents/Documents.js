@@ -18,6 +18,7 @@ import IntlMessages from 'util/IntlMessages';
 import { createModeSchema, editModeSchema } from './Documents.schema';
 import { useFlowSteps } from './flow';
 import { FlowContext } from './helpers/FlowContext';
+import { RestorePageOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -61,7 +62,7 @@ const Documents = () => {
 	const classes = useStyles();
 	const history = useHistory()
 	const dispatch = useDispatch();
-	const { id } = useParams()
+	const { id, flowId } = useParams()
 	const {
 		detailDocumentType = [],
 		fileIdLoaded = '',
@@ -73,6 +74,7 @@ const Documents = () => {
 	const EDIT_MODE = document.length !== 0
 	const [resolver, setResolver] = useState(EDIT_MODE ? editModeSchema : createModeSchema)
 
+	console.log("flowID", flowId)
 	const methods = useForm({
 		mode: 'onTouched',
 		name: 'documentForms',
@@ -182,7 +184,7 @@ const Documents = () => {
 	}
 
 
-	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit })
+	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit, flowId })
 	const { flowSteps,
 		Component,
 		activeStep,

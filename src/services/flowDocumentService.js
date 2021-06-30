@@ -32,12 +32,8 @@ const postFlowAll = (authUser, page, pageSize) => {
     });
 };
 
-const getInvolved = (authUser, instanceId) => {
-    return axiosInstance.get(`/flows/data/${instanceId}`, {
-        headers: {
-            Authorization: `Bearer ${authUser}`,
-        },
-    });
+const getInvolved = (instanceId) => {
+    return axiosInstance.get(`/flows/data/${instanceId}`)
 };
 
 const postAcceptTask = (authUser, taskId, approve, comment, role) => {

@@ -6,6 +6,7 @@ import { isEmpty } from "lodash";
 import get from 'lodash/get'
 import React, { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
+
 import IntlMessages from "util/IntlMessages";
 
 const Autocomplete = withStyles ({
@@ -20,17 +21,14 @@ const Autocomplete = withStyles ({
     },
 })(AutocompleteBase);
 
-function AutoCompleteField({ control, errors, register, getUrl, label, name, options, optionsLabel, renderOption, optionsValue, required, className, ...props }) {
+function AutoCompleteField({ control, errors, register, getUrl, label, name, options, optionsLabel, renderOption, optionsValue, required, className, getValues, ...props }) {
     const { ref, ...rest } = register(name);
     const [data, setData] = useState(options || [])
     const [loading, setLoading] = useState(false);
     const isAsync = typeof getUrl === "function";
     const errorMessage = get(errors, `${name}.message`, '');
-    const value = useWatch({
-        control,
-        name,
-        defaultValue: ''
-    });
+    const defaultValue = { [optionsLabel]: get(getValues(), name, null) }
+    const [value, setValue] = useState(defaultValue)
 
     useEffect(() => {
         let active = true;
@@ -62,6 +60,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                     className={className}
                     options={data}
                     loading={loading}
+                    defaultValue={defaultValue}
                     getOptionLabel={(option) => get(option, optionsLabel, "")}
                     renderOption={renderOption ?? ((option) => (
                             option[optionsLabel]
@@ -83,6 +82,10 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                             helperText={errorMessage && <IntlMessages id={errorMessage} />}
                             error={Boolean(errorMessage)}
                             label={label}
+                            onChange={e => { 
+                                setValue(e?.target?.value);
+                                return rest?.onChange(e) 
+                            }}
                             InputProps={{
                                 ...params.InputProps,
                                 endAdornment: (

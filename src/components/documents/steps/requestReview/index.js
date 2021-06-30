@@ -3,16 +3,19 @@ import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import jwt_decode from 'jwt-decode'
 import { filter, get, includes } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
-import { startApprovesListLoading } from 'actions/flowDocument';
+import { startApprovesListLoading, startGetInvolvedLoading } from 'actions/flowDocument';
 import ModalLoadFlow from 'components/documents/resume/ModalLoadFlow';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 
+import Data from './data.json'
 import schema from './requestReview.schema';
 import RolItem from './RolItem';
 
@@ -44,16 +47,34 @@ export default function RequestStep({ tagsField }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
-    const { approvesList } = useSelector(state => state.flowDocument);
+    const { approvesList, initialApprovers } = useSelector(state => state.flowDocument);
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
+    const { flowId } = useParams();
+
+    useEffect(() => {
+        console.log("flowId", flowId)
+        if (flowId){
+            dispatch(startGetInvolvedLoading(flowId))
+        }
+    }, [flowId])
+
     const [formData, setFormData] = useState(null)
-    const { control, register, handleSubmit, formState: { errors }, setValue, setError } = useForm({
-        defaultValues: {},
+    const { control, register, handleSubmit, formState: { errors }, setValue, setError, getValues, reset } = useForm({
+        // defaultValues: initialApprovers,
         mode: "onTouched",
         shouldFocusError: true,
         resolver: yupResolver(schema),
     });
+
+    useEffect(() => {
+        if (!isEmpty(initialApprovers)) {
+            console.log("initialApprovers", initialApprovers)
+           reset(Data)
+        }
+    }, [initialApprovers, setValue])
+
+
     const flowName = "GENERAL";
 
     const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)
@@ -130,6 +151,7 @@ export default function RequestStep({ tagsField }) {
                             commonProps={commonProps}
                             control={control}
                             setError={setError}
+                            getValues={getValues}
                             {...rest} />
                     </Grid>)
             }
