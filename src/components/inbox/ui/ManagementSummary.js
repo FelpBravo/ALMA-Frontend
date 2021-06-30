@@ -146,7 +146,7 @@ const ManagementSummary = () => {
 								alignItems="flex-end"
 								spacing={2}
 							>
-								{value === "false" &&
+								{value === "false" && role === "owner" &&
 									<Button
 										className="mr-3"
 										style={{
