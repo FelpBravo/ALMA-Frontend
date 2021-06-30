@@ -23,27 +23,27 @@ import 'moment/locale/es';
 
 const App = (props) => {
 
-	const [isLogin, setIsLogin] = useState(false);
 	const dispatch = useDispatch();
 	const { themeColor, darkTheme, locale, isDirectionRTL } = useSelector(({ settings }) => settings);
 	const { authUser } = useSelector(({ auth }) => auth);
-
+	const isLogin = Boolean(authUser)
+	
 	const isDarkTheme = darkTheme;
 	const { match } = props;
 
-	useEffect(() => {
+	// useEffect(() => {
 
-		if (authUser) {
+	// 	if (authUser) {
 
-			setIsLogin(true);
+	// 		setIsLogin(true);
 
-		} else {
+	// 	} else {
 
-			setIsLogin(false);
+	// 		setIsLogin(false);
 
-		}
+	// 	}
 
-	}, [dispatch, setIsLogin, authUser]);
+	// }, [dispatch, setIsLogin, authUser]);
 
 	useEffect(() => {
 

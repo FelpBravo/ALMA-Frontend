@@ -15,7 +15,6 @@ import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 
-import Data from './data.json'
 import schema from './requestReview.schema';
 import RolItem from './RolItem';
 
@@ -67,20 +66,31 @@ export default function RequestStep({ tagsField }) {
         resolver: yupResolver(schema),
     });
 
+    const getUsers = (role, approvers) => approvers.find( app => app.role === role)?.users;
+    console.log("errors", errors)
     useEffect(() => {
-        if (!isEmpty(initialApprovers)) {
-            console.log("initialApprovers", initialApprovers)
-           reset(Data)
+        if (!isEmpty(initialApprovers) && !isEmpty(approvesList)) {
+            console.log("Data.approves)", initialApprovers.approves)
+            const currentData = { 
+                ...initialApprovers,
+                approves: approvesList?.map(({role}) =>({
+                    role,
+                    users: getUsers(role, initialApprovers.approves) || [],
+                }))
+            }
+            console.log("currentData", currentData)
+            reset(currentData)
         }
-    }, [initialApprovers, setValue])
+    }, [initialApprovers, setValue, approvesList])
 
 
     const flowName = "GENERAL";
-
+    console.log("approvesList", approvesList, "Data", initialApprovers)
     const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)
-
+    console.log("getValues", getValues())
     const onSubmit = values => {
         let canOpenModal = true;
+        console.log("values receive", values)
         const { approves } = values;
         const set = [...new Set(approves.map(x => get(x, 'users').map(({ userId }) => userId)))];
         const allList = set.map(arr => filter(arr, (val, i, iteratee) => includes(iteratee, val, i + 1)))
@@ -109,6 +119,7 @@ export default function RequestStep({ tagsField }) {
                 "startedBy": user?.userId,
                 ...values
             }
+            console.log("data TO SEND", data)
             setFormData(data)
         }
     };

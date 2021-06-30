@@ -27,7 +27,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
     const [loading, setLoading] = useState(false);
     const isAsync = typeof getUrl === "function";
     const errorMessage = get(errors, `${name}.message`, '');
-    const defaultValue = { [optionsLabel]: get(getValues(), name, null) }
+    const defaultValue = getValues && { [optionsLabel]: get(getValues(), name, null) }
     const [value, setValue] = useState(defaultValue)
 
     useEffect(() => {

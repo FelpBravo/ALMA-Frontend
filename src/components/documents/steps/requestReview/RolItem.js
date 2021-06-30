@@ -30,10 +30,9 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
     const { authUser } = useSelector(state => state.auth);
 
     useEffect(() => {
-        setValue(`approves[${index}].role`, rolName);
-        // setValue(`${name}[0].userId`, 'juan.suaza');
+        // setValue(`approves[${index}].role`, rolName);
         mandatory && append({})
-    }, [])
+    }, [rolName])
 
     const addField = e => {
         e.preventDefault()
@@ -59,6 +58,11 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
             </Grid>
         </Grid>
         <Grid item md={12} container spacing={1} alignItems="center">
+            <TextField
+                name={`approves[${index}].role`}
+                value={rolName}
+                style={{ display: 'none' }}
+                {...commonProps} />
             {
                 fields.map((field, index) => (
                     <Grid item md={12} container spacing={1} key={field.id}>

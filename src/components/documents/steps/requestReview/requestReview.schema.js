@@ -3,7 +3,7 @@ import * as yup from 'yup';
 const schema = yup.object().shape({
     approves: yup.array().of(
         yup.object().shape({
-            role: yup.string().required(),
+            role: yup.string(),
             users: yup.array().of(
                 yup.object().shape({
                     userId: yup.string().required(),
