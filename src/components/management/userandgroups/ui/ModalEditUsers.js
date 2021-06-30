@@ -34,6 +34,7 @@ const ModalEditUsers = (props) => {
   const [dataEdit, setDataEdit] = useState({});
 
   const [validation, setValidation] = useState({ firstName: true, lastName: true, email: true, companyOther: true, departmentOther: true })
+  console.log("validación",validation)
 
   const [stateCompany, setStateCompany] = useState({})
 
@@ -61,7 +62,7 @@ const ModalEditUsers = (props) => {
 
     })
     if (id) {
-      setValidation({ firstName: !letra.test(firstName) || firstName.length < 3 ? false : true, lastName: !letra.test(lastName) || lastName.length < 3 ? false : true, email: email.length < 3 ? false : true })
+      setValidation({...validation, firstName: !letra.test(firstName) || firstName.length < 3 ? false : true, lastName: !letra.test(lastName) || lastName.length < 3 ? false : true, email: email.length < 3 ? false : true })
     }
 
     setStateCompany({ name: (company === "ESO" || company === "NRAO" || company === "NAOJ")? false: true, department: (department === "ADS" || department === "ADO" || department === "ADC" || department === "ADE" || department === "ADA") ? false: true })
@@ -86,12 +87,6 @@ const ModalEditUsers = (props) => {
       case 'email':
         setValidation({ ...validation, ['email']: !correo.test(value) ? false : true })
         break;
-      case 'departmentOther':
-        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
-        break
-      case 'companyOther':
-        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
-        break
         case 'company':
         if(value === "Other"){  
           setStateCompany({ name:true, department:stateCompany.department})
@@ -108,6 +103,12 @@ const ModalEditUsers = (props) => {
           setStateCompany({ name:stateCompany.name, department:false})
         }
       break
+      case 'departmentOther':
+        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
+        break
+      case 'companyOther':
+        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
+        break
       default:
         break;
     }
