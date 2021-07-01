@@ -47,7 +47,6 @@ const ManagementSummary = () => {
 		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
 	}
 	const handleEdit = () => {
-		console.log("edit")
 		history.push(`/document/${fileId}/edit/${instaceId}`);
 	}
 	
