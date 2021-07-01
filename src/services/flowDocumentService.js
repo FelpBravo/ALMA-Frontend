@@ -24,8 +24,8 @@ const getActiveTasks = (authUser, page, pageSize, status) => {
     });
 };
 
-const postFlowAll = (authUser, page, pageSize) => {
-    return axiosInstance.get(`/flows/data?page=${page}&pageSize=${pageSize}`,{
+const postFlowAll = (authUser, page, pageSize, status) => {
+    return axiosInstance.post(`/flows/data/all?page=${page}&pageSize=${pageSize}`, { status },{
         headers: {
             Authorization: `Bearer ${authUser}`,
         },

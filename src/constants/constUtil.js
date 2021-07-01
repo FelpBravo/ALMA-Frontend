@@ -48,5 +48,11 @@ export const INBOX_STATUS = [
     "Obsolete"]
 
 export const STATUS = [
-        "Reserved",
-       ]    
+    "Reserved",
+    ]
+        
+export const STATUS_FLOWS = [
+    "active",
+    "completed",
+    "aborted"
+       ]           
