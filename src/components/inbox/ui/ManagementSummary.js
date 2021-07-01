@@ -19,7 +19,7 @@ const ManagementSummary = () => {
 
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
-	const { involved, taskId, role, author, expiresAt } = useSelector(state => state.flowDocument);
+	const { involved, taskId, role, author, expiresAt, fileId, instaceId } = useSelector(state => state.flowDocument);
 	const { comment } = involved
 
 	const [value, setValue] = React.useState(null);
@@ -45,6 +45,9 @@ const ManagementSummary = () => {
 	}
 	const handleAcceptTask = () => {
 		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
+	}
+	const handleEdit = () => {
+		history.push(`/document/${fileId}/edit/${instaceId}`);
 	}
 	
 
@@ -141,15 +144,15 @@ const ManagementSummary = () => {
 								justify="flex-end"
 								alignItems="flex-end"
 								spacing={2}
-							>""
-								{value === "false" &&
+							>
+								{value === "false" && role === "owner" &&
 									<Button
 										className="mr-3"
 										style={{
 											backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
 											boxShadow: "none", height: '45px', width: '120px'
 										}}
-										//onClick={}
+										onClick={handleEdit}
 										variant="contained"
 										color="primary"
 									>Editar</Button>}

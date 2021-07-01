@@ -42,7 +42,7 @@ const ModalUsers = () => {
 
   const [validation, setValidation] = useState({})
 
-  const letra = /^[a-zñ ]+$/i
+  const letra = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/
 
   const correo = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
 
@@ -61,6 +61,7 @@ const ModalUsers = () => {
   }, [nameUser]);
 
   const handleClose = () => {
+    setStateCompany({name: false, department: false})
     dispatch(closeModalUsers());
   }
 
@@ -69,16 +70,16 @@ const ModalUsers = () => {
 
     switch (name) {
       case 'firstName':
-        setValidation({ ...validation, ['firstName']: !letra.test(value) || value.length < 1 ? false : true })
+        setValidation({ ...validation, ['firstName']: !letra.test(value) || value.length < 1 || value.length > 50 ? false : true })
         break;
       case 'lastName':
-        setValidation({ ...validation, ['lastName']: !letra.test(value) || value.length < 1 ? false : true })
+        setValidation({ ...validation, ['lastName']: !letra.test(value) || value.length  < 1 || value.length > 50 ? false : true })
         break;
       case 'email':
         setValidation({ ...validation, ['email']: !correo.test(value) ? false : true })
         break;
       case 'company':
-        setValidation({ ...validation, ['company']: !letra.test(value) || value.length < 1 ? false : true })
+        setValidation({ ...validation, ['company']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
         if (value === "Other") {
           setStateCompany({ name: true, department: stateCompany.department })
         } else {
@@ -86,7 +87,7 @@ const ModalUsers = () => {
         }
         break
       case 'department':
-        setValidation({ ...validation, ['department']: !letra.test(value) || value.length < 1 ? false : true })
+        setValidation({ ...validation, ['department']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
         if (value === "Other") {
           setStateCompany({ name: stateCompany.name, department: true })
         } else {
@@ -94,10 +95,10 @@ const ModalUsers = () => {
         }
         break
       case 'departmentOther':
-        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 ? false : true })
+        setValidation({ ...validation, ['departmentOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
         break
       case 'companyOther':
-        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 ? false : true })
+        setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
         break
       case 'id':
         if (value.length > 4) {

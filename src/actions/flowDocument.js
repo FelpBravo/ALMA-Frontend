@@ -95,11 +95,11 @@ export const startActiveTasksInit = ( authUser, page, status) => {
     }
 };
 
-export const startFlowsAllInit = ( authUser, page ) => {
+export const startFlowsAllInit = ( authUser, page, status ) => {
     return async (dispatch) => {
 
         try {
-            const resp = await postFlowAll(authUser, page, 10);
+            const resp = await postFlowAll(authUser, page, 10, status);
 
             dispatch(listFlows(resp.data));
 

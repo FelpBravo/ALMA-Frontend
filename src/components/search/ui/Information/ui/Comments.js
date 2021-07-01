@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     newcomment: {
-        backgroundColor: '#E1F0FF',
+        //backgroundColor: '#E1F0FF',
         color: '#494B74',
         padding: 12,
         borderRadius: 5,
@@ -100,18 +100,19 @@ const Comments = (props) => {
                 <div className={classes.coment}>
                     <span style={{ fontSize: 15, color: "#3699FF", fontWeight:500}}>{author}</span><span style={{ marginLeft: 5, fontSize: 12, color: "#A7A8BB", }} >{new Date(date).toLocaleString()}</span>
                     <br />
-                    <span style={{ fontSize: 14 }}>{text}</span>
+                    <span style={{ fontSize: 14, marginTop: 40}}>{text}</span>
                     <br />
                     {attachment && attachment.length > 0 && attachment.map(({ name, id }) => {
-                        return (<span style={{ color: "#3699FF", fontSize: 11, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{name}</span>)
+                        return (<span style={{  marginTop: 40, color: "#3699FF", fontSize: 11, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{`Documento adjunto: `}{name}</span>)
                     })
 
                     }
-                    <Grid container >
-                        <span style={{}} className={classes.buttoncomment} onClick={() => setActive(!active)} ><MessageOutlinedIcon style={{ fontSize: 20, marginRight: 5 }} /><IntlMessages id="comment.button.comment" /></span>
+                   
+                </div>
+                    <Grid container style={{marginTop: 5}} >
+                        <span style={{marginLeft: 10}} className={classes.buttoncomment} onClick={() => setActive(!active)} ><MessageOutlinedIcon style={{ fontSize: 20, marginRight: 5 }} /><IntlMessages id="comment.button.comment" /></span>
                         <span className={classes.totalcomments} onClick={loadingReplies} >{countcomments === 0 ? '' : <>{countcomments + ' '}<IntlMessages id="comment.button.totalcomments" /></>}</span>
                     </Grid>
-                </div>
                 <div style={{ marginLeft: 50 }}>
                     {replies && replies.length > 0 && replies.map(({ author, content, createdOn, id, totalReplies, attachments }) => {
                         return (
@@ -123,6 +124,7 @@ const Comments = (props) => {
                                     countcomments={totalReplies}
                                     attachment={attachments}
                                     idComment={id}
+                                    
                                 />
                             </>
                         )
@@ -183,21 +185,24 @@ const Comments = (props) => {
             <div className={classes.newcomment}>
                 <form action="javascript:void(0);">
                     <Grid container>
-                        <Grid item xs={10}>
+                        <Grid item xs={11}>
                             <TextField
-                                label={<IntlMessages id="comment.newcomment.title" />}
-                                variant="outlined"
                                 color="primary"
-                                style={{ background: '#FFF'}}
+                                id="outlined-full-width"
+                                label={<IntlMessages id="comment.newcomment.title" />}
                                 fullWidth
-                                size="small"
+                                margin="normal"
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                variant="outlined"
                                 onChange={(event) => setText(event.target.value)}
                                 
                             />
                         </Grid>
                         <Grid item xs={1} >
                             <IconButton 
-                                style={{ background: isEmpty(text) ? "#E0E0E0" : "#3699FF", width: 35, height: 35, marginLeft: 15, marginTop:2}}
+                                style={{ background: isEmpty(text) ? "#E0E0E0" : "#3699FF", width: 35, height: 35, marginLeft: 15, marginTop: 25}}
                                 disabled={isEmpty(text)}
                                 onClick={handleSubmit}>
                                 <NearMeOutlinedIcon style={{ color: "white", fontSize: 22 }} />

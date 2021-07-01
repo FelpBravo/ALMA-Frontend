@@ -717,7 +717,7 @@
 	"comment.button.totalcomments": "Comentarios",
 	"edit.modal.title": "Editar documento en linea",
 
-	"users.result": "Resultado usuarios",
+	"users.result": "Resultados usuarios",
 	"users.table.column1": "Usuario",
 	"users.table.column2": "Nombre",
 	"users.table.column3": "Email",
@@ -786,6 +786,7 @@
 	"tasks.table.column6": "Autor",
 	"tasks.table.column7": "Plazo revisión",
 	"tasks.table.column8": "Gestionar",
+	"tasks.table.column9": "Id flujo",
 
 	"doc.table.column1": "Nombre de documento",
 	"doc.table.column2": "Ubicación",
