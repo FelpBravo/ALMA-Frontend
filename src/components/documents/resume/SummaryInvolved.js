@@ -40,8 +40,8 @@ const SummaryInvolved = ({ data }) => {
                         </TableHead>
                         <TableBody>
                             {
-                                (data || []).map(({ users, role }, index) =>
-                                    users.map(({ userId, comment, maxDays }) => {
+                                (data || [])?.map(({ users, role }, index) =>
+                                    users?.map(({ userId, comment, maxDays }) => {
 
                                         return <TableRow key={index} >
                                             <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}>
@@ -59,7 +59,7 @@ const SummaryInvolved = ({ data }) => {
                                         </TableRow>
                                     }))
                             }
-                                    {users && users.map(({ userId, comment, expiresAt, role }, index) => {
+                                    {users && users?.map(({ userId, comment, expiresAt, role }, index) => {
                                             return <TableRow key={index} >
                                             <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}>
                                                 {role}

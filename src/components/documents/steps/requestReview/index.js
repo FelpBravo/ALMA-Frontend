@@ -46,13 +46,12 @@ export default function RequestStep({ tagsField }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
-    const { approvesList, initialApprovers } = useSelector(state => state.flowDocument);
+    const { approvesList, initialApprovers, taskId } = useSelector(state => state.flowDocument);
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const { flowId } = useParams();
-
+    
     useEffect(() => {
-        console.log("flowId", flowId)
         if (flowId){
             dispatch(startGetInvolvedLoading(flowId))
         }
@@ -67,10 +66,9 @@ export default function RequestStep({ tagsField }) {
     });
 
     const getUsers = (role, approvers) => approvers.find( app => app.role === role)?.users;
-    console.log("errors", errors)
+
     useEffect(() => {
         if (!isEmpty(initialApprovers) && !isEmpty(approvesList)) {
-            console.log("Data.approves)", initialApprovers.approves)
             const currentData = { 
                 ...initialApprovers,
                 approves: approvesList?.map(({role}) =>({
@@ -78,21 +76,18 @@ export default function RequestStep({ tagsField }) {
                     users: getUsers(role, initialApprovers.approves) || [],
                 }))
             }
-            console.log("currentData", currentData)
             reset(currentData)
         }
     }, [initialApprovers, setValue, approvesList])
 
 
     const flowName = "GENERAL";
-    console.log("approvesList", approvesList, "Data", initialApprovers)
     const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)
-    console.log("getValues", getValues())
+
     const onSubmit = values => {
         let canOpenModal = true;
-        console.log("values receive", values)
         const { approves } = values;
-        const set = [...new Set(approves.map(x => get(x, 'users').map(({ userId }) => userId)))];
+        const set = [...new Set(approves.map(x => get(x, 'users')?.map(({ userId }) => userId)))];
         const allList = set.map(arr => filter(arr, (val, i, iteratee) => includes(iteratee, val, i + 1)))
         allList.forEach((arr, index) => arr?.forEach(
             userId => {
@@ -117,9 +112,13 @@ export default function RequestStep({ tagsField }) {
                     tagsField: tagsField?.length
                 },
                 "startedBy": user?.userId,
-                ...values
+                //Edit
+                taskId,
+                "approve": false,
+                "role": "owner",
+                ...values,
+                "comment": "",
             }
-            console.log("data TO SEND", data)
             setFormData(data)
         }
     };

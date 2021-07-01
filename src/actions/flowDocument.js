@@ -55,6 +55,32 @@ export const startInitFlowsLoading = ( authUser, data, callback) => {
 	}
 };
 
+export const startEditFlowsLoading = (authUser, data, callback) => {
+    return async (dispatch) => {
+
+        try {
+            Swal.showLoading();
+
+            const { taskId, approve, approves, comment, role } = data
+            const resp = await postAcceptTask(authUser, taskId, approve, comment, role, approves);
+            console.log("resp", resp)
+            //dispatch(saveFlowInit());
+            callback && callback()
+        } catch (error) {
+            console.log(error);
+
+            Swal.close();
+
+            const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+            Swal.fire({
+                title: 'Error', text: message, icon: 'error', heightAuto: false
+            });
+        }
+
+    }
+};
+
 export const startActiveTasksInit = ( authUser, page, status) => {
     return async (dispatch) => {
 
@@ -90,7 +116,7 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
 
         try {
 
-            const resp = await getInvolved(authUser, instanceId);
+            const resp = await getInvolved(instanceId);
          
             dispatch(involvedLoaded(resp.data, taskId, role, author, fileId, expiresAt));
           
