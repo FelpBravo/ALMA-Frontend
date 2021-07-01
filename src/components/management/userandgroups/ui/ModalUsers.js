@@ -61,6 +61,7 @@ const ModalUsers = () => {
   }, [nameUser]);
 
   const handleClose = () => {
+    setStateCompany({name: false, department: false})
     dispatch(closeModalUsers());
   }
 
