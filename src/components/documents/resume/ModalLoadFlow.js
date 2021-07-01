@@ -22,7 +22,6 @@ const ModalLoadFlow = ({ data, close, open }) => {
   const { flowId } = useParams();
   const EDIT_MODE = Boolean(flowId);
 
-  console.log("EDIT_MODE", EDIT_MODE)
   const handleClose = () => {
     close()
   }

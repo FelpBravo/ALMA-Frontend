@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Divider, Grid, Paper, Step, StepLabel, Stepper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { RestorePageOutlined } from '@material-ui/icons';
 import { isEmpty } from 'lodash-es';
 import get from 'lodash/get'
 import moment from 'moment';
@@ -18,7 +19,6 @@ import IntlMessages from 'util/IntlMessages';
 import { createModeSchema, editModeSchema } from './Documents.schema';
 import { useFlowSteps } from './flow';
 import { FlowContext } from './helpers/FlowContext';
-import { RestorePageOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
 	buttons: {
@@ -71,7 +71,7 @@ const Documents = () => {
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	// ID DOCUMENTO URL
 	const document = id || ""
-	const EDIT_MODE = document.length !== 0
+	const EDIT_MODE =( Boolean(flowId) || document.length !== 0)
 	const [resolver, setResolver] = useState(EDIT_MODE ? editModeSchema : createModeSchema)
 
 	console.log("flowID", flowId)
@@ -105,6 +105,8 @@ const Documents = () => {
 		aspectList.length === 0 ||
 		!isEmpty(errors) ||
 		folderId.length === 0)
+
+	const nextStep = () => setActiveStep(activeStep => activeStep + 1)
 
 	const handleSaveForm = async (values) => {
 
@@ -184,7 +186,7 @@ const Documents = () => {
 	}
 
 
-	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit, flowId })
+	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit, flowId, nextStep })
 	const { flowSteps,
 		Component,
 		activeStep,
@@ -208,7 +210,7 @@ const Documents = () => {
 				<Grid item md={12} xs={12} sm={12}>
 					<Paper className={classes.container}>
 						{
-							(controlledDocument || activeStep > 0) && <>
+							(controlledDocument || activeStep > 0 || flowId) && <>
 								<Stepper alternativeLabel activeStep={activeStep}>
 									{
 										Object.keys(flowSteps).map((name, index) => <Step key={index}>

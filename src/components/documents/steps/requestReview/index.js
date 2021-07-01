@@ -117,7 +117,6 @@ export default function RequestStep({ tagsField }) {
                 "approve": false,
                 "role": "owner",
                 ...values,
-                "comment": "",
             }
             setFormData(data)
         }

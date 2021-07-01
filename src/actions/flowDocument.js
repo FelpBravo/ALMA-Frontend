@@ -63,7 +63,6 @@ export const startEditFlowsLoading = (authUser, data, callback) => {
 
             const { taskId, approve, approves, comment, role } = data
             const resp = await postAcceptTask(authUser, taskId, approve, comment, role, approves);
-            console.log("resp", resp)
             //dispatch(saveFlowInit());
             callback && callback()
         } catch (error) {
