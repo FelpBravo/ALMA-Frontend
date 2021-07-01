@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { editDocumentVersion, editForm, getDocumentById, getOffice, getThumbnail, saveFlowForm, saveForm, uploadDocument } from 'services/filesService';
+import { editDocumentVersion, editForm, getDocumentByFlowId, getDocumentById, getOffice, getThumbnail, saveFlowForm, saveForm, uploadDocument } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
 import { types } from 'types/types';
@@ -367,13 +367,13 @@ export const documentsClear = () => {
 	}
 };
 
-export const startDocumentByIdLoading = (fileId, callBack) => {
+export const startDocumentByIdLoading = (fileId, flowId, callBack) => {
 	return async (dispatch, getState) => {
 		const { authUser } = getState().auth;
 
 		try {
 
-			const resp = await getDocumentById(authUser, fileId);
+			const resp = flowId ? await getDocumentByFlowId(authUser, flowId) : await getDocumentById(authUser, fileId);
 			Swal.close();
 
 			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));

@@ -117,7 +117,7 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
 
             const resp = await getInvolved(instanceId);
          
-            dispatch(involvedLoaded(resp.data, taskId, role, author, fileId, expiresAt));
+            dispatch(involvedLoaded(resp.data, taskId, instanceId, role, author, fileId, expiresAt));
           
         } catch (error) {
             console.log(error);
@@ -174,10 +174,11 @@ const listFlows = (flowList) => {
         payload: flowList
     }
 };
-const involvedLoaded = (involved, taskId, role, author, fileId, expiresAt) => {
+const involvedLoaded = (involved, taskId, instanceId, role, author, fileId, expiresAt) => {
     return {
         type: types.involvedListLoaded,
         payload: {
+            instanceId,
             involved: involved,
             taskId: taskId,
             role: role,

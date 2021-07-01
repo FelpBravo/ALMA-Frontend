@@ -6,7 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startFoldersLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -44,6 +44,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
     const classes = useStyles();
     const { authUser } = useSelector(state => state.auth);
     const [loading, setLoading] = useState(editMode)
+    const { flowId } = useParams()
 
     const {
         path = '',
@@ -75,15 +76,15 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         if (document.length === 0) {
             return;
         }
-
-        dispatch(startDocumentByIdLoading(document, () => setLoading(false)));
+        console.log("flowId", flowId)
+        dispatch(startDocumentByIdLoading(document, flowId, () => setLoading(false)));
 
         dispatch(startThumbnailLoading(document));
         dispatch(startFoldersLoading(authUser))
         return () => dispatch(documentsClear());
 
 
-    }, [dispatch, document, authUser]);
+    }, [dispatch, document, authUser, flowId]);
 
     const goBack = () => history.goBack()
 

@@ -11,6 +11,7 @@ const initialState = {
     fileId: [],
     expiresAt: [],
     initialApprovers: [],
+    flowId: null,
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -34,6 +35,7 @@ export const flowDocumentReducer = (state = initialState, action) => {
         case types.involvedListLoaded:
             return {
                 ...state,
+                flowId: action.payload.instanceId,
                 involved: action.payload.involved,
                 taskId: action.payload.taskId,
                 role: action.payload.role,
