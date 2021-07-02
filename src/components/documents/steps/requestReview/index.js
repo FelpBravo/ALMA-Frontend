@@ -46,11 +46,12 @@ export default function RequestStep({ tagsField }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
-    const { approvesList, initialApprovers, taskId } = useSelector(state => state.flowDocument);
+    const { approvesList, initialApprovers, taskId, form } = useSelector(state => state.flowDocument);
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const { flowId } = useParams();
-    
+    const EDIT_MODE = Boolean(flowId);
+
     useEffect(() => {
         if (flowId){
             dispatch(startGetInvolvedLoading(flowId))
@@ -69,8 +70,10 @@ export default function RequestStep({ tagsField }) {
 
     useEffect(() => {
         if (!isEmpty(initialApprovers) && !isEmpty(approvesList)) {
+            const { approverComment } = form
             const currentData = { 
                 ...initialApprovers,
+                approverComment,
                 approves: approvesList?.map(({role}) =>({
                     role,
                     users: getUsers(role, initialApprovers.approves) || [],
@@ -79,7 +82,7 @@ export default function RequestStep({ tagsField }) {
             console.log("currentData", currentData)
             reset(currentData)
         }
-    }, [initialApprovers, setValue, approvesList])
+    }, [initialApprovers, setValue, approvesList, form])
 
 
     const flowName = "GENERAL";
@@ -87,7 +90,9 @@ export default function RequestStep({ tagsField }) {
 
     const onSubmit = values => {
         let canOpenModal = true;
-        const { approves } = values;
+        const { approves, approverComment } = values;
+
+        // Revisar usuarios duplicados por rol
         const set = [...new Set(approves.map(x => get(x, 'users')?.map(({ userId }) => userId)))];
         const allList = set.map(arr => filter(arr, (val, i, iteratee) => includes(iteratee, val, i + 1)))
         allList.forEach((arr, index) => arr?.forEach(
@@ -99,6 +104,7 @@ export default function RequestStep({ tagsField }) {
                 }, { shouldFocus: true })
             }
         ))
+
         if (canOpenModal) {
             const data = { // TODO: Esta es la variable para enviar por props en el modal informativo.
                 "flow": {
@@ -118,6 +124,7 @@ export default function RequestStep({ tagsField }) {
                 "approve": false,
                 "role": "owner",
                 ...values,
+                comment: EDIT_MODE ? approverComment : values.comment
             }
             console.log("Data formData: ", data) 
             setFormData(data)
@@ -171,7 +178,7 @@ export default function RequestStep({ tagsField }) {
             </Grid>
             <Grid container item md={12}>
                 <TextField
-                    name="comment"
+                    name={EDIT_MODE ? "approverComment" :"comment" }
                     label="Comentario"
                     multiline
                     rows={3}

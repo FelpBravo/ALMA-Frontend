@@ -1,25 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { Divider, FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import { useHistory, useParams, useRouteMatch, useLocation } from 'react-router-dom';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IntlMessages from 'util/IntlMessages';
-import { useDispatch, useSelector } from 'react-redux';
-import Pagination from '@material-ui/lab/Pagination';
-import TableActionButton from 'components/search/ui/TableActionButton';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import { makeStyles } from '@material-ui/core/styles';
-import { Divider, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { INBOX_STATUS, STATUS } from 'constants/constUtil';
+import Pagination from '@material-ui/lab/Pagination';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
+
 import { startActiveTasksInit, startInvolvedLoading } from 'actions/flowDocument';
+import TableActionButton from 'components/search/ui/TableActionButton';
+import { INBOX_STATUS, STATUS } from 'constants/constUtil';
+import IntlMessages from 'util/IntlMessages';
+
 import ManagementSummary from './ManagementSummary';
-
-
-
 
 const useStyles = makeStyles((theme) => ({
 
@@ -51,8 +50,9 @@ const Tasks = () => {
 	const { data = [], totalItems = 0 } = tasksList;
 
 	const [page, setPage] = useState(0)
+	const { flowId } = useParams();
 
-
+	const renderData = flowId ? data.filter(({instanceId}) => instanceId === parseInt(flowId)) : data;
 
 	const handleManage = (instanceId, taskId, role, author, fileId, expiresAt) => {
 		dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt))
@@ -136,7 +136,7 @@ const Tasks = () => {
 						</TableHead>
 						<TableBody >
 
-							{data.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt }, index) => {
+							{renderData.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt }, index) => {
 
 								return <TableRow key={index} >
 

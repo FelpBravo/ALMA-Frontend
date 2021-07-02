@@ -19,6 +19,11 @@ const LibraryRouter = () => {
 				/>
 
 				<Route
+					path="/inbox/:flowId"
+					component={asyncComponent(() => import('../components/inbox/Inbox'))}
+				/>
+
+				<Route
 					path="/inbox"
 					component={asyncComponent(() => import('../components/inbox/Inbox'))}
 				/>

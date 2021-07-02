@@ -63,8 +63,18 @@ export const startEditFlowsLoading = (authUser, data, callback) => {
 
             const { taskId, approve, approves, comment, role } = data
             const resp = await postAcceptTask(authUser, taskId, approve, comment, role, approves);
-            //dispatch(saveFlowInit());
-            callback && callback()
+            Swal.close();
+
+            const { value } = await Swal.fire({
+                icon: 'success',
+                width: 400,
+                title: '<h4>Tarea finalizada con éxito</h4>',
+                showConfirmButton: true,
+            })
+
+            if (value) {
+                callback && callback()
+            }
         } catch (error) {
             console.log(error);
 

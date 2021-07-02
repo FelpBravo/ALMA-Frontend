@@ -29,7 +29,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
   const handleInitFlow = () => {
     !EDIT_MODE
     ? dispatch(startInitFlowsLoading(authUser, data, () => history.push('/inbox')))
-    : dispatch(startEditFlowsLoading(authUser, data))
+      : dispatch(startEditFlowsLoading(authUser, data, () => history.push('/inbox')))
 
     close()
   }
