@@ -76,6 +76,7 @@ export default function RequestStep({ tagsField }) {
                     users: getUsers(role, initialApprovers.approves) || [],
                 }))
             }
+            console.log("currentData", currentData)
             reset(currentData)
         }
     }, [initialApprovers, setValue, approvesList])
@@ -118,6 +119,7 @@ export default function RequestStep({ tagsField }) {
                 "role": "owner",
                 ...values,
             }
+            console.log("Data formData: ", data) 
             setFormData(data)
         }
     };

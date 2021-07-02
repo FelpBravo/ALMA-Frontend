@@ -59,22 +59,6 @@ const SummaryInvolved = ({ data }) => {
                                         </TableRow>
                                     }))
                             }
-                                    {users && users?.map(({ userId, comment, expiresAt, role }, index) => {
-                                            return <TableRow key={index} >
-                                            <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}>
-                                                {role}
-                                            </TableCell>
-                                            <TableCell>
-                                                {userId}
-                                            </TableCell>
-                                            <TableCell>
-                                                {expiresAt} días
-                                            </TableCell>
-                                            <TableCell>
-                                                {comment}
-                                            </TableCell>
-                                        </TableRow>
-                                        })}
                         </TableBody>
                     </Table>
                 </TableContainer>

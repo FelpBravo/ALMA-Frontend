@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { startAcceptTasksInit } from 'actions/flowDocument';
+import { manageSetValueField, startAcceptTasksInit } from 'actions/flowDocument';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
@@ -54,6 +54,10 @@ const ManagementSummary = () => {
 		history.push(`/document/${fileId}/edit/${flowId}`);
 	}
 
+	const handleChangeRedux = ({ target }) => {
+		const { name, value } = target;
+		dispatch(manageSetValueField(name, value));
+	}
 
 	return (
 
@@ -122,11 +126,11 @@ const ManagementSummary = () => {
 
 					<Grid container item xs={12}>
 						<TextField
-							name="comment"
+							name="approverComment"
 							label="Comentario"
 							multiline
 							rows={3}
-
+							onChange={handleChangeRedux}
 						/>
 					</Grid>
 

@@ -12,6 +12,7 @@ const initialState = {
     expiresAt: [],
     initialApprovers: [],
     flowId: null,
+    form: {}
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -49,6 +50,17 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 ...state,
                 initialApprovers: payload
             }
+
+        case types.manageSetValueField:
+            return {
+                ...state,
+                form: {
+                    ...state?.form,
+                    [action.payload.name]: action.payload.value
+                }
+            }
+
+
         default:
             return state;
     }

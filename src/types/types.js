@@ -176,4 +176,5 @@ export const types = {
 	notificationsChangeState: "Change notification state",
 	notificationsReset: "Notifications reset initial values",
 
+	manageSetValueField: "Manage set value field",
 }

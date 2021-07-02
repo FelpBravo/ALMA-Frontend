@@ -20,39 +20,39 @@ export const startApprovesListLoading = ({ authUser, flowName }) => {
 
     }
 };
-export const startInitFlowsLoading = ( authUser, data, callback) => {
+export const startInitFlowsLoading = (authUser, data, callback) => {
     return async (dispatch) => {
 
         try {
             Swal.showLoading();
 
-            const {flow, document, approves, comment, startedBy} = data
+            const { flow, document, approves, comment, startedBy } = data
             const resp = await postFlows(authUser, flow, document, approves, comment, startedBy);
-            const {value} = await Swal.fire({
-				icon: 'success',
-				width: 400,
-				title: '<h4>Solicitud enviada</h4>',
-				html: `<ul>ID Asignado: ${resp.data}</ul>`,
-				showConfirmButton: true,
-			})
-            
+            const { value } = await Swal.fire({
+                icon: 'success',
+                width: 400,
+                title: '<h4>Solicitud enviada</h4>',
+                html: `<ul>ID Asignado: ${resp.data}</ul>`,
+                showConfirmButton: true,
+            })
+
             dispatch(saveFlowInit());
-            if (value){
+            if (value) {
                 callback && callback()
             }
-		} catch (error) {
-			console.log(error);
+        } catch (error) {
+            console.log(error);
 
-			Swal.close();
+            Swal.close();
 
-			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+            const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
 
-			Swal.fire({
-				title: 'Error', text: message, icon: 'error', heightAuto: false
-			});
-		}
+            Swal.fire({
+                title: 'Error', text: message, icon: 'error', heightAuto: false
+            });
+        }
 
-	}
+    }
 };
 
 export const startEditFlowsLoading = (authUser, data, callback) => {
@@ -80,7 +80,7 @@ export const startEditFlowsLoading = (authUser, data, callback) => {
     }
 };
 
-export const startActiveTasksInit = ( authUser, page, status) => {
+export const startActiveTasksInit = (authUser, page, status) => {
     return async (dispatch) => {
 
         try {
@@ -95,7 +95,7 @@ export const startActiveTasksInit = ( authUser, page, status) => {
     }
 };
 
-export const startFlowsAllInit = ( authUser, page, status ) => {
+export const startFlowsAllInit = (authUser, page, status) => {
     return async (dispatch) => {
 
         try {
@@ -116,9 +116,9 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
         try {
 
             const resp = await getInvolved(instanceId);
-         
+
             dispatch(involvedLoaded(resp.data, taskId, instanceId, role, author, fileId, expiresAt));
-          
+
         } catch (error) {
             console.log(error);
         }
@@ -126,11 +126,11 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
     }
 };
 
-export const startAcceptTasksInit = ( authUser, taskId, approve, comment, role) => {
+export const startAcceptTasksInit = (authUser, taskId, approve, comment, role) => {
     return async (dispatch) => {
 
         try {
-            const resp = await postAcceptTask(authUser,taskId, approve, comment, role);
+            const resp = await postAcceptTask(authUser, taskId, approve, comment, role);
 
             dispatch(respAcceptTask(resp));
 
@@ -142,11 +142,11 @@ export const startAcceptTasksInit = ( authUser, taskId, approve, comment, role) 
 };
 
 const saveFlowInit = () => {
-	return {
-		type: types.docsSaveFlowInit,
-	}
+    return {
+        type: types.docsSaveFlowInit,
+    }
 };
-    
+
 const approvesLoaded = (approvesList) => {
     return {
         type: types.approvesListLoaded,
@@ -186,7 +186,7 @@ const involvedLoaded = (involved, taskId, instanceId, role, author, fileId, expi
             fileId: fileId,
             expiresAt: expiresAt,
         }
-                
+
     }
 };
 
@@ -218,3 +218,11 @@ const initalApprovesLoaded = (approvesList) => {
         payload: approvesList
     }
 };
+
+export const manageSetValueField = (name, value) => ({
+    type: types.manageSetValueField,
+    payload: {
+        name,
+        value
+    }
+});
