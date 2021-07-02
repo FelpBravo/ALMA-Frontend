@@ -80,7 +80,7 @@ const ManagementSummary = () => {
 							disabled
 						/>
 					</Grid>
-					{role === "owner" &&
+					{(role === "owner" || role === "author") &&
 						<div>
 							<Divider className="mt-3 mb-3" />
 							<h3>Involucrados</h3>
@@ -119,7 +119,7 @@ const ManagementSummary = () => {
 					<Grid container item xs={12}>
 						<TextField
 							name="comment"
-							label="Comentario"
+							label="Escribe las observaciones"
 							multiline
 							rows={3}
 
@@ -145,7 +145,7 @@ const ManagementSummary = () => {
 								alignItems="flex-end"
 								spacing={2}
 							>
-								{value === "false" && role === "owner" &&
+								{value === "false" && (role === "owner" || role === "author") &&
 									<Button
 										className="mr-3"
 										style={{
