@@ -101,10 +101,10 @@ const ModalUsers = () => {
         setValidation({ ...validation, ['companyOther']: !letra.test(value) || value.length < 3 || value.length > 50 ? false : true })
         break
       case 'id':
-        if (value.length > 4) {
+        if (value.length > 4 ) {
           dispatch(validateUserNickname(authUser, value))
           setMessageErrorUser()
-          setValidation({ ...validation, ['id']: !letra.test(value) || value.length < 3 ? false : true })
+          setValidation({ ...validation, ['id']: !letra.test(value) || value.length > 100 ? false : true })
         } else {
           dispatch(nicknameValidate(false))
           setMessageErrorUser('Debe contener 5 caracteres como minimo.')
@@ -124,6 +124,7 @@ const ModalUsers = () => {
   const handleOnSave = e => {
     e.preventDefault()
     dispatch(startCreateUsersLoading(authUser, dataCreate))
+    setStateCompany({name: false, department: false})
     dispatch(closeModalUsers());
   }
 
