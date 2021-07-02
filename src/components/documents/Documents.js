@@ -74,7 +74,6 @@ const Documents = () => {
 	const EDIT_MODE =( Boolean(flowId) || document.length !== 0)
 	const [resolver, setResolver] = useState(EDIT_MODE ? editModeSchema : createModeSchema)
 
-	console.log("flowID", flowId)
 	const methods = useForm({
 		mode: 'onTouched',
 		name: 'documentForms',

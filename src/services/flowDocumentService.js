@@ -36,7 +36,7 @@ const getInvolved = (instanceId) => {
     return axiosInstance.get(`/flows/data/${instanceId}`)
 };
 
-const postAcceptTask = (authUser, taskId = 278, approve, comment, role, approves) => {
+const postAcceptTask = (authUser, taskId, approve, comment, role, approves) => {
     return axiosInstance.post(`/flows/data/completeTask`, { taskId, approve, comment, role, approves },{
         headers: {
             Authorization: `Bearer ${authUser}`,

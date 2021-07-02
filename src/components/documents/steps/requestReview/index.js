@@ -126,7 +126,6 @@ export default function RequestStep({ tagsField }) {
                 ...values,
                 comment: EDIT_MODE ? approverComment : values.comment
             }
-            console.log("Data formData: ", data) 
             setFormData(data)
         }
     };
