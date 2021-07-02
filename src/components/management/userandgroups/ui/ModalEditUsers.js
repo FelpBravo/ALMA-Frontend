@@ -34,8 +34,7 @@ const ModalEditUsers = (props) => {
   const [dataEdit, setDataEdit] = useState({});
 
   const [validation, setValidation] = useState({ firstName: true, lastName: true, email: true, companyOther: true, departmentOther: true })
-  console.log("validación",validation)
-
+ 
   const [stateCompany, setStateCompany] = useState({})
 
   const letra = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/
@@ -62,7 +61,7 @@ const ModalEditUsers = (props) => {
 
     })
     if (id) {
-      setValidation({...validation, firstName: !letra.test(firstName) || firstName.length < 3 ? false : true, lastName: !letra.test(lastName) || lastName.length < 3 ? false : true, email: email.length < 3 ? false : true })
+      setValidation({...validation, firstName: !letra.test(firstName) || firstName.length < 1 ? false : true, lastName: !letra.test(lastName) || lastName.length < 1 ? false : true, email: email.length < 3 ? false : true })
     }
 
     setStateCompany({ name: (company === "ESO" || company === "NRAO" || company === "NAOJ")? false: true, department: (department === "ADS" || department === "ADO" || department === "ADC" || department === "ADE" || department === "ADA") ? false: true })
