@@ -86,6 +86,14 @@ const getDocumentById = (authUser, id) => {
 	});
 };
 
+const getDocumentByFlowId = (authUser, flowId) => {
+	return axiosInstance.get(`/flows/data/${flowId}/document`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
 const editDocumentVersion = (authUser, file, fileId, versioningType, versioningComments) => {
 
 	const data = new FormData();
@@ -125,4 +133,5 @@ export {
 	editForm,
 	getOffice,
 	saveFlowForm,
+	getDocumentByFlowId,
 }

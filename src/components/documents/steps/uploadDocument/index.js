@@ -6,7 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 import { clearFolderIdOrigin, documentsClear, startDocumentByIdLoading, startFoldersLoading, startThumbnailLoading } from 'actions/documents';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -37,13 +37,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit, handleSaveForm, handleSubmit }) {
+export default function UploadDocument({ editMode, setFiles, document, files, handleClear, controlledDocument, disabledSubmit, handleSaveForm, handleSubmit, nextStep }) {
     const [directorio, setDirectorio] = useState(false)
     const [openModal, setOpenModal] = useState(false);
     const history = useHistory();
     const classes = useStyles();
     const { authUser } = useSelector(state => state.auth);
     const [loading, setLoading] = useState(editMode)
+    const { flowId } = useParams()
 
     const {
         path = '',
@@ -75,15 +76,15 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         if (document.length === 0) {
             return;
         }
-
-        dispatch(startDocumentByIdLoading(document, () => setLoading(false)));
+        console.log("flowId", flowId)
+        dispatch(startDocumentByIdLoading(document, flowId, () => setLoading(false)));
 
         dispatch(startThumbnailLoading(document));
         dispatch(startFoldersLoading(authUser))
         return () => dispatch(documentsClear());
 
 
-    }, [dispatch, document, authUser]);
+    }, [dispatch, document, authUser, flowId]);
 
     const goBack = () => history.goBack()
 
@@ -179,7 +180,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         <SelectTags />
         <Grid container className="mt-4">
             <Grid item md>
-                {!editMode && <Button
+                 <Button
                     variant="text"
                     color="primary"
                     size="large"
@@ -187,7 +188,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                 >
                     <KeyboardBackspaceIcon color="primary" style={{ marginRight: 10 }} />
                     <IntlMessages id="dashboard.button.back" />
-                </Button>}
+                </Button>
             </Grid>
             <Grid item md>
                 <Grid
@@ -204,16 +205,16 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                             }}
                             type="button"
                             variant="contained"
-                            onClick={editMode ? goBack : handleClear}
+                            onClick={editMode ? nextStep : handleClear}
                         >
                             {
-                                !editMode
-                                    ? <IntlMessages id="dashboard.advancedSearchClear" />
-                                    : <IntlMessages id="dashboard.button.cancel" />
+                                editMode
+                                    ? "Saltar paso"
+                                    : <IntlMessages id="dashboard.advancedSearchClear" />
                             }
 
                         </Button>}
-
+                        
 
 
                         <Button

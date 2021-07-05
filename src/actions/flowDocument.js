@@ -20,42 +20,77 @@ export const startApprovesListLoading = ({ authUser, flowName }) => {
 
     }
 };
-export const startInitFlowsLoading = ( authUser, data, callback) => {
+export const startInitFlowsLoading = (authUser, data, callback) => {
     return async (dispatch) => {
 
         try {
             Swal.showLoading();
 
-            const {flow, document, approves, comment, startedBy} = data
+            const { flow, document, approves, comment, startedBy } = data
             const resp = await postFlows(authUser, flow, document, approves, comment, startedBy);
-            const {value} = await Swal.fire({
-				icon: 'success',
-				width: 400,
-				title: '<h4>Solicitud enviada</h4>',
-				html: `<ul>ID Asignado: ${resp.data}</ul>`,
-				showConfirmButton: true,
-			})
-            
+            const { value } = await Swal.fire({
+                icon: 'success',
+                width: 400,
+                title: '<h4>Solicitud enviada</h4>',
+                html: `<ul>ID Asignado: ${resp.data}</ul>`,
+                showConfirmButton: true,
+            })
+
             dispatch(saveFlowInit());
-            if (value){
+            if (value) {
                 callback && callback()
             }
-		} catch (error) {
-			console.log(error);
+        } catch (error) {
+            console.log(error);
 
-			Swal.close();
+            Swal.close();
 
-			const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+            const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
 
-			Swal.fire({
-				title: 'Error', text: message, icon: 'error', heightAuto: false
-			});
-		}
+            Swal.fire({
+                title: 'Error', text: message, icon: 'error', heightAuto: false
+            });
+        }
 
-	}
+    }
 };
 
-export const startActiveTasksInit = ( authUser, page, status) => {
+export const startEditFlowsLoading = (authUser, data, callback) => {
+    return async (dispatch) => {
+
+        try {
+            Swal.showLoading();
+
+            const { taskId, approve, approves, comment, role } = data
+            const resp = await postAcceptTask(authUser, taskId, approve, comment, role, approves);
+            Swal.close();
+
+            const { value } = await Swal.fire({
+                icon: 'success',
+                width: 400,
+                title: '<h4>Tarea finalizada con éxito</h4>',
+                showConfirmButton: true,
+            })
+
+            if (value) {
+                callback && callback()
+            }
+        } catch (error) {
+            console.log(error);
+
+            Swal.close();
+
+            const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+            Swal.fire({
+                title: 'Error', text: message, icon: 'error', heightAuto: false
+            });
+        }
+
+    }
+};
+
+export const startActiveTasksInit = (authUser, page, status) => {
     return async (dispatch) => {
 
         try {
@@ -70,7 +105,7 @@ export const startActiveTasksInit = ( authUser, page, status) => {
     }
 };
 
-export const startFlowsAllInit = ( authUser, page, status ) => {
+export const startFlowsAllInit = (authUser, page, status) => {
     return async (dispatch) => {
 
         try {
@@ -90,10 +125,10 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
 
         try {
 
-            const resp = await getInvolved(authUser, instanceId);
-         
-            dispatch(involvedLoaded(resp.data, taskId, role, author, fileId, expiresAt));
-          
+            const resp = await getInvolved(instanceId);
+
+            dispatch(involvedLoaded(resp.data, taskId, instanceId, role, author, fileId, expiresAt));
+
         } catch (error) {
             console.log(error);
         }
@@ -101,11 +136,11 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
     }
 };
 
-export const startAcceptTasksInit = ( authUser, taskId, approve, comment, role) => {
+export const startAcceptTasksInit = (authUser, taskId, approve, comment, role) => {
     return async (dispatch) => {
 
         try {
-            const resp = await postAcceptTask(authUser,taskId, approve, comment, role);
+            const resp = await postAcceptTask(authUser, taskId, approve, comment, role);
 
             dispatch(respAcceptTask(resp));
 
@@ -117,11 +152,11 @@ export const startAcceptTasksInit = ( authUser, taskId, approve, comment, role) 
 };
 
 const saveFlowInit = () => {
-	return {
-		type: types.docsSaveFlowInit,
-	}
+    return {
+        type: types.docsSaveFlowInit,
+    }
 };
-    
+
 const approvesLoaded = (approvesList) => {
     return {
         type: types.approvesListLoaded,
@@ -149,10 +184,11 @@ const listFlows = (flowList) => {
         payload: flowList
     }
 };
-const involvedLoaded = (involved, taskId, role, author, fileId, expiresAt) => {
+const involvedLoaded = (involved, taskId, instanceId, role, author, fileId, expiresAt) => {
     return {
         type: types.involvedListLoaded,
         payload: {
+            instanceId,
             involved: involved,
             taskId: taskId,
             role: role,
@@ -160,7 +196,7 @@ const involvedLoaded = (involved, taskId, role, author, fileId, expiresAt) => {
             fileId: fileId,
             expiresAt: expiresAt,
         }
-                
+
     }
 };
 
@@ -170,3 +206,33 @@ const respAcceptTask = (resptask) => {
         payload: resptask
     }
 };
+
+export const startGetInvolvedLoading = (flowId) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await getInvolved(flowId);
+            dispatch(initalApprovesLoaded(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+const initalApprovesLoaded = (approvesList) => {
+    return {
+        type: types.initialApproversLoaded,
+        payload: approvesList
+    }
+};
+
+export const manageSetValueField = (name, value) => ({
+    type: types.manageSetValueField,
+    payload: {
+        name,
+        value
+    }
+});

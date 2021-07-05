@@ -3,11 +3,13 @@ import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import jwt_decode from 'jwt-decode'
 import { filter, get, includes } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
-import { startApprovesListLoading } from 'actions/flowDocument';
+import { startApprovesListLoading, startGetInvolvedLoading } from 'actions/flowDocument';
 import ModalLoadFlow from 'components/documents/resume/ModalLoadFlow';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -44,24 +46,54 @@ export default function RequestStep({ tagsField }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
-    const { approvesList } = useSelector(state => state.flowDocument);
+    const { approvesList, initialApprovers, taskId, form } = useSelector(state => state.flowDocument);
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
+    const { flowId } = useParams();
+    const EDIT_MODE = Boolean(flowId);
+
+    useEffect(() => {
+        if (flowId){
+            dispatch(startGetInvolvedLoading(flowId))
+        }
+    }, [flowId])
+
     const [formData, setFormData] = useState(null)
-    const { control, register, handleSubmit, formState: { errors }, setValue, setError } = useForm({
-        defaultValues: {},
+    const { control, register, handleSubmit, formState: { errors }, setValue, setError, getValues, reset } = useForm({
+        // defaultValues: initialApprovers,
         mode: "onTouched",
         shouldFocusError: true,
         resolver: yupResolver(schema),
     });
-    const flowName = "GENERAL";
 
+    const getUsers = (role, approvers) => approvers.find( app => app.role === role)?.users;
+
+    useEffect(() => {
+        if (!isEmpty(initialApprovers) && !isEmpty(approvesList)) {
+            const { approverComment } = form
+            const currentData = { 
+                ...initialApprovers,
+                approverComment,
+                approves: approvesList?.map(({role}) =>({
+                    role,
+                    users: getUsers(role, initialApprovers.approves) || [],
+                }))
+            }
+            console.log("currentData", currentData)
+            reset(currentData)
+        }
+    }, [initialApprovers, setValue, approvesList, form])
+
+
+    const flowName = "GENERAL";
     const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)
 
     const onSubmit = values => {
         let canOpenModal = true;
-        const { approves } = values;
-        const set = [...new Set(approves.map(x => get(x, 'users').map(({ userId }) => userId)))];
+        const { approves, approverComment } = values;
+
+        // Revisar usuarios duplicados por rol
+        const set = [...new Set(approves.map(x => get(x, 'users')?.map(({ userId }) => userId)))];
         const allList = set.map(arr => filter(arr, (val, i, iteratee) => includes(iteratee, val, i + 1)))
         allList.forEach((arr, index) => arr?.forEach(
             userId => {
@@ -72,6 +104,7 @@ export default function RequestStep({ tagsField }) {
                 }, { shouldFocus: true })
             }
         ))
+
         if (canOpenModal) {
             const data = { // TODO: Esta es la variable para enviar por props en el modal informativo.
                 "flow": {
@@ -86,7 +119,12 @@ export default function RequestStep({ tagsField }) {
                     tagsField: tagsField?.length
                 },
                 "startedBy": user?.userId,
-                ...values
+                //Edit
+                taskId,
+                "approve": false,
+                "role": "owner",
+                ...values,
+                comment: EDIT_MODE ? approverComment : values.comment
             }
             setFormData(data)
         }
@@ -130,6 +168,7 @@ export default function RequestStep({ tagsField }) {
                             commonProps={commonProps}
                             control={control}
                             setError={setError}
+                            getValues={getValues}
                             {...rest} />
                     </Grid>)
             }
@@ -138,7 +177,7 @@ export default function RequestStep({ tagsField }) {
             </Grid>
             <Grid container item md={12}>
                 <TextField
-                    name="comment"
+                    name={EDIT_MODE ? "approverComment" :"comment" }
                     label="Comentario"
                     multiline
                     rows={3}

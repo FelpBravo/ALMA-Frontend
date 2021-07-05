@@ -5,9 +5,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import React, {  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
-import { startInitFlowsLoading } from 'actions/flowDocument';
+import { startEditFlowsLoading, startInitFlowsLoading } from 'actions/flowDocument';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
 
@@ -19,13 +19,18 @@ const ModalLoadFlow = ({ data, close, open }) => {
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
   const history = useHistory();
+  const { flowId } = useParams();
+  const EDIT_MODE = Boolean(flowId);
 
   const handleClose = () => {
     close()
   }
 
   const handleInitFlow = () => {
-    dispatch(startInitFlowsLoading(authUser, data, () => history.push('/inbox')))
+    !EDIT_MODE
+    ? dispatch(startInitFlowsLoading(authUser, data, () => history.push('/inbox')))
+      : dispatch(startEditFlowsLoading(authUser, data, () => history.push('/inbox')))
+
     close()
   }
 
