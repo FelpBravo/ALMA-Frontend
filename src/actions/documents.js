@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { editDocumentVersion, editForm, getDocumentByFlowId, getDocumentById, getOffice, getThumbnail, saveFlowForm, saveForm, uploadDocument } from 'services/filesService';
+import { editDocumentVersion, editForm, getDocumentByFlowId, getDocumentById, getDocumentFlowId, getOffice, getThumbnail, saveFlowForm, saveForm, uploadDocument } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
 import { types } from 'types/types';
@@ -410,6 +410,43 @@ const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = 
 		}
 	}
 };
+export const startDocumentFlowIdVisibility = (instanceId) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getDocumentFlowId(authUser, instanceId);
+
+			Swal.close();
+
+			dispatch(documentFlowVisibility(resp.data));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+			//dispatch(documentsClear())
+		}
+
+	}
+};
+
+const documentFlowVisibility = (docsFlow) => {
+	return {
+		type: types.docsDocumentFlowIdVisibility,
+		payload: docsFlow,
+	}
+}
 
 export const startDocumentByIdVisibility = (id) => {
 	return async (dispatch, getState) => {

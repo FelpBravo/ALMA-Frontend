@@ -86,8 +86,16 @@ const getDocumentById = (authUser, id) => {
 	});
 };
 
+const getDocumentFlowId = (authUser, instanceId) => {
+	return axiosInstance.get(`/flows/document/instance/${instanceId}`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
 const getDocumentByFlowId = (authUser, flowId) => {
-	return axiosInstance.get(`/flows/data/${flowId}/document`, {
+	return axiosInstance.get(`/flows/document/instance/${flowId}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -134,4 +142,5 @@ export {
 	getOffice,
 	saveFlowForm,
 	getDocumentByFlowId,
+	getDocumentFlowId,
 }
