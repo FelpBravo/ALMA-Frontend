@@ -22,7 +22,6 @@ const ManagementSummary = () => {
 	const { authUser } = useSelector(state => state.auth);
 	const { involved, taskId, role, author, expiresAt, fileId, flowId } = useSelector(state => state.flowDocument);
 	const { comment, users} = involved
-	console.log("usuarios", users)
 
 	const [value, setValue] = React.useState(null);
 
