@@ -21,7 +21,7 @@ const ManagementSummary = () => {
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
 	const { involved, taskId, role, author, expiresAt, fileId, flowId } = useSelector(state => state.flowDocument);
-	const { comment, users} = involved
+	const { comment, approves} = involved
 
 	const [value, setValue] = React.useState(null);
 
@@ -46,7 +46,7 @@ const ManagementSummary = () => {
 	}
 
 	const handleAcceptTask = () => {
-		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, users))
+		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves))
 		handleBackGo()
 	}
 	const handleEdit = e => {
