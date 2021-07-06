@@ -21,7 +21,7 @@ const ManagementSummary = () => {
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
 	const { involved, taskId, role, author, expiresAt, fileId, flowId } = useSelector(state => state.flowDocument);
-	const { comment } = involved
+	const { comment, users} = involved
 
 	const [value, setValue] = React.useState(null);
 
@@ -46,7 +46,7 @@ const ManagementSummary = () => {
 	}
 
 	const handleAcceptTask = () => {
-		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
+		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, users))
 		handleBackGo()
 	}
 	const handleEdit = e => {
@@ -88,7 +88,7 @@ const ManagementSummary = () => {
 							disabled
 						/>
 					</Grid>
-					{role === "owner" &&
+					{(role === "owner" || role === "author") &&
 						<div>
 							<Divider className="mt-3 mb-3" />
 							<h3>Involucrados</h3>
@@ -126,8 +126,8 @@ const ManagementSummary = () => {
 
 					<Grid container item xs={12}>
 						<TextField
-							name="approverComment"
-							label="Comentario"
+							name="comment"
+							label="Escribe las observaciones"
 							multiline
 							rows={3}
 							onChange={handleChangeRedux}

@@ -136,11 +136,11 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
     }
 };
 
-export const startAcceptTasksInit = (authUser, taskId, approve, comment, role) => {
+export const startAcceptTasksInit = (authUser, taskId, approve, comment, role, approves) => {
     return async (dispatch) => {
 
         try {
-            const resp = await postAcceptTask(authUser, taskId, approve, comment, role);
+            const resp = await postAcceptTask(authUser, taskId, approve, comment, role, approves);
 
             dispatch(respAcceptTask(resp));
 
