@@ -12,7 +12,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { object } from 'yup';
 
-import { documentsClear, saveFileIdLoaded, saveFormFinish, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
+import { documentsClear, saveFileIdLoaded, saveFormFinish, startEditDocumentLoading, startEditFlowDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
 import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
@@ -164,7 +164,9 @@ const Documents = () => {
 						dispatch(saveFormFinish());
 					}
 					return dispatch(
-						startEditDocumentLoading(
+					
+						startEditFlowDocumentLoading(
+							
 							folderId,
 							files,
 							fileIdLoaded,

@@ -35,6 +35,7 @@ const initialState = {
 	loadingFolderModal: false,
 	docs: {},
 	filesLoaded: [],
+	docsFlow: {},
 	
 }
 
@@ -253,6 +254,11 @@ export const documentsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				docs: action.payload,
+			}
+		case types.docsDocumentFlowIdVisibility:
+			return {
+				...state,
+				docsFlow: action.payload,
 			}
 
 		case types.clearDocsDocumentByIdVisibility:

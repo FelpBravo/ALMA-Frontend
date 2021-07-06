@@ -158,7 +158,6 @@ const EditUpload = () => {
 			});
 
 			if (document.length > 0) {
-
 				dispatch(
 					startEditDocumentLoading(
 						folderId,
