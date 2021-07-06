@@ -36,8 +36,7 @@ const ModalAcceptDate = (props) => {
     const { authUser } = useSelector(state => state.auth);
 
     const { docsFlow } = useSelector(state => state.documents);
-    console.log("metadata", docsFlow)
-
+    
     const { fileId } = useSelector(state => state.flowDocument);
 
 
