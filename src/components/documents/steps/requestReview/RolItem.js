@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandatory }) => {
+const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandatory, getValues }) => {
     const { fields, append, remove } = useFieldArray({
         name,
         control
@@ -30,9 +30,9 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
     const { authUser } = useSelector(state => state.auth);
 
     useEffect(() => {
-        setValue(`approves[${index}].role`, rolName);
+        // setValue(`approves[${index}].role`, rolName);
         mandatory && append({})
-    }, [])
+    }, [rolName])
 
     const addField = e => {
         e.preventDefault()
@@ -58,6 +58,11 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
             </Grid>
         </Grid>
         <Grid item md={12} container spacing={1} alignItems="center">
+            <TextField
+                name={`approves[${index}].role`}
+                value={rolName}
+                style={{ display: 'none' }}
+                {...commonProps} />
             {
                 fields.map((field, index) => (
                     <Grid item md={12} container spacing={1} key={field.id}>
@@ -77,6 +82,7 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                                 )}
                                 optionsLabel="id"
                                 optionsValue="id"
+                                getValues={getValues}
                                 {...commonProps} />
                         </Grid>
                         <Grid item md={2} sm={6} xs={6}>

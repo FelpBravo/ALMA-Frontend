@@ -35,9 +35,8 @@ const ModalAcceptDate = (props) => {
 
     const { authUser } = useSelector(state => state.auth);
 
-    const { docs } = useSelector(state => state.documents);
-    console.log("metadata", docs)
-
+    const { docsFlow } = useSelector(state => state.documents);
+    
     const { fileId } = useSelector(state => state.flowDocument);
 
 
@@ -76,7 +75,7 @@ const ModalAcceptDate = (props) => {
                             <Metadata/>
                         </Grid>
                         <Grid item xs={6}>
-                            <Preview authUser={authUser} id={fileId} name={docs.name} />
+                            <Preview authUser={authUser} id={fileId} name={docsFlow.name} />
                         </Grid>
                     </Grid>
                 </DialogContent>

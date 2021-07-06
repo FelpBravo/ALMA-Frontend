@@ -1,46 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { ThemeProvider } from '@material-ui/styles';
-import URLSearchParams from 'url-search-params';
 import MomentUtils from '@date-io/moment';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { ThemeProvider } from '@material-ui/styles';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
-import 'assets/vendors/style';
-import AppLocale from '../lngProvider';
-import RTL from 'util/RTL';
-import { setDarkTheme, setThemeColor } from '../actions/setting';
-import AppLayout from '../components/ui/AppLayout';
-import { PublicRouter } from 'routers/PublicRouter';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import URLSearchParams from 'url-search-params';
+
+import ChangePasswordPage from 'components/changePassword';
+import DownloadFilePage from 'components/downloadFile';
+import FormTestPage from 'components/formTest';
+import { applyTheme } from 'helpers/applyTheme';
 import { AuthRouter } from 'routers/AuthRouter';
 import { PrivateRouter } from 'routers/PrivateRouter';
-import { applyTheme } from 'helpers/applyTheme';
-import DownloadFilePage from 'components/downloadFile';
-import ChangePasswordPage from 'components/changePassword';
-import FormTestPage from 'components/formTest';
-import moment from 'moment';
+import { PublicRouter } from 'routers/PublicRouter';
+import RTL from 'util/RTL';
+
+import { setDarkTheme, setThemeColor } from '../actions/setting';
+import AppLayout from '../components/ui/AppLayout';
+import AppLocale from '../lngProvider';
+
+import 'assets/vendors/style';
 import 'moment/locale/es';
 
 const App = (props) => {
 
-	const [isLogin, setIsLogin] = useState(false);
 	const dispatch = useDispatch();
 	const { themeColor, darkTheme, locale, isDirectionRTL } = useSelector(({ settings }) => settings);
 	const { authUser } = useSelector(({ auth }) => auth);
-
+	const [isLogin, setIsLogin] = useState(false)
+	
 	const isDarkTheme = darkTheme;
 	const { match } = props;
 
 	useEffect(() => {
 
 		if (authUser) {
-
 			setIsLogin(true);
 
 		} else {
-
 			setIsLogin(false);
-
 		}
 
 	}, [dispatch, setIsLogin, authUser]);

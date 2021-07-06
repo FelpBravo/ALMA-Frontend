@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Divider, Grid, Paper, Step, StepLabel, Stepper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { RestorePageOutlined } from '@material-ui/icons';
 import { isEmpty } from 'lodash-es';
 import get from 'lodash/get'
 import moment from 'moment';
@@ -11,7 +12,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { object } from 'yup';
 
-import { documentsClear, saveFileIdLoaded, saveFormFinish, startEditDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
+import { documentsClear, saveFileIdLoaded, saveFormFinish, startEditDocumentLoading, startEditFlowDocumentLoading, startSaveFormFlowLoading, startSaveFormLoading } from 'actions/documents';
 import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
@@ -61,7 +62,7 @@ const Documents = () => {
 	const classes = useStyles();
 	const history = useHistory()
 	const dispatch = useDispatch();
-	const { id } = useParams()
+	const { id, flowId } = useParams()
 	const {
 		detailDocumentType = [],
 		fileIdLoaded = '',
@@ -70,7 +71,7 @@ const Documents = () => {
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	// ID DOCUMENTO URL
 	const document = id || ""
-	const EDIT_MODE = document.length !== 0
+	const EDIT_MODE =( Boolean(flowId) || document.length !== 0)
 	const [resolver, setResolver] = useState(EDIT_MODE ? editModeSchema : createModeSchema)
 
 	const methods = useForm({
@@ -103,6 +104,8 @@ const Documents = () => {
 		aspectList.length === 0 ||
 		!isEmpty(errors) ||
 		folderId.length === 0)
+
+	const nextStep = () => setActiveStep(activeStep => activeStep + 1)
 
 	const handleSaveForm = async (values) => {
 
@@ -161,7 +164,9 @@ const Documents = () => {
 						dispatch(saveFormFinish());
 					}
 					return dispatch(
-						startEditDocumentLoading(
+					
+						startEditFlowDocumentLoading(
+							
 							folderId,
 							files,
 							fileIdLoaded,
@@ -182,7 +187,7 @@ const Documents = () => {
 	}
 
 
-	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit })
+	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit, flowId, nextStep })
 	const { flowSteps,
 		Component,
 		activeStep,
@@ -206,7 +211,7 @@ const Documents = () => {
 				<Grid item md={12} xs={12} sm={12}>
 					<Paper className={classes.container}>
 						{
-							(controlledDocument || activeStep > 0) && <>
+							(controlledDocument || activeStep > 0 || flowId) && <>
 								<Stepper alternativeLabel activeStep={activeStep}>
 									{
 										Object.keys(flowSteps).map((name, index) => <Step key={index}>

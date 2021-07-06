@@ -14,7 +14,7 @@ import moment from 'moment';
 import { FORMAT_YYYY_MM_DD } from 'constants/constUtil';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import ModalAcceptDate from './ModalAcceptDate';
-import { startDocumentByIdVisibility } from 'actions/documents';
+import { startDocumentByIdVisibility, startDocumentFlowIdVisibility } from 'actions/documents';
 import { startDownloadDocument } from 'actions/search';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import Swal from 'sweetalert2';
@@ -36,14 +36,15 @@ const DocManagement = () => {
 
     const classes = useStyles();
     const { authUser, authorities } = useSelector(state => state.auth);
-    const { fileId, name } = useSelector(state => state.flowDocument);
+    const { fileId,  flowId,  name } = useSelector(state => state.flowDocument);
     const [dateActive, setDateActive] = useState(false)
     const dispatch = useDispatch();
     const { involved } = useSelector(state => state.flowDocument);
     const { document } = involved
   
     const handleOpenDate = () => {
-        dispatch(startDocumentByIdVisibility(fileId));
+        dispatch(startDocumentFlowIdVisibility(flowId));
+        
         setDateActive(true)
     }
 

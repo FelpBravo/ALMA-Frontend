@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { fileBase64 } from 'helpers/fileBase64';
 import { getCurrentFolderById } from 'helpers/getCurrentFolderById';
 import { getAll, getById } from 'services/aspectGroupsService';
-import { editDocumentVersion, editForm, getDocumentById, getOffice, getThumbnail, saveFlowForm, saveForm, uploadDocument } from 'services/filesService';
+import { editDocumentVersion, editFLowForm, editForm, getDocumentByFlowId, getDocumentById, getDocumentFlowId, getOffice, getThumbnail, saveFlowForm, saveForm, uploadDocument } from 'services/filesService';
 import { getFolders, getFoldersById } from 'services/foldersService';
 import { getTags } from 'services/tagsServices';
 import { types } from 'types/types';
@@ -367,13 +367,13 @@ export const documentsClear = () => {
 	}
 };
 
-export const startDocumentByIdLoading = (fileId, callBack) => {
+export const startDocumentByIdLoading = (fileId, flowId, callBack) => {
 	return async (dispatch, getState) => {
 		const { authUser } = getState().auth;
 
 		try {
 
-			const resp = await getDocumentById(authUser, fileId);
+			const resp = flowId ? await getDocumentByFlowId(authUser, flowId) : await getDocumentById(authUser, fileId);
 			Swal.close();
 
 			dispatch(documentByIdLoaded(getDataWithDate(resp.data)));
@@ -410,6 +410,43 @@ const documentByIdLoaded = ({ path, aspectGroup, fileId, folderId, name, tags = 
 		}
 	}
 };
+export const startDocumentFlowIdVisibility = (instanceId) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			const resp = await getDocumentFlowId(authUser, instanceId);
+
+			Swal.close();
+
+			dispatch(documentFlowVisibility(resp.data));
+
+		} catch (error) {
+			Swal.close();
+			console.log(error);
+			//dispatch(documentsClear())
+		}
+
+	}
+};
+
+const documentFlowVisibility = (docsFlow) => {
+	return {
+		type: types.docsDocumentFlowIdVisibility,
+		payload: docsFlow,
+	}
+}
 
 export const startDocumentByIdVisibility = (id) => {
 	return async (dispatch, getState) => {
@@ -591,6 +628,53 @@ export const startEditDocumentLoading = (
 			if (resp.value) {
 				callback && callback()
 			}
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+export const startEditFlowDocumentLoading = (
+	folderId,
+	files,
+	fileId,
+	versioningType,
+	versioningComments,
+	aspectGroup,
+	tags,
+	callback
+) => {
+	return async (dispatch, getState) => {
+
+		const { authUser } = getState().auth;
+
+		try {
+
+			Swal.fire({
+				title: 'Cargando...',
+				text: 'Por favor espere...',
+				allowOutsideClick: false,
+				heightAuto: false,
+			});
+
+			Swal.showLoading();
+
+			if (files) {
+
+				await editDocumentVersion(
+					authUser,
+					files[0],
+					fileId,
+					versioningType,
+					versioningComments
+				);
+
+			}
+
+			const response = await editFLowForm(authUser, folderId, [fileId], aspectGroup, tags);
+			Swal.close();
 
 		} catch (error) {
 			console.log(error);

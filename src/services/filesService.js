@@ -77,9 +77,34 @@ const editForm = (authUser, folderId, fileId, aspectGroup, tags = []) => {
 	});
 
 };
+const editFLowForm = (authUser, folderId, fileId, aspectGroup, tags = []) => {
+
+	return axiosInstance.post(`/flows/document/`, { folderId, fileId, aspectGroup, tags }, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+
+};
 
 const getDocumentById = (authUser, id) => {
 	return axiosInstance.get(`/files/${id}`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
+const getDocumentFlowId = (authUser, instanceId) => {
+	return axiosInstance.get(`/flows/document/instance/${instanceId}`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
+const getDocumentByFlowId = (authUser, flowId) => {
+	return axiosInstance.get(`/flows/document/instance/${flowId}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
@@ -101,6 +126,7 @@ const editDocumentVersion = (authUser, file, fileId, versioningType, versioningC
 	});
 
 };
+
 
 const getOffice = (authUser, fileId) => {
 
@@ -125,4 +151,7 @@ export {
 	editForm,
 	getOffice,
 	saveFlowForm,
+	getDocumentByFlowId,
+	getDocumentFlowId,
+	editFLowForm,
 }
