@@ -21,7 +21,7 @@ const ManagementSummary = () => {
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
 	const { involved, taskId, role, author, expiresAt, fileId, flowId } = useSelector(state => state.flowDocument);
-	const { comment, approves} = involved
+	const { comment, approves } = involved
 
 	const [value, setValue] = React.useState(null);
 
@@ -46,11 +46,16 @@ const ManagementSummary = () => {
 	}
 
 	const handleAcceptTask = () => {
-		dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves))
-		handleBackGo()
+		if (role === "owner" || role === "author") {
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves))
+			handleBackGo()
+		}
+		else {
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
+			handleBackGo()
+		}
 	}
 	const handleEdit = e => {
-		console.log(`/document/${fileId}/edit/${flowId}`)
 		history.push(`/document/${fileId}/edit/${flowId}`);
 	}
 
@@ -139,12 +144,12 @@ const ManagementSummary = () => {
 						className="mt-3 mb-3"
 					>
 						<Grid item md={2}>
-							
+
 							<Button onClick={handleBackGo} startIcon={<KeyboardBackspaceIcon color='primary' />}>
-									Volver
+								Volver
 							</Button>
-			
-							
+
+
 						</Grid>
 						<Grid item xs>
 							<Grid
