@@ -64,21 +64,25 @@ const CommentRole = () => {
     const dispatch = useDispatch()
     const { commentList=[] } = useSelector(state => state.flowDocument);
 
+    const handleDownload = (fileId, name) => {
+        dispatch(startDownloadDocument(fileId, name))
+
+    }
 
     return (
         <div>
             <Divider className="mt-1" style={{ height: 1, background: "rgba(0, 0, 0, 0.12)" }} />
-            <div style={{ marginTop: '16px', maxHeight: '650px', overflow: 'auto' }}>
+            <div style={{ marginTop: '18px', maxHeight: '650px', overflow: 'auto' }}>
                 {commentList.length > 0 && commentList.map(({ userId, comment, completedAt,  attachments }) => {
                     return (
                         <>
                     <div className={classes.coment}>
-                    <span style={{ fontSize: 15, color: "#3699FF", fontWeight:500}}>{userId}</span><span style={{ marginLeft: 5, fontSize: 12, color: "#A7A8BB", }} >{new Date(completedAt).toLocaleString()}</span>
+                    <span style={{  marginLeft: 15, fontSize: 17, color: "#3699FF", fontWeight: 400}}>{userId}</span><span style={{ marginLeft: 10, fontSize: 12, color: "#181824", }} >{new Date(completedAt).toLocaleString()}</span>
                     <br />
-                    <span style={{ fontSize: 14, marginTop: 40}}>{comment}</span>
+                    <span style={{ fontSize: 15, marginTop: 70, marginLeft: 20}}>{comment}</span>
                     <br />
                     {attachments && attachments.length > 0 && attachments.map(({ name, id }) => {
-                        return (<span style={{  marginTop: 40, color: "#3699FF", fontSize: 11, cursor: 'pointer' }}>{`Documento adjunto: `}{name}</span>)
+                        return (<span style={{   marginLeft: 20, marginTop: 90, color: "#3699FF", fontSize: 12, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{`Documento adjunto: `}{name}</span>)
                     })
 
                     }

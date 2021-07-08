@@ -25,7 +25,7 @@ const ModalComments = (props) => {
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
             fullWidth={true}
-            //maxWidth={true}
+            maxWidth= "lg"
         >
 
             <DialogTitle >
