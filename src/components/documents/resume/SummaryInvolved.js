@@ -60,7 +60,7 @@ const SummaryInvolved = ({ data }) => {
                                     }))
                             }
 
-                                 {users?.map(({ userId, comment, expiresAt, role}, index) => {
+                                 {!data && users?.map(({ userId, comment, expiresAt, role}, index) => {
 
                                         return <TableRow key={index} >
                                             <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400 }}>

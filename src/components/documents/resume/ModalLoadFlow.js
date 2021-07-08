@@ -68,6 +68,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
             <IntlMessages id="document.loadDocuments.request.summary.general.remarks" />
           </h3>
 
+         
           <Grid container item xs={12}>
             <TextField
               name="comment"
@@ -80,7 +81,8 @@ const ModalLoadFlow = ({ data, close, open }) => {
               }}
             />
           </Grid>
-
+          
+        
         </DialogContent>
 
         <DialogActions>

@@ -62,7 +62,7 @@ const ManagementSummary = () => {
 
 	const handleAcceptTask = () => {
 		if (role === "owner" || role === "author") {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves ,file))
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves, file))
 			handleBackGo()
 		}
 		else {
@@ -90,12 +90,12 @@ const ManagementSummary = () => {
 		setName()
 	}
 	const handleOpenComment = () => {
-		dispatch(CommentRoleInit(authUser,flowId, role))
-        setDateActive(true)
-    }
+		dispatch(CommentRoleInit(authUser, flowId, role))
+		setDateActive(true)
+	}
 	const handleCloseComment = () => {
-        setDateActive(false)
-    }
+		setDateActive(false)
+	}
 
 	return (
 
@@ -183,7 +183,7 @@ const ManagementSummary = () => {
 						</Grid>
 						<Grid item xs={2}>
 							<Link
-							style={{ fontSize: '12px' }}
+								style={{ fontSize: '12px' }}
 								component="button"
 								variant="body2"
 								onClick={handleOpenComment}
@@ -241,7 +241,19 @@ const ManagementSummary = () => {
 								alignItems="flex-end"
 								spacing={2}
 							>
-								{value === "false" && (role === "owner" || role === "author") &&
+								{value === "false" && role === "owner" &&
+									<Button
+										className="mr-3"
+										style={{
+											backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+											boxShadow: "none", height: '45px', width: '120px'
+										}}
+										onClick={handleEdit}
+										variant="contained"
+										color="primary"
+									>Editar</Button>}
+
+								{role === "author"  &&
 									<Button
 										className="mr-3"
 										style={{
@@ -269,7 +281,7 @@ const ManagementSummary = () => {
 				</div>
 
 			</div>
-         <ModalComments close={handleCloseComment} open={dateActive} />
+			<ModalComments close={handleCloseComment} open={dateActive} />
 
 		</div>
 
