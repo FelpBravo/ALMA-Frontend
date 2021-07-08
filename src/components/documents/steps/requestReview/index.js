@@ -47,6 +47,7 @@ export default function RequestStep({ tagsField }) {
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList, initialApprovers, taskId, form } = useSelector(state => state.flowDocument);
+    console.log("comentario",form)
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const { flowId } = useParams();
