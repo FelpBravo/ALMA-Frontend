@@ -169,6 +169,7 @@ export const types = {
 
 	tasksListLoaded: "Tasks List Loaded",
 	flowListLoaded: "Flow List Loaded",
+	commentListLoaded: "Comment Lis Loaded",
 	docsDocumentFlowIdVisibility: "Documents Flow Visibility",
 	involvedListLoaded: "Involved List Loaded",
 	initialApproversLoaded:"initial approvers loaded",

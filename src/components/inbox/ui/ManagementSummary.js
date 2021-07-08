@@ -5,29 +5,44 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import { manageSetValueField, startAcceptTasksInit } from 'actions/flowDocument';
+import { CommentRoleInit, manageSetValueField, startAcceptTasksInit } from 'actions/flowDocument';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
+import AttachFileOutlinedIcon from '@material-ui/icons/AttachFileOutlined';
+import ClearIcon from '@material-ui/icons/Clear';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { DocManagement } from './DocManagement';
+import ModalComments from './ModalComments';
+
+const useStyles = makeStyles((theme) => ({
+	input: {
+		display: 'none',
+	},
+
+}));
 
 const ManagementSummary = () => {
 
+	const classes = useStyles();
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
 	const { involved, taskId, role, author, expiresAt, fileId, flowId } = useSelector(state => state.flowDocument);
-	const { comment, approves } = involved
+	const { comment, approves, users } = involved
 
 	const [value, setValue] = React.useState(null);
 
 	const history = useHistory();
 
-
+	const [name, setName] = useState()
+	const [file, setFile] = useState()
+	const [dateActive, setDateActive] = useState(false)
 	{/*useEffect(() => {
 
 		if (value !== null) {
@@ -47,11 +62,11 @@ const ManagementSummary = () => {
 
 	const handleAcceptTask = () => {
 		if (role === "owner" || role === "author") {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves))
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves, file))
 			handleBackGo()
 		}
 		else {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, file))
 			handleBackGo()
 		}
 	}
@@ -63,6 +78,24 @@ const ManagementSummary = () => {
 		const { name, value } = target;
 		dispatch(manageSetValueField(name, value));
 	}
+
+	const handleChangeFile = (event) => {
+		event.preventDefault();
+		setName(event.target.files[0].name)
+		setFile(event.target.files[0])
+	}
+
+	const handleClear = () => {
+		setFile()
+		setName()
+	}
+	const handleOpenComment = () => {
+		dispatch(CommentRoleInit(authUser,flowId, role))
+        setDateActive(true)
+    }
+	const handleCloseComment = () => {
+        setDateActive(false)
+    }
 
 	return (
 
@@ -102,8 +135,25 @@ const ManagementSummary = () => {
 						</div>
 					}
 
+					{(role === "coAutor" || role === "stakeholder" || role === "reiewed" || role === "approved" || role === "released") &&
+						<div>
+							<Divider className="mt-3 mb-3" />
+							<h3>Comentario del autor</h3>
 
-
+							<Grid container item xs={12}>
+								{users.filter(user => user.role === role).map(result => (
+									<TextField
+										name="comment"
+										multiline
+										rows={3}
+										value={result.comment}
+										disabled
+									/>
+								))
+								}
+							</Grid>
+						</div>
+					}
 
 
 					<Divider className="mt-3 mb-3" />
@@ -127,16 +177,49 @@ const ManagementSummary = () => {
 					</FormControl>
 
 					<Divider className="mt-3 mb-3" />
-					<h3>Observaciones</h3>
+					<Grid container >
+						<Grid item xs={2}>
+							<h3>Comentarios sobre la tarea</h3>
+						</Grid>
+						<Grid item xs={2}>
+							<Link
+							style={{ fontSize: '12px' }}
+								component="button"
+								variant="body2"
+								onClick={handleOpenComment}
+							>
+								Ver más comentarios
+							</Link>
+
+						</Grid>
+					</Grid>
 
 					<Grid container item xs={12}>
 						<TextField
 							name="comment"
-							label="Escribe las observaciones"
+							label="Escribe tus cometarios"
 							multiline
 							rows={3}
 							onChange={handleChangeRedux}
 						/>
+					</Grid>
+					<Grid container className="mt-1">
+						<label >
+
+							<AttachFileOutlinedIcon fontSize="small" color="primary" />
+
+							<span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13, cursor: 'pointer' }}>{file ? '' : <IntlMessages id="comment.attachment.title" />}</span>
+							<input
+								className={classes.input}
+								type="file"
+								onChange={handleChangeFile}
+
+							/>
+						</label>
+
+						<span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13 }}>{file ? <>{name}<ClearIcon fontSize="small" style={{ marginLeft: 5, cursor: 'pointer' }} onClick={handleClear} /></> : ''}</span>
+
+
 					</Grid>
 
 					<Divider className="mt-3 mb-3" />
@@ -186,7 +269,7 @@ const ManagementSummary = () => {
 				</div>
 
 			</div>
-
+         <ModalComments close={handleCloseComment} open={dateActive} />
 
 		</div>
 

@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-import { getActiveTasks, getApproves, getInvolved, postAcceptTask, postFlowAll, postFlows } from 'services/flowDocumentService';
+import { getActiveTasks, getApproves, getCommentRole, getInvolved, postAcceptTask, postFlowAll, postFlows } from 'services/flowDocumentService';
 import { types } from 'types/types';
 
 import { GENERAL_ERROR } from '../constants/constUtil';
@@ -136,11 +136,11 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
     }
 };
 
-export const startAcceptTasksInit = (authUser, taskId, approve, comment, role, approves) => {
+export const startAcceptTasksInit = (authUser, taskId, approve, comment, role, approves, file) => {
     return async (dispatch) => {
 
         try {
-            const resp = await postAcceptTask(authUser, taskId, approve, comment, role, approves);
+            const resp = await postAcceptTask(authUser, taskId, approve, comment, role, approves, file);
 
             dispatch(respAcceptTask(resp));
 
@@ -150,6 +150,29 @@ export const startAcceptTasksInit = (authUser, taskId, approve, comment, role, a
 
     }
 };
+
+export const CommentRoleInit = (authUser, instanceId, role) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await getCommentRole(authUser, instanceId, role);
+
+            dispatch(commentsRole(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+const commentsRole = (commentList) => {
+    return {
+        type: types.commentListLoaded,
+        payload: commentList
+    }
+};
+
 
 const saveFlowInit = () => {
     return {

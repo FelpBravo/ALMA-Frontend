@@ -574,6 +574,7 @@ export const clearVersioningComments = () => {
 };
 
 export const startEditDocumentLoading = (
+
 	folderId,
 	files,
 	fileId,
@@ -584,7 +585,7 @@ export const startEditDocumentLoading = (
 	callback
 ) => {
 	return async (dispatch, getState) => {
-
+		console.log("entreee")
 		const { authUser } = getState().auth;
 
 		try {

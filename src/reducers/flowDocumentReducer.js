@@ -12,7 +12,8 @@ const initialState = {
     expiresAt: [],
     initialApprovers: [],
     flowId: null,
-    form: {}
+    form: {},
+    commentList:[],
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -27,12 +28,12 @@ export const flowDocumentReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tasksList: payload
-                }    
+            }
         case types.flowListLoaded:
             return {
                 ...state,
                 flowList: payload
-                }    
+            }
         case types.involvedListLoaded:
             return {
                 ...state,
@@ -43,8 +44,8 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 author: action.payload.author,
                 fileId: action.payload.fileId,
                 expiresAt: action.payload.expiresAt,
-                }
-  
+            }
+
         case types.initialApproversLoaded:
             return {
                 ...state,
@@ -59,7 +60,11 @@ export const flowDocumentReducer = (state = initialState, action) => {
                     [action.payload.name]: action.payload.value
                 }
             }
-
+        case types.commentListLoaded:
+            return {
+                ...state,
+                commentList: payload
+            }
 
         default:
             return state;
