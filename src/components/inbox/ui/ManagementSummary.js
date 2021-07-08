@@ -62,11 +62,11 @@ const ManagementSummary = () => {
 
 	const handleAcceptTask = () => {
 		if (role === "owner" || role === "author") {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves, file))
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves ,file))
 			handleBackGo()
 		}
 		else {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, file))
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, [], file))
 			handleBackGo()
 		}
 	}

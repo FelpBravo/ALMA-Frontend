@@ -136,7 +136,7 @@ export const startInvolvedLoading = (authUser, instanceId, taskId, role, author,
     }
 };
 
-export const startAcceptTasksInit = (authUser, taskId, approve, comment, role, approves, file) => {
+export const startAcceptTasksInit = (authUser, taskId, approve, comment, role , approves,  file ) => {
     return async (dispatch) => {
 
         try {
