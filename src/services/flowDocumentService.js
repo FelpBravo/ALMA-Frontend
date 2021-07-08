@@ -36,8 +36,24 @@ const getInvolved = (instanceId) => {
     return axiosInstance.get(`/flows/data/${instanceId}`)
 };
 
-const postAcceptTask = (authUser, taskId, approve, comment, role, approves) => {
-    return axiosInstance.post(`/flows/data/completeTask`, { taskId, approve, comment, role, approves },{
+const postAcceptTask = (authUser, taskId, approve, comment, role, approves, file) => {
+
+    const obj = {taskId , approve, comment, role, approves}
+
+    const data = new FormData();
+	data.append('files', file);
+	data.append('content', JSON.stringify(obj) )
+
+    return axiosInstance.post(`/flows/data/completeTask`, data,{
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+            'Content-Type': 'multipart/form-data'
+        },
+    });
+};
+
+const getCommentRole = (authUser, instanceId, role) => {
+    return axiosInstance.get(`/flows/data/${instanceId}/comments?role=${role}`, {
         headers: {
             Authorization: `Bearer ${authUser}`,
         },
@@ -49,5 +65,6 @@ export { getApproves,
          getActiveTasks,
          postFlowAll,
          getInvolved,
-         postAcceptTask
+         postAcceptTask,
+         getCommentRole,
          }
