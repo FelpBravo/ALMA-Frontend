@@ -12,8 +12,8 @@ import CommentRole from './CommentRole';
 
 const ModalComments = (props) => {
     const { close, open } = props
-    const { commentList=[] } = useSelector(state => state.flowDocument);
-    console.log("Servicio",commentList)
+   
+
     const handleClose = () => {
         close()
     }

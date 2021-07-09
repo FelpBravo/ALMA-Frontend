@@ -256,6 +256,7 @@ export const manageSetValueField = (name, value) => ({
     type: types.manageSetValueField,
     payload: {
         name,
-        value
+        value,
+        
     }
 });

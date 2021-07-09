@@ -1,17 +1,9 @@
-import { Button, Grid, IconButton, TextField } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
-import AttachFileOutlinedIcon from '@material-ui/icons/AttachFileOutlined';
-import ClearIcon from '@material-ui/icons/Clear';
-import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
-import NearMeOutlinedIcon from '@material-ui/icons/NearMeOutlined';
-import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { getCommentsReply, saveComments, saveReplies, startSaveCommentsLoading } from 'actions/information'
 import { startDownloadDocument } from 'actions/search'
-import IntlMessages from 'util/IntlMessages';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -73,16 +65,16 @@ const CommentRole = () => {
         <div>
             <Divider className="mt-1" style={{ height: 1, background: "rgba(0, 0, 0, 0.12)" }} />
             <div style={{ marginTop: '18px', maxHeight: '650px', overflow: 'auto' }}>
-                {commentList.length > 0 && commentList.map(({ userId, comment, completedAt,  attachments }) => {
+                {commentList.length > 0 && commentList.map(({ userId, comment, completedAt,  attachments, role }) => {
                     return (
                         <>
                     <div className={classes.coment}>
-                    <span style={{  marginLeft: 15, fontSize: 17, color: "#3699FF", fontWeight: 400}}>{userId}</span><span style={{ marginLeft: 10, fontSize: 12, color: "#181824", }} >{new Date(completedAt).toLocaleString()}</span>
+                    <span style={{  marginLeft: 15, fontSize: 16, color: "#3699FF", fontWeight: 400}}>{userId}</span> <span style={{ fontSize: 12, color: "#3699FF"}}>{` (${role})`}</span><span style={{ marginLeft: 25, fontSize: 12, color: "#181824", }} >{new Date(completedAt).toLocaleString()}</span>
                     <br />
-                    <span style={{ fontSize: 15, marginTop: 70, marginLeft: 20}}>{comment}</span>
+                    <span style={{ fontSize: 15, marginTop: 70, marginLeft: 17}}>{comment}</span>
                     <br />
                     {attachments && attachments.length > 0 && attachments.map(({ name, id }) => {
-                        return (<span style={{   marginLeft: 20, marginTop: 90, color: "#3699FF", fontSize: 12, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{`Documento adjunto: `}{name}</span>)
+                        return (<span style={{   marginLeft: 15, marginTop: 90, color: "#3699FF", fontSize: 12, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{`Documento adjunto: `}{name}</span>)
                     })
 
                     }
