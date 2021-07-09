@@ -52,6 +52,7 @@ export default function RequestStep({ tagsField }) {
     const { user } = jwt_decode(authUser)
     const { flowId } = useParams();
     const EDIT_MODE = Boolean(flowId);
+    const {role} = useSelector(state => state.flowDocument);
 
     useEffect(() => {
         if (flowId){
@@ -123,7 +124,7 @@ export default function RequestStep({ tagsField }) {
                 //Edit
                 taskId,
                 "approve": false,
-                "role": "owner",
+                "role": role,
                 ...values,
                 comment: EDIT_MODE ? approverComment : values.comment
             }

@@ -43,14 +43,8 @@ const ManagementSummary = () => {
 	const [name, setName] = useState()
 	const [file, setFile] = useState()
 	const [dateActive, setDateActive] = useState(false)
-	{/*useEffect(() => {
+	const [commentCreate, setCommentCreate] = useState();
 
-		if (value !== null) {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role))
-			return;
-		}
-
-	}, [dispatch, value, authUser]);*/}
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
@@ -62,11 +56,11 @@ const ManagementSummary = () => {
 
 	const handleAcceptTask = () => {
 		if (role === "owner" || role === "author") {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, approves, file))
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", commentCreate, role, approves, file))
 			handleBackGo()
 		}
 		else {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", comment, role, [], file))
+			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", commentCreate, role, [], file))
 			handleBackGo()
 		}
 	}
@@ -76,6 +70,7 @@ const ManagementSummary = () => {
 
 	const handleChangeRedux = ({ target }) => {
 		const { name, value } = target;
+		setCommentCreate(value)
 		dispatch(manageSetValueField(name, value));
 	}
 
