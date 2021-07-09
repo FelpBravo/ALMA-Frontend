@@ -14,6 +14,8 @@ const initialState = {
     flowId: null,
     form: {},
     commentList:[],
+    file: [],
+    names: [], 
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -55,6 +57,8 @@ export const flowDocumentReducer = (state = initialState, action) => {
         case types.manageSetValueField:
             return {
                 ...state,
+                file: action.payload.file,
+                names: action.payload.names,
                 form: {
                     ...state?.form,
                     [action.payload.name]: action.payload.value

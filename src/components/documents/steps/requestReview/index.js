@@ -47,7 +47,6 @@ export default function RequestStep({ tagsField }) {
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList, initialApprovers, taskId, form } = useSelector(state => state.flowDocument);
-    console.log("comentario",form)
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const { flowId } = useParams();
@@ -72,10 +71,10 @@ export default function RequestStep({ tagsField }) {
 
     useEffect(() => {
         if (!isEmpty(initialApprovers) && !isEmpty(approvesList)) {
-            const { approverComment } = form
+            const { comment } = form
             const currentData = { 
                 ...initialApprovers,
-                approverComment,
+                comment,
                 approves: approvesList?.map(({role}) =>({
                     role,
                     users: getUsers(role, initialApprovers.approves) || [],
@@ -92,7 +91,7 @@ export default function RequestStep({ tagsField }) {
 
     const onSubmit = values => {
         let canOpenModal = true;
-        const { approves, approverComment } = values;
+        const { approves, comment } = values;
 
         // Revisar usuarios duplicados por rol
         const set = [...new Set(approves.map(x => get(x, 'users')?.map(({ userId }) => userId)))];
@@ -126,7 +125,7 @@ export default function RequestStep({ tagsField }) {
                 "approve": false,
                 "role": role,
                 ...values,
-                comment: EDIT_MODE ? approverComment : values.comment
+                comment: EDIT_MODE ? comment : values.comment
             }
             setFormData(data)
         }
@@ -179,11 +178,12 @@ export default function RequestStep({ tagsField }) {
             </Grid>
             <Grid container item md={12}>
                 <TextField
-                    name={EDIT_MODE ? "approverComment" :"comment" }
-                    label="Comentario"
+                    name={EDIT_MODE ? "comment" :"comment" }
+                    //label="Comentario"
                     multiline
                     rows={3}
                     {...commonProps} />
+
             </Grid>
         </Grid>
         <div className="row mt-4">
