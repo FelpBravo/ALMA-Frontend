@@ -19,6 +19,8 @@ import { FormInit } from '../../ui/FormInit';
 import { SelectFolderDialog } from '../../ui/SelectFolderDialog';
 import { SelectTags } from '../../ui/SelectTags';
 import { Versioning } from '../../ui/Versioning';
+import { CheckField, SelectField } from 'components/ui/Form';
+import { useFormContext } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
     buttons: {
@@ -45,6 +47,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
     const { authUser } = useSelector(state => state.auth);
     const [loading, setLoading] = useState(editMode)
     const { flowId } = useParams()
+    const { control } = useFormContext();
 
     const {
         path = '',
@@ -125,6 +128,14 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         <CircularProgress />
     </Grid>
 
+
+    const isControlledDocument = {
+        name: 'controlled_document',
+        label: 'Documento controlado',
+        control,
+
+    };
+
     return <form onSubmit={handleSubmit(handleSaveForm)}>
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -141,7 +152,12 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
             &&
             <FormInit />
         }
-
+        {!flowId && editMode &&
+            <Grid container style={{ marginTop: 10 }}>
+                <Grid item xl={4} lg={4} md={4} sm={12}>
+                    <CheckField {...isControlledDocument} />
+                </Grid>
+            </Grid>}
         {editMode
             &&
             <div className="row">
@@ -180,7 +196,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         <SelectTags />
         <Grid container className="mt-4">
             <Grid item md>
-                 <Button
+                <Button
                     variant="text"
                     color="primary"
                     size="large"
@@ -205,16 +221,16 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                             }}
                             type="button"
                             variant="contained"
-                            onClick={editMode ? nextStep : handleClear}
+                            onClick={editMode && flowId ? nextStep : handleClear}
                         >
                             {
-                                editMode
+                                editMode && flowId
                                     ? "Saltar paso"
                                     : <IntlMessages id="dashboard.advancedSearchClear" />
                             }
 
                         </Button>}
-                        
+
 
 
                         <Button
@@ -228,7 +244,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
 
                                 controlledDocument
                                     ? <IntlMessages id="document.loadDocuments.submit.flow.next" />
-                                    : editMode
+                                    : editMode && flowId
                                         ? <IntlMessages id="document.loadDocuments.submit.edit" />
                                         : <IntlMessages id="document.loadDocuments.load" />
                             }
