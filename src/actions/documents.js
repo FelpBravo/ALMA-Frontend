@@ -617,7 +617,7 @@ export const startEditDocumentLoading = (
 			const resp = await Swal.fire({
 				icon: 'success',
 				title: 'Documento modificado con éxito',
-				html: `<ul>${response.data.map(({ name, fileId }) => `<li><h6><b>${fileId}</b>    ${name}</h6></li>`)}</ul>
+				html: `<ul>${response.data?.name}</ul>
 				<br/><center>¿Desea regresar a la vista anterior?</center>`,
 				showConfirmButton: true,
 				showCloseButton: true,
