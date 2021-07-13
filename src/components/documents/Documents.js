@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	container: {
-		width:'100%',
+		width: '100%',
 		padding: theme.spacing(3, 4)
 	},
 	margin: {
@@ -71,7 +71,7 @@ const Documents = () => {
 	const documentsList = useSelector(state => state.documents.filesLoaded)
 	// ID DOCUMENTO URL
 	const document = id || ""
-	const EDIT_MODE =( Boolean(flowId) || document.length !== 0)
+	const EDIT_MODE = (Boolean(flowId) || document.length !== 0)
 	const [resolver, setResolver] = useState(EDIT_MODE ? editModeSchema : createModeSchema)
 
 	const methods = useForm({
@@ -132,9 +132,10 @@ const Documents = () => {
 			)
 
 			const { tagsField } = values
-			setOtherProps({tagsField})
+			setOtherProps({ tagsField })
 			const filesId = documentsList.map(({ fileIdLoaded }) => fileIdLoaded)
 			switch (true) {
+
 				case controlledDocument:
 					const callback = () => setActiveStep(activeStep + 1)
 					return dispatch(
@@ -158,15 +159,28 @@ const Documents = () => {
 							reset
 						)
 					);
+				case flowId && EDIT_MODE:
+					return dispatch(
+						startEditFlowDocumentLoading(
+							folderId,
+							files,
+							fileIdLoaded,
+							true, //values?.version === VERSION_TYPE_MAJOR ? true : false,
+							values?.versioningComments,
+							{ id: documentId, aspectList: newAspectList },
+							tagsField,
+							
+						)
+					);
 				case EDIT_MODE:
 					const callBack = () => {
 						history.goBack();
 						dispatch(saveFormFinish());
 					}
 					return dispatch(
-					
-						startEditFlowDocumentLoading(
-							
+
+						startEditDocumentLoading(
+
 							folderId,
 							files,
 							fileIdLoaded,
@@ -185,7 +199,7 @@ const Documents = () => {
 		}
 
 	}
-
+	
 
 	const flowStepsProvider = useFlowSteps({ editMode: EDIT_MODE, controlledDocument, setFiles, document, files, handleClear, disabledSubmit, handleSaveForm, handleSubmit, flowId, nextStep })
 	const { flowSteps,

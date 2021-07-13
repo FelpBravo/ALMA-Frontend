@@ -222,12 +222,15 @@ const ManagementSummary = () => {
 						className="mt-3 mb-3"
 					>
 						<Grid item md={2}>
-
-							<Button onClick={handleBackGo} startIcon={<KeyboardBackspaceIcon color='primary' />}>
-								Volver
+							<Button
+								variant="text"
+								color="primary"
+								size="large"
+								onClick={handleBackGo}
+							>
+								<KeyboardBackspaceIcon color="primary" style={{ marginRight: 10 }} />
+								<IntlMessages id="dashboard.button.back" />
 							</Button>
-
-
 						</Grid>
 						<Grid item xs>
 							<Grid
@@ -248,7 +251,7 @@ const ManagementSummary = () => {
 										color="primary"
 									>Editar</Button>}
 
-								{role === "author"  &&
+								{role === "author" &&
 									<Button
 										className="mr-3"
 										style={{
