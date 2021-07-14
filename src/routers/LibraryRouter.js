@@ -37,6 +37,7 @@ const LibraryRouter = () => {
 					path="/documents"
 					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
+	
 				<Route
 					path="/documentcreation"
 					component={asyncComponent(() => import('../components/documents/DocumentCreation'))}
@@ -68,7 +69,7 @@ const LibraryRouter = () => {
 				/>
 
 				<Route
-					path={["/management/usersandgroups/group","/management/usersandgroups/:page", "/management/usersandgroups"]}
+					path={["/management/usersandgroups/group", "/management/usersandgroups/:page", "/management/usersandgroups"]}
 					component={asyncComponent(() => import('../components/management/userandgroups/UsersandGroup'))}
 				/>
 
@@ -86,14 +87,14 @@ const LibraryRouter = () => {
 					path="/document/:id/edit"
 					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
-
+				<Route
+					path="/document/:id/CREE"
+					component={asyncComponent(() => import('../components/documents/cree/Cree'))}
+				/>
 				<Route
 					path="/document/:id/version"
 					component={asyncComponent(() => import('../components/search/ui/Versioning/Versioning'))}
 				/>
-
-				
-
 				<Route
 
 					path="/document/:id/info"
