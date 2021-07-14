@@ -20,6 +20,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { DocManagement } from './DocManagement';
 import ModalComments from './ModalComments';
+import { TableDocsCree } from './TableDocsCree';
 
 const useStyles = makeStyles((theme) => ({
 	input: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const ManagementSummary = () => {
+const ManageCree = () => {
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -43,7 +44,8 @@ const ManagementSummary = () => {
 	const [name, setName] = useState()
 	const [file, setFile] = useState()
 	const [dateActive, setDateActive] = useState(false)
-	const [commentCreate, setCommentCreate] = useState();
+    const [commentCreate, setCommentCreate] = useState();
+
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
@@ -52,22 +54,7 @@ const ManagementSummary = () => {
 	const handleBackGo = () => {
 		history.goBack()
 	}
-
-	const handleAcceptTask = () => {
-		if (role === "owner" || role === "author") {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", commentCreate, role, approves, file))
-			handleBackGo()
-		}
-		else {
-			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", commentCreate, role, [], file))
-			handleBackGo()
-		}
-	}
-	const handleEdit = e => {
-		history.push(`/document/${fileId}/edit/${flowId}`);
-	}
-
-	const handleChangeRedux = ({ target }) => {
+    const handleChangeRedux = ({ target }) => {
 		const { name, value } = target;
 		setCommentCreate(value)
 		dispatch(manageSetValueField(name, value));
@@ -109,6 +96,10 @@ const ManagementSummary = () => {
 					<DocManagement />
 
 					<Divider className="mt-3 mb-3" />
+
+                    <TableDocsCree/>
+
+					<Divider className="mt-3 mb-3" />
 					<h3>Información general del flujo</h3>
 
 					<Grid container item xs={12}>
@@ -116,42 +107,13 @@ const ManagementSummary = () => {
 							name="comment"
 							multiline
 							rows={3}
-							value={comment}
+							//value={comment}
 							disabled
 						/>
 					</Grid>
-					{(role === "owner" || role === "author") &&
-						<div>
-							<Divider className="mt-3 mb-3" />
-							<h3>Involucrados</h3>
-
-							<SummaryInvolved />
-						</div>
-					}
-
-					{(role === "coAutor" || role === "stakeholder" || role === "reiewed" || role === "approved" || role === "released") &&
-						<div>
-							<Divider className="mt-3 mb-3" />
-							<h3>Comentario del autor</h3>
-
-							<Grid container item xs={12}>
-								{users.filter(user => user.role === role).map(result => (
-									<TextField
-										name="comment"
-										multiline
-										rows={3}
-										value={result.comment}
-										disabled
-									/>
-								))
-								}
-							</Grid>
-						</div>
-					}
-
 
 					<Divider className="mt-3 mb-3" />
-					<h3>Solicitud de revisión</h3>
+					<h3>Solicitud de permiso</h3>
 					<p className="user-description">
 						<span className="owner-most-viewed-documents">{author}</span>
 						{` te ha solicitado revisar este documento, en el rol `}
@@ -163,7 +125,7 @@ const ManagementSummary = () => {
 					</p>
 
 					<FormControl>
-						<FormLabel color="primary" >Aprobar Tarea</FormLabel>
+						<FormLabel color="primary" >Aprobar CREE</FormLabel>
 						<RadioGroup value={String(value)} onChange={handleChange}>
 							<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
 							<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
@@ -238,39 +200,16 @@ const ManagementSummary = () => {
 								alignItems="flex-end"
 								spacing={2}
 							>
-								{value === "false" && role === "owner" &&
-									<Button
-										className="mr-3"
-										style={{
-											backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
-											boxShadow: "none", height: '45px', width: '120px'
-										}}
-										onClick={handleEdit}
-										variant="contained"
-										color="primary"
-									>Editar</Button>}
-
-								{role === "author" &&
-									<Button
-										className="mr-3"
-										style={{
-											backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
-											boxShadow: "none", height: '45px', width: '120px'
-										}}
-										onClick={handleEdit}
-										variant="contained"
-										color="primary"
-									>Editar</Button>}
-
+								
 								<Button
 									style={{
 										fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
 									}}
-									onClick={handleAcceptTask}
+									//onClick={handleAcceptTask}
 									variant="contained"
 									color="primary">
 
-									Completar tarea</Button>
+									Gestionar</Button>
 
 							</Grid>
 						</Grid>
@@ -289,4 +228,4 @@ const ManagementSummary = () => {
 	)
 }
 
-export default ManagementSummary;
+export default ManageCree;

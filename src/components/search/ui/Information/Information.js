@@ -68,10 +68,14 @@ function a11yProps(index) {
 
 const Information = () => {
 	const dispatch = useDispatch();
-	const { id, name } = useParams()
+	const { id, name} = useParams()
+
 	const { authUser } = useSelector(state => state.auth);
 	const classes = useStyles();
 	const location = useLocation();
+	const {state} = location
+	const {permissions} = state
+	console.log(permissions)
 	const history = useHistory();
 	const { docs } = useSelector(state => state.documents);
 
@@ -83,7 +87,6 @@ const Information = () => {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-
 
 	useEffect(()=>{
 		dispatch(startDocumentByIdVisibility(id));
