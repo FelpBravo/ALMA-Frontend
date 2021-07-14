@@ -100,7 +100,7 @@ const ManageCree = () => {
                     <TableDocsCree/>
 
 					<Divider className="mt-3 mb-3" />
-					<h3>Información general del flujo</h3>
+					<h3>Comentario general del solicitante</h3>
 
 					<Grid container item xs={12}>
 						<TextField

@@ -122,15 +122,11 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
     useEffect(() => {
         dispatch(startApprovesListLoading({ authUser, flowName }))
     }, [authUser])
-    
+
     const handleClose = () => {
         setFormData(null)
     }*/}
-    const List = [
-        { "role": "Author", "label": "FLOW.OWNER.NAME", "order": 1, "mandatory": true }, 
-        { "role": "Approved", "label": "FLOW.APPROVED.NAME", "order": 5, "mandatory": false },
-        { "role": "Publicador", "label": "FLOW.RELEASED.NAME", "order": 6, "mandatory": true }]
-
+   
     return (
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
