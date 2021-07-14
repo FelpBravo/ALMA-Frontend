@@ -38,6 +38,7 @@ import ModalEditOnline from './ModalEditOnline';
 import SharedDialog from './SharedDialog';
 import TableActionButton from './TableActionButton';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
+import TableActionButtonCree from './TableActionButtonCree';
 
 const MAX_CHARACTERS = 60;
 
@@ -91,6 +92,11 @@ const useStyles = makeStyles((theme) => ({
 	iconos: {
 		cursor: "pointer",
 		color: "#2196f3",
+		fontSize: '18px',
+	},
+	iconosCCB: {
+		cursor: "pointer",
+		color: "#FFA800",
 		fontSize: '18px',
 	},
 	root: {
@@ -233,6 +239,11 @@ const DataTable = () => {
 		history.push(`/document/${id}/edit`);
 
 	}
+	const handleEditCCB = (id) => {
+		history.push(`/document/${id}/CREE`);
+
+	}
+	
 
 	const handleDelete = async (id) => {
 		setAnchorEl(null)
@@ -386,6 +397,17 @@ const DataTable = () => {
 															</Tooltip>
 														}
 													/>}
+											    
+													<TableActionButtonCree
+														materialIcon={
+															<Tooltip  title={<IntlMessages id="table.shared.dialog.tooltip.edit"/>}>
+																<BorderColorOutlinedIcon
+																	className={classes.iconosCCB}
+																	onClick={() => handleEditCCB(id)}
+																/>
+															</Tooltip>
+														}
+													/>
 												{/*{(ROLE_FILE_DELETE || DELETE) &&
 													<TableActionButton
 														materialIcon={
