@@ -44,6 +44,8 @@ const ModalUsers = () => {
 
   const letra = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/
 
+  const letraUsuario = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+ [1-9]+ [^<>()[\].,;:"]$/
+
   const correo = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
 
   useEffect(() => {
@@ -107,7 +109,7 @@ const ModalUsers = () => {
         if (value.length > 4 ) {
           dispatch(validateUserNickname(authUser, value))
           setMessageErrorUser()
-          setValidation({ ...validation, ['id']: !letra.test(value) || value.length > 100 ? false : true })
+          setValidation({ ...validation, ['id']: value.length > 100 ? false : true })
         } else {
           dispatch(nicknameValidate(false))
           setMessageErrorUser('Debe contener 5 caracteres como minimo.')
@@ -280,7 +282,7 @@ const ModalUsers = () => {
                 fullWidth
                 label="Usuario"
                 name="id"
-                error={validateNickname || messageErrorUser || validation.id === false ? true : false}
+                error={validateNickname || messageErrorUser || validation.id === false  ? true : false}
                 type="text"
                 variant="outlined"
                 size="small"
