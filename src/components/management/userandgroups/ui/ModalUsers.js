@@ -128,6 +128,9 @@ const ModalUsers = () => {
     e.preventDefault()
     dispatch(startCreateUsersLoading(authUser, dataCreate))
     setStateCompany({name: false, department: false})
+    setMessageErrorUser(false)
+    setValidation({})
+    dispatch(nicknameValidate(false))
     dispatch(closeModalUsers());
   }
 
