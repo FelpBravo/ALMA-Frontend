@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const Cree = () => {
     const classes = useStyles();
     const { authUser } = useSelector(state => state.auth);
+    const { approvesList} = useSelector(state => state.flowDocument);
     //useEffect(() => {
     //if (flowId){
     // dispatch(startGetInvolvedLoading(flowId))
@@ -121,14 +122,11 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
     useEffect(() => {
         dispatch(startApprovesListLoading({ authUser, flowName }))
     }, [authUser])
+
     const handleClose = () => {
         setFormData(null)
     }*/}
-    const List = [
-        { "role": "Author", "label": "FLOW.OWNER.NAME", "order": 1, "mandatory": true }, 
-        { "role": "Approved", "label": "FLOW.APPROVED.NAME", "order": 5, "mandatory": false },
-        { "role": "Publicador", "label": "FLOW.RELEASED.NAME", "order": 6, "mandatory": true }]
-
+   
     return (
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -148,7 +146,7 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
                             <Grid container item md={12} >
                                
                                 {
-                                    List.map(({ role, ...rest }, index) =>
+                                    approvesList.map(({ role, ...rest }, index) =>
                                         <Grid container key={role} item md={12} spacing={2}>
                                             <RolItemCree
                                                 index={index}

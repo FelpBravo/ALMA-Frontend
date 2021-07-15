@@ -19,6 +19,7 @@ import { INBOX_STATUS, STATUS } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
 
 import ManagementSummary from './ManagementSummary';
+import TableActionButtonCree from 'components/search/ui/TableActionButtonCree';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -33,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 	formControl: {
 		width: "100%",
+	},
+	iconosCCB: {
+		cursor: "pointer",
+		color: "#FFA800",
+		fontSize: '18px',
 	},
 }));
 
@@ -52,11 +58,17 @@ const Tasks = () => {
 	const [page, setPage] = useState(0)
 	const { flowId } = useParams();
 
-	const renderData = flowId ? data.filter(({instanceId}) => instanceId === parseInt(flowId)) : data;
+	const renderData = flowId ? data.filter(({ instanceId }) => instanceId === parseInt(flowId)) : data;
 
 	const handleManage = (instanceId, taskId, role, author, fileId, expiresAt) => {
 		dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt))
 		history.push(`/manage`);
+
+	};
+
+	const handleManageCCB = () => {
+		//dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt))
+		history.push(`/CREE`);
 
 	};
 
@@ -108,7 +120,7 @@ const Tasks = () => {
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="tasks.table.column2" />
 								</TableCell>
-								
+
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="tasks.table.column3" />
 								</TableCell>
@@ -171,11 +183,24 @@ const Tasks = () => {
 												materialIcon={
 													<DescriptionOutlinedIcon
 														className={classes.iconos}
-														onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt )}
+														onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt)}
+													/>
+												}
+											/>
+
+											<TableActionButtonCree
+												materialIcon={
+													<DescriptionOutlinedIcon
+														className={classes.iconosCCB}
+														onClick={() => handleManageCCB()}
 													/>
 												}
 											/>
 										</div>
+
+
+
+
 
 									</TableCell>
 

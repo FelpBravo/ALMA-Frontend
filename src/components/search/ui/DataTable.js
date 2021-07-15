@@ -39,6 +39,7 @@ import SharedDialog from './SharedDialog';
 import TableActionButton from './TableActionButton';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import TableActionButtonCree from './TableActionButtonCree';
+import { startApprovesListLoading } from 'actions/flowDocument';
 
 const MAX_CHARACTERS = 60;
 
@@ -153,7 +154,7 @@ const DataTable = () => {
 
 	const [editActive, setEditActive] = useState(false)
 
-
+	const flowName = "CRE";
 
 	let page_url = 1
 	if (page) {
@@ -180,10 +181,14 @@ const DataTable = () => {
 
 	}, []);
 
-	const handleVisibility = (id, name) => {
+	const handleVisibility = (id, name, permissions) => {
 		dispatch(informationRemoveAll())
 		dispatch(addBreadcrumbs(name, `/document/${id}/info`))
-		history.push(`/document/${id}/info`);
+		history.push(
+			{
+				pathname: `/document/${id}/info`,
+				state: { permissions: permissions }
+			})
 	};
 
 	const handleFirm = (id, name) => {
@@ -240,6 +245,7 @@ const DataTable = () => {
 
 	}
 	const handleEditCCB = (id) => {
+		dispatch(startApprovesListLoading( {authUser, flowName}))
 		history.push(`/document/${id}/CREE`);
 
 	}
@@ -371,7 +377,7 @@ const DataTable = () => {
 															<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.preview" />}>
 																<VisibilityOutlinedIcon
 																	className={classes.iconos}
-																	onClick={() => handleVisibility(id, name)}
+																	onClick={() => handleVisibility(id, name, permissions)}
 																/>
 															</Tooltip>
 														}
@@ -397,7 +403,7 @@ const DataTable = () => {
 															</Tooltip>
 														}
 													/>}
-											    
+											    {}
 													<TableActionButtonCree
 														materialIcon={
 															<Tooltip  title={<IntlMessages id="table.shared.dialog.tooltip.edit"/>}>

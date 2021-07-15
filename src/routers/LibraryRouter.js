@@ -32,12 +32,17 @@ const LibraryRouter = () => {
 					path="/manage"
 					component={asyncComponent(() => import('../components/inbox/ui/ManagementSummary'))}
 				/>
+				<Route
+					path="/CREE"
+					component={asyncComponent(() => import('../components/inbox/ui/ManageCree'))}
+				/>
+
 
 				<Route
 					path="/documents"
 					component={asyncComponent(() => import('../components/documents/Documents'))}
 				/>
-	
+
 				<Route
 					path="/documentcreation"
 					component={asyncComponent(() => import('../components/documents/DocumentCreation'))}
