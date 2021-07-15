@@ -30,7 +30,7 @@ const ModalUsers = () => {
 
   const { openModal, validateNickname, companys, departments, grouplist = {}, } = useSelector(state => state.adminUsers);
 
-  const [messageErrorUser, setMessageErrorUser] = useState(null);
+  const [messageErrorUser, setMessageErrorUser] = useState(false)
 
   const [stateCompany, setStateCompany] = useState({ name: false, department: false })
 
@@ -62,6 +62,9 @@ const ModalUsers = () => {
 
   const handleClose = () => {
     setStateCompany({name: false, department: false})
+    setMessageErrorUser(false)
+    setValidation({})
+    dispatch(nicknameValidate(false))
     dispatch(closeModalUsers());
   }
 
@@ -330,6 +333,8 @@ const ModalUsers = () => {
                 && validation.department
                 && validation.company
                 && validation.id
+                && !validateNickname
+                && !messageErrorUser
                 && (department === 'Other' ? validation.departmentOther : true)
                 && (company === 'Other' ? validation.companyOther : true) ? false : true
             }
