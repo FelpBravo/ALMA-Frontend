@@ -9,7 +9,8 @@ const initialState = {
         tag: '',
         hex: '',
         state: true,
-    }
+    },
+    tagSet: "",
 }
 
 export const tagsReducer = (state = initialState, action) => {
@@ -93,6 +94,11 @@ export const tagsReducer = (state = initialState, action) => {
                     hex: '',
                     state: true,
                 }
+            }
+        case types.tagSetInit:
+            return {
+                ...state,
+                tagSet: action.payload,
             }
 
         default:

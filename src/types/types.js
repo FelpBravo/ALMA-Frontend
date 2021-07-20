@@ -117,6 +117,7 @@ export const types = {
 	tagsSaveLoaded: 'Tags save loaded',
 	tagsUpdateLoaded: 'Tags update loaded',
 	tagsRemoveAll: 'Tags Remove all',
+	ttagSetInit: 'Tags Set Init',
 
 	attachmentsDataLoaded:'Attachments Data Loaded',
 	commentsDataLoaded: 'Comments Data Loaded',

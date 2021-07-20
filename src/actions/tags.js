@@ -1,4 +1,4 @@
-import { getTags, addTags, editTags, deleteTags} from 'services/tagsServices';
+import { getTags, addTags, editTags, deleteTags, getTagsById} from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 import { GENERAL_ERROR } from 'constants/constUtil';
@@ -180,5 +180,30 @@ const updateTagsLoaded = (id, tag, hex) => {
 export const tagsRemoveAll = () => {
 	return {
 		type: types.tagsRemoveAll,
+	}
+};
+
+export const startTagSet = (authUser,tagId) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getTagsById(authUser, tagId);
+
+			dispatch(tagsSet(resp.data));
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+export const tagsSet = (tagSet) => {
+	return {
+		type: types.tagSetInit,
+		payload: {
+			tagSet,
+		},
 	}
 };

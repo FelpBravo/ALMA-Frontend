@@ -10,6 +10,14 @@ const getTags = (authUser) => {
 	});
 };
 
+const getTagsById = (authUser,tagId) => {
+	return axiosInstance.get(`/tags/${tagId}/children`, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+	});
+};
+
 const addTags = (authUser, tag, hex) => {
 	return axiosInstance.post(`/tags/add`,
 		{ tag, hex },
@@ -50,4 +58,5 @@ export {
 	deleteTags,
 	addTags,
 	editTags,
+	getTagsById, 
 }

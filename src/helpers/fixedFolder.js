@@ -109,10 +109,10 @@ export const fixedFolders = [
 				bd: false,
 			},
 		],
-	},*/
+	},
 	{
 		name: 'sidebar.folders',
 		type: 'section',
 		children: [],
-	},
+	},*/
 ];
