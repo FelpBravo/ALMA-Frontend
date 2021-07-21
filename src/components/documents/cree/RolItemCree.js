@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import Button from 'components/ui/Button';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
 import { getUsersFilter } from 'services/usersService';
+import { postFlowsSearch } from 'services/flowDocumentService';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -39,7 +40,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
         append({})
     }
 
-    const getUsers = userName => getUsersFilter({ authUser, search: userName })
+    const getTitle = userName => postFlowsSearch({ authUser, text: userName })
 
     return (
     <Grid item md={12} spacing={3} container alignItems="center">
@@ -77,11 +78,11 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                             <AutoCompleteField
                                 name={`${name}[${index}].userId`}
                                 label="Seleccionar titulo documento"
-                                getUrl={getUsers}
+                                getUrl={getTitle}
                                 renderOption={(option) => (
-                                    `${option["firstName"]} ${option["lastName"]} (${option["id"]})`
+                                    `${option["title"]} (${option["almaId"]})`
                                 )}
-                                optionsLabel="id"
+                                optionsLabel="title"
                                 optionsValue="id"
                                 getValues={getValues}
                                 {...commonProps} />

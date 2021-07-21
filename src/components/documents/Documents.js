@@ -169,7 +169,7 @@ const Documents = () => {
 							values?.versioningComments,
 							{ id: documentId, aspectList: newAspectList },
 							tagsField,
-							
+							flowId,
 						)
 					);
 				case EDIT_MODE:

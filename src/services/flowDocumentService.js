@@ -60,6 +60,15 @@ const getCommentRole = (authUser, instanceId, role) => {
     });
 };
 
+const postFlowsSearch = ({authUser, text}) => {
+    return axiosInstance.post(`flows/document/search`, {text}, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
+
 export { getApproves,
          postFlows,
          getActiveTasks,
@@ -67,4 +76,5 @@ export { getApproves,
          getInvolved,
          postAcceptTask,
          getCommentRole,
+         postFlowsSearch, 
          }
