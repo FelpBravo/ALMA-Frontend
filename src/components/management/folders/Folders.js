@@ -17,7 +17,7 @@ const Folders = () => {
 
 	const dispatch = useDispatch();
 
-	const { folders = [], currentFolders, historyFolders = [],folder } = useSelector(state => state.adminFolders);
+	const { folders = [], currentFolders, historyFolders = [], folder } = useSelector(state => state.adminFolders);
 
 	const { authUser, authorities } = useSelector(state => state.auth);
 	const canCreateFolder = useSelector(hasAuthority('ROLE_FOLDER_CREATE'));
