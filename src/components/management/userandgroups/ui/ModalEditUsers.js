@@ -71,6 +71,7 @@ const ModalEditUsers = (props) => {
 
 
   const handleClose = () => {
+    setValidation({ companyOther: true, departmentOther: true })
     close()
   }
 

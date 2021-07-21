@@ -127,7 +127,7 @@ const DocManagement = () => {
                                         <div className={classes.iconsHolder}>
                                             <TableActionButton
                                                 materialIcon={
-                                                    <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
+                                                    <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.preview" />}>
                                                     <VisibilityOutlinedIcon
                                                         className={classes.iconos}
                                                         onClick={() => handleOpenDate(fileId)}

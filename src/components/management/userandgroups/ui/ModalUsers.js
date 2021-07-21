@@ -30,7 +30,7 @@ const ModalUsers = () => {
 
   const { openModal, validateNickname, companys, departments, grouplist = {}, } = useSelector(state => state.adminUsers);
 
-  const [messageErrorUser, setMessageErrorUser] = useState(null);
+  const [messageErrorUser, setMessageErrorUser] = useState(false)
 
   const [stateCompany, setStateCompany] = useState({ name: false, department: false })
 
@@ -43,6 +43,8 @@ const ModalUsers = () => {
   const [validation, setValidation] = useState({})
 
   const letra = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/
+
+  const letraUsuario = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+ [1-9]+ [^<>()[\].,;:"]$/
 
   const correo = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
 
@@ -62,6 +64,9 @@ const ModalUsers = () => {
 
   const handleClose = () => {
     setStateCompany({name: false, department: false})
+    setMessageErrorUser(false)
+    setValidation({})
+    dispatch(nicknameValidate(false))
     dispatch(closeModalUsers());
   }
 
@@ -104,7 +109,7 @@ const ModalUsers = () => {
         if (value.length > 4 ) {
           dispatch(validateUserNickname(authUser, value))
           setMessageErrorUser()
-          setValidation({ ...validation, ['id']: !letra.test(value) || value.length > 100 ? false : true })
+          setValidation({ ...validation, ['id']: value.length > 100 ? false : true })
         } else {
           dispatch(nicknameValidate(false))
           setMessageErrorUser('Debe contener 5 caracteres como minimo.')
@@ -125,6 +130,9 @@ const ModalUsers = () => {
     e.preventDefault()
     dispatch(startCreateUsersLoading(authUser, dataCreate))
     setStateCompany({name: false, department: false})
+    setMessageErrorUser(false)
+    setValidation({})
+    dispatch(nicknameValidate(false))
     dispatch(closeModalUsers());
   }
 
@@ -274,7 +282,7 @@ const ModalUsers = () => {
                 fullWidth
                 label="Usuario"
                 name="id"
-                error={validateNickname || messageErrorUser || validation.id === false ? true : false}
+                error={validateNickname || messageErrorUser || validation.id === false  ? true : false}
                 type="text"
                 variant="outlined"
                 size="small"
@@ -330,6 +338,8 @@ const ModalUsers = () => {
                 && validation.department
                 && validation.company
                 && validation.id
+                && !validateNickname
+                && !messageErrorUser
                 && (department === 'Other' ? validation.departmentOther : true)
                 && (company === 'Other' ? validation.companyOther : true) ? false : true
             }
