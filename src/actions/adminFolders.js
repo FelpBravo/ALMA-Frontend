@@ -20,7 +20,7 @@ export const startFoldersLoading = (authUser) => {
 			Swal.showLoading();
 
 			const resp = await getFoldersAdmin(authUser);
-			
+
 			dispatch(foldersLoaded(resp.data));
 			dispatch(saveHistory(0, INIT_FOLDER));
 			dispatch(saveCurrentFolders(0, INIT_FOLDER, resp.data));
@@ -34,7 +34,7 @@ export const startFoldersLoading = (authUser) => {
 	}
 };
 
-export const startUpdateFolderLoading = (authUser, data, folderId,parentId) => {
+export const startUpdateFolderLoading = (authUser, data, folderId, parentId) => {
 	return async (dispatch) => {
 
 		try {
@@ -50,14 +50,14 @@ export const startUpdateFolderLoading = (authUser, data, folderId,parentId) => {
 			if (folderId === 0) {
 				await create(authUser, data).then(async () => {
 					const resp = await getFoldersAdmin(authUser);
-					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+					dispatch(updateFoldersCurrentLoaded(parentId, resp.data))
 				})
 
 			}
 			else {
 				await create(authUser, data).then(async () => {
 					const resp = await getFoldersAdminById(authUser, folderId);
-					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+					dispatch(updateFoldersCurrentLoaded(parentId, resp.data))
 				})
 			}
 
@@ -72,7 +72,7 @@ export const startUpdateFolderLoading = (authUser, data, folderId,parentId) => {
 	}
 };
 
-export const updateFoldersCurrentLoaded = (parentId,folders,start) => {
+export const updateFoldersCurrentLoaded = (parentId, folders, start) => {
 	return {
 		type: types.adminFoldersUpdateCurrentFolders,
 		payload: {
@@ -166,14 +166,14 @@ const saveCurrentFolders = (folderId, name, folders) => {
 	}
 };
 
-export const startSaveCurrentFolder = (authUser,folderId,name) => {
-	return async(dispatch, getState) => {
+export const startSaveCurrentFolder = (authUser, folderId, name) => {
+	return async (dispatch, getState) => {
 
 		const { historyFolders = [] } = getState().adminFolders;
 
 		if (folderId === 0) {
 			const resp = await getFoldersAdmin(authUser);
-			dispatch(updateFoldersCurrentLoaded(folderId,resp.data))
+			dispatch(updateFoldersCurrentLoaded(folderId, resp.data))
 			dispatch(foldersLoaded(resp.data));
 			dispatch(saveCurrentFolders(folderId, name, resp.data));
 			dispatch(updateListHistory([{ id: 0, name: INIT_FOLDER }]));
@@ -181,7 +181,7 @@ export const startSaveCurrentFolder = (authUser,folderId,name) => {
 		} else {
 
 			const resp = await getFoldersAdminById(authUser, folderId);
-			dispatch(updateFoldersCurrentLoaded(folderId,resp.data))
+			dispatch(updateFoldersCurrentLoaded(folderId, resp.data))
 
 			const folderSelected = historyFolders.find(history => history.id === folderId);
 			const newHistoryFolders = [
@@ -190,10 +190,10 @@ export const startSaveCurrentFolder = (authUser,folderId,name) => {
 
 			dispatch(updateListHistory(newHistoryFolders));
 			dispatch(saveCurrentFolders(folderId, name, resp.data));
-			
 
 
-			
+
+
 
 		}
 
@@ -324,8 +324,13 @@ export const startEditFolderLoading = (authUser, data, folderId, name) => {
 
 			Swal.showLoading();
 
-			await edit(authUser, data, folderId);
+			await edit(authUser, data, folderId).then(async () => {
+				const resp = await getFoldersAdmin(authUser);
+				dispatch(foldersLoaded(resp.data));
+				dispatch(saveCurrentFolders(0, INIT_FOLDER, resp.data));
+				dispatch(saveCurrentFolders(folderId, name, resp.data));
 
+			})
 			dispatch(updateLoaded(data));
 			dispatch(saveFolderLoaded());
 
@@ -351,7 +356,7 @@ export const adminFoldersremoveAll = () => {
 	}
 };
 
-export const startDeleteFolderLoading = (authUser, folderId,parentId) => {
+export const startDeleteFolderLoading = (authUser, folderId, parentId) => {
 	return async (dispatch, getState) => {
 
 		const { folders, currentFolders } = getState().adminFolders;
@@ -366,22 +371,21 @@ export const startDeleteFolderLoading = (authUser, folderId,parentId) => {
 
 			Swal.showLoading();
 
-			await remove(authUser, folderId).then(async()=>{
-				if(parentId === 0 ){
+			await remove(authUser, folderId).then(async () => {
+				if (parentId === 0) {
 					const resp = await getFoldersAdmin(authUser, parentId);
-					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+					dispatch(updateFoldersCurrentLoaded(parentId, resp.data))
 				}
-				else
-				{
+				else {
 					const resp = await getFoldersAdminById(authUser, parentId);
-					dispatch(updateFoldersCurrentLoaded(parentId,resp.data))
+					dispatch(updateFoldersCurrentLoaded(parentId, resp.data))
 				}
-				
+
 			})
 
 			Swal.close();
 
-			
+
 
 		} catch (error) {
 			Swal.close();
