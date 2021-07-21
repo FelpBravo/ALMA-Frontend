@@ -27,7 +27,7 @@ import Navigation from '../components/Navigation';
 import StyledTreeItem from '../StyledTreeItem';
 import { SideBarContext } from './SideBarContext';
 import { Divider } from '@material-ui/core';
-import { startTagSet } from 'actions/tags';
+import { removeTagsId, saveTagsId, startTagSet, startTagsInitLoading, startTagsSetChildren, tagsSelected } from 'actions/tags';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -77,7 +77,7 @@ const SideBarContent = () => {
 	const dispatch = useDispatch();
 	const { selectedIds = [], initFolders = [], folderId = [] } = useSelector(state => state.folders);
 
-	const { tagSet = [], } = useSelector(state => state.tags);
+	const { selectedTagsIds = [], initTags = [], tagId = []  } = useSelector(state => state.tags);
 
 	const { authUser, authorities } = useSelector(state => state.auth);
 
@@ -93,7 +93,12 @@ const SideBarContent = () => {
 
 	const [value, setValue] = React.useState(0);
 
-	const tagId = 0
+	const [tags, setTags] = useState([]);
+
+	const [selectedTags, setSelectedTags] = useState([]);
+
+	const [expandedTags, setExpandedTags] = useState([]);
+
 
 	useEffect(() => {
 		setSelected([folderId]);
@@ -110,6 +115,22 @@ const SideBarContent = () => {
 
 	}, [selectedIds, setExpanded]);
 
+	//Arbol de TAGS
+
+	useEffect(() => {
+		setTags(initTags);
+
+	}, [initTags, setTags]);
+
+	useEffect(() => {
+		setSelectedTags([tagId]);
+
+	}, [tagId, setSelectedTags]);
+
+	useEffect(() => {
+		setExpandedTags(selectedTagsIds);
+
+	}, [selectedTagsIds, setExpandedTags]);
 
 
 	useEffect(() => {
@@ -122,11 +143,9 @@ const SideBarContent = () => {
 
 
 				dispatch(startFoldersInitLoading(authUser));
-				dispatch(startTagSet(authUser, tagId))
+				dispatch(startTagsInitLoading(authUser))
 
 			}
-
-
 		}
 
 	}, [dispatch]);
@@ -147,6 +166,27 @@ const SideBarContent = () => {
 					onClick={() => { dispatch(startBreadcrumbs(folder.name, `/directory/${folder.id}`)) }}
 				>
 					{Array.isArray(folder.children) ? handleRenderMenu(folder.children) : null}
+				</StyledTreeItem>
+			</div>
+		});
+
+	}
+
+	//Arbol de TAGS MENU
+
+	const handleRenderMenuTags = (tags) => {
+		return tags.map((tag) => {
+			const isSelected = parseInt(tagId) === parseInt(tag.id)
+			return <div ref={isSelected ? setMyRef : null}>
+				<StyledTreeItem
+					key={tag.id}
+					folderId={tag.id}
+					nodeId={String(tag.id)}
+					labelText={tag.tag}
+					labelIcon={tag.hashSubTags ? FolderIcon : MailIcon}
+					onClick={() => { dispatch(startBreadcrumbs(tag.tag, `/directory/${tag.id}`)) }}
+				>
+					{Array.isArray(tag.children) ? handleRenderMenuTags(tag.children) : null}
 				</StyledTreeItem>
 			</div>
 		});
@@ -175,16 +215,27 @@ const SideBarContent = () => {
 		history.push(`/directory/${folderId}`);
 	}
 
+	//Seleccion de Tags
+
 	const handleSelectTag = async (event, tagId) => {
-		if (selected === tagId) {
+		if (selectedTags === tagId) {
 			return;
 		}
 
-		dispatch(startFoldersSetChildren(tagId, authUser));
+		dispatch(startTagsSetChildren(authUser, tagId));
 
-		dispatch(folderSelected(tagId));
+		dispatch(tagsSelected(tagId));
 
-		history.push(`/directory/${tagId}`);
+		const existsId = selectedTagsIds.find(id => id == tagId);
+		if (!existsId) {
+			dispatch(saveTagsId(tagId));
+		} else {
+			dispatch(removeTagsId(tagId));
+		}
+
+		dispatch(searchRemoveText());
+
+		//history.push(`/directory/${tagId}`);
 	}
 
 	useEffect(() => {
@@ -205,14 +256,13 @@ const SideBarContent = () => {
 					onChange={handleChange}
 					indicatorColor="none"
 					textColor='inherit'
-					//variant='standard'
-					centered
 				>
-					<Tab style={{ fontFamily: 'Poppins', fontSize: "12px", fontWeight: 400, textTransform: "none", minWidth: 100 }} label="Directorios" {...a11yProps(0)} />
-					<Tab style={{ fontFamily: 'Poppins', fontSize: "12px", fontWeight: 400, textTransform: "none", minWidth: 50 }} label="Etiquetas" {...a11yProps(1)} />
+					<Tab style={{ fontFamily: 'Poppins', fontSize: "12px", fontWeight: 400, textTransform: "none", minWidth: 100, padding: 0 }} label="Directorios" {...a11yProps(0)} />
+					<Tab style={{ fontFamily: 'Poppins', fontSize: "12px", fontWeight: 400, textTransform: "none", minWidth: 100 }} label="Etiquetas" {...a11yProps(1)} />
 
 				</Tabs>
 				<TabPanel value={value} index={0}>
+
 					<TreeView
 						className={classes.root}
 						defaultCollapseIcon={<ExpandMoreIcon />}
@@ -226,16 +276,16 @@ const SideBarContent = () => {
 				</TabPanel>
 
 				<TabPanel value={value} index={1}>
-					<h1>Hola</h1>
-					{/*<TreeView
+					
+					<TreeView
 						defaultCollapseIcon={<ExpandMoreIcon />}
 						defaultExpandIcon={<ChevronRightIcon />}
-						selected={selected}
+						selected={selectedTags}
 						onNodeSelect={handleSelectTag}
-						expanded={expanded}
+						expanded={expandedTags}
 					>
-						{handleRenderMenu(folders)}
-					</TreeView>*/}
+						{handleRenderMenuTags(tags)}
+					</TreeView>
 				</TabPanel>
 
 			</SideBarContext.Provider>

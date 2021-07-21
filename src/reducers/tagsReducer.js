@@ -1,7 +1,8 @@
+import { setChildrenTags } from 'helpers/setChildrenTags';
 import { types } from 'types/types';
 
 const initialState = {
-    tagslist: [],
+    initTags: [],
     openModal: false,
     actionModal: '',
     tags: {
@@ -10,7 +11,9 @@ const initialState = {
         hex: '',
         state: true,
     },
-    tagSet: "",
+    selectedTagsIds: [],
+    tagId: '',
+
 }
 
 export const tagsReducer = (state = initialState, action) => {
@@ -19,9 +22,37 @@ export const tagsReducer = (state = initialState, action) => {
         case types.tagsInitLoaded:
             return {
                 ...state,
-                tagslist: action.payload,
+                initTags: action.payload,
             }
 
+        case types.tagsSetChildren:
+            setChildrenTags(state.initTags, action.payload.id, action.payload.tagS);
+            return {
+                ...state,
+                initTags: [...state.initTags],
+            }
+
+        case types.tagsSaveIds:
+            return {
+                ...state,
+                selectedTagsIds: [...state.selectedTagsIds, action.payload],
+            }
+
+        case types.tagsRemoveId:
+            return {
+                ...state,
+                selectedTagsIds: state.selectedTagsIds.map(x => {
+                    if (x != action.payload) {
+                        return x;
+                    }
+                }),
+            }
+
+        case types.tagsSelected:
+            return {
+                ...state,
+                tagId: action.payload,
+            }
         case types.tagsOpenModal:
             return {
                 ...state,

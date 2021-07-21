@@ -19,12 +19,59 @@ export const startTagsInitLoading = (authUser) => {
 	}
 };
 
-export const tagsInitLoaded = (tagslist) => {
+export const tagsInitLoaded = (tagS) => {
 	return {
 		type: types.tagsInitLoaded,
-		payload: tagslist,
+		payload: tagS,
 	}
 };
+
+export const startTagsSetChildren = (authUser, tagId) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getTagsById(authUser, tagId);
+
+			dispatch(tagsSetChildren(tagId, resp.data));
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+export const tagsSetChildren = (tagId, tagS) => {
+	return {
+		type: types.tagsSetChildren,
+		payload: {
+			id: tagId,
+			tagS,
+		},
+	}
+};
+
+export const saveTagsId = (tagId) => {
+	return {
+		type: types.tagsSaveIds,
+		payload: tagId,
+	}
+};
+
+export const removeTagsId = (tagId) => {
+	return {
+		type: types.tagsRemoveId,
+		payload: tagId,
+	}
+};
+
+export const tagsSelected = (tagId) => {
+	return {
+		type: types.tagsSelected,
+		payload: tagId,
+	}
+}
 
 export const openModalTags = () => {
 	return {
@@ -183,27 +230,3 @@ export const tagsRemoveAll = () => {
 	}
 };
 
-export const startTagSet = (authUser,tagId) => {
-	return async (dispatch) => {
-
-		try {
-
-			const resp = await getTagsById(authUser, tagId);
-
-			dispatch(tagsSet(resp.data));
-
-		} catch (error) {
-			console.log(error);
-		}
-
-	}
-};
-
-export const tagsSet = (tagSet) => {
-	return {
-		type: types.tagSetInit,
-		payload: {
-			tagSet,
-		},
-	}
-};
