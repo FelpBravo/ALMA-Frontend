@@ -75,9 +75,10 @@ const SideBarContent = () => {
 	const classes = useStyles();
 
 	const dispatch = useDispatch();
+
 	const { selectedIds = [], initFolders = [], folderId = [] } = useSelector(state => state.folders);
 
-	const { selectedTagsIds = [], initTags = [], tagId = []  } = useSelector(state => state.tags);
+	const { selectedTagsIds = [], initTags = [], tagId = [] } = useSelector(state => state.tags);
 
 	const { authUser, authorities } = useSelector(state => state.auth);
 
@@ -92,6 +93,7 @@ const SideBarContent = () => {
 	const [folders, setFolders] = useState([]);
 
 	const [value, setValue] = React.useState(0);
+	console.log(value)
 
 	const [tags, setTags] = useState([]);
 
@@ -156,9 +158,8 @@ const SideBarContent = () => {
 	const handleRenderMenu = (folders) => {
 		return folders.map((folder) => {
 			const isSelected = parseInt(folderId) === parseInt(folder.id)
-			return <div ref={isSelected ? setMyRef : null}>
+			return <div ref={isSelected ? setMyRef : null} key={folder.id}>
 				<StyledTreeItem
-					key={folder.id}
 					folderId={folder.id}
 					nodeId={String(folder.id)}
 					labelText={folder.name}
@@ -177,14 +178,13 @@ const SideBarContent = () => {
 	const handleRenderMenuTags = (tags) => {
 		return tags.map((tag) => {
 			const isSelected = parseInt(tagId) === parseInt(tag.id)
-			return <div ref={isSelected ? setMyRef : null}>
+			return <div ref={isSelected ? setMyRef : null} key={tag.id}>
 				<StyledTreeItem
-					key={tag.id}
 					folderId={tag.id}
 					nodeId={String(tag.id)}
 					labelText={tag.tag}
 					labelIcon={tag.hashSubTags ? FolderIcon : MailIcon}
-					onClick={() => { dispatch(startBreadcrumbs(tag.tag, `/directory/${tag.id}`)) }}
+					onClick={() => { dispatch(startBreadcrumbs(tag.tag, `/tags/${tag.id}`)) }}
 				>
 					{Array.isArray(tag.children) ? handleRenderMenuTags(tag.children) : null}
 				</StyledTreeItem>
@@ -215,6 +215,9 @@ const SideBarContent = () => {
 		history.push(`/directory/${folderId}`);
 	}
 
+	useEffect(() => {
+		if (folderId && myRef) executeScroll()
+	}, [folderId, myRef])
 	//Seleccion de Tags
 
 	const handleSelectTag = async (event, tagId) => {
@@ -234,15 +237,16 @@ const SideBarContent = () => {
 		}
 
 		dispatch(searchRemoveText());
-
-		//history.push(`/directory/${tagId}`);
+	
+		history.push(`/tags/${tagId}`);
 	}
 
 	useEffect(() => {
-		if (folderId && myRef) executeScroll()
-	}, [folderId, myRef])
+		if (tagId && myRef) executeScroll()
+	}, [tagId, myRef])
+    
 
-	const handleChange = (event, newValue) => {
+	const handleChange1 = (event, newValue) => {
 		setValue(newValue);
 	};
 
@@ -250,14 +254,14 @@ const SideBarContent = () => {
 		<CustomScrollbars style={{ overflowX: 'hidden' }} className="scrollbar">
 			<SideBarContext.Provider value={{}}>
 				<Navigation menuItems={fixedFolders} privileges={authorities} />
-				<Divider className="mt-2" />
+				
 				<Tabs
 					value={value}
-					onChange={handleChange}
+					onChange={handleChange1}
 					indicatorColor="none"
 					textColor='inherit'
 				>
-					<Tab style={{ fontFamily: 'Poppins', fontSize: "12px", fontWeight: 400, textTransform: "none", minWidth: 100, padding: 0 }} label="Directorios" {...a11yProps(0)} />
+					<Tab style={{ fontFamily: 'Poppins', fontSize: "12px", fontWeight: 400, textTransform: "none", minWidth: 100}} label="Directorios" {...a11yProps(0)} />
 					<Tab style={{ fontFamily: 'Poppins', fontSize: "12px", fontWeight: 400, textTransform: "none", minWidth: 100 }} label="Etiquetas" {...a11yProps(1)} />
 
 				</Tabs>
@@ -276,7 +280,7 @@ const SideBarContent = () => {
 				</TabPanel>
 
 				<TabPanel value={value} index={1}>
-					
+
 					<TreeView
 						defaultCollapseIcon={<ExpandMoreIcon />}
 						defaultExpandIcon={<ChevronRightIcon />}
@@ -286,6 +290,7 @@ const SideBarContent = () => {
 					>
 						{handleRenderMenuTags(tags)}
 					</TreeView>
+
 				</TabPanel>
 
 			</SideBarContext.Provider>

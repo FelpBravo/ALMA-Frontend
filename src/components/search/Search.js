@@ -12,7 +12,7 @@ const Search = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 
-	const { id, page, savedSearchId } = useParams()
+	const { id, savedSearchId , page, tagId } = useParams()
 	const { folderId } = queryString.parse(location.search);
 	
 	let page_url = '1'
@@ -23,15 +23,22 @@ const Search = () => {
 
 	const { authUser } = useSelector(state => state.auth);
 
-	
+
 	useEffect(() => {
+		if (tagId){
+		dispatch(startSearchLoading(authUser, undefined, undefined, undefined , page_url, 10, tagId));	
+		}
+		
+	}, [dispatch,tagId]); 
+
+    useEffect(() => {
 
 		if (!id || !authUser) {
 			return;
 		}
-		dispatch(startSearchLoading(authUser, undefined, undefined, id,page_url));
+		dispatch(startSearchLoading(authUser, undefined, undefined, id ,page_url));
 
-	}, [dispatch, id, authUser]); 
+	}, [dispatch, id, authUser]);
 
 	useEffect(() => {
 		if(id) dispatch(searchClearAllFilters());
