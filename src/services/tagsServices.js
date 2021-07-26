@@ -18,9 +18,9 @@ const getTagsById = (authUser,tagId) => {
 	});
 };
 
-const addTags = (authUser, tag, hex) => {
+const addTags = (authUser, tag, hex,  parentId) => {
 	return axiosInstance.post(`/tags/add`,
-		{ tag, hex },
+		{ tag, hex,  parentId },
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,

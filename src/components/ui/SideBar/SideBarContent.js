@@ -15,7 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
-
+import LabelIcon from '@material-ui/icons/Label';
+import TreeItem from '@material-ui/lab/TreeItem';
+import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
 
 import { startBreadcrumbs } from 'actions/breadcrumbs'
 import { folderSelected, removeFoldersId, saveFoldersId, startFoldersInitLoading, startFoldersSetChildren } from 'actions/folders';
@@ -27,7 +29,7 @@ import Navigation from '../components/Navigation';
 import StyledTreeItem from '../StyledTreeItem';
 import { SideBarContext } from './SideBarContext';
 import { Divider } from '@material-ui/core';
-import { removeTagsId, saveTagsId, startTagSet, startTagsInitLoading, startTagsSetChildren, tagsSelected } from 'actions/tags';
+import { removeTagsId, removeTagsIdSelected, saveTagsId, startTagSet, startTagsInitLoading, startTagsSetChildren, tagsSelected } from 'actions/tags';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -92,14 +94,14 @@ const SideBarContent = () => {
 
 	const [folders, setFolders] = useState([]);
 
-	const [value, setValue] = React.useState(0);
-	console.log(value)
+	const [value, setValue] = useState(tagId ? 1:0);
 
 	const [tags, setTags] = useState([]);
 
 	const [selectedTags, setSelectedTags] = useState([]);
 
 	const [expandedTags, setExpandedTags] = useState([]);
+
 
 
 	useEffect(() => {
@@ -179,15 +181,27 @@ const SideBarContent = () => {
 		return tags.map((tag) => {
 			const isSelected = parseInt(tagId) === parseInt(tag.id)
 			return <div ref={isSelected ? setMyRef : null} key={tag.id}>
-				<StyledTreeItem
-					folderId={tag.id}
+				<TreeItem
+					tagId={tag.id}
 					nodeId={String(tag.id)}
-					labelText={tag.tag}
-					labelIcon={tag.hashSubTags ? FolderIcon : MailIcon}
+					label={tag.hashSubTags ? 
+						<div>
+							<Typography style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, padding:"4px 30px 8px 0px" }}>
+								<LabelIcon style={{ fontSize: '14px', color: tag.hex }} className="mr-2" color="inherit"/>
+								{tag.tag}
+							</Typography>
+						</div>	:
+						<div>
+						<Typography style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, padding:"4px 30px 8px 0px" }}>
+							<LabelOutlinedIcon style={{ fontSize: '14px', color: tag.hex }} className="mr-2" color="inherit"/>
+							{tag.tag}
+						</Typography>
+					</div>
+					}
 					onClick={() => { dispatch(startBreadcrumbs(tag.tag, `/tags/${tag.id}`)) }}
 				>
 					{Array.isArray(tag.children) ? handleRenderMenuTags(tag.children) : null}
-				</StyledTreeItem>
+				</TreeItem>
 			</div>
 		});
 
@@ -199,6 +213,7 @@ const SideBarContent = () => {
 			return;
 		}
 
+		dispatch(removeTagsIdSelected())
 		dispatch(startFoldersSetChildren(folderId, authUser));
 
 		dispatch(folderSelected(folderId));
@@ -218,6 +233,7 @@ const SideBarContent = () => {
 	useEffect(() => {
 		if (folderId && myRef) executeScroll()
 	}, [folderId, myRef])
+
 	//Seleccion de Tags
 
 	const handleSelectTag = async (event, tagId) => {
@@ -241,14 +257,10 @@ const SideBarContent = () => {
 		history.push(`/tags/${tagId}`);
 	}
 
-	useEffect(() => {
-		if (tagId && myRef) executeScroll()
-	}, [tagId, myRef])
-    
-
-	const handleChange1 = (event, newValue) => {
-		setValue(newValue);
+	const handleChange = (event, newValue) => {
+		setValue(newValue)
 	};
+
 
 	return (
 		<CustomScrollbars style={{ overflowX: 'hidden' }} className="scrollbar">
@@ -257,7 +269,7 @@ const SideBarContent = () => {
 				
 				<Tabs
 					value={value}
-					onChange={handleChange1}
+					onChange={handleChange}
 					indicatorColor="none"
 					textColor='inherit'
 				>

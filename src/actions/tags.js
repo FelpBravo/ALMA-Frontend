@@ -144,7 +144,7 @@ export const deleteTagsLoaded = (tagsData) => {
 		
 	}
 }
-export const startCreateTagsLoading = (authUser, tag, hex) => {
+export const startCreateTagsLoading = (authUser, tag, hex, parentId) => {
 	return async (dispatch) => {
 
 		try {
@@ -158,7 +158,7 @@ export const startCreateTagsLoading = (authUser, tag, hex) => {
 
 			Swal.showLoading();
 
-			await addTags(authUser, tag, hex);
+			await addTags(authUser, tag, hex, parentId);
 
 			const resp = await getTags(authUser);
 			
@@ -227,6 +227,12 @@ const updateTagsLoaded = (id, tag, hex) => {
 export const tagsRemoveAll = () => {
 	return {
 		type: types.tagsRemoveAll,
+	}
+};
+ 
+export const removeTagsIdSelected = () => {
+	return {
+		type: types.tagsRemoveIdSelected,
 	}
 };
 

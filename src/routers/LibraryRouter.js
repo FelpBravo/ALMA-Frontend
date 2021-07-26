@@ -68,7 +68,7 @@ const LibraryRouter = () => {
 				/>
 
 				<Route
-					path="/tags"
+					path="/management/tags"
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
 

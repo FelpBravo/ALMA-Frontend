@@ -40,15 +40,6 @@ export const fixedFolders = [
 				bd: false,
 			},
 			{
-				id: -3,
-				name: 'sidebar.tags.home',
-				icon: 'tag',
-				type: 'item',
-				link: '/tags',
-				auth:'ROLE_TAG_MENU',
-				bd: false,
-			},
-			{
 				id: -4,
 				name: 'sidebar.tags.management',
 				icon: 'settings',
@@ -62,6 +53,14 @@ export const fixedFolders = [
 						type: 'item',
 						link: '/management/folders',
 						auth: ['ROLE_FOLDER_MENU'],
+						bd: false,
+					},
+					{
+						id: -3,
+						name: 'sidebar.tags.home',
+						type: 'item',
+						link: '/management/tags',
+						auth:'ROLE_TAG_MENU',
 						bd: false,
 					},
 					{

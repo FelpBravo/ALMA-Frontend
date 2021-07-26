@@ -47,7 +47,11 @@ export const tagsReducer = (state = initialState, action) => {
                     }
                 }),
             }
-
+        case types.tagsRemoveIdSelected:
+                return {
+                    ...state,
+                    tagId: "",
+                }
         case types.tagsSelected:
             return {
                 ...state,
