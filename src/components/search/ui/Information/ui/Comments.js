@@ -66,15 +66,12 @@ const Comments = (props) => {
     const dispatch = useDispatch()
     const { comments = [], } = useSelector(state => state.info);
 
+    const { authorities } = useSelector(state => state.auth);
+    const ROLE_FILE_COMMENT_CREATE = authorities.find(rol => rol === 'ROLE_FILE_COMMENT_CREATE')
 
     useEffect(() => {
         dispatch(startSaveCommentsLoading(authUser, fileId))
     }, [fileId])
-
-
-
-
-
 
     const Comment = (props) => {
         const { author, text, date, countcomments, attachment, idComment } = props
@@ -94,6 +91,7 @@ const Comments = (props) => {
         }
 
 
+        
         return (
             <>
 
@@ -110,8 +108,16 @@ const Comments = (props) => {
                    
                 </div>
                     <Grid container style={{marginTop: 5}} >
-                        <span style={{marginLeft: 10}} className={classes.buttoncomment} onClick={() => setActive(!active)} ><MessageOutlinedIcon style={{ fontSize: 20, marginRight: 5 }} /><IntlMessages id="comment.button.comment" /></span>
-                        <span className={classes.totalcomments} onClick={loadingReplies} >{countcomments === 0 ? '' : <>{countcomments + ' '}<IntlMessages id="comment.button.totalcomments" /></>}</span>
+                    {(ROLE_FILE_COMMENT_CREATE) &&
+                        <span style={{marginLeft: 10}} className={classes.buttoncomment} onClick={() => setActive(!active)} >
+                            <MessageOutlinedIcon style={{ fontSize: 20, marginRight: 5 }} />
+                            <IntlMessages id="comment.button.comment" />
+                        </span>
+                    }
+                        <span className={classes.totalcomments} onClick={loadingReplies} >
+                            {countcomments === 0 ? '' : <>{countcomments + ' '}
+                            <IntlMessages id="comment.button.totalcomments" /></>}
+                        </span>
                     </Grid>
                 <div style={{ marginLeft: 50 }}>
                     {replies && replies.length > 0 && replies.map(({ author, content, createdOn, id, totalReplies, attachments }) => {
@@ -183,61 +189,66 @@ const Comments = (props) => {
 
         return (
             <div className={classes.newcomment}>
-                <form action="javascript:void(0);">
-                    <Grid container>
-                        <Grid item xs={11}>
-                            <TextField
-                                color="primary"
-                                id="outlined-full-width"
-                                label={<IntlMessages id="comment.newcomment.title" />}
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{
-                                  shrink: true,
-                                }}
-                                variant="outlined"
-                                onChange={(event) => setText(event.target.value)}
-                                
-                            />
+                {(ROLE_FILE_COMMENT_CREATE) &&
+                    <form action="javascript:void(0);">
+                        <Grid container>
+                            <Grid item xs={11}>
+                                <TextField
+                                    color="primary"
+                                    id="outlined-full-width"
+                                    label={<IntlMessages id="comment.newcomment.title" />}
+                                    fullWidth
+                                    margin="normal"
+                                    InputLabelProps={{
+                                    shrink: true,
+                                    }}
+                                    variant="outlined"
+                                    onChange={(event) => setText(event.target.value)}
+                                    
+                                />
+                            </Grid>
+                            <Grid item xs={1} >
+                                <IconButton 
+                                    style={{ background: isEmpty(text) ? "#E0E0E0" : "#3699FF", width: 35, height: 35, marginLeft: 15, marginTop: 25}}
+                                    disabled={isEmpty(text)}
+                                    onClick={handleSubmit}>
+                                    <NearMeOutlinedIcon style={{ color: "white", fontSize: 22 }} />
+                                </IconButton>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={1} >
-                            <IconButton 
-                                style={{ background: isEmpty(text) ? "#E0E0E0" : "#3699FF", width: 35, height: 35, marginLeft: 15, marginTop: 25}}
-                                disabled={isEmpty(text)}
-                                onClick={handleSubmit}>
-                                <NearMeOutlinedIcon style={{ color: "white", fontSize: 22 }} />
-                            </IconButton>
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <label htmlFor={idComment}>    
+                        <Grid container>
+                            <label htmlFor={idComment}>    
+                            
+                                    <AttachFileOutlinedIcon fontSize="small" color="primary" />
                         
-                                <AttachFileOutlinedIcon fontSize="small" color="primary" />
-                      
-                            <span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13, cursor: 'pointer' }}>{file ? '' : <IntlMessages id="comment.attachment.title" />}</span>
-                            <input
-                                className={classes.input}
-                                id={idComment}
-                                type="file"
-                                onChange={handleChange}
+                                <span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13, cursor: 'pointer' }}>{file ? '' : <IntlMessages id="comment.attachment.title" />}</span>
+                                <input
+                                    className={classes.input}
+                                    id={idComment}
+                                    type="file"
+                                    onChange={handleChange}
 
-                            />
-                        </label>
+                                />
+                            </label>
 
-                        <span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13 }}>{file ? <>{name}<ClearIcon fontSize="small" style={{ marginLeft: 5, cursor: 'pointer' }} onClick={handleClear} /></> : ''}</span>
+                            <span style={{ fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, color: "#3699FF", marginTop: 13 }}>{file ? <>{name}<ClearIcon fontSize="small" style={{ marginLeft: 5, cursor: 'pointer' }} onClick={handleClear} /></> : ''}</span>
 
 
-                    </Grid>
-                </form>
+                        </Grid>
+                    </form>
+                }
             </div>
         )
     }
 
-
     return (
         <div>
-            <NewComment />
-            <Divider className="mt-1" style={{ height: 1, background: "rgba(0, 0, 0, 0.12)" }} />
+            {
+                <div>
+                    <NewComment />
+                    <Divider className="mt-1" style={{ height: 1, background: "rgba(0, 0, 0, 0.12)" }} />
+                </div>
+            }
             <div style={{ marginTop: '16px', maxHeight: '650px', overflow: 'auto' }}>
                 {comments.length > 0 && comments.map(({ author, content, createdOn, id, totalReplies, attachments }) => {
                     return (

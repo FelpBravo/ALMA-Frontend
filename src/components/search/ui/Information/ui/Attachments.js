@@ -36,6 +36,9 @@ const Attachments = (props) => {
   const [file, setFile] = useState()
   const [name, setName] = useState()
 
+  const { authorities } = useSelector(state => state.auth);
+  const ROLE_FILE_ATTACHMENT_UPLOAD = authorities.find(rol => rol === 'ROLE_FILE_ATTACHMENT_UPLOAD')
+
   useEffect(() => {
 
     dispatch(startSaveAttachmentsLoading(authUser, fileId))
@@ -77,33 +80,38 @@ const Attachments = (props) => {
   return (
     <div className="table-responsive-material">
       <div className="mt-2" style={{ marginBottom: 10 }}>
-        <input
-          className={classes.input}
-          id="contained-button-file"
-          multiple
-          type="file"
-          onChange={handleChange}
-        />
-        <label htmlFor="contained-button-file">
-          {!file &&
-            <Button variant="contained" component="span"
-              startIcon={<SearchIcon />}
-              style={{background:"#E1F0FF", fontFamily:"Poppins", fontSize:14, color:'#3699FF', width:200, padding: 6}}
+      {(ROLE_FILE_ATTACHMENT_UPLOAD) &&
+        <div>
+        
+          <input
+            className={classes.input}
+            id="contained-button-file"
+            multiple
+            type="file"
+            onChange={handleChange}
+          />
+          <label htmlFor="contained-button-file">
+            {!file &&
+              <Button variant="contained" component="span"
+                startIcon={<SearchIcon />}
+                style={{background:"#E1F0FF", fontFamily:"Poppins", fontSize:14, color:'#3699FF', width:200, padding: 6}}
+              >
+                Adjuntar
+
+              </Button>
+            }
+          </label>
+          {file &&
+            <Button variant="contained" color="primary" component="span"
+              startIcon={<CloudUploadIcon />}
+              onClick={handleUploadAttach}
             >
-              Adjuntar
+              Cargar Archivo
 
             </Button>
           }
-        </label>
-        {file &&
-          <Button variant="contained" color="primary" component="span"
-            startIcon={<CloudUploadIcon />}
-            onClick={handleUploadAttach}
-          >
-            Cargar Archivo
-
-          </Button>
-        }
+        </div>
+      }
       </div>
       <span style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, color: "#808080", marginTop: 15, marginLeft: 10 }}>{file ? <>{name}<ClearIcon fontSize="small" style={{ marginLeft: 5, cursor: 'pointer' }} onClick={handleClear} /></> : ''}</span>
 
