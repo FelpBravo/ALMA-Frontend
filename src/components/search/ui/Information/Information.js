@@ -79,10 +79,13 @@ const Information = () => {
 	const history = useHistory();
 	const { docs } = useSelector(state => state.documents);
 
-  
+	const { comments = [], } = useSelector(state => state.info);
 
 	const [value, setValue] = useState(0);
 
+	const { authorities } = useSelector(state => state.auth);
+	const ROLE_FILE_COMMENT = authorities.find(rol => rol === 'ROLE_FILE_COMMENT')
+	const ROLE_FILE_ATTACHMENT = authorities.find(rol => rol === 'ROLE_FILE_ATTACHMENT')
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -113,19 +116,27 @@ const Information = () => {
 									textColor="primary"
 									centered
 								>
-									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }} label="Información General" {...a11yProps(0)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Comentarios" {...a11yProps(1)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Documentos adjuntos" {...a11yProps(2)} />
+								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }} label="Información General" {...a11yProps(0)} />
+								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Comentarios" {...a11yProps(1)} /> 
+								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Documentos adjuntos" {...a11yProps(2)} />
 								</Tabs>
+
 								<TabPanel value={value} index={0}>
 									<Metadata/>
 								</TabPanel>
+
+								{(ROLE_FILE_COMMENT) &&
 								<TabPanel value={value} index={1}>
 									<Comments authUser={authUser} fileId={id}/>
 								</TabPanel>
+								}
+
+								{(ROLE_FILE_ATTACHMENT) &&
 								<TabPanel value={value} index={2}>
 									<Attachments authUser={authUser} fileId={id} name={docs.name}/>
 								</TabPanel>
+								}
+
 							</div>
 							</Grid>
 
