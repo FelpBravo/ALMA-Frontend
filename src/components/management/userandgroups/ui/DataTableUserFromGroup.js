@@ -58,7 +58,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 	}
 
 	const handleRemove = async (id) => {
-		console.log("id", id)
+		
 		const resp = await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Estas seguro que quiere eliminar al usuario de este grupo?",
@@ -67,7 +67,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 			focusConfirm: true,
 			heightAuto: false,
 		});
-		console.log(resp, "RESPUESTA")
+		
 		if (resp.value) {
 			dispatch(removeUserGroupLoading(authUser, idGroup, id));
 			
