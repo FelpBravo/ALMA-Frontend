@@ -62,7 +62,10 @@ const ModalGroup = () => {
   }
   const handleOnSave =() =>{
   setNameGroup({dependencie: "", profile: "" , fullnamegroup: "", users:[] })
-   dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup, nameGroup.users))
+   const nameUsers = nameGroup.users.map(function(item) {
+    return item['id'];
+    })
+   dispatch(startCreateGroupLoading(authUser, nameGroup.fullnamegroup, nameUsers))
   }
 
   useEffect(() => {
@@ -134,6 +137,7 @@ const ModalGroup = () => {
                 type="text"
                 variant="outlined"
                 name="names"
+                disabled
                 error={groupname || messageErrorGroup? true : false}
                 onChange={handleOnChangeName}
                 helperText={!groupname? (messageErrorGroup? messageErrorGroup : '' ): 'Grupo ya existe'}
@@ -142,7 +146,7 @@ const ModalGroup = () => {
           </Grid>
           <Divider className="mt-3" />
           <h5 className="mt-3">Asignación de usuarios</h5>
-          <SelectAndChips data={data} returnData={(users)=> setNameGroup({...nameGroup,['users']:users.map(users=>{
+          <SelectAndChips data={data.map(user => {return { 'id' : user.id}})} returnData={(users)=> setNameGroup({...nameGroup,['users']:users.map(users=>{
              return{'id': users.id}
             })})
             }/>

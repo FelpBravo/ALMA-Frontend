@@ -34,8 +34,8 @@ const ModalUsers = () => {
 
   const [stateCompany, setStateCompany] = useState({ name: false, department: false })
 
-  const [nameUser, setNameUser] = useState({ group: [] })
-
+  const [nameUser, setNameUser] = useState({ name: [] })
+  
   const [dataCreate, setDataCreate] = useState({});
 
   const { company, department } = dataCreate
@@ -69,7 +69,7 @@ const ModalUsers = () => {
     dispatch(nicknameValidate(false))
     dispatch(closeModalUsers());
   }
-
+  
   const handleOnChange = ({ target }) => {
     const { name, value } = target
 
@@ -136,7 +136,7 @@ const ModalUsers = () => {
     dispatch(closeModalUsers());
   }
 
-
+ 
   return (
 
     <div>
@@ -300,10 +300,8 @@ const ModalUsers = () => {
           <Divider className="mt-3" />
 
           <h5 className="mt-3">Asignar grupos</h5>
-
-          <SelectAndChips data={grouplist} returnData={(group) => setNameUser(group.map(group => {
-            return { 'id': group.id }
-          }))} />
+          
+          <SelectAndChips data={grouplist.map(group => {return { 'id' : group.name}})} returnData={(group) => setNameUser(group.map(group => group.id))} />
 
           <Divider className="mt-3" />
 

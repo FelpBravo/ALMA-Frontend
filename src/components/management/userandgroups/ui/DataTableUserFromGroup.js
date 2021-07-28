@@ -58,6 +58,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 	}
 
 	const handleRemove = async (id) => {
+		console.log("id", id)
 		const resp = await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Estas seguro que quiere eliminar al usuario de este grupo?",
@@ -66,14 +67,15 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 			focusConfirm: true,
 			heightAuto: false,
 		});
-
+		console.log(resp, "RESPUESTA")
 		if (resp.value) {
 			dispatch(removeUserGroupLoading(authUser, idGroup, id));
-
+			
 		}
 
 	}
-
+	const users = members.users
+	
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -84,7 +86,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 									<IntlMessages id="Usuarios del grupo : " />
-									{nameGroup}
+									{idGroup}
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 
@@ -103,7 +105,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 						<TableBody>
 
 
-							{members && members.length > 0 && members.map(({ id, firstName, lastName, email }, index) => {
+							{users && users.length > 0 && users.map(({ id, firstName, lastName, email }, index) => {
 								return (
 									<TableRow key={index} >
 										<TableCell>
@@ -128,7 +130,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 							})
 
 							}
-							{members.length === 0 &&
+							{users && users.length === 0 &&
 								<TableRow key='1' >
 									<TableCell>
 										No hay usuarios
