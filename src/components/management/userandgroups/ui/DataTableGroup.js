@@ -66,13 +66,13 @@ const DataTableGroup = ({ setOpenUserFromGroup }) => {
 		}
 	}, [])
 
-	const handleSelectName = (id, name) => {
+	const handleSelectName = (name) => {
 		setOpenUserFromGroup(true)
-		dispatch(membersGroupInitLoading(authUser, id, name));
+		dispatch(membersGroupInitLoading(authUser, name));
 
 	}
 
-	const handleDelete = async (id) => {
+	const handleDelete = async (name) => {
 		const resp = await Swal.fire({
 			title: 'Eliminar',
 			text: "¿Estas seguro que quiere eliminar al usuario de este grupo?",
@@ -81,13 +81,13 @@ const DataTableGroup = ({ setOpenUserFromGroup }) => {
 			focusConfirm: true,
 			heightAuto: false,
 		});
-
-		if (resp.value) {
-			dispatch(deleteGroupLoading(authUser, id));
+		console.log("RESPUESTA", resp.system)
+		if (resp.value && resp.system === false) {
+			dispatch(deleteGroupLoading(authUser, name));
+			setOpenUserFromGroup(false)
 		}
 
 	}
-
 
 	return (
 		<div className="row">
@@ -110,11 +110,11 @@ const DataTableGroup = ({ setOpenUserFromGroup }) => {
 						</TableHead>
 						<TableBody>
 
-							{grouplist.map(({ id, name }, index) => {
+							{grouplist.map(({ name, system }, index) => {
 
-								return <TableRow key={index} >
+								return  <TableRow key={index} >
 									<TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}
-										onClick={() => handleSelectName(id, name)}
+										onClick={() => handleSelectName(name)}
 									>
 										{name}
 									</TableCell>
@@ -122,14 +122,15 @@ const DataTableGroup = ({ setOpenUserFromGroup }) => {
 										canDeleteGroups &&
 										<TableCell>
 											<div className={classes.iconsHolder}>
+												{(!system)  &&
 												<TableActionButton
 													materialIcon={
 														<DeleteOutlinedIcon
 															className={classes.iconos}
-															onClick={() => handleDelete(id)}
+															onClick={() => handleDelete(name)}
 														/>
 													}
-												/>
+												/>}
 											</div>
 
 										</TableCell>
