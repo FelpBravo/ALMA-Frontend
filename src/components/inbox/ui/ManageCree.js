@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { CommentRoleInit, manageSetValueField, startAcceptTasksInit } from 'actions/flowDocument';
+import { CommentRoleInit, manageSetValueField, startAcceptTasksCreeInit } from 'actions/flowDocument';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
@@ -18,9 +18,9 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { DocManagement } from './DocManagement';
 import ModalComments from './ModalComments';
 import { TableDocsCree } from './TableDocsCree';
+import { TableDocPrincipal } from './TableDocPrincipal';
 
 const useStyles = makeStyles((theme) => ({
 	input: {
@@ -35,7 +35,7 @@ const ManageCree = () => {
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
 	const { involved, taskId, role, author, expiresAt, fileId, flowId } = useSelector(state => state.flowDocument);
-	const { comment, approves, users } = involved
+	//const { comment, approves, users } = involved
 
 	const [value, setValue] = React.useState(null);
 
@@ -45,6 +45,8 @@ const ManageCree = () => {
 	const [file, setFile] = useState()
 	const [dateActive, setDateActive] = useState(false)
     const [commentCreate, setCommentCreate] = useState();
+	const { dataCREE = [] } = useSelector(state => state.flowDocument);
+
 
 
 	const handleChange = (event) => {
@@ -53,6 +55,11 @@ const ManageCree = () => {
 
 	const handleBackGo = () => {
 		history.goBack()
+	}
+
+	const handleAcceptTask = () => {
+			dispatch(startAcceptTasksCreeInit(authUser, taskId, value === "true"))
+			handleBackGo()
 	}
     const handleChangeRedux = ({ target }) => {
 		const { name, value } = target;
@@ -93,9 +100,13 @@ const ManageCree = () => {
 						</Grid>
 					</Grid>
 
-					<DocManagement />
+					
+					<h3>Documento Principal</h3>
+
+					<TableDocPrincipal/>
 
 					<Divider className="mt-3 mb-3" />
+                    <h3>Documentos Relacionados</h3>
 
                     <TableDocsCree/>
 
@@ -104,10 +115,9 @@ const ManageCree = () => {
 
 					<Grid container item xs={12}>
 						<TextField
-							name="comment"
 							multiline
 							rows={3}
-							//value={comment}
+						    value={dataCREE.comment}
 							disabled
 						/>
 					</Grid>
@@ -116,7 +126,7 @@ const ManageCree = () => {
 					<h3>Solicitud de permiso</h3>
 					<p className="user-description">
 						<span className="owner-most-viewed-documents">{author}</span>
-						{` te ha solicitado revisar este documento, en el rol `}
+						{` te ha solicitado permiso para modificar este documento, en el rol `}
 						<span className="owner-most-viewed-documents">{role}</span>
 					</p>
 					<p className="user-description">
@@ -205,7 +215,7 @@ const ManageCree = () => {
 									style={{
 										fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
 									}}
-									//onClick={handleAcceptTask}
+									onClick={handleAcceptTask}
 									variant="contained"
 									color="primary">
 

@@ -105,10 +105,21 @@ const ManagementSummary = () => {
 							</h3>
 						</Grid>
 					</Grid>
+					{role === "author" &&
+						<div>
+							<Divider className="mt-3 mb-3" />
+							<h3>Tarea Rechazada</h3>
+							<p className="user-description">
+								<span className="owner-most-viewed-documents">{author}</span>
+								{` te ha devuelto este documento, en el rol `}
+								<span className="owner-most-viewed-documents">{role}</span>
+							</p>
 
+						</div>}
 					<DocManagement />
 
-					<Divider className="mt-3 mb-3" />
+					{role !== "author" &&
+					<div><Divider className="mt-3 mb-3" />
 					<h3>Información general del flujo</h3>
 
 					<Grid container item xs={12}>
@@ -120,6 +131,7 @@ const ManagementSummary = () => {
 							disabled
 						/>
 					</Grid>
+					</div>}
 					{(role === "owner" || role === "author") &&
 						<div>
 							<Divider className="mt-3 mb-3" />
@@ -149,26 +161,28 @@ const ManagementSummary = () => {
 						</div>
 					}
 
+					{role !== "author" &&
+						<div>
+							<Divider className="mt-3 mb-3" />
+							<h3>Solicitud de revisión</h3>
+							<p className="user-description">
+								<span className="owner-most-viewed-documents">{author}</span>
+								{` te ha solicitado revisar este documento, en el rol `}
+								<span className="owner-most-viewed-documents">{role}</span>
+							</p>
+							<p className="user-description">
+								{`El plazo de esta solicitud vence el `}
+								<span className="owner-most-viewed-documents">{expiresAt}</span>
+							</p>
 
-					<Divider className="mt-3 mb-3" />
-					<h3>Solicitud de revisión</h3>
-					<p className="user-description">
-						<span className="owner-most-viewed-documents">{author}</span>
-						{` te ha solicitado revisar este documento, en el rol `}
-						<span className="owner-most-viewed-documents">{role}</span>
-					</p>
-					<p className="user-description">
-						{`El plazo de esta solicitud vence el `}
-						<span className="owner-most-viewed-documents">{expiresAt}</span>
-					</p>
-
-					<FormControl>
-						<FormLabel color="primary" >Aprobar Tarea</FormLabel>
-						<RadioGroup value={String(value)} onChange={handleChange}>
-							<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
-							<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
-						</RadioGroup>
-					</FormControl>
+							<FormControl>
+								<FormLabel color="primary" >Aprobar Tarea</FormLabel>
+								<RadioGroup value={String(value)} onChange={handleChange}>
+									<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
+									<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
+								</RadioGroup>
+							</FormControl>
+						</div>}
 
 					<Divider className="mt-3 mb-3" />
 					<Grid container >
@@ -251,16 +265,30 @@ const ManagementSummary = () => {
 									>Editar</Button>}
 
 								{role === "author" &&
-									<Button
-										className="mr-3"
-										style={{
-											backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
-											boxShadow: "none", height: '45px', width: '120px'
-										}}
-										onClick={handleEdit}
-										variant="contained"
-										color="primary"
-									>Editar</Button>}
+									<Grid>
+										<Button
+											className="mr-3"
+											style={{
+												fontFamily: "Poppins", fontSize: '12px', fontWeight: 500,
+												boxShadow: "none", height: '45px', width: '120px'
+											}}
+											//onClick={handleEdit}
+											variant="outlined"
+											color="primary"
+										>Cancelar</Button>
+
+										<Button
+											className="mr-3"
+											style={{
+												backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+												boxShadow: "none", height: '45px', width: '120px'
+											}}
+											onClick={handleEdit}
+											variant="contained"
+											color="primary"
+										>Editar</Button>
+									</Grid>
+								}
 
 								<Button
 									style={{

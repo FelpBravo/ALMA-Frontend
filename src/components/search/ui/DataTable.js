@@ -39,7 +39,7 @@ import SharedDialog from './SharedDialog';
 import TableActionButton from './TableActionButton';
 import ModalVersioning from './Versioning/ui/ModalVersioning';
 import TableActionButtonCree from './TableActionButtonCree';
-import { startApprovesListLoading } from 'actions/flowDocument';
+import { starDocumentCreeInit, startApprovesListLoading } from 'actions/flowDocument';
 
 const MAX_CHARACTERS = 60;
 
@@ -246,6 +246,7 @@ const DataTable = () => {
 	}
 	const handleEditCCB = (id) => {
 		dispatch(startApprovesListLoading( {authUser, flowName}))
+		dispatch(starDocumentCreeInit({authUser, id}))
 		history.push(`/document/${id}/CREE`);
 
 	}

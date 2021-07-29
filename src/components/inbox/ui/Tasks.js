@@ -13,11 +13,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 
-import { startActiveTasksInit, startInvolvedLoading } from 'actions/flowDocument';
+import { startActiveTasksInit, startDataCreeInit, startDataCreeLoading, startInvolvedLoading } from 'actions/flowDocument';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import { INBOX_STATUS, STATUS } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
-
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import ManagementSummary from './ManagementSummary';
 import TableActionButtonCree from 'components/search/ui/TableActionButtonCree';
 
@@ -54,7 +55,6 @@ const Tasks = () => {
 	const { authUser } = useSelector(state => state.auth);
 	const { tasksList = {} } = useSelector(state => state.flowDocument);
 	const { data = [], totalItems = 0 } = tasksList;
-
 	const [page, setPage] = useState(0)
 	const { flowId } = useParams();
 
@@ -66,8 +66,8 @@ const Tasks = () => {
 
 	};
 
-	const handleManageCCB = () => {
-		//dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt))
+	const handleManageCCB = (instanceId, taskId, role, author, fileId, expiresAt) => {
+		dispatch(startDataCreeInit(authUser, instanceId, taskId, role, author, fileId, expiresAt))
 		history.push(`/CREE`);
 
 	};
@@ -78,6 +78,10 @@ const Tasks = () => {
 		dispatch(startActiveTasksInit(authUser , page, value));
 	
 	}*/}
+
+	const handleEdit = (fileId, instanceId) => {
+		history.push(`/document/${fileId}/edit/${instanceId}`);
+	}
 
 	const handleChangePage = (event, page) => {
 		dispatch(startActiveTasksInit(authUser, page, STATUS))
@@ -148,7 +152,7 @@ const Tasks = () => {
 						</TableHead>
 						<TableBody >
 
-							{renderData.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt }, index) => {
+							{renderData.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt, type }, index) => {
 
 								return <TableRow key={index} >
 
@@ -179,23 +183,38 @@ const Tasks = () => {
 									<TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
 
 										<div className={classes.iconsHolder}>
-											<TableActionButton
-												materialIcon={
-													<DescriptionOutlinedIcon
-														className={classes.iconos}
-														onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt)}
-													/>
-												}
-											/>
+											{type === "GENERAL" &&
+												<TableActionButton
+													materialIcon={
+														<DescriptionOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt)}
+														/>
+													}
+												/>}
+											{type === "CRE" && role !== "autor" &&
+												<TableActionButtonCree
+													materialIcon={
+														<DescriptionOutlinedIcon
+															className={classes.iconosCCB}
+															onClick={() => handleManageCCB(instanceId, taskId, role, author, fileId, expiresAt)}
+														/>
+													}
+												/>
+											}
+											{type === "CRE" && role === "autor" &&
+												<TableActionButton
+													materialIcon={
+														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.edit" />}>
+															<BorderColorOutlinedIcon
+																className={classes.iconos}
+																onClick={() => handleEdit(fileId, instanceId)}
+															/>
+														</Tooltip>
+													}
+												/>
+											}
 
-											<TableActionButtonCree
-												materialIcon={
-													<DescriptionOutlinedIcon
-														className={classes.iconosCCB}
-														onClick={() => handleManageCCB()}
-													/>
-												}
-											/>
 										</div>
 
 

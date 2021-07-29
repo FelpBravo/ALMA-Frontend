@@ -2,17 +2,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import jwt_decode from 'jwt-decode'
-import { filter, get, includes } from 'lodash';
+import { filter, get, includes, values } from 'lodash';
 import { isEmpty } from 'lodash-es';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useHistory } from 'react-router';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
 import IntlMessages from 'util/IntlMessages';
 import schema from './requestReviewCree.schema';
 import RolItemCree from './RolItemCree';
+import DocumentInit from './DocumentInit';
+import RolItemUser from './RollItemUser';
+import { startInitFlowsCreeLoading } from 'actions/flowDocument';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -39,78 +42,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Cree = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const { authUser } = useSelector(state => state.auth);
-    const { approvesList} = useSelector(state => state.flowDocument);
-    //useEffect(() => {
-    //if (flowId){
-    // dispatch(startGetInvolvedLoading(flowId))
-    // }
-    //}, [flowId])
-    //const [formData, setFormData] = useState(null)
+    const { approvesList, docCree} = useSelector(state => state.flowDocument);
+    console.log("doc selecionado", docCree);
+    const [maxDays, setMaxDays] = useState();
+    const [commentValue, setCommentValue] = useState();
+ 
+ 
     const { control, register, handleSubmit, formState: { errors }, setValue, setError, getValues, reset } = useForm({
-        // defaultValues: initialApprovers,
+       
         mode: "onTouched",
         shouldFocusError: true,
         resolver: yupResolver(schema),
     });
-    {/*const getUsers = (role, approvers) => approvers.find( app => app.role === role)?.users;
-    useEffect(() => {
-        if (!isEmpty(initialApprovers) && !isEmpty(approvesList)) {
-            const { comment } = form
-            const currentData = { 
-                ...initialApprovers,
-                comment,
-                approves: approvesList?.map(({role}) =>({
-                    role,
-                    users: getUsers(role, initialApprovers.approves) || [],
-                }))
-            }
-            console.log("currentData", currentData)
-            reset(currentData)
-        }
-    }, [initialApprovers, setValue, approvesList, form])
-    const flowName = "GENERAL";
-const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
-    {/* const onSubmit = values => {
-        let canOpenModal = true;
-        const { approves, comment } = values;
-     // Revisar usuarios duplicados por rol
-        const set = [...new Set(approves.map(x => get(x, 'users')?.map(({ userId }) => userId)))];
-        const allList = set.map(arr => filter(arr, (val, i, iteratee) => includes(iteratee, val, i + 1)))
-        allList.forEach((arr, index) => arr?.forEach(
-            userId => {
-                canOpenModal = false;
-                setError(`approves[${index}].users[${getIndex(get(approves, `${index}.users`, []), userId)}].userId`, {
-                    type: "focus",
-                    message: "forms.errors.validation.string.unique.flows",
-                }, { shouldFocus: true })
-            }
-        ))
-        if (canOpenModal) {
-            const data = { // TODO: Esta es la variable para enviar por props en el modal informativo.
-                "flow": {
-                    "name": "hola"
-                },
-                "document": {
-                    "uuid": get(filesLoaded, '0.fileIdLoaded', null),
-                    "name": get(filesLoaded, '0.name', null),
-                    "author": user?.userId,
-                    pathFolderName,
-                    folderId,
-                    //tagsField: tagsField?.length
-                },
-                "startedBy": user?.userId,
-                //Edit
-                taskId,
-                "approve": false,
-                "role": role,
-                ...values,
-                comment: values.comment
-            }
-            setFormData(data)
-        }
-    };
-  */}
+    console.log("valores", getValues())
+
     const commonProps = {
         register,
         errors,
@@ -118,16 +66,22 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
         shrink: true,
         size: "small",
     }
-    {/*
-    useEffect(() => {
-        dispatch(startApprovesListLoading({ authUser, flowName }))
-    }, [authUser])
+  
 
-    const handleClose = () => {
-        setFormData(null)
-    }*/}
-   
+    const documentList = [{"type":"Documentos Relacionados","label":"prueba","order":3,"mandatory": true}]
+
+    const onSubmit = values => {
+        console.log(values)
+       
+            const data = { 
+                ...values,
+                "fileId": docCree?.id,
+            }
+        dispatch(startInitFlowsCreeLoading(authUser, data,  () => history.push('/inbox')))
+    };
+
     return (
+        <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row">
             <div className="col-xl-12 col-lg-12 col-md-12 col-12">
                 <div className="jr-card">
@@ -143,12 +97,34 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
                                     </p>
                                 </Alert>
                             </Grid>
+
+                            <DocumentInit  commonProps={commonProps}/>
+
                             <Grid container item md={12} >
                                
                                 {
-                                    approvesList.map(({ role, ...rest }, index) =>
-                                        <Grid container key={role} item md={12} spacing={2}>
+                                    documentList.map(({ type, ...rest }, index) =>
+                                        <Grid container key={type} item md={12} spacing={2}>
                                             <RolItemCree
+                                                index={index}
+                                                rolName={type}
+                                                setValue={setValue}
+                                                name={`documents[${index}].documents`}
+                                                commonProps={commonProps}
+                                                control={control}
+                                                setError={setError}
+                                                getValues={getValues}
+                                                {...rest} />
+                                        </Grid>)
+                                }
+                            </Grid>
+
+                            <Grid container item md={12} >
+                               
+                                {
+                                   approvesList.map(({ role, ...rest }, index) =>
+                                        <Grid container key={role} item md={12} spacing={2}>
+                                            <RolItemUser
                                                 index={index}
                                                 rolName={role}
                                                 setValue={setValue}
@@ -161,7 +137,7 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
                                         </Grid>)
                                 }
                             </Grid>
-                            
+                           
                             <Grid container item md={12}>
                             <TitleCard message="document.loadDocuments.general.remarks" />
                                 <TextField
@@ -169,7 +145,8 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
                                     //label="Comentario"
                                     multiline
                                     rows={3}
-                                    {...commonProps} />
+                                    {...commonProps}
+                                   />
                             </Grid>
                         </Grid>
                         <div className="row mt-4">
@@ -183,7 +160,7 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
                                     <div className={classes.buttons}>
                                         <Button
                                             className={classes.buttonPrimary}
-                                            //type="submit"
+                                            type="submit"
                                             variant="contained"
                                             color="primary"
                                         >
@@ -197,6 +174,7 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
                 </div>
             </div>
         </div>
+    </form>
     )
 }
 export default Cree;
