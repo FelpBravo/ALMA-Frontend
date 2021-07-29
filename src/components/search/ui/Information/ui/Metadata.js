@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Metadata = () => {
     const classes = useStyles();
-    const { docs, docsFlow} = useSelector(state => state.documents);
-
+    const { docs, docsFlow } = useSelector(state => state.documents);
     return (
         <div>
             {docs.aspectGroup &&
@@ -33,16 +32,26 @@ const Metadata = () => {
                                         <div style={{ padding: "9px 6px 9px 0px" }} className="row">
                                             <div style={{ fontSize: "13px", fontFamily: "Poppins", fontWeight: 'bold' }}>
                                                 {p.label}:
-                                        </div>
-                                        {p.type === "DATE" &&
-                                            <div style={{ fontSize: "13px", fontFamily: "Poppins" }} className='ml-1'>
-                                                {isNaN(Date.parse(p.value)) ? p.value : new Date(p.value).toLocaleDateString()}
                                             </div>
+                                            {p.name === "mc:document_abstract" &&
+                                                <div style={{ fontSize: "13px", fontFamily: "Poppins", backgroundColor: "#DBDADA" }} className='ml-1' >
+                                                    <div dangerouslySetInnerHTML={{ __html: p.value }}></div>
+                                                </div>
                                             }
-                                        {p.type !== "DATE" &&
-                                            <div style={{ fontSize: "13px", fontFamily: "Poppins" }} className='ml-1'>
-                                                {p.value}
-                                            </div>
+                                            {p.type === "DATE" &&
+                                                <div style={{ fontSize: "13px", fontFamily: "Poppins" }} className='ml-1'>
+                                                    {isNaN(Date.parse(p.value)) ? p.value : new Date(p.value).toLocaleDateString()}
+                                                </div>
+                                            }
+                                            {p.type === "TEXT" && p.name !== "mc:document_abstract" &&
+                                                <div style={{ fontSize: "13px", fontFamily: "Poppins" }} className='ml-1'>
+                                                    {p.value}
+                                                </div>
+                                            }
+                                            {p.type === "LIST" &&
+                                                <div style={{ fontSize: "13px", fontFamily: "Poppins" }} className='ml-1'>
+                                                    {p.value}
+                                                </div>
                                             }
                                         </div>
                                     </div>

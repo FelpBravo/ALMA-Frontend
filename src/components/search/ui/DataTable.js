@@ -327,9 +327,11 @@ const DataTable = () => {
 									createdByUser,
 									permissions = []
 								}) => {
-								const READ = permissions.find(rol => rol === 'READ')
-								const EDIT = permissions.find(rol => rol === 'EDIT')
-								const DELETE = permissions.find(rol => rol === 'DELETE')
+									const VIEW = permissions.find(rol => rol === 'VIEW')
+									const EDIT = permissions.find(rol => rol === 'EDIT')
+									const DELETE = permissions.find(rol => rol === 'DELETE')
+									const UPDATE = permissions.find(rol => rol === 'UPDATE')
+									const DOWNLOAD = permissions.find(rol => rol === 'DOWNLOAD')
 
 								return (
 									<TableRow
@@ -372,7 +374,7 @@ const DataTable = () => {
 										<TableCell></TableCell>
 										<TableCell>
 											<div className={classes.iconsHolder}>
-												{(ROLE_FILE_PREVIEW || READ) &&
+												{(ROLE_FILE_PREVIEW || VIEW) &&
 													<TableActionButton
 														materialIcon={
 															<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.preview" />}>
@@ -382,17 +384,22 @@ const DataTable = () => {
 																/>
 															</Tooltip>
 														}
-													/>}
-												<TableActionButton
-													materialIcon={
-														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
-															<SaveAltOutlinedIcon
-																className={classes.iconos}
-																onClick={() => handleDownload(id, name)}
-															/>
-														</Tooltip>
-													}
-												/>
+													/>
+												}
+
+												{(ROLE_FILE_DOWNLOAD || DOWNLOAD) &&
+													<TableActionButton
+														materialIcon={
+															<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
+																<SaveAltOutlinedIcon
+																	className={classes.iconos}
+																	onClick={() => handleDownload(id, name)}
+																/>
+															</Tooltip>
+														}
+													/>
+												}	
+
 												{(ROLE_FILE_UPDATE || EDIT) &&
 													<TableActionButton
 														materialIcon={
@@ -403,8 +410,10 @@ const DataTable = () => {
 																/>
 															</Tooltip>
 														}
-													/>}
-											    {}
+													/>
+												}
+
+												{(ROLE_FILE_UPDATE || EDIT) && /*MOMENTANEAMENTE HASTA QUE SE CREEN LOS PERMISOS PARA EL 'CRE' */
 													<TableActionButtonCree
 														materialIcon={
 															<Tooltip  title={<IntlMessages id="table.shared.dialog.tooltip.edit"/>}>
@@ -415,6 +424,7 @@ const DataTable = () => {
 															</Tooltip>
 														}
 													/>
+												}
 												{/*{(ROLE_FILE_DELETE || DELETE) &&
 													<TableActionButton
 														materialIcon={
@@ -479,22 +489,22 @@ const DataTable = () => {
 													open={Boolean(anchorEl)}
 													onClose={handleClose}
 												>
+
+												{(ROLE_FILE_UPDATE || UPDATE) &&	
 													<StyledMenuItem onClick={() => handleOpenEditUsers(selectedRow.id)}>
 													        <RateReviewOutlinedIcon
 																className={classes.iconos}	
 															/>{` `}
 													<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.editonline"/></span>	
 													</StyledMenuItem>
+												}
 
+												{(ROLE_FILE_DELETE || DELETE) && 
 													<StyledMenuItem onClick={() => handleDelete(selectedRow.id)} >
-														{(ROLE_FILE_DELETE || DELETE) &&
-
-															<DeleteOutlinedIcon
-																className={classes.iconos}
-															/>
-
-														}<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.remove" /></span>
+															<DeleteOutlinedIcon className={classes.iconos}/>
+														<span className={classes.menu}><IntlMessages id="table.shared.dialog.tooltip.remove" /></span>
 													</StyledMenuItem>
+												}
 
 													<StyledMenuItem onClick={() => setDataSharedDialog(selectedRow)} >
 														<ShareIcon

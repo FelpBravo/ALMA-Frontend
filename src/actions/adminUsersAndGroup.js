@@ -359,7 +359,7 @@ export const membersGroupInitLoading = (authUser, idGroup, nameGroup) => {
 	}
 };
 
-export const createUsersGroupLoading = (authUser, idGroup, users, nameGroup) => {
+export const createUsersGroupLoading = (authUser, idGroup, users1, nameGroup) => {
 	return async (dispatch) => {
 
 		try {
@@ -372,11 +372,12 @@ export const createUsersGroupLoading = (authUser, idGroup, users, nameGroup) => 
 			});
 
 			Swal.showLoading();
-
+			
+			const users = users1.users.map(user => user.id)
+			
 			await addUsersGroup(authUser, idGroup, users);
 
 			const resp = await membersGroup(authUser, idGroup);
-			console.log(idGroup)
 			
 			Swal.close();
 
@@ -392,10 +393,11 @@ export const createUsersGroupLoading = (authUser, idGroup, users, nameGroup) => 
 };
 
 export const removeUserGroupLoading = (authUser, idGroup, userId) => {
+	
 	return async (dispatch, getState) => {
-
-		const { members = [] } = getState().adminUsers;
-
+		
+		const { members = {} } = getState().adminUsers;
+		
 		try {
 
 			Swal.fire({
@@ -410,9 +412,9 @@ export const removeUserGroupLoading = (authUser, idGroup, userId) => {
 			await removeUsersGroup(authUser, idGroup, userId);
 			Swal.close();
 
-			const newCurrentMembers = members.filter(user => user.id !== userId);
-
-			dispatch(deleteUsersGroupLoaded(newCurrentMembers));	
+			const newCurrentMembers = members.users.filter(user => user.id !== userId);
+			
+			dispatch(deleteUsersGroupLoaded({users: newCurrentMembers}));	
 
 		} catch (error) {
 			console.log(error);
@@ -442,8 +444,8 @@ export const deleteGroupLoading = (authUser, idGroup) => {
 			await deleteGroup(authUser, idGroup);
 			Swal.close();
 
-			const newCurrentGroup = grouplist.filter(group => group.id !== idGroup);
-
+			const newCurrentGroup = grouplist.filter(group => group.name !== idGroup);
+			
 			dispatch(deleteGroupLoaded(newCurrentGroup));	
 
 		} catch (error) {
