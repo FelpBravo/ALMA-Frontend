@@ -32,8 +32,17 @@ const postFlowAll = (authUser, page, pageSize, status) => {
     });
 };
 
-const getInvolved = (instanceId) => {
+/* const getInvolved = (instanceId) => {
     return axiosInstance.get(`/flows/data/${instanceId}`)
+};
+ */
+
+const getInvolved = (authUser, instanceId) => {
+    return axiosInstance.get(`/flows/data/${instanceId}`, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
 };
 
 const postAcceptTask = (authUser, taskId, approve, comment, role, approves, file) => {
@@ -68,7 +77,38 @@ const postFlowsSearch = ({authUser, text}) => {
     });
 };
 
+const getDocumentCree = (authUser, fileId) => {
+    return axiosInstance.get(`/flows/cre/${fileId}`, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+const postFlowsCree = (authUser, documents, approves , comment , fileId, maxDays) => {
+    return axiosInstance.post(`/flows/cre`, {documents, approves ,comment, fileId, maxDays
+    }, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
 
+const getDataCree = (authUser, flowId) => {
+    return axiosInstance.get(`/flows/cre/${flowId}/data`, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
+
+const postFlowsCreeComplete = (authUser,taskId, approve) => {
+    return axiosInstance.post(`/flows/cre/complete`, {taskId ,approve
+    }, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
+};
 export { getApproves,
          postFlows,
          getActiveTasks,
@@ -77,4 +117,8 @@ export { getApproves,
          postAcceptTask,
          getCommentRole,
          postFlowsSearch, 
+         getDocumentCree,
+         postFlowsCree,
+         getDataCree,
+         postFlowsCreeComplete,
          }

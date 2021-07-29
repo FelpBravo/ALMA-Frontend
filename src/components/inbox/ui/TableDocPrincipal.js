@@ -32,16 +32,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const TableDocsCree = () => {
+const TableDocPrincipal = () => {
 
     const classes = useStyles();
     const { authUser, authorities } = useSelector(state => state.auth);
     const { fileId, flowId, name } = useSelector(state => state.flowDocument);
     const [dateActive, setDateActive] = useState(false)
     const dispatch = useDispatch();
-    
+
     const { dataCREE = [] } = useSelector(state => state.flowDocument);
-	const {documents} = dataCREE
+    const { document } = dataCREE
 
     const handleOpenDate = () => {
         dispatch(startDocumentFlowIdVisibility(flowId));
@@ -108,81 +108,68 @@ const TableDocsCree = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {documents && documents.map(({ author, createdAt, id, location, name, tags, version }, index) => {
 
-                                return <TableRow key={index} >
-                                    <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}>
-                                        {name}
-                                    </TableCell>
-                                    <TableCell>
-                                        {location}
-                                    </TableCell>
-                                    <TableCell>
-                                        {createdAt}
-                                    </TableCell>
-                                    <TableCell>
-                                        {author}
-                                    </TableCell>
-                                    <TableCell>
-                                        Owner
-                                    </TableCell>
-                                    <TableCell>
-                                        {version}
-                                    </TableCell>
-                                    <TableCell>
-                                        {
-                                            tags.length > 0
-                                            &&
-                                            tags.map((tag) => {
-                                                return (
-                                                    <i
-                                                        key={tag.id}
-                                                        style={{ color: tag.hex, margin: 1 }}
-                                                        className="zmdi zmdi-circle jr-fs-xxs"
+                            <TableRow  >
+                                <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}>
+                                    {document?.name}
+                                </TableCell>
+                                <TableCell>
+                                    {document?.location}
+                                </TableCell>
+                                <TableCell>
+                                    {document?.createdAt}
+                                </TableCell>
+                                <TableCell>
+                                    {document?.author}
+                                </TableCell>
+                                <TableCell>
+                                    Owner
+                                </TableCell>
+                                <TableCell>
+                                    {document?.version}
+                                </TableCell>
+                                <TableCell>
+                                    {
+                                        document?.tags
+                                        &&
+                                        document?.tags.map((tag) => {
+                                            return (
+                                                <i
+                                                    key={tag.id}
+                                                    style={{ color: tag.hex, margin: 1 }}
+                                                    className="zmdi zmdi-circle jr-fs-xxs"
+                                                />
+                                            )
+                                        })
+                                    }
+                                </TableCell>
+                                <TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
+                                    <div className={classes.iconsHolder}>
+                                        <TableActionButton
+                                            materialIcon={
+                                                <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
+                                                    <VisibilityOutlinedIcon
+                                                        className={classes.iconos}
+                                                        onClick={() => handleOpenDate(document?.id)}
                                                     />
-                                                )
-                                            })
-                                        }
-                                    </TableCell>
-                                    <TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
-                                        <div className={classes.iconsHolder}>
-                                            <TableActionButton
-                                                materialIcon={
-                                                    <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
-                                                        <VisibilityOutlinedIcon
-                                                            className={classes.iconos}
-                                                            onClick={() => handleOpenDate(id)}
-                                                        />
-                                                    </Tooltip>
-                                                }
-                                            />
-                                            <TableActionButton
-                                                materialIcon={
-                                                    <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
-                                                        <SaveAltOutlinedIcon
-                                                            className={classes.iconos}
-                                                            onClick={() => handleDownload(id, name)}
-                                                        />
-                                                    </Tooltip>
-                                                }
-                                            />
-                                        </div>
+                                                </Tooltip>
+                                            }
+                                        />
+                                        <TableActionButton
+                                            materialIcon={
+                                                <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
+                                                    <SaveAltOutlinedIcon
+                                                        className={classes.iconos}
+                                                        onClick={() => handleDownload(document?.id, document?.name)}
+                                                    />
+                                                </Tooltip>
+                                            }
+                                        />
+                                    </div>
 
-                                    </TableCell>
+                                </TableCell>
 
-                                </TableRow>
-                            })}
-                            	{!documents || documents.length == 0 &&
-								<TableRow>
-									<TableCell
-										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
-										colSpan='5'
-									>
-										<IntlMessages id="No existen documentos relacionados" />
-									</TableCell>
-								</TableRow>
-
-							}
+                            </TableRow>
 
                         </TableBody>
                     </Table>
@@ -194,4 +181,4 @@ const TableDocsCree = () => {
     )
 }
 
-export { TableDocsCree }
+export { TableDocPrincipal }

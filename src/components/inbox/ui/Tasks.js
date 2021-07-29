@@ -13,7 +13,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 
-import { startActiveTasksInit, startInvolvedLoading } from 'actions/flowDocument';
+import { startActiveTasksInit, startDataCreeInit, startDataCreeLoading, startInvolvedLoading } from 'actions/flowDocument';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import { INBOX_STATUS, STATUS } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
@@ -54,7 +54,6 @@ const Tasks = () => {
 	const { authUser } = useSelector(state => state.auth);
 	const { tasksList = {} } = useSelector(state => state.flowDocument);
 	const { data = [], totalItems = 0 } = tasksList;
-
 	const [page, setPage] = useState(0)
 	const { flowId } = useParams();
 
@@ -66,8 +65,8 @@ const Tasks = () => {
 
 	};
 
-	const handleManageCCB = () => {
-		//dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt))
+	const handleManageCCB = (instanceId, taskId, role, author, fileId, expiresAt) => {
+		dispatch(startDataCreeInit(authUser, instanceId, taskId, role, author, fileId, expiresAt))
 		history.push(`/CREE`);
 
 	};
@@ -148,7 +147,7 @@ const Tasks = () => {
 						</TableHead>
 						<TableBody >
 
-							{renderData.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt }, index) => {
+							{renderData.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt, type }, index) => {
 
 								return <TableRow key={index} >
 
@@ -179,6 +178,7 @@ const Tasks = () => {
 									<TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
 
 										<div className={classes.iconsHolder}>
+										{type === "GENERAL" &&
 											<TableActionButton
 												materialIcon={
 													<DescriptionOutlinedIcon
@@ -186,16 +186,18 @@ const Tasks = () => {
 														onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt)}
 													/>
 												}
-											/>
+											/>}
+											{type === "CRE" &&
+												<TableActionButtonCree
+													materialIcon={
+														<DescriptionOutlinedIcon
+															className={classes.iconosCCB}
+															onClick={() => handleManageCCB(instanceId,taskId, role, author, fileId, expiresAt)}
+														/>
+													}
+												/>
+											}
 
-											<TableActionButtonCree
-												materialIcon={
-													<DescriptionOutlinedIcon
-														className={classes.iconosCCB}
-														onClick={() => handleManageCCB()}
-													/>
-												}
-											/>
 										</div>
 
 

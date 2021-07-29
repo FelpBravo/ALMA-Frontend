@@ -121,7 +121,20 @@ const DocManagement = () => {
                                         {document?.version}
                                     </TableCell>
                                     <TableCell>
-                                        {document?.tags}
+                                    {
+                                        document?.tags.length > 0
+                                        &&
+                                        document?.tags.map((tag) => {
+                                            return (
+                                                <i
+                                                    key={tag.id}
+                                                    style={{ color: tag.hex, margin: 1 }}
+                                                    className="zmdi zmdi-circle jr-fs-xxs"
+                                                />
+                                            )
+                                        })
+                                    }
+                                        
                                     </TableCell>
                                     <TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
                                         <div className={classes.iconsHolder}>

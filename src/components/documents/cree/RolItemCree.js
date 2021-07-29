@@ -1,14 +1,16 @@
-import { Divider, Grid, Hidden, IconButton, makeStyles } from '@material-ui/core';
+import { Divider, Grid, Hidden, IconButton, makeStyles} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+
 
 import Button from 'components/ui/Button';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
 import { getUsersFilter } from 'services/usersService';
 import { postFlowsSearch } from 'services/flowDocumentService';
+import { get } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
     rolTitle: {
@@ -29,9 +31,10 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
     });
     const classes = useStyles();
     const { authUser } = useSelector(state => state.auth);
+ 
 
     useEffect(() => {
-        // setValue(`approves[${index}].role`, rolName);
+        //setValue(`approves[${index}].role`, rolName);
         mandatory && append({})
     }, [rolName])
 
@@ -61,57 +64,62 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
         </Grid>
         <Grid item md={12} container spacing={1} alignItems="center">
             <TextField
-                name={`approves[${index}].role`}
+                name={`documents[${index}].type`}
                 value={rolName}
                 style={{ display: 'none' }}
                 {...commonProps} />
             {
-                fields.map((field, index) => (
+                fields.map((field, item) => (
                     <Grid item xs={12} container spacing={1} key={field.id}>
-                        <TextField
-                            name={`${name}[${index}].order`}
-                            value={parseInt(index + 1)}
-                            type="number"
-                            style={{ display: 'none' }}
-                            {...commonProps} />
                         <Grid item xs={4}>
                             <AutoCompleteField
-                                name={`${name}[${index}].userId`}
+                                name={`${name}[${item}].id`}
                                 label="Seleccionar titulo documento"
                                 getUrl={getTitle}
-                                renderOption={(option) => (
-                                    `${option["title"]} (${option["almaId"]})`
-                                )}
+                                renderOption={(option) => {
+                                    setValue(`documents[${index}].documents[${item}].owner`, option["owner"]);
+                                    setValue(`documents[${index}].documents[${item}].author`, option["author"]);
+                                    return`${option["title"]} (${option["almaId"]})`
+                                    
+                                 } }
                                 optionsLabel="title"
                                 optionsValue="id"
                                 getValues={getValues}
-                                {...commonProps} />
+                                {...commonProps} 
+                                />
                         </Grid>
                         <Grid item xs={2}>
                             <TextField
-                                name={`${name}[${index}].author`}
+                                value={get(getValues(),`documents[${index}].documents[${item}].author`)}
                                 label="Autor"
-                                {...commonProps} />
+                                variant="outlined"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }
+                                }
+                                disabled
+                                 />
                         </Grid>
                         <Grid item xs={2}>
                             <TextField
-                                name={`${name}[${index}].owner`}
+                                value={get(getValues(),`documents[${index}].documents[${item}].owner`)}
+                                //console={console.log("nuevo",get(getValues(),`documents[${index}].documents[${item}].owner`))}
                                 label="Owner"
-                                {...commonProps} />
+                                variant="outlined"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }
+                                }
+                                disabled
+                                />
                         </Grid>
                         <Grid item xs={2}>
                             <TextField
-                                name={`${name}[${index}].maxDays`}
+                                name={`${name}[${item}].maxDays`}
                                 label="Plazo en días"
                                 type="number"
                                 {...commonProps} />
                         </Grid>
-                        {/*<Grid item md={5} sm={12} xs={12}>
-                            <TextField
-                                name={`${name}[${index}].comment`}
-                                label="Comentario"
-                                {...commonProps} />
-                        </Grid>*/}
                         <Grid item md={1}>
                             {
                                 (mandatory && fields.length === 1)
