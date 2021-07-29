@@ -17,7 +17,8 @@ import { startActiveTasksInit, startDataCreeInit, startDataCreeLoading, startInv
 import TableActionButton from 'components/search/ui/TableActionButton';
 import { INBOX_STATUS, STATUS } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
-
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import ManagementSummary from './ManagementSummary';
 import TableActionButtonCree from 'components/search/ui/TableActionButtonCree';
 
@@ -77,6 +78,10 @@ const Tasks = () => {
 		dispatch(startActiveTasksInit(authUser , page, value));
 	
 	}*/}
+
+	const handleEdit = (fileId, instanceId) => {
+		history.push(`/document/${fileId}/edit/${instanceId}`);
+	}
 
 	const handleChangePage = (event, page) => {
 		dispatch(startActiveTasksInit(authUser, page, STATUS))
@@ -178,22 +183,34 @@ const Tasks = () => {
 									<TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
 
 										<div className={classes.iconsHolder}>
-										{type === "GENERAL" &&
-											<TableActionButton
-												materialIcon={
-													<DescriptionOutlinedIcon
-														className={classes.iconos}
-														onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt)}
-													/>
-												}
-											/>}
-											{type === "CRE" &&
+											{type === "GENERAL" &&
+												<TableActionButton
+													materialIcon={
+														<DescriptionOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt)}
+														/>
+													}
+												/>}
+											{type === "CRE" && role !== "autor" &&
 												<TableActionButtonCree
 													materialIcon={
 														<DescriptionOutlinedIcon
 															className={classes.iconosCCB}
-															onClick={() => handleManageCCB(instanceId,taskId, role, author, fileId, expiresAt)}
+															onClick={() => handleManageCCB(instanceId, taskId, role, author, fileId, expiresAt)}
 														/>
+													}
+												/>
+											}
+											{type === "CRE" && role === "autor" &&
+												<TableActionButton
+													materialIcon={
+														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.edit" />}>
+															<BorderColorOutlinedIcon
+																className={classes.iconos}
+																onClick={() => handleEdit(fileId, instanceId)}
+															/>
+														</Tooltip>
 													}
 												/>
 											}
