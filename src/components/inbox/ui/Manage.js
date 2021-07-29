@@ -62,19 +62,19 @@ const Manage = ({setOpenTracing}) => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Nombre del documento" />
+									<IntlMessages id="versioning.table.column1" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Tipo de flujo" />
+									<IntlMessages id="sidebar.document.FlowType" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Fecha de creación" />
+									<IntlMessages id="reports.table.missing2" />
 								</TableCell>
 								<TableCell align="center" style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Estado" />
+									<IntlMessages id="users.table.column4" />
 								</TableCell>
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="Seguimiento" />
+									<IntlMessages id="sidebar.document.follow-up" />
 								</TableCell>
 							</TableRow>
 						</TableHead>

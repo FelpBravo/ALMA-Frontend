@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+import IntlMessages from 'util/IntlMessages';
 import Button from 'components/ui/Button';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
 import { getUsersFilter } from 'services/usersService';
@@ -45,7 +46,9 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
         <Grid item md={12} spacing={3} container alignItems="center">
             <Grid item container md={3}>
                 <h5 className={classes.rolTitle}>{rolName}</h5>
-                <p className={classes.rolSubTitle}>{mandatory ? "(Requerido)" : "(Opcional)"}</p>
+                <p className={classes.rolSubTitle}>
+                    {mandatory ? <IntlMessages id="flow.requiered" /> : <IntlMessages id="flow.optional" />}
+                </p>
             </Grid>
             <Grid item md={1}>
                 <Button
@@ -53,7 +56,7 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                     color="secondary"
                     startIcon={<AddIcon />}
                     onClick={addField}>
-                    Agregar
+                    <IntlMessages id="document.add" />
             </Button>
             </Grid>
         </Grid>
@@ -75,7 +78,7 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                         <Grid item md={4} sm={6} xs={6}>
                             <AutoCompleteField
                                 name={`${name}[${index}].userId`}
-                                label="Seleccionar nombre"
+                                label={<IntlMessages id="flow.select.user.name" />}
                                 getUrl={getUsers}
                                 renderOption={(option) => (
                                     `${option["firstName"]} ${option["lastName"]} (${option["id"]})`
@@ -88,14 +91,14 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                         <Grid item md={2} sm={6} xs={6}>
                             <TextField
                                 name={`${name}[${index}].maxDays`}
-                                label="Plazo en días"
+                                label={<IntlMessages id="flow.select.user.day" />}
                                 type="number"
                                 {...commonProps} />
                         </Grid>
                         <Grid item md={5} sm={12} xs={12}>
                             <TextField
                                 name={`${name}[${index}].comment`}
-                                label="Comentario"
+                                label={<IntlMessages id="dashboard.comments" />}
                                 {...commonProps} />
                         </Grid>
                         <Grid item md={1}>

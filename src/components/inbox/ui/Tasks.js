@@ -214,7 +214,7 @@ const Tasks = () => {
 										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
 										colSpan='5'
 									>
-										<IntlMessages id="No hay tareas por hacer" />
+										<IntlMessages id="document.management.NotTasks" />
 									</TableCell>
 								</TableRow>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
+import IntlMessages from 'util/IntlMessages';
 
 const CheckField = ({
   name,
@@ -10,7 +11,7 @@ const CheckField = ({
   className
 }) => (
   <FormControlLabel
-    label={label}
+    label={<IntlMessages id="document.loadDocuments.ControlledDoc" />}
     className={className}
     control={(
       <Controller

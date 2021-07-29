@@ -85,7 +85,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="Usuarios del grupo : " />
+									<IntlMessages id="document.add.userGroup" />
 									{idGroup}
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
@@ -97,7 +97,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 										onClick={() => handleAdd()}
 										style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'end', cursor: 'pointer' }} >
 										<AddIcon />
-										Agregar Usuario
+										<IntlMessages id="document.add.user" />
 									</TableCell>
 								}
 							</TableRow>
@@ -133,13 +133,10 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 							{users && users.length === 0 &&
 								<TableRow key='1' >
 									<TableCell>
-										No hay usuarios
+										<IntlMessages id="document.not.user" />
 									</TableCell>
 								</TableRow>
 							}
-
-
-
 
 						</TableBody>
 					</Table>

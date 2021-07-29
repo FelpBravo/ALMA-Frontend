@@ -225,7 +225,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                         >
                             {
                                 editMode && flowId
-                                    ? "Saltar paso"
+                                    ? <IntlMessages id="document.loadDocuments.skipStep" />
                                     : <IntlMessages id="dashboard.advancedSearchClear" />
                             }
 

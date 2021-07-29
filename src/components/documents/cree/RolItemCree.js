@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+import IntlMessages from 'util/IntlMessages';
 import Button from 'components/ui/Button';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
 import { getUsersFilter } from 'services/usersService';
@@ -54,7 +55,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                     color="secondary"
                     startIcon={<AddIcon />}
                     onClick={addField}>
-                    Agregar
+                    <IntlMessages id="document.add" />
             </Button>
             </Grid>
         </Grid>
