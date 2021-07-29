@@ -1,5 +1,7 @@
 {
   "sidebar.main": "Main",
+  "sidebar.admin": "Administration",
+	"sidebar.folders": "Directories",
   "sidebar.dashboard": "Dashboard",
   "sidebar.dashboard.misc": "Misc",
   "sidebar.dashboard.ecommerce": "eCommerce",
@@ -573,5 +575,6 @@
   "dashboard.traffic": "Traffic",
   "dashboard.browser": "Browser",
   "dashboard.application": "Application",
-  "dashboard.weekly": "Weekly"
-}
+  "dashboard.weekly": "Weekly",
+  "title.groups": "Groups"
+} 
