@@ -24,20 +24,20 @@ const ModalAddUsersGroup = () => {
   const { authUser } = useSelector(state => state.auth);
 
   const { usersAll = {}, nameGroup , idGroup, openModal2} = useSelector(state => state.adminUsers);
-
+  
   const { data = [] } = usersAll
-
-  const [nameUsersGroup, setNameUsersGroup] = useState({ users:[] })
- 
+  
+  const [nameUsersGroup, setNameUsersGroup] = useState([])
+  
   const [messageErrorName, setMessageErrorName] = useState(null);
  
    useEffect(() => {
     dispatch(usersInitLoading(authUser));
   }, [dispatch]);
-
+  
   useEffect(() => {
 
-    if (!nameGroup || nameGroup.length < 3) {
+    if (!idGroup || idGroup.length < 3) {
 
       setMessageErrorName('Este campo debe tener un grupo selecionado');
 
@@ -45,16 +45,16 @@ const ModalAddUsersGroup = () => {
         setMessageErrorName(null);
       }
 
-  }, [nameGroup, setMessageErrorName]);
+  }, [idGroup, setMessageErrorName]);
 
   
   const handleClose = () => {
     dispatch(closeModalUsersGroup());
     
   }
-  
+
   const handleOnSave =() =>{
-    dispatch(createUsersGroupLoading(authUser, idGroup, nameUsersGroup.users, nameGroup))
+    dispatch(createUsersGroupLoading(authUser, idGroup, nameUsersGroup))
     dispatch(closeModalUsersGroup());
 
   }
@@ -76,7 +76,7 @@ const ModalAddUsersGroup = () => {
           <Grid container spacing={1}>
             <Grid item xs={6}>
               <TextField
-                value={nameGroup}
+                value={idGroup}
                 fullWidth
                 size="small"
                 label="Nombre del grupo"
@@ -91,13 +91,13 @@ const ModalAddUsersGroup = () => {
           <Divider className="mt-3" />
 
           <h4 className="mt-3">Asignación de usuarios</h4>
-          <SelectAndChips data={data} returnData={(users)=> setNameUsersGroup({...nameUsersGroup,['users']:users.map(users=>{
-             return{'id': users.id}
+          <SelectAndChips data={data} returnData={(users) => setNameUsersGroup({...nameUsersGroup,['users']:users.map(users=>{
+             return { 'id': users.id }
             })})
             }/>
           <Divider className="mt-3" />
         </DialogContent>
-
+            
         <DialogActions>
           <Button
             style={{
@@ -117,7 +117,7 @@ const ModalAddUsersGroup = () => {
             onClick={handleOnSave}
             variant="contained"
             color="primary"
-            disabled={nameUsersGroup.users.length === 0 }
+            disabled={ nameUsersGroup.users && nameUsersGroup.users.length === 0 }
           >
             Crear
           </Button>
