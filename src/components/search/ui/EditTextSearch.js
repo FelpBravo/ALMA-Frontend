@@ -65,7 +65,7 @@ export const EditTextSearch = ({ savedSearchId }) => {
 
 		if (searchText.length < minTermLength) {
 			setDisabledButton(true);
-			setMessageError(`Minimo ${minTermLength} caracteres`);
+			setMessageError(<><IntlMessages id="dashboard.required.search.1"/> {minTermLength} <IntlMessages id="dashboard.required.search.1.2"/></>);
 			return;
 		}
 

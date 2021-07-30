@@ -11,7 +11,7 @@ const CheckField = ({
   className
 }) => (
   <FormControlLabel
-    label={<IntlMessages id="document.loadDocuments.ControlledDoc" />}
+    label={label}
     className={className}
     control={(
       <Controller

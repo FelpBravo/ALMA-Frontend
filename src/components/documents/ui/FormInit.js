@@ -64,7 +64,7 @@ export const FormInit = () => {
 
 	const isControlledDocument = {
 		name: 'controlled_document',
-		label: 'Documento controlado',
+		label: <IntlMessages id="document.loadDocuments.ControlledDoc" />,
 		control,
 	};
 

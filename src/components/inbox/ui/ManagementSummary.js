@@ -101,7 +101,7 @@ const ManagementSummary = () => {
 
 						<Grid item xs={11}>
 							<h3 className="mb-0">
-								<IntlMessages id="Revisión de documento" />
+								<IntlMessages id="document.review" />
 							</h3>
 						</Grid>
 					</Grid>
@@ -109,7 +109,7 @@ const ManagementSummary = () => {
 					<DocManagement />
 
 					<Divider className="mt-3 mb-3" />
-					<h3>Información general del flujo</h3>
+					<h3><IntlMessages id="document.flow.information" /></h3>
 
 					<Grid container item xs={12}>
 						<TextField
@@ -123,7 +123,7 @@ const ManagementSummary = () => {
 					{(role === "owner" || role === "author") &&
 						<div>
 							<Divider className="mt-3 mb-3" />
-							<h3>Involucrados</h3>
+							<h3><IntlMessages id="document.loadDocuments.request.summary.involved" /></h3>
 
 							<SummaryInvolved />
 						</div>
@@ -132,7 +132,7 @@ const ManagementSummary = () => {
 					{(role === "coAutor" || role === "stakeholder" || role === "reiewed" || role === "approved" || role === "released") &&
 						<div>
 							<Divider className="mt-3 mb-3" />
-							<h3>Comentario del autor</h3>
+							<h3><IntlMessages id="document.flow.comentary.author" /></h3>
 
 							<Grid container item xs={12}>
 								{users.filter(user => user.role === role).map(result => (
@@ -151,29 +151,29 @@ const ManagementSummary = () => {
 
 
 					<Divider className="mt-3 mb-3" />
-					<h3>Solicitud de revisión</h3>
+					<h3><IntlMessages id="document.flow.review.request" /></h3>
 					<p className="user-description">
 						<span className="owner-most-viewed-documents">{author}</span>
-						{` te ha solicitado revisar este documento, en el rol `}
+						{` `}<IntlMessages id="document.flow.review.request.role" />{` `}
 						<span className="owner-most-viewed-documents">{role}</span>
 					</p>
 					<p className="user-description">
-						{`El plazo de esta solicitud vence el `}
+							<IntlMessages id="document.flow.review.request.days" />{` `}
 						<span className="owner-most-viewed-documents">{expiresAt}</span>
 					</p>
 
 					<FormControl>
-						<FormLabel color="primary" >Aprobar Tarea</FormLabel>
+						<FormLabel color="primary" ><IntlMessages id="document.flow.approv.task" /></FormLabel>
 						<RadioGroup value={String(value)} onChange={handleChange}>
-							<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
-							<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
+							<FormControlLabel value="true" control={<Radio color="primary" />} label={<IntlMessages id="document.flow.approv.yes" />}/>
+							<FormControlLabel value="false" control={<Radio color="primary" />} label={<IntlMessages id="document.flow.approv.no" />}/>
 						</RadioGroup>
 					</FormControl>
 
 					<Divider className="mt-3 mb-3" />
 					<Grid container >
 						<Grid item xs={2}>
-							<h3>Comentarios sobre la tarea</h3>
+							<h3><IntlMessages id="document.flow.comentary.task" /></h3>
 						</Grid>
 						<Grid item xs={2}>
 							<Link
@@ -182,7 +182,7 @@ const ManagementSummary = () => {
 								variant="body2"
 								onClick={handleOpenComment}
 							>
-								Ver más comentarios
+								<IntlMessages id="document.flow.comentary.more" />
 							</Link>
 
 						</Grid>
@@ -191,7 +191,7 @@ const ManagementSummary = () => {
 					<Grid container item xs={12}>
 						<TextField
 							name="comment"
-							label="Escribe tus cometarios"
+							label={<IntlMessages id="document.flow.comentary.writer" />}
 							multiline
 							rows={3}
 							onChange={handleChangeRedux}
@@ -248,7 +248,7 @@ const ManagementSummary = () => {
 										onClick={handleEdit}
 										variant="contained"
 										color="primary"
-									>Editar</Button>}
+									><IntlMessages id="document.loadDocuments.edit" /></Button>}
 
 								{role === "author" &&
 									<Button
@@ -259,8 +259,9 @@ const ManagementSummary = () => {
 										}}
 										onClick={handleEdit}
 										variant="contained"
-										color="primary"
-									>Editar</Button>}
+										color="primary">
+										<IntlMessages id="document.loadDocuments.edit" />
+									</Button>}
 
 								<Button
 									style={{
@@ -270,7 +271,8 @@ const ManagementSummary = () => {
 									variant="contained"
 									color="primary">
 
-									Completar tarea</Button>
+									<IntlMessages id="document.flow.complete.task" />
+								</Button>
 
 							</Grid>
 						</Grid>

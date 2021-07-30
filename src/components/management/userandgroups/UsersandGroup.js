@@ -115,8 +115,8 @@ const Management = () => {
 									variant="fullWidth"
 									centered
 								>
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none",color:"#369bff"}} label={<IntlMessages id="sidebar.tags.usersandgroup" />} {...a11yProps(0)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none", color:"#369bff"}} label="Administración de grupos" {...a11yProps(1)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none",color:"#369bff"}} label={<IntlMessages id="user.manage" />} {...a11yProps(0)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none", color:"#369bff"}} label={<IntlMessages id="group.manage" />} {...a11yProps(1)} />
 									
 								</Tabs>
 								<TabPanel value={value} index={0}>

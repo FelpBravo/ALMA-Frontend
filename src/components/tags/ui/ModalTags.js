@@ -149,7 +149,7 @@ const ModalTags = () => {
 
           <span className="text-danger text-error">{messageErrorName}</span>
 
-          <h3 className='mt-3'>Color de etiqueta</h3>
+          <h3 className='mt-3'><IntlMessages id="tags.color" /></h3>
 
           <TwitterPicker value={color} onChange={handleOnChangeColor} />
 
@@ -162,7 +162,7 @@ const ModalTags = () => {
             variant="contained"
             color="primary"
           >
-            Cancelar
+            <IntlMessages id="button.text.cancel" />
           </Button>
 
           <Button
@@ -176,9 +176,9 @@ const ModalTags = () => {
             {
               actionModal === ACTION_EDIT 
               ? 
-              'Editar' 
+              <IntlMessages id="button.text.edit" /> 
               : 
-              'Guardar'
+              <IntlMessages id="button.text.save" /> 
             }
 
           </Button>

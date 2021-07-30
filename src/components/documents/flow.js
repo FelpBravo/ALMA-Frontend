@@ -8,7 +8,7 @@ export const useFlowSteps = ({ ...props }) => {
     const [otherProps, setOtherProps] = useState({})
     
     const flowSteps = {
-        "Carga de doscumentos": < UploadDocument {...props} {...otherProps} setOtherProps={setOtherProps} />,
+        "Carga de documentos": < UploadDocument {...props} {...otherProps} setOtherProps={setOtherProps} />,
         "Solicitud de Revisión y Aprobación": <Request {...props} {...otherProps} />,
     }
     

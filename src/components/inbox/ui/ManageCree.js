@@ -88,7 +88,7 @@ const ManageCree = () => {
 
 						<Grid item xs={11}>
 							<h3 className="mb-0">
-								<IntlMessages id="Revisión de documento" />
+								<IntlMessages id="document.review" />
 							</h3>
 						</Grid>
 					</Grid>

@@ -72,7 +72,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
           <Grid container item xs={12}>
             <TextField
               name="comment"
-              label="Comentario"
+              label={<IntlMessages id="versioning.table.column5" />}
               multiline
               rows={3}
               value={data?.comment}

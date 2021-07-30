@@ -20,7 +20,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 		dispatch(searchSetValueFilter(name, value));
 
 	}
-	console.log("HOLAAA SOY FELIPE", label, name)
+	
 	const labelType = label => {
 		switch (label) {
 			case "Etiquetas":
@@ -73,7 +73,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 				);
 		}
 	}
-	console.log("HOLAAA SOY FELIPE", label)
+	
 	switch (type) {
 		case DATE:
 			return (
@@ -114,7 +114,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 			return (
 				<DateRange
 					key={name}
-					label={label}
+					label={labelType(label)}
 					namecomponent={name}
 					value={value}
 				/>

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 
+import IntlMessages from 'util/IntlMessages';
 import { SUBSCRIPTIONS } from 'constants/constUtil';
 import IconWithTextCard from './ui/IconWithTextCard';
 
@@ -24,25 +25,25 @@ export const TotalSummary = () => {
 			const dataMetrics = [
 				{
 					title: statistics[0].totalDocuments.toString(),
-					subTitle: 'Total documentos',
+					subTitle: <IntlMessages id="dashboard.total.documents" />,
 					imageIcon: require('assets/images/dashboard/nounfiles.png'),
 					cardColor: 'secondary',
 				},
 				{
 					title: statistics[0].totalUsers,
-					subTitle: 'Total usuarios',
+					subTitle: <IntlMessages id="dashboard.total.users" />,
 					imageIcon: require('assets/images/dashboard/noun_users.png'),
 					cardColor: 'info',
 				},
 				{
 					title: statistics[0].userDocumentsUploaded,
-					subTitle: 'Documentos subidos',
+					subTitle: <IntlMessages id="dashboard.total.documents.upload" />,
 					imageIcon: require('assets/images/dashboard/noun_File.png'),
 					cardColor: 'warning',
 				},
 				{
 					title: statistics[0].userDocumentsViewed,
-					subTitle: 'Documentos visualizados',
+					subTitle: <IntlMessages id="dashboard.total.documents.visualized" />,
 					imageIcon: require('assets/images/dashboard/noun_study.png'),
 					cardColor: 'danger',
 				}

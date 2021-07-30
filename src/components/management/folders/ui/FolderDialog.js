@@ -135,14 +135,14 @@ const FolderDialog = () => {
 
 	const workSpaceTypeProps = {
 		name: "type",
-		label: "Tipo de espacio de trabajo",
+		label: <IntlMessages id="folders.type.workspace" />,
 		required: true,
 		...commonProps,
 	}
 
 	const groupsProps = {
 		name: "groups",
-		label: "Seleccionar grupos",
+		label: <IntlMessages id="folders.select.group" />,
 		multiple: true,
 		defaultValue: [],
 		renderValue: selected => `${selected?.length ?? 0} grupos seleccionados`,
@@ -152,7 +152,7 @@ const FolderDialog = () => {
 
 	const isAnonymousProps = {
 		name: 'inheritPermissions',
-		label: 'Heredar permisos de carpeta padre',
+		label: <IntlMessages id="folders.father.permissions" />,
 		...commonProps,
 	};
 
@@ -194,7 +194,7 @@ const FolderDialog = () => {
 						<Divider />
 						<div className={clsx(classes.sectionB, classes.sectionT)}>
 							<h4>
-								Permisos de grupo
+								<IntlMessages id="sidebar.permissions" />
 							</h4>
 							<CheckField {...isAnonymousProps} />
 
