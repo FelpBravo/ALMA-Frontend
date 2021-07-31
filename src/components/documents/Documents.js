@@ -160,6 +160,7 @@ const Documents = () => {
 						)
 					);
 				case flowId && EDIT_MODE:
+					const Callback = () => setActiveStep(activeStep + 1)
 					return dispatch(
 						startEditFlowDocumentLoading(
 							folderId,
@@ -170,8 +171,11 @@ const Documents = () => {
 							{ id: documentId, aspectList: newAspectList },
 							tagsField,
 							flowId,
+							Callback,
 						)
+					
 					);
+					
 				case EDIT_MODE:
 					const callBack = () => {
 						history.goBack();

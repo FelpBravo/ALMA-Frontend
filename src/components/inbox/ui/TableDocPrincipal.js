@@ -40,8 +40,8 @@ const TableDocPrincipal = () => {
     const [dateActive, setDateActive] = useState(false)
     const dispatch = useDispatch();
 
-    const { dataCREE = [] } = useSelector(state => state.flowDocument);
-    const { document } = dataCREE
+    const { dataCREE = [], involved} = useSelector(state => state.flowDocument);
+    const { document } =involved
 
     const handleOpenDate = () => {
         dispatch(startDocumentFlowIdVisibility(flowId));

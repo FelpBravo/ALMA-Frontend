@@ -646,7 +646,7 @@ export const startEditFlowDocumentLoading = (
 	aspectGroup,
 	tags,
 	flowId,
-	callback
+	Callback
 ) => {
 	return async (dispatch, getState) => {
 
@@ -676,6 +676,7 @@ export const startEditFlowDocumentLoading = (
 			}
 
 			const response = await editFLowForm(authUser, folderId, [fileId], aspectGroup, tags, flowId);
+			Callback()
 			Swal.close();
 
 		} catch (error) {
