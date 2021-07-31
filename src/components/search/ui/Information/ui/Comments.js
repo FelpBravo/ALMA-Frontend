@@ -101,7 +101,11 @@ const Comments = (props) => {
                     <span style={{ fontSize: 14, marginTop: 40}}>{text}</span>
                     <br />
                     {attachment && attachment.length > 0 && attachment.map(({ name, id }) => {
-                        return (<span style={{  marginTop: 40, color: "#3699FF", fontSize: 11, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{`Documento adjunto: `}{name}</span>)
+                        return (
+                            <span style={{  marginTop: 40, color: "#3699FF", fontSize: 11, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>
+                                <IntlMessages id="document.attachment" />{`: `}{name}
+                            </span>
+                        )
                     })
 
                     }

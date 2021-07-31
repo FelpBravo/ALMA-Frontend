@@ -187,7 +187,7 @@ const getIndex = (arr, userId) => arr.findIndex(e => userId === e.userId)*/}
                                             variant="contained"
                                             color="primary"
                                         >
-                                            <IntlMessages id="Crear" />
+                                            <IntlMessages id="table.shared.dialog.field.createDocument" />
                                         </Button>
                                     </div>
                                 </Grid>

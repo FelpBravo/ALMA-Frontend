@@ -85,8 +85,7 @@ const DataTableUserFromGroup = ({ setOpenUserFromGroup }) => {
 						<TableHead>
 							<TableRow>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-									<IntlMessages id="document.add.userGroup" />
-									{idGroup}
+									{<IntlMessages id="document.add.userGroup" />} {idGroup}
 								</TableCell>
 								<TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
 

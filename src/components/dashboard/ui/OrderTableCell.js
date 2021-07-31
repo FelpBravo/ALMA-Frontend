@@ -80,7 +80,7 @@ const OrderTableCell = (props) => {
 							owner
 							&&
 							<p className="user-description">
-								<IntlMessages id="dashboard.upload.by" />
+								<IntlMessages id="dashboard.upload.by" />{` `}
 								<span className="owner-most-viewed-documents">{owner}</span>
 								{`, ${date}`}
 							</p>

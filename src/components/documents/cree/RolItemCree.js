@@ -77,7 +77,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                         <Grid item xs={4}>
                             <AutoCompleteField
                                 name={`${name}[${index}].userId`}
-                                label="Seleccionar titulo documento"
+                                label={<IntlMessages id="document.title" />}
                                 getUrl={getUsers}
                                 renderOption={(option) => (
                                     `${option["firstName"]} ${option["lastName"]} (${option["id"]})`
@@ -90,7 +90,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                         <Grid item xs={2}>
                             <TextField
                                 name={`${name}[${index}].author`}
-                                label="Autor"
+                                label={<IntlMessages id="tasks.table.column6" />}
                                 {...commonProps} />
                         </Grid>
                         <Grid item xs={2}>
@@ -102,7 +102,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                         <Grid item xs={2}>
                             <TextField
                                 name={`${name}[${index}].maxDays`}
-                                label="Plazo en días"
+                                label={<IntlMessages id="flow.select.user.day" />}
                                 type="number"
                                 {...commonProps} />
                         </Grid>

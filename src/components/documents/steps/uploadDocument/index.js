@@ -131,7 +131,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
 
     const isControlledDocument = {
         name: 'controlled_document',
-        label: 'Documento controlado',
+        label: <IntlMessages id="document.loadDocuments.ControlledDoc" />,
         control,
 
     };

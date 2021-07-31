@@ -1,5 +1,7 @@
 import { getFileStatus, postDownloadFile, postSharedFile } from 'services/sharedDocumentService';
 import { types } from 'types/types';
+import React from 'react';
+import IntlMessages from 'util/IntlMessages';
 
 export const sharedDocumentSetValue = (name, value) => {
 	return {
@@ -90,7 +92,7 @@ export const startDownloadFile = (fileId, password, fileName, file, setFile, set
 			}
 
 		} catch (error) {
-			dispatch(saveFileStatus(fileId, { errors: { password: "Contraseña incorrecta" } })); //While backend return errors 
+			dispatch(saveFileStatus(fileId, { errors: { password: <IntlMessages id="shared.incorrect.password" /> } })); //While backend return errors 
 		} finally {
 			setLoading(false);
 			setGoDownload(directDownload)

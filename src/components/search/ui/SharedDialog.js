@@ -125,7 +125,6 @@ const SharedDialog = ({ data, handleClose }) => {
 
           <Grid item xs={12} sm={12} md={12}>
             <KeyboardDatePicker
-              autoFocus
               label={<IntlMessages id="table.shared.dialog.field.expirationDate" />}
               name='expirationDate'
               fullWidth

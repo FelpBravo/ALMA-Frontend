@@ -201,14 +201,14 @@ const ModalUsers = () => {
             <Grid container spacing={1} className="mt-3" >
               <Grid item xs={4}>
                 <FormControl size="small" variant="outlined" className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-outlined-label">Empresa</InputLabel>
+                  <InputLabel id="demo-simple-select-outlined-label">{<IntlMessages id="users.table.column6" />}</InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     name="company"
                     required
                     onChange={handleOnChange}
-                    label={<IntlMessages id="users.table.column6" />}
+                    label="Empresa"
                     error={validation.company === false}
 
                   >
@@ -241,14 +241,14 @@ const ModalUsers = () => {
             <Grid container spacing={1} className="mt-3" >
               <Grid item xs={4}>
                 <FormControl size="small" variant="outlined" className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
+                  <InputLabel id="demo-simple-select-outlined-label"><IntlMessages id="users.table.column7" /></InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     name='department'
                     required
                     onChange={handleOnChange}
-                    label={<IntlMessages id="users.table.column7" />}
+                    label="Departamento"
                     error={validation.department === false}
 
                   >

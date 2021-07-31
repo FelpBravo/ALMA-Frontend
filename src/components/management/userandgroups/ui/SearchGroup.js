@@ -10,6 +10,7 @@ import { openModalGroup } from 'actions/adminUsersAndGroup';
 import { searchSetText, startSearchLoading } from 'actions/search';
 import { hasAuthority } from 'util/authorities';
 import IntlMessages from 'util/IntlMessages';
+import { FormattedMessage } from 'react-intl';
 
 import ModalGroup from './ModalGroup';
 
@@ -47,7 +48,7 @@ const SearchGroup = () => {
 		}
 		else {
 			setDisabledButton(true)
-			setMessageError('Tiene que tener 2 caracteres como minimo')
+			setMessageError(<IntlMessages id="user.required.search" />)
 		}
 		setSearchText(value)
 	}
@@ -68,17 +69,23 @@ const SearchGroup = () => {
 				>
 					<Grid container spacing={1}>
 						<Grid item xs={6}>
-							<OutlinedInput
-								style={{ height: 41, fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
-								value={searchText}
-								name="inputSearch"
-								fullWidth
-								placeholder="Buscar grupo"
-								onChange={handleOnChange}
-								required
-								startAdornment={<SearchIcon color="primary" />}
-
-							/>
+						<FormattedMessage id="group.search">
+							{
+								placeholder => (
+									<OutlinedInput
+										style={{ height: 41, fontFamily: "Poppins, sans-serif", fontSize: '12px', fontWeight: 600, }}
+										value={searchText}
+										name="inputSearch"
+										fullWidth
+										placeholder={placeholder}
+										onChange={handleOnChange}
+										required
+										startAdornment={<SearchIcon color="primary" />}
+									/>
+								)
+							}
+						</FormattedMessage>
+							
 							<span className="text-danger text-error">{messageError}</span>
 						</Grid>
 
@@ -104,9 +111,8 @@ const SearchGroup = () => {
 									style={{ fontFamily: "Poppins, sans-serif", fontSize: '14px', fontWeight: 500, marginLeft: 10 }}
 								>
 									<AddIcon style={{ fontSize: 30, color: "#3699FF", marginLeft: 10 }} />
-							    Crear nuevo grupo
-							</Link>
-
+									<IntlMessages id="group.create" />
+								</Link>
 							</Grid>
 						}
 
