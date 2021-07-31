@@ -180,5 +180,6 @@ export const types = {
 
 	manageSetValueField: "Manage set value field",
 	docInitCree: "Document Init Cree",
-	dataCreeInitFlow: "Data Cree Init Flow"
+	dataCreeInitFlow: "Data Cree Init Flow",
+	typeInitCree: "Type Init Cree",
 }

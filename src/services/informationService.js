@@ -71,6 +71,28 @@ const getReplies = (authUser,idComment) => {
     })
 }
 
+const createTopicCree = (authUser, flowId, taskId, content, file) => {
+	const data = new FormData();
+	data.append('files', file);
+	data.append('content', content)
+
+	return axiosInstance.post(`/${flowId}/task/${taskId}/comments`, data, {
+		headers: {
+			Authorization: `Bearer ${authUser}`,
+			'Content-Type': 'multipart/form-data'
+		},
+	});
+};
+
+const getTopicCree = (authUser, flowId) => {
+    return axiosInstance.get(`/${flowId}/comments`,{
+        headers: {
+			Authorization: `Bearer ${authUser}`,
+		},
+    }).catch((e)=>{
+        console.log(e);
+    })
+}
 
 export {
     createAttachments,
@@ -78,5 +100,7 @@ export {
 	createTopic,
 	getTopic,
 	getReplies,
-	createReplies
+	createReplies,
+	createTopicCree,
+	getTopicCree,
 }

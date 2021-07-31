@@ -9,7 +9,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
-import { startApprovesListLoading, startGetInvolvedLoading } from 'actions/flowDocument';
+import { startApprovesListLoading, startGetInvolvedCreeLoading, startGetInvolvedLoading } from 'actions/flowDocument';
 import ModalLoadFlow from 'components/documents/resume/ModalLoadFlow';
 import { TextField } from 'components/ui/Form';
 import { TitleCard } from 'components/ui/helpers/TitleCard';
@@ -46,7 +46,8 @@ export default function RequestStep({ tagsField }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
-    const { approvesList, initialApprovers, taskId, form } = useSelector(state => state.flowDocument);
+    const { approvesList, initialApprovers, taskId, form, type } = useSelector(state => state.flowDocument);
+    console.log(type)
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const { flowId } = useParams();
@@ -54,8 +55,11 @@ export default function RequestStep({ tagsField }) {
     const {role} = useSelector(state => state.flowDocument);
 
     useEffect(() => {
-        if (flowId){
-            dispatch(startGetInvolvedLoading(flowId))
+        if (flowId && type === "GENERAL"){
+            dispatch(startGetInvolvedLoading(authUser, flowId))
+        }
+        else{
+            dispatch(startGetInvolvedCreeLoading(authUser, flowId))
         }
     }, [flowId])
 
