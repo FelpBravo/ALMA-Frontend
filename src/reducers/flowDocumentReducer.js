@@ -13,9 +13,12 @@ const initialState = {
     initialApprovers: [],
     flowId: null,
     form: {},
-    commentList:[],
+    commentList: [],
     file: [],
-    names: [], 
+    names: [],
+    docCree: "",
+    dataCREE: [],
+    type: ""
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -46,6 +49,19 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 author: action.payload.author,
                 fileId: action.payload.fileId,
                 expiresAt: action.payload.expiresAt,
+                type: action.payload.type,
+            }
+        case types.dataCreeInitFlow:
+            return {
+                ...state,
+                flowId: action.payload.instanceId,
+                dataCREE: action.payload.dataCREE,
+                taskId: action.payload.taskId,
+                role: action.payload.role,
+                author: action.payload.author,
+                fileId: action.payload.fileId,
+                expiresAt: action.payload.expiresAt,
+                type: action.payload.type,
             }
 
         case types.initialApproversLoaded:
@@ -68,6 +84,18 @@ export const flowDocumentReducer = (state = initialState, action) => {
             return {
                 ...state,
                 commentList: payload
+            }
+        case types.docInitCree:
+            return {
+                ...state,
+                docCree: payload
+            }
+        case types.typeInitCree:
+            return {
+                ...state,
+                type: action.payload.type,
+                taskId: action.payload.taskId,
+
             }
 
         default:

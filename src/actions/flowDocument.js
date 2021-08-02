@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-import { getActiveTasks, getApproves, getCommentRole, getInvolved, postAcceptTask, postFlowAll, postFlows } from 'services/flowDocumentService';
+import { getActiveTasks, getApproves, getCommentRole, getInvolved, postAcceptTask, postFlowAll, postFlows, getDocumentCree, postFlowsCree, getDataCree, postFlowsCreeComplete, getInvolvedCree, getCommentRoleCree, deleteCree, deleteGeneral } from 'services/flowDocumentService';
 import { types } from 'types/types';
 
 import { GENERAL_ERROR } from '../constants/constUtil';
@@ -120,14 +120,14 @@ export const startFlowsAllInit = (authUser, page, status) => {
     }
 };
 
-export const startInvolvedLoading = (authUser, instanceId, taskId, role, author, fileId, expiresAt) => {
+export const startInvolvedLoading = (authUser, instanceId, taskId, role, author, fileId, expiresAt, type) => {
     return async (dispatch) => {
 
         try {
 
-            const resp = await getInvolved(instanceId);
+            const resp = await getInvolved(authUser, instanceId);
 
-            dispatch(involvedLoaded(resp.data, taskId, instanceId, role, author, fileId, expiresAt));
+            dispatch(involvedLoaded(resp.data, taskId, instanceId, role, author, fileId, expiresAt, type));
 
         } catch (error) {
             console.log(error);
@@ -156,6 +156,21 @@ export const CommentRoleInit = (authUser, instanceId, role) => {
 
         try {
             const resp = await getCommentRole(authUser, instanceId, role);
+
+            dispatch(commentsRole(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+export const CommentRoleCreeInit = (authUser, instanceId, taskId) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await  getCommentRoleCree(authUser, instanceId, taskId);
 
             dispatch(commentsRole(resp.data));
 
@@ -207,7 +222,7 @@ const listFlows = (flowList) => {
         payload: flowList
     }
 };
-const involvedLoaded = (involved, taskId, instanceId, role, author, fileId, expiresAt) => {
+const involvedLoaded = (involved, taskId, instanceId, role, author, fileId, expiresAt, type) => {
     return {
         type: types.involvedListLoaded,
         payload: {
@@ -218,6 +233,7 @@ const involvedLoaded = (involved, taskId, instanceId, role, author, fileId, expi
             author: author,
             fileId: fileId,
             expiresAt: expiresAt,
+            type: type,
         }
 
     }
@@ -230,12 +246,12 @@ const respAcceptTask = (resptask) => {
     }
 };
 
-export const startGetInvolvedLoading = (flowId) => {
+export const startGetInvolvedLoading = (authUser,flowId) => {
     return async (dispatch) => {
 
         try {
 
-            const resp = await getInvolved(flowId);
+            const resp = await getInvolved(authUser,flowId);
             dispatch(initalApprovesLoaded(resp.data));
 
         } catch (error) {
@@ -260,3 +276,177 @@ export const manageSetValueField = (name, value) => ({
         
     }
 });
+
+export const starDocumentCreeInit= ({ authUser, id }) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await getDocumentCree(authUser, id);
+
+            dispatch(docInitCree(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+const docInitCree = (docCree) => {
+    return {
+        type: types.docInitCree,
+        payload: docCree
+    }
+};
+
+export const startInitFlowsCreeLoading = (authUser, data, callback) => {
+    return async (dispatch) => {
+
+        try {
+            Swal.showLoading();
+
+            const { documents, approves, comment, fileId, maxDays } = data
+            const resp = await postFlowsCree(authUser, documents, approves, comment, fileId, maxDays);
+            const { value } = await Swal.fire({
+                icon: 'success',
+                width: 400,
+                title: '<h4>Solicitud enviada</h4>',
+                html: `<ul>ID Asignado: ${resp.data}</ul>`,
+                showConfirmButton: true,
+            })
+
+            dispatch(saveFlowInit());
+            if (value) {
+                callback && callback()
+            }
+        } catch (error) {
+            console.log(error);
+
+            Swal.close();
+
+            const message = error?.response?.data?.message ? error.response.data.message : GENERAL_ERROR;
+
+            Swal.fire({
+                title: 'Error', text: message, icon: 'error', heightAuto: false
+            });
+        }
+
+    }
+};
+
+export const startDataCreeInit = (authUser, instanceId, taskId, role, author, fileId, expiresAt, type) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await getDataCree(authUser, instanceId);
+
+            dispatch(involvedLoaded(resp.data, taskId, instanceId, role, author, fileId, expiresAt, type));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+/* const dataCreeInit = (dataCREE, taskId, instanceId, role, author, fileId, expiresAt, type) => {
+    return {
+        type: types.dataCreeInitFlow,
+        payload: {
+            instanceId,
+            dataCREE: dataCREE,
+            taskId: taskId,
+            role: role,
+            author: author,
+            fileId: fileId,
+            expiresAt: expiresAt,
+            type: type
+        }
+
+    }
+}; */
+
+export const startAcceptTasksCreeInit = (authUser, taskId, approve) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await postFlowsCreeComplete(authUser, taskId, approve);
+
+            dispatch(respAcceptTask(resp));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+export const startGetInvolvedCreeLoading = (authUser,flowId) => {
+    return async (dispatch) => {
+
+        try {
+
+            const resp = await getInvolvedCree(authUser,flowId);
+            dispatch(initalApprovesLoaded(resp.data));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+ export const typeInitCree = (type, taskId,) => {
+    return {
+        type: types.typeInitCree,
+        payload: {
+            type:type,
+            taskId:taskId,
+        }
+    }
+};
+
+export const startAcceptTasksCreeEdit = (authUser, taskId, data) => {
+    return async (dispatch) => {
+
+        try {
+            const { approves, comment} = data
+            console.log( taskId)
+            const resp = await postFlowsCreeComplete(authUser, taskId, undefined , comment, undefined, approves);
+
+            dispatch(respAcceptTask(resp));
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+export const CancelCree = (authUser, flowId) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await deleteCree(authUser, flowId);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};
+
+export const CancelGeneral = (authUser, flowId) => {
+    return async (dispatch) => {
+
+        try {
+            const resp = await deleteGeneral(authUser, flowId);
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+};

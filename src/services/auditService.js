@@ -2,19 +2,19 @@ import { axiosInstance } from '../config/axios-instance';
 
 const getAudits = async(authUser) => {
 
-	const upload_document = await axiosInstance.get('/audits/movements/UPLOADED', {
+	const upload_document = await axiosInstance.get('/audits/movements/file/UPLOADED', {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
 	});
 
-	const view_document = await axiosInstance.get('/audits/movements/VIEWED', {
+	const view_document = await axiosInstance.get('/audits/movements/file/VIEWED', {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
 	});
 
-	const subscribed_document = await axiosInstance.get('/audits/movements/SUBSCRIBED', {
+	const subscribed_document = await axiosInstance.get('/audits/movements/file/SUBSCRIBED', {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},

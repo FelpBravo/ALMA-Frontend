@@ -3,11 +3,11 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import React, {  } from 'react';
+import React, { } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 
-import { startEditFlowsLoading, startInitFlowsLoading } from 'actions/flowDocument';
+import { startAcceptTasksCreeEdit, startEditFlowsLoading, startInitFlowsLoading } from 'actions/flowDocument';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
 
@@ -18,6 +18,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
 
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
+  const { type, taskId } = useSelector(state => state.flowDocument);
   const history = useHistory();
   const { flowId } = useParams();
   const EDIT_MODE = Boolean(flowId);
@@ -27,9 +28,15 @@ const ModalLoadFlow = ({ data, close, open }) => {
   }
 
   const handleInitFlow = () => {
-    !EDIT_MODE
-    ? dispatch(startInitFlowsLoading(authUser, data, () => history.push('/inbox')))
-      : dispatch(startEditFlowsLoading(authUser, data, () => history.push('/inbox')))
+    if (type === "CRE") {
+      dispatch(startAcceptTasksCreeEdit(authUser, taskId, data, () => history.push('/inbox')))
+    }
+    else {
+      !EDIT_MODE
+        ? dispatch(startInitFlowsLoading(authUser, data, () => history.push('/inbox')))
+        : dispatch(startEditFlowsLoading(authUser, data, () => history.push('/inbox')))
+
+    }
 
     close()
   }
@@ -68,7 +75,7 @@ const ModalLoadFlow = ({ data, close, open }) => {
             <IntlMessages id="document.loadDocuments.request.summary.general.remarks" />
           </h3>
 
-         
+
           <Grid container item xs={12}>
             <TextField
               name="comment"
@@ -81,8 +88,8 @@ const ModalLoadFlow = ({ data, close, open }) => {
               }}
             />
           </Grid>
-          
-        
+
+
         </DialogContent>
 
         <DialogActions>

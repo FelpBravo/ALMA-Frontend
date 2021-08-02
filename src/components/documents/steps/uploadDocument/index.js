@@ -79,7 +79,6 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         if (document.length === 0) {
             return;
         }
-        console.log("flowId", flowId)
         dispatch(startDocumentByIdLoading(document, flowId, () => setLoading(false)));
 
         dispatch(startThumbnailLoading(document));

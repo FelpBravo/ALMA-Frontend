@@ -4,7 +4,9 @@ import {
 	getTopic,
 	createTopic,
 	getReplies,
-	createReplies
+	createReplies,
+	getTopicCree,
+	createTopicCree
 } from 'services/informationService';
 import { types } from 'types/types';
 import Swal from 'sweetalert2';
@@ -72,9 +74,6 @@ export const saveComments = (authUser, fileId, content, file) => {
 				const resp = await getTopic(authUser, fileId)
 				dispatch(commentsLoaded(resp.data))
 			})
-
-
-
 
 		} catch (error) {
 			console.log(error);
@@ -171,6 +170,32 @@ export const startUploadAttachments = (authUser, fileId, files) => {
 	
 	
 	
+	
+			} catch (error) {
+				console.log(error);
+			} finally {
+				Swal.close();
+			}
+	
+		}
+	};
+
+
+	export const saveCommentsCree = (authUser, flowId, taskId, content, file) => {
+		return async (dispatch) => {
+			try {
+				Swal.fire({
+					title: 'Cargando...',
+					text: 'Por favor espere...',
+					allowOutsideClick: false,
+					heightAuto: false,
+				});
+				Swal.showLoading();
+	
+				await createTopicCree(authUser, flowId, taskId, content, file).then(async() => {
+					const resp = await getTopicCree(authUser, flowId)
+					dispatch(commentsLoaded(resp.data))
+				})
 	
 			} catch (error) {
 				console.log(error);
