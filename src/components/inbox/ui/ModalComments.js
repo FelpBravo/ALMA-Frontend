@@ -30,7 +30,7 @@ const ModalComments = (props) => {
 
             <DialogTitle >
                 <div style={{ fontFamily: "Poppins", }}>
-                    <IntlMessages id="Comentarios por Rol" />
+                    <IntlMessages id="document.flow.comentary.with.role" />
                 </div>
             </DialogTitle>
 
@@ -45,7 +45,7 @@ const ModalComments = (props) => {
                     variant="contained"
                     color="primary"
                 >
-                    Cerrar
+                    <IntlMessages id="flow.preview.out" />
                 </Button>
 
             </DialogActions>

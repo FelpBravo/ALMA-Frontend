@@ -35,7 +35,7 @@ export const UploadDocuments = () => {
 							name: fileName,
 							icon: 'far fa-file',
 							tags,
-							activity:'Subio',
+							activity:<IntlMessages id="dashboard.upload" />,
 							userName: userFirstName + " "+userLastName,
 							date: new Date(activityDate).toLocaleString("es-ES",{weekday:"short", year: "numeric", month: "long", day: "numeric", hour:"numeric",minute:"numeric"}),
 						};

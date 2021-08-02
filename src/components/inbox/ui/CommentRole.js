@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startDownloadDocument } from 'actions/search'
 
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,7 +75,7 @@ const CommentRole = () => {
                     <span style={{ fontSize: 15, marginTop: 70, marginLeft: 17}}>{comment}</span>
                     <br />
                     {attachments && attachments.length > 0 && attachments.map(({ name, id }) => {
-                        return (<span style={{   marginLeft: 15, marginTop: 90, color: "#3699FF", fontSize: 12, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{`Documento adjunto: `}{name}</span>)
+                        return (<span style={{   marginLeft: 15, marginTop: 90, color: "#3699FF", fontSize: 12, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}><IntlMessages id="document.attachment" />{`: `}{name}</span>)
                     })
 
                     }

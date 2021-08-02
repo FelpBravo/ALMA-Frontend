@@ -147,7 +147,7 @@ const ModalEditUsers = (props) => {
             <TextField
               value={id}
               fullWidth
-              label="Usuario"
+              label={<IntlMessages id="users.table.column1" />}
               name='usuario'
               type="text"
               variant="outlined"
@@ -204,7 +204,7 @@ const ModalEditUsers = (props) => {
           <Grid container spacing={1} className="mt-3" >
             <Grid item xs={4}>
               <FormControl size="small" variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">Empresa</InputLabel>
+                <InputLabel id="demo-simple-select-outlined-label">{<IntlMessages id="users.table.column6" />}</InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
@@ -225,7 +225,7 @@ const ModalEditUsers = (props) => {
                   value={dataEdit.companyOther}
                   onChange={handleOnChange}
                   fullWidth
-                  label="Escriba nombre de la empresa"
+                  label={<IntlMessages id="users.company.name" />}
                   name='companyOther'
                   type="text"
                   variant="outlined"
@@ -239,7 +239,7 @@ const ModalEditUsers = (props) => {
           <Grid container spacing={1} className="mt-3" >
             <Grid item xs={4}>
               <FormControl size="small" variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
+                <InputLabel id="demo-simple-select-outlined-label"><IntlMessages id="users.table.column7" /></InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
@@ -255,21 +255,20 @@ const ModalEditUsers = (props) => {
                 </Select>
               </FormControl>
             </Grid>
-            {stateCompany.department &&
-              <Grid item xs={4}>
-                <TextField
-                 value={dataEdit.departmentOther}
-                  onChange={handleOnChange}
-                  fullWidth
-                  label="Escriba nombre del departamento"
-                  name='departmentOther'
-                  type="text"
-                  variant="outlined"
-                  size="small"    
-                  error={!validation.departmentOther}       
+              {stateCompany.department &&
+                <Grid item xs={4}>
+                  <TextField
+                  value={dataEdit.departmentOther}
+                    onChange={handleOnChange}
+                    fullWidth
+                    label={<IntlMessages id="users.company.name" />}
+                    name='departmentOther'
+                    type="text"
+                    variant="outlined"
+                    size="small"    
+                    error={!validation.departmentOther}       
                 />
-
-              </Grid>
+            </Grid>
             }
           </Grid>
 

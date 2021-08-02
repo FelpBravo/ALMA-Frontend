@@ -72,7 +72,7 @@ const Versioning = () => {
 						<KeyboardBackspaceIcon
 							color='primary' />
 						<span style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 500, color: "#3699FF", marginTop: 2 }}	>
-							Volver
+						<IntlMessages id="dashboard.button.back" />
 						</span>
 					</Grid>
 				</div>

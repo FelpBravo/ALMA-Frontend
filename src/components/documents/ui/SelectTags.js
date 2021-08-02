@@ -121,7 +121,7 @@ export const SelectTags = () => {
                                 multiple
                                 // value={tagsSelected}
                                 name="tagsField"
-                                label="Seleccionar etiquetas"
+                                label={<IntlMessages id="groupPermissions.select.tags" />}
                                 control={control}
                                 size="small"
                                 // onChange={handleChange}

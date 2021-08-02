@@ -173,13 +173,13 @@ const ManageCree = () => {
 								>
 									<Tab
 										style={{ fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform: "none" }}
-										label="Gestion de aprobación"
+										label={<IntlMessages id="document.cree.manage.approv" />}
 										icon={<DescriptionOutlinedIcon />}
 										{...a11yProps(0)}
 									/>
 									<Tab
 										style={{ fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform: "none" }}
-										label="Comentarios tarea"
+										label={<IntlMessages id="document.cree.manage.comment" />}
 										icon={<CommentOutlinedIcon />}
 										{...a11yProps(1)}
 									/>
@@ -188,17 +188,17 @@ const ManageCree = () => {
 								<TabPanel value={value1} index={0}>
 
 
-									<h3>Documento Principal</h3>
+									<h3><IntlMessages id="document.cree.manage.principal" /></h3>
 
 									<TableDocPrincipal />
 
 									<Divider className="mt-3 mb-3" />
-									<h3>Documentos Relacionados</h3>
+									<h3><IntlMessages id="document.cree.manage.relacion" /></h3>
 
 									<TableDocsCree />
 
 									<Divider className="mt-3 mb-3" />
-									<h3>Comentario general del solicitante</h3>
+									<h3><IntlMessages id="document.cree.manage.general" /></h3>
 
 									<Grid container item xs={12}>
 										<TextField
@@ -210,22 +210,22 @@ const ManageCree = () => {
 									</Grid>
 
 									<Divider className="mt-3 mb-3" />
-									<h3>Solicitud de permiso</h3>
+									<h3><IntlMessages id="document.title.creeDocument1" /></h3>
 									<p className="user-description">
 										<span className="owner-most-viewed-documents">{author}</span>
-										{` te ha solicitado permiso para modificar este documento, en el rol `}
+										{` `}<IntlMessages id="document.title.request.in.role" />{` `}
 										<span className="owner-most-viewed-documents">{role}</span>
 									</p>
 									<p className="user-description">
-										{`El plazo de esta solicitud vence el `}
+										<IntlMessages id="document.request.cree.date" />{` `}
 										<span className="owner-most-viewed-documents">{expiresAt}</span>
 									</p>
 
 									<FormControl>
-										<FormLabel color="primary" >Aprobar CREE</FormLabel>
+										<FormLabel color="primary" ><IntlMessages id="document.request.cree" /></FormLabel>
 										<RadioGroup value={String(value)} onChange={handleChange}>
-											<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
-											<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
+											<FormControlLabel value="true" control={<Radio color="primary" />} label={<IntlMessages id="document.flow.approv.yes" />} />
+											<FormControlLabel value="false" control={<Radio color="primary" />} label={<IntlMessages id="document.flow.approv.no" />} />
 										</RadioGroup>
 									</FormControl>
 
@@ -262,8 +262,8 @@ const ManageCree = () => {
 													onClick={handleAcceptTask}
 													variant="contained"
 													color="primary">
-
-													Gestionar</Button>
+													<IntlMessages id="tasks.table.column8" />
+												</Button>
 
 											</Grid>
 										</Grid>
@@ -273,7 +273,7 @@ const ManageCree = () => {
 
 									<Grid container >
 										<Grid item xs={2}>
-											<h3>Comentarios sobre la tarea</h3>
+											<h3><IntlMessages id="document.flow.comentary.task" /></h3>
 										</Grid>
 
 									</Grid>
@@ -282,7 +282,7 @@ const ManageCree = () => {
 										<Grid item xs={10} >
 											<TextField
 												name="comment"
-												label="Escribe tus cometarios"
+												label={<IntlMessages id="document.flow.comentary.writer" />}
 												multiline
 												rows={3}
 												onChange={handleChangeRedux}

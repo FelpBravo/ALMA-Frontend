@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { FormattedMessage } from 'react-intl';
 import IntlMessages from 'util/IntlMessages';
 
 import { searchSetText, startSearchLoading } from '../../../actions/search';
@@ -64,7 +65,7 @@ export const EditTextSearch = ({ savedSearchId }) => {
 
 		if (searchText.length < minTermLength) {
 			setDisabledButton(true);
-			setMessageError(`Minimo ${minTermLength} caracteres`);
+			setMessageError(<><IntlMessages id="dashboard.required.search.1"/> {minTermLength} <IntlMessages id="dashboard.required.search.1.2"/></>);
 			return;
 		}
 
@@ -107,16 +108,22 @@ export const EditTextSearch = ({ savedSearchId }) => {
 							<Grid item xs={9}>
 								<Paper className={classes.root}>
 									<SearchIcon color="primary" />
-									<InputBase
-										className={classes.input}
-										value={searchText}
-										name="inputSearch"
-										//className="custom-text-field"
-										fullWidth
-										placeholder="Buscar documento..."
-										onChange={handleOnChange}
-									/>
-									
+									<FormattedMessage id="dashboard.placeholder.searchDocuments">
+										{
+											placeholder => (
+												<InputBase
+													className={classes.input}
+													value={searchText}
+													name="inputSearch"
+													//className="custom-text-field"
+													fullWidth
+													placeholder={placeholder}
+													onChange={handleOnChange}
+												/>
+											)
+										}
+									</FormattedMessage>
+
 								</Paper>
 								<span className="text-danger text-error">{messageError}</span>
 							</Grid>

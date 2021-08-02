@@ -69,7 +69,7 @@ const ModalAddUsersGroup = () => {
       >
         <DialogTitle id="form-dialog-title">
           <div style={{ fontFamily: 'Poppins', fontSize: "16px" }}>
-            <IntlMessages id="Agregar usuarios" />
+            <IntlMessages id="document.add.users" />
           </div>
         </DialogTitle>
         <DialogContent>
@@ -79,7 +79,7 @@ const ModalAddUsersGroup = () => {
                 value={idGroup}
                 fullWidth
                 size="small"
-                label="Nombre del grupo"
+                label={<IntlMessages id="group.name" />}
                 type="text"
                 variant="outlined"
                 name="names"
@@ -90,7 +90,7 @@ const ModalAddUsersGroup = () => {
 
           <Divider className="mt-3" />
 
-          <h4 className="mt-3">Asignación de usuarios</h4>
+          <h4 className="mt-3"><IntlMessages id="group.modal.add.users" /></h4>
           <SelectAndChips data={data} returnData={(users) => setNameUsersGroup({...nameUsersGroup,['users']:users.map(users=>{
              return { 'id': users.id }
             })})
@@ -108,7 +108,7 @@ const ModalAddUsersGroup = () => {
             variant="contained"
             color="primary"
           >
-            Cancelar
+            <IntlMessages id="document.loadDocuments.request.summary.button.cancel" />
           </Button>
           <Button
             style={{
@@ -119,7 +119,7 @@ const ModalAddUsersGroup = () => {
             color="primary"
             disabled={ nameUsersGroup.users && nameUsersGroup.users.length === 0 }
           >
-            Crear
+            <IntlMessages id="table.shared.dialog.field.createDocument" />
           </Button>
         </DialogActions>
       </Dialog>

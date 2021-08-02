@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import IntlMessages from 'util/IntlMessages';
 
 import { removeDetailDocumentType, startDetailDocumentTypeLoading, startDocumentsTypeLoading, startFoldersLoading } from 'actions/documents';
 import { CheckField, SelectField } from 'components/ui/Form';
@@ -63,7 +64,7 @@ export const FormInit = () => {
 
 	const isControlledDocument = {
 		name: 'controlled_document',
-		label: 'Documento controlado',
+		label: <IntlMessages id="document.loadDocuments.ControlledDoc" />,
 		control,
 	};
 
@@ -102,7 +103,7 @@ export const FormInit = () => {
 
 						<FormControl fullWidth>
 							<SelectField
-								label="Seleccionar tipo de documento"
+								label={<IntlMessages id="document.loadDocuments.SelecTypeDoc" />}
 								name="documentsType"
 								size="small"
 								{...commonProps}

@@ -4,7 +4,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useEffect, useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-
+import IntlMessages from 'util/IntlMessages';
 
 import Button from 'components/ui/Button';
 import { AutoCompleteField, TextField } from 'components/ui/Form';
@@ -50,7 +50,9 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
         <Grid item md={12} spacing={3} container alignItems="center">
             <Grid item container md={3}>
                 <h5 className={classes.rolTitle}>{rolName}</h5>
-                <p className={classes.rolSubTitle}>{mandatory ? "(Requerido)" : "(Opcional)"}</p>
+                <p className={classes.rolSubTitle}>{
+                mandatory ? 
+                <IntlMessages id="flow.requiered" /> :  <IntlMessages id="flow.optional" />}</p>
             </Grid>
             <Grid item md={1}>
                 <Button
@@ -58,7 +60,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                     color="secondary"
                     startIcon={<AddIcon />}
                     onClick={addField}>
-                    Agregar
+                    <IntlMessages id="document.add" />
             </Button>
             </Grid>
         </Grid>
@@ -74,7 +76,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                         <Grid item xs={4}>
                             <AutoCompleteField
                                 name={`${name}[${item}].id`}
-                                label="Seleccionar titulo documento"
+                                label={<IntlMessages id="document.title" />}
                                 getUrl={getTitle}
                                 renderOption={(option) => {
                                     setValue(`documents[${index}].documents[${item}].owner`, option["owner"]);
@@ -91,7 +93,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                         <Grid item xs={2}>
                             <TextField
                                 value={get(getValues(),`documents[${index}].documents[${item}].author`)}
-                                label="Autor"
+                                label={<IntlMessages id="tasks.table.column6" />}
                                 variant="outlined"
                                 InputLabelProps={{
                                     shrink: true,
@@ -116,7 +118,7 @@ const RolItemCree = ({ name, control, commonProps, rolName, index, setValue, man
                         <Grid item xs={2}>
                             <TextField
                                 name={`${name}[${item}].maxDays`}
-                                label="Plazo en días"
+                                label={<IntlMessages id="flow.select.user.day" />}
                                 type="number"
                                 {...commonProps} />
                         </Grid>
