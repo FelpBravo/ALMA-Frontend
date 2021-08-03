@@ -11,7 +11,7 @@ import SearchUsers from './ui/SearchUsers';
 import SearchGroup from './ui/SearchGroup';
 import { TableSearchUsers } from './ui/TableSearchUsers';
 import { TableSearchGroup } from './ui/TableSearchGroup';
-import { useHistory, useLocation, useParams,useRouteMatch  } from 'react-router-dom';
+import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 
 
 function TabPanel(props) {
@@ -64,7 +64,7 @@ const Management = () => {
 	const { path, url } = useRouteMatch();
 
 	const [value, setValue] = useState(path === '/management/usersandgroups/group'? 1:0);
-
+	console.log(path)
 	const history = useHistory();
 
 	

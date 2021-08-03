@@ -22,7 +22,10 @@ const ModalTags = () => {
 
   const { authUser } = useSelector(state => state.auth);
 
-  const { openModal, actionModal, tags , tagslist = [] } = useSelector(state => state.tags);
+  const { openModal, actionModal, tags , initTags = [], tagS} = useSelector(state => state.tags);
+
+  console.log(tagS)
+  //const { parentId } = tagS
 
   const [color, setColor] = useState('#fff');
 
@@ -30,6 +33,7 @@ const ModalTags = () => {
 
   const [messageErrorName, setMessageErrorName] = useState(null);
 
+  const parentId = 175
 
   useEffect(() => {
 
@@ -53,7 +57,7 @@ const ModalTags = () => {
 
     } else
      {
-      const searchtag = tagslist.find(list=>list.tag === value)
+      const searchtag = initTags.find(list=>list.tag === value)
       if(searchtag)
       {
         if(searchtag.id === tags.id)
@@ -94,8 +98,13 @@ const ModalTags = () => {
   const handleOnSave = () => {
     if (actionModal === ACTION_CREATE) {
 
+     
+      if(parentId !== 0){
+        dispatch(closeModalTags());
+        dispatch(startCreateTagsLoading(authUser, value, color,  parentId));
+      }
       dispatch(closeModalTags());
-      dispatch(startCreateTagsLoading(authUser, value, color));
+      dispatch(startCreateTagsLoading(authUser, value, color, 0));
 
     } else {
 

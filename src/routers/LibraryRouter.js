@@ -62,9 +62,13 @@ const LibraryRouter = () => {
 					path={["/directory/:id/:page", "/directory/:id"]}
 					component={asyncComponent(() => import('../components/search/Search'))}
 				/>
+				<Route
+					path={["/tags/:tagId"]}
+					component={asyncComponent(() => import('../components/search/Search'))}
+				/>
 
 				<Route
-					path="/tags"
+					path="/management/tags"
 					component={asyncComponent(() => import('../components/tags/Tags'))}
 				/>
 
@@ -101,7 +105,7 @@ const LibraryRouter = () => {
 					component={asyncComponent(() => import('../components/search/ui/Versioning/Versioning'))}
 				/>
 				<Route
-
+					exact
 					path="/document/:id/info"
 					component={asyncComponent(() => import('../components/search/ui/Information/Information'))}
 				/>
@@ -113,7 +117,7 @@ const LibraryRouter = () => {
 					component={asyncComponent(() => import('../components/groupPermissions/index'))}
 				/>
 
-				<Redirect to="/dashboard" />
+				{<Redirect to="/dashboard" />}
 
 			</Switch>
 		</div>

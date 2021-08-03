@@ -8,9 +8,9 @@ const getSearchFields = (authUser) => {
 	});
 };
 
-const search = (authUser, term, filters = [], folderId, page, maxItems = 10) => {
+const search = (authUser, term, filters = [], folderId, page, maxItems = 10, tagId) => {
 	return axiosInstance.post(`/searches/`,
-		{ term, page, folderId, maxItems, filters, },
+		{ term, page, folderId, maxItems, filters, tagId },
 		{
 			headers: {
 				Authorization: `Bearer ${authUser}`,
