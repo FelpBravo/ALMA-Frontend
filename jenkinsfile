@@ -22,14 +22,14 @@ pipeline {
         stage ("Install libraries") {
             steps {
                 nodejs(nodeJSInstallationName: 'Node') {
-                    sh 'yarn'
+                    sh 'npm install'
                 }
             }
         }
         stage ("Build") {
             steps {
                 nodejs(nodeJSInstallationName: 'Node') {
-                    sh 'yarn run build-dev'
+                    sh 'npm run build-dev'
                 }
             }
         }
