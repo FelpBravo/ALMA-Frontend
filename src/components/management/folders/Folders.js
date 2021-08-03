@@ -97,8 +97,8 @@ const Folders = () => {
 									{
 										canCreateFolder &&
 										<Link component="button" variant="body2" onClick={handleNewFolder} >
-																		<AddIcon color='primary' />
-																			Crear nuevo directorio
+											<AddIcon color='primary' />
+											<IntlMessages id="folders.create" />
 									</Link>
 									}
 									</Grid>

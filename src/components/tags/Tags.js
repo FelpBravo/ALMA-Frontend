@@ -137,16 +137,16 @@ const Tags = () => {
 									<Grid container spacing={2}>
 
 										<Grid item xs={10}>
-											<p className="mb-0"> Listado actual de etiquetas</p>
+										<p className="mb-0"> <IntlMessages id="tags.list" /></p>
 										</Grid>
 
 										<Grid item xs={2}>
-											{ROLE_TAG_CREATE &&
-												<Link component="button" variant="body2" onClick={() => handleSelectActionTags(1)} >
-													<AddIcon color='primary' />
-													Crear nueva etiqueta
-												</Link>
-											}
+										{ ROLE_TAG_CREATE &&
+											<Link component="button" variant="body2" onClick={() => handleSelectActionTags(1)} >
+																				<AddIcon color='primary' />
+																				<IntlMessages id="tags.create" />
+											</Link>
+										}
 										</Grid>
 									</Grid>
 								</div>

@@ -32,44 +32,45 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DocManagement = () => {
+const TableDocPrincipal = () => {
 
     const classes = useStyles();
     const { authUser, authorities } = useSelector(state => state.auth);
-    const { fileId,  flowId,  name } = useSelector(state => state.flowDocument);
+    const { fileId, flowId, name } = useSelector(state => state.flowDocument);
     const [dateActive, setDateActive] = useState(false)
     const dispatch = useDispatch();
-    const { involved } = useSelector(state => state.flowDocument);
-    const { document } = involved
-  
+
+    const { dataCREE = [], involved} = useSelector(state => state.flowDocument);
+    const { document } =involved
+
     const handleOpenDate = () => {
         dispatch(startDocumentFlowIdVisibility(flowId));
-        
+
         setDateActive(true)
     }
 
     const handleCloseDate = () => {
         setDateActive(false)
     }
- 
+
     const ROLE_FILE_DOWNLOAD = authorities.find(rol => rol === 'ROLE_FILE_DOWNLOAD')
 
     const handleDownload = async () => {
-		if (ROLE_FILE_DOWNLOAD) {
-			const resp = await Swal.fire({
-				title: 'Descargar',
-				text: "¿Está seguro que quiere descargar el documento?",
-				icon: "question",
-				showCancelButton: true,
-				focusConfirm: true,
-				heightAuto: false,
-			});
-			if (resp.value) {
-				dispatch(startDownloadDocument(fileId, document?.name))
-			}
-		}
+        if (ROLE_FILE_DOWNLOAD) {
+            const resp = await Swal.fire({
+                title: 'Descargar',
+                text: "¿Está seguro que quiere descargar el documento?",
+                icon: "question",
+                showCancelButton: true,
+                focusConfirm: true,
+                heightAuto: false,
+            });
+            if (resp.value) {
+                dispatch(startDownloadDocument(fileId, document?.name))
+            }
+        }
 
-	}
+    }
 
     return (
         <div className="row">
@@ -80,7 +81,7 @@ const DocManagement = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    <IntlMessages id="doc.table.column1" />
+                                    <IntlMessages id="Titulo del documento" />
                                 </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
                                     <IntlMessages id="doc.table.column2" />
@@ -89,7 +90,10 @@ const DocManagement = () => {
                                     <IntlMessages id="doc.table.column4" />
                                 </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    <IntlMessages id="doc.table.column5" />
+                                    <IntlMessages id="Author" />
+                                </TableCell>
+                                <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
+                                    <IntlMessages id="Owner" />
                                 </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
                                     <IntlMessages id="doc.table.column6" />
@@ -104,25 +108,29 @@ const DocManagement = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        <TableRow>
-                                    <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}>
-                                        {document?.name}
-                                    </TableCell>
-                                    <TableCell>
-                                        {document?.location}
-                                    </TableCell>
-                                    <TableCell>
-                                        {document?.createdAt}
-                                    </TableCell>
-                                    <TableCell>
-                                        {document?.author}
-                                    </TableCell>
-                                    <TableCell>
-                                        {document?.version}
-                                    </TableCell>
-                                    <TableCell>
+
+                            <TableRow  >
+                                <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}>
+                                    {document?.name}
+                                </TableCell>
+                                <TableCell>
+                                    {document?.location}
+                                </TableCell>
+                                <TableCell>
+                                    {document?.createdAt}
+                                </TableCell>
+                                <TableCell>
+                                    {document?.author}
+                                </TableCell>
+                                <TableCell>
+                                    Owner
+                                </TableCell>
+                                <TableCell>
+                                    {document?.version}
+                                </TableCell>
+                                <TableCell>
                                     {
-                                        document?.tags.length > 0
+                                        document?.tags
                                         &&
                                         document?.tags.map((tag) => {
                                             return (
@@ -134,35 +142,34 @@ const DocManagement = () => {
                                             )
                                         })
                                     }
-                                        
-                                    </TableCell>
-                                    <TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
-                                        <div className={classes.iconsHolder}>
-                                            <TableActionButton
-                                                materialIcon={
-                                                    <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.preview" />}>
+                                </TableCell>
+                                <TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
+                                    <div className={classes.iconsHolder}>
+                                        <TableActionButton
+                                            materialIcon={
+                                                <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
                                                     <VisibilityOutlinedIcon
                                                         className={classes.iconos}
-                                                        onClick={() => handleOpenDate(fileId)}
+                                                        onClick={() => handleOpenDate(document?.id)}
                                                     />
-                                                    </Tooltip>
-                                                }
-                                            />
-                                            <TableActionButton
-													materialIcon={
-														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
-															<SaveAltOutlinedIcon
-																className={classes.iconos}
-																onClick={() => handleDownload(fileId, document?.name)}
-															/>
-														</Tooltip>
-													}
-												/>
-                                        </div>
-                                        
-                                    </TableCell>
+                                                </Tooltip>
+                                            }
+                                        />
+                                        <TableActionButton
+                                            materialIcon={
+                                                <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
+                                                    <SaveAltOutlinedIcon
+                                                        className={classes.iconos}
+                                                        onClick={() => handleDownload(document?.id, document?.name)}
+                                                    />
+                                                </Tooltip>
+                                            }
+                                        />
+                                    </div>
 
-                                </TableRow>
+                                </TableCell>
+
+                            </TableRow>
 
                         </TableBody>
                     </Table>
@@ -174,4 +181,4 @@ const DocManagement = () => {
     )
 }
 
-export { DocManagement }
+export { TableDocPrincipal }

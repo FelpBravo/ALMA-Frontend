@@ -36,40 +36,41 @@ const TableDocsCree = () => {
 
     const classes = useStyles();
     const { authUser, authorities } = useSelector(state => state.auth);
-    const { fileId,  flowId,  name } = useSelector(state => state.flowDocument);
+    const { fileId, flowId, name } = useSelector(state => state.flowDocument);
     const [dateActive, setDateActive] = useState(false)
     const dispatch = useDispatch();
-    const { involved } = useSelector(state => state.flowDocument);
-    const { document } = involved
-  
+    
+    const { dataCREE = [], involved } = useSelector(state => state.flowDocument);
+	const {documents} = involved
+
     const handleOpenDate = () => {
         dispatch(startDocumentFlowIdVisibility(flowId));
-        
+
         setDateActive(true)
     }
 
     const handleCloseDate = () => {
         setDateActive(false)
     }
- 
+
     const ROLE_FILE_DOWNLOAD = authorities.find(rol => rol === 'ROLE_FILE_DOWNLOAD')
 
     const handleDownload = async () => {
-		if (ROLE_FILE_DOWNLOAD) {
-			const resp = await Swal.fire({
-				title: 'Descargar',
-				text: "¿Está seguro que quiere descargar el documento?",
-				icon: "question",
-				showCancelButton: true,
-				focusConfirm: true,
-				heightAuto: false,
-			});
-			if (resp.value) {
-				dispatch(startDownloadDocument(fileId, document?.name))
-			}
-		}
+        if (ROLE_FILE_DOWNLOAD) {
+            const resp = await Swal.fire({
+                title: 'Descargar',
+                text: "¿Está seguro que quiere descargar el documento?",
+                icon: "question",
+                showCancelButton: true,
+                focusConfirm: true,
+                heightAuto: false,
+            });
+            if (resp.value) {
+                dispatch(startDownloadDocument(fileId, document?.name))
+            }
+        }
 
-	}
+    }
 
     return (
         <div className="row">
@@ -107,55 +108,81 @@ const TableDocsCree = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                        <TableRow>
+                            {documents && documents.map(({ author, createdAt, id, location, name, tags, version }, index) => {
+
+                                return <TableRow key={index} >
                                     <TableCell style={{ fontFamily: "Poppins", fontSize: '14px', fontWeight: 400, cursor: 'pointer' }}>
-                                        name
+                                        {name}
                                     </TableCell>
                                     <TableCell>
-                                      Location
+                                        {location}
                                     </TableCell>
                                     <TableCell>
-                                    createdAt
+                                        {createdAt}
                                     </TableCell>
                                     <TableCell>
-                                      Author
+                                        {author}
                                     </TableCell>
                                     <TableCell>
-                                      Owner
+                                        Owner
                                     </TableCell>
                                     <TableCell>
-                                      version
+                                        {version}
                                     </TableCell>
                                     <TableCell>
-                                        tags
+                                        {
+                                            tags.length > 0
+                                            &&
+                                            tags.map((tag) => {
+                                                return (
+                                                    <i
+                                                        key={tag.id}
+                                                        style={{ color: tag.hex, margin: 1 }}
+                                                        className="zmdi zmdi-circle jr-fs-xxs"
+                                                    />
+                                                )
+                                            })
+                                        }
                                     </TableCell>
                                     <TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
                                         <div className={classes.iconsHolder}>
                                             <TableActionButton
                                                 materialIcon={
                                                     <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
-                                                    <VisibilityOutlinedIcon
-                                                        className={classes.iconos}
-                                                        onClick={() => handleOpenDate(fileId)}
-                                                    />
+                                                        <VisibilityOutlinedIcon
+                                                            className={classes.iconos}
+                                                            onClick={() => handleOpenDate(id)}
+                                                        />
                                                     </Tooltip>
                                                 }
                                             />
                                             <TableActionButton
-													materialIcon={
-														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
-															<SaveAltOutlinedIcon
-																className={classes.iconos}
-																onClick={() => handleDownload(fileId,name)}
-															/>
-														</Tooltip>
-													}
-												/>
+                                                materialIcon={
+                                                    <Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.upload" />}>
+                                                        <SaveAltOutlinedIcon
+                                                            className={classes.iconos}
+                                                            onClick={() => handleDownload(id, name)}
+                                                        />
+                                                    </Tooltip>
+                                                }
+                                            />
                                         </div>
-                                        
+
                                     </TableCell>
 
                                 </TableRow>
+                            })}
+                            	{!documents || documents.length == 0 &&
+								<TableRow>
+									<TableCell
+										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
+										colSpan='5'
+									>
+										<IntlMessages id="No existen documentos relacionados" />
+									</TableCell>
+								</TableRow>
+
+							}
 
                         </TableBody>
                     </Table>

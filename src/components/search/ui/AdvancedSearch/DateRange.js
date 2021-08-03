@@ -83,7 +83,7 @@ export const DateRange = ({ value, ...props }) => {
 			<Grid item xs={6}>
 				<TextField
 					//key={name}
-					label="hasta"
+					label={<IntlMessages id="dashboard.advancedUntil" />}
 					variant="outlined"
 					name='endDate'
 					fullWidth

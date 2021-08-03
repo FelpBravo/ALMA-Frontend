@@ -14,6 +14,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SearchesSavedList from 'components/search/SearchesSavedList';
 
+
 const useStyles = makeStyles((theme) => ({
 	buttons: {
 		'& > *': {
@@ -97,7 +98,8 @@ export const AdvancedSearch = ({savedSearchId}) => {
 		const exists = filters.filter(filter => filter.value);
 
 		if (exists.length === 0) {
-			return Swal.fire({
+			return Swal.fire(
+				{
 				title: 'Error',
 				text: 'Debe seleccionar un filtro',
 				icon: 'error',
@@ -116,7 +118,8 @@ export const AdvancedSearch = ({savedSearchId}) => {
 		const exists = filters.filter(filter => filter.value);
 
 		if (exists.length === 0) {
-			return Swal.fire({
+			return Swal.fire(
+				{
 				title: 'Error',
 				text: 'Debe seleccionar un filtro',
 				icon: 'error',
@@ -156,6 +159,7 @@ export const AdvancedSearch = ({savedSearchId}) => {
 								i === 0 ? columns : i * columns + columns
 							)
 							.map((item) => {
+								console.log("assqsada", {...item})
 								return (
 									<div
 										key={item.name}

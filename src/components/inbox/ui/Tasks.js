@@ -13,11 +13,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 
-import { startActiveTasksInit, startInvolvedLoading } from 'actions/flowDocument';
+import { startActiveTasksInit, startDataCreeInit, startDataCreeLoading, startInvolvedLoading, typeInitCree } from 'actions/flowDocument';
 import TableActionButton from 'components/search/ui/TableActionButton';
 import { INBOX_STATUS, STATUS } from 'constants/constUtil';
 import IntlMessages from 'util/IntlMessages';
-
+import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import ManagementSummary from './ManagementSummary';
 import TableActionButtonCree from 'components/search/ui/TableActionButtonCree';
 
@@ -54,21 +55,26 @@ const Tasks = () => {
 	const { authUser } = useSelector(state => state.auth);
 	const { tasksList = {} } = useSelector(state => state.flowDocument);
 	const { data = [], totalItems = 0 } = tasksList;
-
 	const [page, setPage] = useState(0)
 	const { flowId } = useParams();
 
 	const renderData = flowId ? data.filter(({ instanceId }) => instanceId === parseInt(flowId)) : data;
 
-	const handleManage = (instanceId, taskId, role, author, fileId, expiresAt) => {
-		dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt))
+	const handleManage = (instanceId, taskId, role, author, fileId, expiresAt, type) => {
+		dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt, type))
 		history.push(`/manage`);
 
 	};
 
-	const handleManageCCB = () => {
-		//dispatch(startInvolvedLoading(authUser, instanceId, taskId, role, author, fileId, expiresAt))
+	const handleManageCCB = (instanceId, taskId, role, author, fileId, expiresAt, type) => {
+		dispatch(startDataCreeInit(authUser, instanceId, taskId, role, author, fileId, expiresAt, type))
 		history.push(`/CREE`);
+
+	};
+
+	const handleManageSub = (instanceId, taskId, role, author, fileId, expiresAt, type) => {
+		dispatch(startDataCreeInit(authUser, instanceId, taskId, role, author, fileId, expiresAt, type))
+		history.push(`/manage`);
 
 	};
 
@@ -78,6 +84,11 @@ const Tasks = () => {
 		dispatch(startActiveTasksInit(authUser , page, value));
 	
 	}*/}
+
+	const handleEdit = (fileId, instanceId, type, taskId) => {
+		dispatch(typeInitCree(type, taskId))
+		history.push(`/document/${fileId}/edit/${instanceId}`);
+	}
 
 	const handleChangePage = (event, page) => {
 		dispatch(startActiveTasksInit(authUser, page, STATUS))
@@ -144,11 +155,14 @@ const Tasks = () => {
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
 									<IntlMessages id="tasks.table.column8" />
 								</TableCell>
+								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
+									<IntlMessages id="document.flow.cree" />
+								</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody >
 
-							{renderData.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt }, index) => {
+							{renderData.map(({ fileName, role, status, createdOn, author, instanceId, taskId, fileId, expiresAt, type, hasParent }, index) => {
 
 								return <TableRow key={index} >
 
@@ -176,26 +190,54 @@ const Tasks = () => {
 									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
 										{expiresAt && expiresAt.substr(0, 10)}
 									</TableCell>
+									<TableCell style={{ fontFamily: "Poppins", textAlign: "center", fontSize: "13px" }}>
+										{type}
+									</TableCell>
 									<TableCell style={{ fontFamily: "Poppins", textAlign: "center" }}>
 
 										<div className={classes.iconsHolder}>
-											<TableActionButton
-												materialIcon={
-													<DescriptionOutlinedIcon
-														className={classes.iconos}
-														onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt)}
-													/>
-												}
-											/>
+											{type === "GENERAL" &&
+												<TableActionButton
+													materialIcon={
+														<DescriptionOutlinedIcon
+															className={classes.iconos}
+															onClick={() => handleManage(instanceId, taskId, role, author, fileId, expiresAt, type)}
+														/>
+													}
+												/>}
+											{type === "CRE" && role !== "autor" &&  hasParent !== "YES" &&
+												<TableActionButtonCree
+													materialIcon={
+														<DescriptionOutlinedIcon
+															className={classes.iconosCCB}
+															onClick={() => handleManageCCB(instanceId, taskId, role, author, fileId, expiresAt, type)}
+														/>
+													}
+												/>
+											}
+											{type === "CRE" && role === "autor" && 
+												<TableActionButtonCree
+													materialIcon={
+														<Tooltip color="primary" title={<IntlMessages id="table.shared.dialog.tooltip.edit" />}>
+															<DescriptionOutlinedIcon
+																className={classes.iconosCCB}
+																onClick={() => handleEdit(fileId, instanceId, type, taskId)}
+															/>
+														</Tooltip>
+													}
+												/>
+											}
+											{type === "CRE" && role !== "autor" && hasParent === "YES" &&
+												<TableActionButtonCree
+													materialIcon={
+														<DescriptionOutlinedIcon
+															className={classes.iconosCCB}
+															onClick={() =>  handleManageSub(instanceId, taskId, role, author, fileId, expiresAt, type)}
+														/>
+													}
+												/>
+											}
 
-											<TableActionButtonCree
-												materialIcon={
-													<DescriptionOutlinedIcon
-														className={classes.iconosCCB}
-														onClick={() => handleManageCCB()}
-													/>
-												}
-											/>
 										</div>
 
 
@@ -214,7 +256,7 @@ const Tasks = () => {
 										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
 										colSpan='5'
 									>
-										<IntlMessages id="No hay tareas por hacer" />
+										<IntlMessages id="document.management.NotTasks" />
 									</TableCell>
 								</TableRow>
 

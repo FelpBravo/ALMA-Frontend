@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startDownloadDocument } from 'actions/search'
 
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,16 +66,16 @@ const CommentRole = () => {
         <div>
             <Divider className="mt-1" style={{ height: 1, background: "rgba(0, 0, 0, 0.12)" }} />
             <div style={{ marginTop: '18px', maxHeight: '650px', overflow: 'auto' }}>
-                {commentList.length > 0 && commentList.map(({ userId, comment, completedAt,  attachments, role }) => {
+                {commentList.length > 0 && commentList.map(({ userId, comment, createdAt,  attachments, role }) => {
                     return (
                         <>
                     <div className={classes.coment}>
-                    <span style={{  marginLeft: 15, fontSize: 16, color: "#3699FF", fontWeight: 400}}>{userId}</span> <span style={{ fontSize: 12, color: "#3699FF"}}>{` (${role})`}</span><span style={{ marginLeft: 25, fontSize: 12, color: "#181824", }} >{new Date(completedAt).toLocaleString()}</span>
+                    <span style={{  marginLeft: 15, fontSize: 16, color: "#3699FF", fontWeight: 400}}>{userId}</span> <span style={{ fontSize: 12, color: "#3699FF"}}>{` (${role})`}</span><span style={{ marginLeft: 25, fontSize: 12, color: "#181824", }} >{new Date(createdAt).toLocaleString()}</span>
                     <br />
                     <span style={{ fontSize: 15, marginTop: 70, marginLeft: 17}}>{comment}</span>
                     <br />
                     {attachments && attachments.length > 0 && attachments.map(({ name, id }) => {
-                        return (<span style={{   marginLeft: 15, marginTop: 90, color: "#3699FF", fontSize: 12, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}>{`Documento adjunto: `}{name}</span>)
+                        return (<span style={{   marginLeft: 15, marginTop: 90, color: "#3699FF", fontSize: 12, cursor: 'pointer' }} onClick={() => handleDownload(id, name)}><IntlMessages id="document.attachment" />{`: `}{name}</span>)
                     })
 
                     }

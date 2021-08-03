@@ -103,7 +103,7 @@ const Information = () => {
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
 				<h3 className="mb-0">
-				<IntlMessages id="Informacion Documento" />
+				<IntlMessages id="document.information" />
 				<BreadCrumbs/>
 				 </h3>
 						<Grid container className="mt-2">
@@ -116,9 +116,9 @@ const Information = () => {
 									textColor="primary"
 									centered
 								>
-								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }} label="Información General" {...a11yProps(0)} />
-								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Comentarios" {...a11yProps(1)} /> 
-								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label="Documentos adjuntos" {...a11yProps(2)} />
+								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }} label={<IntlMessages id="document.information.general" />} {...a11yProps(0)} />
+								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label={<IntlMessages id="dashboard.comments" />} {...a11yProps(1)} /> 
+								<Tab style={{fontFamily: 'Poppins', fontSize: "12px", fontWeight: 500, textTransform:"none" }}label={<IntlMessages id="document.attachment" />} {...a11yProps(2)} />
 								</Tabs>
 
 								<TabPanel value={value} index={0}>

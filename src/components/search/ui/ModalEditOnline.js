@@ -41,7 +41,7 @@ const ModalEditOnline = (props) => {
 
         <DialogContent>
         <Alert severity="info" style={{fontFamily:"Poppins", color:"#3699FF", fontSize:"12px"}} className="mt-3">
-            Solo se puede editar en linea documentos del tipo no controlados
+          <IntlMessages id="edit.modal.warning" />
           </Alert>
         
             
@@ -60,7 +60,7 @@ const ModalEditOnline = (props) => {
             variant="contained"
             color="primary"
           >
-            Cancelar
+            <IntlMessages id="document.loadDocuments.request.summary.button.cancel" />
           </Button>
 
           <Button
@@ -71,7 +71,7 @@ const ModalEditOnline = (props) => {
             variant="contained"
             color="primary"
            >
-           Editar
+           <IntlMessages id="document.loadDocuments.edit" />
           </Button>
 
         </DialogActions>

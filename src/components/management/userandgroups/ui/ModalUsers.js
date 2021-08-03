@@ -159,7 +159,7 @@ const ModalUsers = () => {
                 <TextField
                   fullWidth
                   name="firstName"
-                  label="Nombres"
+                  label={<IntlMessages id="users.firstName" />}
                   type="text"
                   variant="outlined"
                   size="small"
@@ -173,7 +173,7 @@ const ModalUsers = () => {
                 <TextField
                   fullWidth
                   name="lastName"
-                  label="Apellidos"
+                  label={<IntlMessages id="users.lastName" />}
                   type="text"
                   variant="outlined"
                   size="small"
@@ -185,7 +185,7 @@ const ModalUsers = () => {
               </Grid>
               <Grid item xs={4}>
                 <TextField
-                  label="Correo electrónico"
+                  label={<IntlMessages id="users.email" />}
                   type="email"
                   required
                   variant="outlined"
@@ -201,7 +201,7 @@ const ModalUsers = () => {
             <Grid container spacing={1} className="mt-3" >
               <Grid item xs={4}>
                 <FormControl size="small" variant="outlined" className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-outlined-label">Empresa</InputLabel>
+                  <InputLabel id="demo-simple-select-outlined-label">{<IntlMessages id="users.table.column6" />}</InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
@@ -223,7 +223,7 @@ const ModalUsers = () => {
                   <TextField
                     // value={value}
                     fullWidth
-                    label="Escriba nombre de la empresa"
+                    label={<IntlMessages id="users.company.name" />}
                     name='companyOther'
                     type="text"
                     variant="outlined"
@@ -241,7 +241,7 @@ const ModalUsers = () => {
             <Grid container spacing={1} className="mt-3" >
               <Grid item xs={4}>
                 <FormControl size="small" variant="outlined" className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-outlined-label">Departamento</InputLabel>
+                  <InputLabel id="demo-simple-select-outlined-label"><IntlMessages id="users.table.column7" /></InputLabel>
                   <Select
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
@@ -263,7 +263,7 @@ const ModalUsers = () => {
                 <Grid item xs={4}>
                   <TextField
                     fullWidth
-                    label="Escriba nombre del departamento"
+                    label={<IntlMessages id="users.department.name" />}
                     name='departmentOther'
                     type="text"
                     variant="outlined"
@@ -280,7 +280,7 @@ const ModalUsers = () => {
             <Grid item xs={4} className="mt-3" >
               <TextField
                 fullWidth
-                label="Usuario"
+                label={<IntlMessages id="users.table.column1" />}
                 name="id"
                 error={validateNickname || messageErrorUser || validation.id === false  ? true : false}
                 type="text"
@@ -294,12 +294,12 @@ const ModalUsers = () => {
             </Grid>
 
           <Alert severity="info" style={{ fontFamily: "Poppins", color: "#3699FF", fontSize: "12px" }} className="mt-3">
-            La contraseña de generará automatícamente y llegara al correo indicado.
+            <IntlMessages id="users.create.message" />
           </Alert>
 
           <Divider className="mt-3" />
 
-          <h5 className="mt-3">Asignar grupos</h5>
+          <h5 className="mt-3"><IntlMessages id="users.assigned.group" /></h5>
           
           <SelectAndChips data={grouplist.map(group => {return { 'id' : group.name}})} returnData={(group) => setNameUser(group.map(group => group.id))} />
 
@@ -342,7 +342,7 @@ const ModalUsers = () => {
                 && (company === 'Other' ? validation.companyOther : true) ? false : true
             }
           >
-            Crear
+            <IntlMessages id="table.shared.dialog.field.createDocument" />
           </Button>
 
         </DialogActions>

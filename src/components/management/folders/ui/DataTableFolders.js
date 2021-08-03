@@ -66,7 +66,7 @@ export const DataTableFolders = ({ folders, privileges }) => {
 										className="folders-table-row"
 									>
 
-										No se encontro ningun directorio 
+										<IntlMessages id="folders.no.found" />
 									</TableCell>
 								</TableRow>
 							}

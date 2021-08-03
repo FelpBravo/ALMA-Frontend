@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { CommentRoleInit, manageSetValueField, startAcceptTasksInit } from 'actions/flowDocument';
+import { CancelCree, CancelGeneral, CommentRoleCreeInit, CommentRoleInit, manageSetValueField, startAcceptTasksCreeInit, startAcceptTasksInit } from 'actions/flowDocument';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
@@ -33,7 +33,7 @@ const ManagementSummary = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const { authUser } = useSelector(state => state.auth);
-	const { involved, taskId, role, author, expiresAt, fileId, flowId } = useSelector(state => state.flowDocument);
+	const { involved, taskId, role, author, expiresAt, fileId, flowId, type } = useSelector(state => state.flowDocument);
 	const { comment, approves, users } = involved
 
 	const [value, setValue] = React.useState(null);
@@ -54,7 +54,7 @@ const ManagementSummary = () => {
 	}
 
 	const handleAcceptTask = () => {
-		if (role === "owner" || role === "author") {
+		if (role === "owner" || role === "autor") {
 			dispatch(startAcceptTasksInit(authUser, taskId, value === "true", commentCreate, role, approves, file))
 			handleBackGo()
 		}
@@ -63,6 +63,7 @@ const ManagementSummary = () => {
 			handleBackGo()
 		}
 	}
+
 	const handleEdit = e => {
 		history.push(`/document/${fileId}/edit/${flowId}`);
 	}
@@ -84,11 +85,40 @@ const ManagementSummary = () => {
 		setName()
 	}
 	const handleOpenComment = () => {
-		dispatch(CommentRoleInit(authUser, flowId, role))
-		setDateActive(true)
+		if (type === "CRE") {
+			dispatch(CommentRoleCreeInit(authUser, flowId, taskId))
+			setDateActive(true)
+		}
+		else {
+			dispatch(CommentRoleInit(authUser, flowId, role))
+			setDateActive(true)
+		}
 	}
+
 	const handleCloseComment = () => {
 		setDateActive(false)
+	}
+
+	const handleCancel = () => {
+		if(type === "CRE"){
+			dispatch(CancelCree(authUser, flowId))
+		}
+		else{
+			dispatch(CancelGeneral(authUser, flowId))
+		}
+		
+
+	}
+
+	const handleAcceptTaskCRE = () => {
+		if (role === "owner" || role === "autor") {
+			dispatch(startAcceptTasksCreeInit(authUser, taskId, value === "true", commentCreate, role, approves, file))
+			handleBackGo()
+		}
+		else {
+			dispatch(startAcceptTasksCreeInit(authUser, taskId, value === "true", commentCreate, role, [], file))
+			handleBackGo()
+		}
 	}
 
 	return (
@@ -96,34 +126,46 @@ const ManagementSummary = () => {
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
 				<div className="jr-card">
+					
+					{role !== "autor" &&
+						<Grid container className="mt-2 mb-3">
 
-					<Grid container className="mt-2 mb-3">
+							<Grid item xs={11}>
+								<h3 className="mb-0">
+									<IntlMessages id="document.review" />
+								</h3>
+							</Grid>
+						</Grid>}
+					{role === "autor" &&
+						<div>
+							<h3>Tarea Rechazada</h3>
+							<p className="user-description">
+								<span className="owner-most-viewed-documents">{author}</span>
+								{` te ha devuelto este documento, en el rol `}
+								<span className="owner-most-viewed-documents">{role}</span>
+							</p>
 
-						<Grid item xs={11}>
-							<h3 className="mb-0">
-								<IntlMessages id="Revisión de documento" />
-							</h3>
-						</Grid>
-					</Grid>
-
+						</div>}
 					<DocManagement />
 
-					<Divider className="mt-3 mb-3" />
-					<h3>Información general del flujo</h3>
+					{role !== "autor" &&
+						<div><Divider className="mt-3 mb-3" />
+							<h3><IntlMessages id="document.flow.information" /></h3>
 
-					<Grid container item xs={12}>
-						<TextField
-							name="comment"
-							multiline
-							rows={3}
-							value={comment}
-							disabled
-						/>
-					</Grid>
-					{(role === "owner" || role === "author") &&
+							<Grid container item xs={12}>
+								<TextField
+									name="comment"
+									multiline
+									rows={3}
+									value={comment}
+									disabled
+								/>
+							</Grid>
+						</div>}
+					{(role === "owner" || role === "autor") &&
 						<div>
 							<Divider className="mt-3 mb-3" />
-							<h3>Involucrados</h3>
+							<h3><IntlMessages id="document.loadDocuments.request.summary.involved" /></h3>
 
 							<SummaryInvolved />
 						</div>
@@ -132,7 +174,7 @@ const ManagementSummary = () => {
 					{(role === "coAutor" || role === "stakeholder" || role === "reiewed" || role === "approved" || role === "released") &&
 						<div>
 							<Divider className="mt-3 mb-3" />
-							<h3>Comentario del autor</h3>
+							<h3><IntlMessages id="document.flow.comentary.author" /></h3>
 
 							<Grid container item xs={12}>
 								{users.filter(user => user.role === role).map(result => (
@@ -149,31 +191,33 @@ const ManagementSummary = () => {
 						</div>
 					}
 
+					{role !== "autor" &&
+						<div>
+							<Divider className="mt-3 mb-3" />
+							<h3><IntlMessages id="document.flow.review.request" /></h3>
+							<p className="user-description">
+								<span className="owner-most-viewed-documents">{author}</span>
+								{` `}<IntlMessages id="document.flow.review.request.role" />{` `}
+								<span className="owner-most-viewed-documents">{role}</span>
+							</p>
+							<p className="user-description">
+								<IntlMessages id="document.flow.review.request.days" />{` `}
+								<span className="owner-most-viewed-documents">{expiresAt}</span>
+							</p>
 
-					<Divider className="mt-3 mb-3" />
-					<h3>Solicitud de revisión</h3>
-					<p className="user-description">
-						<span className="owner-most-viewed-documents">{author}</span>
-						{` te ha solicitado revisar este documento, en el rol `}
-						<span className="owner-most-viewed-documents">{role}</span>
-					</p>
-					<p className="user-description">
-						{`El plazo de esta solicitud vence el `}
-						<span className="owner-most-viewed-documents">{expiresAt}</span>
-					</p>
-
-					<FormControl>
-						<FormLabel color="primary" >Aprobar Tarea</FormLabel>
-						<RadioGroup value={String(value)} onChange={handleChange}>
-							<FormControlLabel value="true" control={<Radio color="primary" />} label="Si" />
-							<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
-						</RadioGroup>
-					</FormControl>
+							<FormControl>
+								<FormLabel color="primary" ><IntlMessages id="document.flow.approv.task" /></FormLabel>
+								<RadioGroup value={String(value)} onChange={handleChange}>
+									<FormControlLabel value="true" control={<Radio color="primary" />} label={<IntlMessages id="document.flow.approv.yes" />} />
+									<FormControlLabel value="false" control={<Radio color="primary" />} label={<IntlMessages id="document.flow.approv.no" />} />
+								</RadioGroup>
+							</FormControl>
+						</div>}
 
 					<Divider className="mt-3 mb-3" />
 					<Grid container >
 						<Grid item xs={2}>
-							<h3>Comentarios sobre la tarea</h3>
+							<h3><IntlMessages id="document.flow.comentary.task" /></h3>
 						</Grid>
 						<Grid item xs={2}>
 							<Link
@@ -182,7 +226,7 @@ const ManagementSummary = () => {
 								variant="body2"
 								onClick={handleOpenComment}
 							>
-								Ver más comentarios
+								<IntlMessages id="document.flow.comentary.more" />
 							</Link>
 
 						</Grid>
@@ -191,7 +235,7 @@ const ManagementSummary = () => {
 					<Grid container item xs={12}>
 						<TextField
 							name="comment"
-							label="Escribe tus cometarios"
+							label={<IntlMessages id="document.flow.comentary.writer" />}
 							multiline
 							rows={3}
 							onChange={handleChangeRedux}
@@ -248,30 +292,54 @@ const ManagementSummary = () => {
 										onClick={handleEdit}
 										variant="contained"
 										color="primary"
-									>Editar</Button>}
+									><IntlMessages id="document.loadDocuments.edit" /></Button>}
 
-								{role === "author" &&
+								{role === "autor" &&
+									<Grid>
+										<Button
+											className="mr-3"
+											style={{
+												fontFamily: "Poppins", fontSize: '12px', fontWeight: 500,
+												boxShadow: "none", height: '45px', width: '120px'
+											}}
+											onClick={handleCancel}
+											variant="outlined"
+											color="primary"
+										><IntlMessages id="document.loadDocuments.request.summary.button.cancel" /></Button>
+
+										<Button
+											className="mr-3"
+											style={{
+												backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
+												boxShadow: "none", height: '45px', width: '120px'
+											}}
+											onClick={handleEdit}
+											variant="contained"
+											color="primary"
+										><IntlMessages id="document.loadDocuments.edit" /></Button>
+									</Grid>
+								}
+
+								{type === "GENERAL" &&
 									<Button
-										className="mr-3"
 										style={{
-											backgroundColor: '#E1F0FF', color: '#3699FF', fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none",
-											boxShadow: "none", height: '45px', width: '120px'
+											fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
 										}}
-										onClick={handleEdit}
+										onClick={handleAcceptTask}
 										variant="contained"
-										color="primary"
-									>Editar</Button>}
-
-								<Button
-									style={{
-										fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
-									}}
-									onClick={handleAcceptTask}
-									variant="contained"
-									color="primary">
-
-									Completar tarea</Button>
-
+										color="primary">
+										<IntlMessages id="document.loadDocuments.edit" />
+									</Button>}
+								{type === "CRE" &&
+									<Button
+										style={{
+											fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
+										}}
+										onClick={handleAcceptTaskCRE}
+										variant="contained"
+										color="primary">
+										<IntlMessages id="document.flow.complete.task" />
+									</Button>}
 							</Grid>
 						</Grid>
 					</Grid>

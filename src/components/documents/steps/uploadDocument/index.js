@@ -79,7 +79,6 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
         if (document.length === 0) {
             return;
         }
-        console.log("flowId", flowId)
         dispatch(startDocumentByIdLoading(document, flowId, () => setLoading(false)));
 
         dispatch(startThumbnailLoading(document));
@@ -131,7 +130,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
 
     const isControlledDocument = {
         name: 'controlled_document',
-        label: 'Documento controlado',
+        label: <IntlMessages id="document.loadDocuments.ControlledDoc" />,
         control,
 
     };
@@ -225,7 +224,7 @@ export default function UploadDocument({ editMode, setFiles, document, files, ha
                         >
                             {
                                 editMode && flowId
-                                    ? "Saltar paso"
+                                    ? <IntlMessages id="document.loadDocuments.skipStep" />
                                     : <IntlMessages id="dashboard.advancedSearchClear" />
                             }
 

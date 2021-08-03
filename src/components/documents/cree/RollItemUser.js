@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandatory, getValues }) => {
+const RolItemUser = ({ name, control, commonProps, rolName, index, setValue, mandatory, getValues }) => {
     const { fields, append, remove } = useFieldArray({
         name,
         control
@@ -46,9 +46,9 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
         <Grid item md={12} spacing={3} container alignItems="center">
             <Grid item container md={3}>
                 <h5 className={classes.rolTitle}>{rolName}</h5>
-                <p className={classes.rolSubTitle}>
-                    {mandatory ? <IntlMessages id="flow.requiered" /> : <IntlMessages id="flow.optional" />}
-                </p>
+                <p className={classes.rolSubTitle}>{
+                mandatory ? 
+                <IntlMessages id="flow.requiered" /> :  <IntlMessages id="flow.optional" />}</p>
             </Grid>
             <Grid item md={1}>
                 <Button
@@ -95,12 +95,7 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
                                 type="number"
                                 {...commonProps} />
                         </Grid>
-                        <Grid item md={5} sm={12} xs={12}>
-                            <TextField
-                                name={`${name}[${index}].comment`}
-                                label={<IntlMessages id="dashboard.comments" />}
-                                {...commonProps} />
-                        </Grid>
+                        
                         <Grid item md={1}>
                             {
                                 (mandatory && fields.length === 1)
@@ -120,4 +115,4 @@ const RolItem = ({ name, control, commonProps, rolName, index, setValue, mandato
     </Grid>)
 }
 
-export default RolItem;
+export default RolItemUser;

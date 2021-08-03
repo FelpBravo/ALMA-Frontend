@@ -184,4 +184,7 @@ export const types = {
 	notificationsReset: "Notifications reset initial values",
 
 	manageSetValueField: "Manage set value field",
+	docInitCree: "Document Init Cree",
+	dataCreeInitFlow: "Data Cree Init Flow",
+	typeInitCree: "Type Init Cree",
 }

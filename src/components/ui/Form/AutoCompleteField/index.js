@@ -9,7 +9,7 @@ import { Controller, useWatch } from "react-hook-form";
 
 import IntlMessages from "util/IntlMessages";
 
-const Autocomplete = withStyles ({
+const Autocomplete = withStyles({
     option: {
         '&[aria-selected="true"]': {
             backgroundColor: 'transparent',
@@ -45,11 +45,12 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
         };
     }, [value, setLoading, isAsync]);
 
+
     const onClose = (onChange, data) => {
-        if(isEmpty(data)){
+        if (isEmpty(data)) {
             onChange(null)
         }
-    }  
+    }
 
     return (
         <Controller
@@ -63,7 +64,7 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                     defaultValue={defaultValue}
                     getOptionLabel={(option) => get(option, optionsLabel, "")}
                     renderOption={renderOption ?? ((option) => (
-                            option[optionsLabel]
+                        option[optionsLabel]
                     ))}
                     getOptionSelected={(option, value) =>
                         (value === undefined || value === "" || option?.id === value?.id)
@@ -82,9 +83,9 @@ function AutoCompleteField({ control, errors, register, getUrl, label, name, opt
                             helperText={errorMessage && <IntlMessages id={errorMessage} />}
                             error={Boolean(errorMessage)}
                             label={label}
-                            onChange={e => { 
+                            onChange={e => {
                                 setValue(e?.target?.value);
-                                return rest?.onChange(e) 
+                                return rest?.onChange(e)
                             }}
                             InputProps={{
                                 ...params.InputProps,
