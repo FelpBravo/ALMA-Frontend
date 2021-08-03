@@ -42,12 +42,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function RequestStep({ tagsField }) {
+export default function RequestStep({ tagsField, controlledDocument }) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList, initialApprovers, taskId, form, type } = useSelector(state => state.flowDocument);
-    console.log(type)
     const { folderId, filesLoaded, pathFolderName } = useSelector(state => state.documents);
     const { user } = jwt_decode(authUser)
     const { flowId } = useParams();
@@ -214,6 +213,7 @@ export default function RequestStep({ tagsField }) {
 
             </div>
             <ModalLoadFlow
+                controlledDocument={controlledDocument}
                 data={formData}
                 close={handleClose}
                 open={Boolean(formData)} />

@@ -181,7 +181,7 @@ export const startUploadAttachments = (authUser, fileId, files) => {
 	};
 
 
-	export const saveCommentsCree = (authUser, flowId, taskId, content, file) => {
+/* 	export const saveCommentsCree = (authUser, flowId, taskId, content, file) => {
 		return async (dispatch) => {
 			try {
 				Swal.fire({
@@ -205,3 +205,4 @@ export const startUploadAttachments = (authUser, fileId, files) => {
 	
 		}
 	};
+ */

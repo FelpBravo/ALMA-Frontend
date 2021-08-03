@@ -101,10 +101,10 @@ const ManagementSummary = () => {
 
 	const handleCancel = () => {
 		if(type === "CRE"){
-			dispatch(CancelCree(authUser, flowId))
+			dispatch(CancelCree(authUser, flowId, () => history.push('/inbox')))
 		}
 		else{
-			dispatch(CancelGeneral(authUser, flowId))
+			dispatch(CancelGeneral(authUser, flowId, () => history.push('/inbox')))
 		}
 		
 

@@ -187,4 +187,5 @@ export const types = {
 	docInitCree: "Document Init Cree",
 	dataCreeInitFlow: "Data Cree Init Flow",
 	typeInitCree: "Type Init Cree",
+	commentTransvLoaded: "Comment Transversal Loaded",
 }

@@ -8,8 +8,8 @@ const getApproves = (authUser, flowName) => {
     });
 };
 
-const postFlows = (authUser, flow, document, approves ,comment , startedBy) => {
-    return axiosInstance.post(`/flows/data`, {authUser, flow, document, approves ,comment, startedBy}, {
+const postFlows = (authUser, flow, document, approves ,comment , startedBy, needCopy) => {
+    return axiosInstance.post(`/flows/data`, {authUser, flow, document, approves ,comment, startedBy, needCopy}, {
         headers: {
             Authorization: `Bearer ${authUser}`,
         },
@@ -142,11 +142,33 @@ const deleteCree = (authUser, flowId) => {
 };
 
 const deleteGeneral = (authUser, flowId) => {
-	return axiosInstance.delete(`/data/${flowId}`, {
+	return axiosInstance.delete(`/flows/data/${flowId}`, {
 		headers: {
 			Authorization: `Bearer ${authUser}`,
 		},
 	});
+};
+
+const postCreeComments = (authUser, flowId,  taskId, content, file) => {
+
+    const data = new FormData();
+	data.append('files', file);
+	data.append('content', content)
+
+    return axiosInstance.post(`/flows/cre/${flowId}/task/${taskId}/comments`, data, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+            'Content-Type': 'multipart/form-data'
+        },
+    });
+};
+
+const getCommentCree = (authUser, flowId) => {
+    return axiosInstance.get(`/flows/cre/${flowId}/comments`, {
+        headers: {
+            Authorization: `Bearer ${authUser}`,
+        },
+    });
 };
 
 export { getApproves,
@@ -165,4 +187,6 @@ export { getApproves,
          getCommentRoleCree,
          deleteCree,
          deleteGeneral,
+         postCreeComments,
+         getCommentCree,
          }
