@@ -18,7 +18,8 @@ const initialState = {
     names: [],
     docCree: "",
     dataCREE: [],
-    type: ""
+    type: "",
+    commentTransv:[],
 }
 
 export const flowDocumentReducer = (state = initialState, action) => {
@@ -90,12 +91,19 @@ export const flowDocumentReducer = (state = initialState, action) => {
                 ...state,
                 docCree: payload
             }
+           
         case types.typeInitCree:
             return {
                 ...state,
                 type: action.payload.type,
                 taskId: action.payload.taskId,
 
+            }
+        case types. commentTransvLoaded:
+            return {
+                ...state,
+                commentTransv: payload
+               
             }
 
         default:

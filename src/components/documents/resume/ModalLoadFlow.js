@@ -7,21 +7,25 @@ import React, { } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 
-import { startAcceptTasksCreeEdit, startEditFlowsLoading, startInitFlowsLoading } from 'actions/flowDocument';
+import { startAcceptTasksCreeEdit, startEditFlowsLoading, startInitFlowsLoading, typeInitCree } from 'actions/flowDocument';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
+import { useForm } from 'react-hook-form';
 
 import { SummaryDocument } from './SummaryDocument';
 import { SummaryInvolved } from './SummaryInvolved';
 
-const ModalLoadFlow = ({ data, close, open }) => {
+const ModalLoadFlow = ({ data, close, open, controlledDocument }) => {
 
   const dispatch = useDispatch();
   const { authUser } = useSelector(state => state.auth);
   const { type, taskId } = useSelector(state => state.flowDocument);
+  console.log("modal", type)
   const history = useHistory();
   const { flowId } = useParams();
   const EDIT_MODE = Boolean(flowId);
+  const needCopy = controlledDocument ? true : false ;
+
 
   const handleClose = () => {
     close()
@@ -30,10 +34,11 @@ const ModalLoadFlow = ({ data, close, open }) => {
   const handleInitFlow = () => {
     if (type === "CRE") {
       dispatch(startAcceptTasksCreeEdit(authUser, taskId, data, () => history.push('/inbox')))
+      dispatch(typeInitCree("", ""))
     }
     else {
       !EDIT_MODE
-        ? dispatch(startInitFlowsLoading(authUser, data, () => history.push('/inbox')))
+        ? dispatch(startInitFlowsLoading(authUser, data, needCopy, () => history.push('/inbox')))
         : dispatch(startEditFlowsLoading(authUser, data, () => history.push('/inbox')))
 
     }
@@ -41,6 +46,13 @@ const ModalLoadFlow = ({ data, close, open }) => {
     close()
   }
 
+  /* const needCopy = true
+
+  const handleInitFlowEdit = () => {
+    dispatch(startInitFlowsLoading(authUser, data, needCopy, () => history.push('/inbox')))
+    close()
+  }
+ */
   return (
 
     <div>
@@ -106,17 +118,18 @@ const ModalLoadFlow = ({ data, close, open }) => {
             <IntlMessages id="document.loadDocuments.request.summary.button.cancel" />
           </Button>
 
-          <Button
-            style={{
-              fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
-            }}
-            onClick={handleInitFlow}
-            variant="contained"
-            color="primary"
-          // disabled={messageErrorName}
-          >
-            <IntlMessages id="document.loadDocuments.request.summary.button.confirm" />
-          </Button>
+          
+            <Button
+              style={{
+                fontFamily: "Poppins", fontSize: '12px', fontWeight: 500, border: "none", boxShadow: "none", height: '45px', width: '120px'
+              }}
+              onClick={handleInitFlow}
+              variant="contained"
+              color="primary"
+            >
+              <IntlMessages id="document.loadDocuments.request.summary.button.confirm" />
+            </Button>
+         
 
         </DialogActions>
 

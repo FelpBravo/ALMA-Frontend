@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { CommentRoleCreeInit, CommentRoleInit, manageSetValueField, startAcceptTasksCreeInit } from 'actions/flowDocument';
+import { commentCreeTransv, CommentRoleCreeInit, CommentRoleInit, manageSetValueField, startAcceptTasksCreeInit, startCommentsCreeInit } from 'actions/flowDocument';
 import { SummaryInvolved } from 'components/documents/resume/SummaryInvolved';
 import { TextField } from 'components/ui/Form';
 import IntlMessages from 'util/IntlMessages';
@@ -98,6 +98,13 @@ const ManageCree = () => {
 	const [commentCreate, setCommentCreate] = useState();
 	const [value1, setValue1] = React.useState(0);
 
+	useEffect(() => {
+		
+		dispatch(commentCreeTransv(authUser, flowId))
+	
+  }, [dispatch])
+
+
 	const approves = {}
 
 	const handleChange1 = (event, newValue) => {
@@ -138,21 +145,22 @@ const ManageCree = () => {
 		setFile()
 		setName()
 	}
-	const handleOpenComment = () => {
+	/* const handleOpenComment = () => {
 		dispatch(CommentRoleInit(authUser, flowId, role))
 		setDateActive(true)
 	}
 	const handleCloseComment = () => {
 		setDateActive(false)
 	}
-	
+	 */
 	const handleSubmit = async e => {
 		e.preventDefault()
-	    dispatch(saveCommentsCree(authUser, flowId, taskId))
+	    dispatch(startCommentsCreeInit(authUser, flowId, taskId, commentCreate, file))
 		setName()
 		setFile()
 
 	}
+
 	return (
 		<div className="row">
 			<div className="col-xl-12 col-lg-12 col-md-12 col-12">
@@ -228,9 +236,6 @@ const ManageCree = () => {
 											<FormControlLabel value="false" control={<Radio color="primary" />} label="No" />
 										</RadioGroup>
 									</FormControl>
-
-									<Divider className="mt-3 mb-3" />
-
 
 									<Divider className="mt-3 mb-3" />
 									<Grid container

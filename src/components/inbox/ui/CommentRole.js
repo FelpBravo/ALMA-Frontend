@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 const CommentRole = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const { commentList=[] } = useSelector(state => state.flowDocument);
+    const { commentList=[]} = useSelector(state => state.flowDocument);
 
     const handleDownload = (fileId, name) => {
         dispatch(startDownloadDocument(fileId, name))
