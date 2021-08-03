@@ -1,4 +1,4 @@
-import { getTags, addTags, editTags, deleteTags} from 'services/tagsServices';
+import { getTags, addTags, editTags, deleteTags, getTagsById} from 'services/tagsServices';
 import Swal from 'sweetalert2';
 import { types } from 'types/types';
 import { GENERAL_ERROR } from 'constants/constUtil';
@@ -19,12 +19,59 @@ export const startTagsInitLoading = (authUser) => {
 	}
 };
 
-export const tagsInitLoaded = (tagslist) => {
+export const tagsInitLoaded = (tagS) => {
 	return {
 		type: types.tagsInitLoaded,
-		payload: tagslist,
+		payload: tagS,
 	}
 };
+
+export const startTagsSetChildren = (authUser, tagId) => {
+	return async (dispatch) => {
+
+		try {
+
+			const resp = await getTagsById(authUser, tagId);
+
+			dispatch(tagsSetChildren(tagId, resp.data));
+
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+};
+
+export const tagsSetChildren = (tagId, tagS) => {
+	return {
+		type: types.tagsSetChildren,
+		payload: {
+			id: tagId,
+			tagS,
+		},
+	}
+};
+
+export const saveTagsId = (tagId) => {
+	return {
+		type: types.tagsSaveIds,
+		payload: tagId,
+	}
+};
+
+export const removeTagsId = (tagId) => {
+	return {
+		type: types.tagsRemoveId,
+		payload: tagId,
+	}
+};
+
+export const tagsSelected = (tagId) => {
+	return {
+		type: types.tagsSelected,
+		payload: tagId,
+	}
+}
 
 export const openModalTags = () => {
 	return {
@@ -97,7 +144,7 @@ export const deleteTagsLoaded = (tagsData) => {
 		
 	}
 }
-export const startCreateTagsLoading = (authUser, tag, hex) => {
+export const startCreateTagsLoading = (authUser, tag, hex, parentId) => {
 	return async (dispatch) => {
 
 		try {
@@ -111,7 +158,7 @@ export const startCreateTagsLoading = (authUser, tag, hex) => {
 
 			Swal.showLoading();
 
-			await addTags(authUser, tag, hex);
+			await addTags(authUser, tag, hex, parentId);
 
 			const resp = await getTags(authUser);
 			
@@ -182,3 +229,10 @@ export const tagsRemoveAll = () => {
 		type: types.tagsRemoveAll,
 	}
 };
+ 
+export const removeTagsIdSelected = () => {
+	return {
+		type: types.tagsRemoveIdSelected,
+	}
+};
+

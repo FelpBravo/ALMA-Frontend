@@ -58,7 +58,7 @@ export const startSearchFieldsLoading = (authUser) => {
 	}
 };
 
-export const startSearchLoading = (authUser, term, filters, folderId, page, maxItems) => {
+export const startSearchLoading = (authUser, term, filters, folderId, page, maxItems, tagId) => {
 
 	return async (dispatch) => {
 		dispatch(versioningRemove())
@@ -72,7 +72,7 @@ export const startSearchLoading = (authUser, term, filters, folderId, page, maxI
 			});
 
 			Swal.showLoading();
-			const resp = await search(authUser, term, filters, folderId, page ? parseInt(page) : 1, maxItems);
+			const resp = await search(authUser, term, filters, folderId, page ? parseInt(page) : 1, maxItems, tagId);
 
 			dispatch(searchLoaded(resp.data));
 
