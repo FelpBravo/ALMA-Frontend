@@ -156,7 +156,7 @@ const Tasks = () => {
 									<IntlMessages id="tasks.table.column8" />
 								</TableCell>
 								<TableCell align="center" className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="Flujo" />
+									<IntlMessages id="document.flow.cree" />
 								</TableCell>
 							</TableRow>
 						</TableHead>
@@ -256,7 +256,7 @@ const Tasks = () => {
 										style={{ fontFamily: "Poppins", fontSize: '13px', fontWeight: 400, height: 50 }}
 										colSpan='5'
 									>
-										<IntlMessages id="No hay tareas por hacer" />
+										<IntlMessages id="document.management.NotTasks" />
 									</TableCell>
 								</TableRow>
 

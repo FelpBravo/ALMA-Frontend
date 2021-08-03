@@ -11,6 +11,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import { NewReleasesOutlined } from '@material-ui/icons';
+import IntlMessages from 'util/IntlMessages';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -96,7 +97,7 @@ const Attachments = (props) => {
                 startIcon={<SearchIcon />}
                 style={{background:"#E1F0FF", fontFamily:"Poppins", fontSize:14, color:'#3699FF', width:200, padding: 6}}
               >
-                Adjuntar
+                <IntlMessages id="comment.attachment.button" />
 
               </Button>
             }
@@ -106,7 +107,7 @@ const Attachments = (props) => {
               startIcon={<CloudUploadIcon />}
               onClick={handleUploadAttach}
             >
-              Cargar Archivo
+              <IntlMessages id="comment.load.document.button" />
 
             </Button>
           }
@@ -142,7 +143,7 @@ const Attachments = (props) => {
                         {` ${name} `}
                       </h5>
                       <p className="user-description">
-                        {`Subido por `}
+                        <IntlMessages id="dashboard.upload.by" />{` `}
                         <span className="owner-most-viewed-documents">{createdByUser}</span>
                         {`, ${new Date(createdAt).toLocaleString()}`}
                       </p>

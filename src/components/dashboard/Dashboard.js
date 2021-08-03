@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import IntlMessages from 'util/IntlMessages';
 import { startAuditsLoading } from 'actions/audit';
 import { uiAuditShowLoading } from 'actions/uiAudit';
 import { TotalSummary } from './TotalSummary';
@@ -60,7 +61,7 @@ const Dashboard = () => {
 				<div className="ml-4">
 			      <img src={require("assets/images/dashboard/usuario.png")} alt="jambo" title="jambo" />
 			    </div>
-			<p style={{fontFamily: "Poppins", fontSize: '18px', fontWeight: 600 }} className="ml-2"> ¡Bienvenido {`${user.firstName && user.firstName}`}!</p>
+			<p style={{fontFamily: "Poppins", fontSize: '18px', fontWeight: 600 }} className="ml-2"> <IntlMessages id="dashboard.Welcome" /> {`${user.firstName && user.firstName}`}!</p>
 			</div>
           
 			<div className="row">

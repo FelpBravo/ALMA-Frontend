@@ -102,7 +102,7 @@ const Inbox = () => {
 							
 							<div className="jr-card-header d-flex align-items-center">
 								<h3 className="mb-0">
-									<IntlMessages id="Gestión de documentos" />
+									<IntlMessages id="document.management.title" />
 								</h3>
 							</div>
 							<div className={classes.root}>
@@ -114,8 +114,8 @@ const Inbox = () => {
 									variant="fullWidth"
 									centered
 								>
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none",color:"#369bff"}} label="Mis Tareas" {...a11yProps(0)} />
-									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none", color:"#369bff"}}label="Mis Flujos" {...a11yProps(1)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none",color:"#369bff"}} label={<IntlMessages id="document.management.Tasks" />} {...a11yProps(0)} />
+									<Tab style={{fontFamily: 'Poppins', fontSize: "14px", fontWeight: 500, textTransform:"none", color:"#369bff"}}label={<IntlMessages id="document.management.Flows" />} {...a11yProps(1)} />
 									
 								</Tabs>
 								<TabPanel value={value} index={0}>

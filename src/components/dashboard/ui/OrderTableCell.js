@@ -1,6 +1,7 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 
+import IntlMessages from 'util/IntlMessages';
 const OrderTableCell = (props) => {
 
 	const {
@@ -79,7 +80,7 @@ const OrderTableCell = (props) => {
 							owner
 							&&
 							<p className="user-description">
-								{`Subido por `}
+								<IntlMessages id="dashboard.upload.by" />{` `}
 								<span className="owner-most-viewed-documents">{owner}</span>
 								{`, ${date}`}
 							</p>

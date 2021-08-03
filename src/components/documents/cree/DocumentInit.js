@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+import IntlMessages from 'util/IntlMessages';
 import { TextField } from 'components/ui/Form';
 
 
@@ -31,7 +32,7 @@ const DocumentInit = ( {commonProps}) => {
         <Grid item md={12} spacing={3} container alignItems="center">
             <Grid item md={12} spacing={3} container alignItems="center">
                 <Grid item container md={3}>
-                    <h5 className={classes.rolTitle}>Documento Principal</h5>
+                    <h5 className={classes.rolTitle}><IntlMessages id="document.cree.manage.principal" /></h5>
                 </Grid>
             </Grid>
             <Grid item md={12} container spacing={1} alignItems="center">
@@ -41,14 +42,14 @@ const DocumentInit = ( {commonProps}) => {
                     <Grid item xs={4}>
                         <TextField
                             value={title}
-                            label="Seleccionar titulo documento"
+                            label={<IntlMessages id="document.title" />}
                             disabled
                         />
                     </Grid>
                     <Grid item xs={2}>
                         <TextField
                             value={author}
-                            label="Autor"
+                            label={<IntlMessages id="tasks.table.column6" />}
                             disabled
                         />
                     </Grid>
@@ -61,7 +62,7 @@ const DocumentInit = ( {commonProps}) => {
                     <Grid item xs={2}>
                         <TextField
                             name="maxDays"
-                            label="Plazo en días"
+                            label={<IntlMessages id="flow.select.user.day" />}
                             type="number"
                             {...commonProps}
                         />

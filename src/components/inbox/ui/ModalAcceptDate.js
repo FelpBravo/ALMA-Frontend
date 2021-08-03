@@ -87,8 +87,8 @@ const ModalAcceptDate = (props) => {
                         variant="contained"
                         color="primary"
                     >
-                        Cerrar
-          </Button>
+                        <IntlMessages id="flow.preview.out" />
+                    </Button>
 
                 </DialogActions>
 

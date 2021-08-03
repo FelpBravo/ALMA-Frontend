@@ -137,7 +137,7 @@ const DataTableVersioning = () => {
 									<IntlMessages id="versioning.table.column5" />
 								</TableCell>
 								<TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400, textAlign: 'center' }} >
-									<IntlMessages id="Acciones" />
+									<IntlMessages id="table.search.actions" />
 								</TableCell>
 							</TableRow>
 						</TableHead>

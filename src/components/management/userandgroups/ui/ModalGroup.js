@@ -72,7 +72,7 @@ const ModalGroup = () => {
 
     if (!nameGroup.fullnamegroup || nameGroup.fullnamegroup.length < 10) {
 
-      setMessageErrorName('Este campo debe tener mínimo 6 letras');
+      setMessageErrorName(<IntlMessages id="group.required.search" />);
 
     } else
      {
@@ -91,7 +91,7 @@ const ModalGroup = () => {
       >
         <DialogTitle id="form-dialog-title">
           <div style={{ fontFamily: 'Poppins', fontSize: "16px" }}>
-            <IntlMessages id="Crear nuevo grupo" />
+            <IntlMessages id="group.create" />
           </div>
         </DialogTitle>
         <DialogContent>
@@ -104,7 +104,7 @@ const ModalGroup = () => {
                   id="demo-simple-select-outlined"
                   name="dependency"
                   onChange={handleOnChangeName}
-                  label="Dependencia"
+                  label={<IntlMessages id="group.dependence" />}
                 >
                   {dependencies.map(({ id, name }) => {
                     return (<MenuItem value={name}>{name}</MenuItem>)
@@ -114,13 +114,13 @@ const ModalGroup = () => {
             </Grid>
             <Grid item xs={4}>
               <FormControl size="small" variant="outlined" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-outlined-label">Perfiles</InputLabel>
+                <InputLabel id="demo-simple-select-outlined-label"><IntlMessages id="group.profiles" /></InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   name="profile"
                   onChange={handleOnChangeName}
-                  label="Perfiles"
+                  label={<IntlMessages id="group.profiles" />}
                 >
                   {profiles.map(({ id, name }) => {
                     return (<MenuItem value={name}>{name}</MenuItem>)
@@ -133,19 +133,19 @@ const ModalGroup = () => {
                 value={nameGroup.fullnamegroup}
                 fullWidth
                 size="small"
-                label="Nombre del grupo"
+                label={<IntlMessages id="group.name" />}
                 type="text"
                 variant="outlined"
                 name="names"
                 disabled
                 error={groupname || messageErrorGroup? true : false}
                 onChange={handleOnChangeName}
-                helperText={!groupname? (messageErrorGroup? messageErrorGroup : '' ): 'Grupo ya existe'}
+                helperText={!groupname? (messageErrorGroup? messageErrorGroup : '' ): <IntlMessages id="group.yes.exist" />}
               />
             </Grid>
           </Grid>
           <Divider className="mt-3" />
-          <h5 className="mt-3">Asignación de usuarios</h5>
+          <h5 className="mt-3"><IntlMessages id="group.modal.add.users" /></h5>
           <SelectAndChips data={data.map(user => {return { 'id' : user.id}})} returnData={(users)=> setNameGroup({...nameGroup,['users']:users.map(users=>{
              return{'id': users.id}
             })})
@@ -173,7 +173,7 @@ const ModalGroup = () => {
             color="primary"
             disabled={messageErrorName}
           >
-            Crear
+            <IntlMessages id="table.shared.dialog.field.createDocument" />
           </Button>
         </DialogActions>
       </Dialog>

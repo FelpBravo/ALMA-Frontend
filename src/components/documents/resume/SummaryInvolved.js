@@ -25,16 +25,16 @@ const SummaryInvolved = ({ data }) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    <IntlMessages id="Rol" />
+                                    <IntlMessages id="flow.rol" />
                                 </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    Usuario
+                                    <IntlMessages id="users.table.column1" />
                                 </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    Plazo de revisión
+                                    <IntlMessages id="flow.days" />
                                 </TableCell>
                                 <TableCell className='mr-3' style={{ background: '#369bff', color: '#ffffff', fontFamily: "Poppins", fontSize: '12px', fontWeight: 400 }} >
-                                    Comentarios
+                                    <IntlMessages id="dashboard.comments" />
                                 </TableCell>
                             </TableRow>
                         </TableHead>
@@ -51,7 +51,7 @@ const SummaryInvolved = ({ data }) => {
                                                 {userId}
                                             </TableCell>
                                             <TableCell>
-                                                {maxDays} días
+                                                {maxDays} <IntlMessages id="flow.day" />
                                             </TableCell>
                                             <TableCell>
                                                 {comment}
@@ -70,7 +70,7 @@ const SummaryInvolved = ({ data }) => {
                                                 {userId}
                                             </TableCell>
                                             <TableCell>
-                                                {expiresAt} días
+                                                {expiresAt} <IntlMessages id="flow.day" />
                                             </TableCell>
                                             <TableCell>
                                                 {comment}

@@ -46,7 +46,7 @@ const Cree = () => {
     const history = useHistory();
     const { authUser } = useSelector(state => state.auth);
     const { approvesList, docCree} = useSelector(state => state.flowDocument);
-    console.log("doc selecionado", docCree);
+    
     const [maxDays, setMaxDays] = useState();
     const [commentValue, setCommentValue] = useState();
  
@@ -68,7 +68,12 @@ const Cree = () => {
     }
   
 
-    const documentList = [{"type":"Documentos Relacionados","label":"prueba","order":3,"mandatory": true}]
+    const documentList = [{
+        "type":"Documentos Relacionados",
+        "label":"prueba",
+        "order":3,
+        "mandatory": true
+    }]
 
     const onSubmit = values => {
         console.log(values)
@@ -164,7 +169,7 @@ const Cree = () => {
                                             variant="contained"
                                             color="primary"
                                         >
-                                            <IntlMessages id="Crear" />
+                                            <IntlMessages id="table.shared.dialog.field.createDocument" />
                                         </Button>
                                     </div>
                                 </Grid>

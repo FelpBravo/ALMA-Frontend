@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import { DATE, NUMERIC,DATERANGE } from 'constants/constUtil';
+import { DATE, NUMERIC, DATERANGE } from 'constants/constUtil';
 import { TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { searchSetValueFilter } from '../../../../actions/search';
 import { DateRange } from './DateRange';
+import IntlMessages from 'util/IntlMessages';
 
 
 
@@ -19,13 +20,66 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 		dispatch(searchSetValueFilter(name, value));
 
 	}
-
+	
+	const labelType = label => {
+		switch (label) {
+			case "Etiquetas":
+				return (
+					<IntlMessages id="todo.labels" />
+				);
+			case "Doc ID":
+				return (
+					<IntlMessages id="dashboard.advancedDocId" />
+				);
+			case "Security Mode":
+				return (
+					<IntlMessages id="dashboard.advancedSecurityMode" />
+				);
+			case "Alma Doc Number":
+				return (
+					<IntlMessages id="dashboard.advancedAlmaDocNumber" />
+				);
+			case "Nombre documento":
+				return (
+					<IntlMessages id="table.search.documentName" />
+				);
+			case "Autor":
+				return (
+					<IntlMessages id="tasks.table.column6" />
+				);
+			case "Version":
+				return (
+					<IntlMessages id="doc.table.column6" />
+				);
+			case "Peso del archivo (bytes)":
+				return (
+					<IntlMessages id="dashboard.advancedBytes" />
+				);
+			case "Titulo":
+				return (
+					<IntlMessages id="dashboard.advancedTitulo" />
+				);
+			case "Modificado en":
+				return (
+					<IntlMessages id="dashboard.advancedModifiedIn" />
+				);
+			case "Creado en":
+				return (
+					<IntlMessages id="dashboard.advancedCreatedIn" />
+				);
+			case "hasta":
+				return (
+					<IntlMessages id="dashboard.advancedHasta" />
+				);
+		}
+	}
+	
 	switch (type) {
 		case DATE:
 			return (
 				<TextField
 					key={name}
-					label={label}
+					label={labelType(label)}
 					name={name}
 					variant="outlined"
 					fullWidth
@@ -35,11 +89,12 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 					InputLabelProps={{
 						shrink: true,
 					}}
-					style={{ color: '#3699FF',	
+					style={{
+						color: '#3699FF',
 					}}
 					onChange={handleOnChange}
 				/>
-				
+
 			);
 
 		case NUMERIC:
@@ -55,22 +110,22 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 					onChange={handleOnChange}
 				/>
 			);
-			case DATERANGE:
+		case DATERANGE:
 			return (
 				<DateRange
 					key={name}
-					label={label}
+					label={labelType(label)}
 					namecomponent={name}
 					value={value}
 				/>
-				
+
 			);
 
 		default:
 			return (
 				<TextField
 					name={name}
-					label={label}
+					label={labelType(label)}
 					value={value ? value : ''}
 					variant="outlined"
 					fullWidth
@@ -80,6 +135,7 @@ export const AdvancedSarchFilters = ({ name, label, type, value }) => {
 			);
 
 	}
+	
 }
 
 AdvancedSarchFilters.propTypes = {
