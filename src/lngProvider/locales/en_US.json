@@ -866,6 +866,7 @@
   "flow.newTask": "You have been assigned a new task ({TaskID}) pending review for flow No. {FlowID}",
   "flow.approved": "Flow {FlowID} has been approved successfully.",
   "flow.decclined": "Flow {FlowID} was rejected.",
+  "task.completed": "Task No.{FlowID} of flow No.{TaskID} has been completed. ",
   "flow.select.user.name": "Select name",
   "flow.select.user.day": "Term in days",
   "flow.requiered": "(Required)",

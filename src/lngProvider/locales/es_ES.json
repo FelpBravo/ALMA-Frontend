@@ -867,6 +867,7 @@
 	"flow.newTask": "Se te ha asignado una nueva tarea ({TaskID}) pendiente de revisión para el flujo No. {FlowID}",
 	"flow.approved": "Se ha aprobado el flujo {FlowID} exitosamente.",
 	"flow.decclined": "Se ha rechazado el flujo {FlowID}.",
+	"task.completed": "La tarea No.{FlowID} del flujo No.{TaskID} ha sido completada.",
 	"flow.select.user.name": "Seleccionar nombre",
 	"flow.select.user.day": "Plazo en días",
 	"flow.requiered": "(Requerido)",
